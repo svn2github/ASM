@@ -5,7 +5,7 @@
 <document>
 
   <properties>
-    <author email="asm-team@objectweb.org">asm-team</author>
+    <author email="asm@objectweb.org">ASM team</author>
     <title>Download</title>
     <filename>index.xml</filename>
     <pathtoroot>..</pathtoroot>
@@ -14,10 +14,26 @@
   <body>
     <s1 name="Download">
 
-      <p>See the ASM <a href=
-      "http://forge.objectweb.org/project/showfiles.php?group_id=23">ObjectWeb
-      Forge page</a>.
-      </p>
+    <subtitle>ASM Stable Releases</subtitle>
+
+    <p>ASM stable releases can be downloaded from the <a href=
+    "http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>.
+    </p>
+
+    <subtitle>ASM CVS Repository</subtitle>
+
+    <p>You can also download ASM from the <a href=
+    "http://forge.objectweb.org/cvs/?group_id=23">ObjectWeb Forge
+    CVS</a>.</p>
+    <p>The available modules are:</p>
+    <ul>
+    <li>.: used to get the whole ASM repository.</li>
+    <li><em>web</em>: used to get the ASM web site.</li>
+    </ul>
+    <p>Note that the latest snapshot of the CVS repository is
+    available for
+    <a href="http://www.objectweb.org/builds/nightly/asm/asm-cvs-latest.tgz">download</a>.
+    This snapshot is generated each night at 00:00 AM CEST.</p>
 
     </s1>
 

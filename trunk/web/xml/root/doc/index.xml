@@ -16,24 +16,24 @@
 			<p>The documentation of the latest packaged release is available on this
       page.</p>
 
-			<s2 name="Overview">
+			<subtitle>Overview</subtitle>
+
 				<p><a href="../current/asm-eng.pdf">"ASM: a code manipulation tool to
         implement adaptable systems"</a>,
         E. Bruneton, R. Lenglet and T. Coupaye,
         <a href="http://arcad.essi.fr/2002-10-composants.html">Adaptable and
         extensible component systems</a>, november 2002, Grenoble, France. Also
-        available in <a href="../current/asm-fr.pdf">french</a>.
-        </p>
-			</s2>
+        available in <a href="../current/asm-fr.pdf">french</a>.</p>
 
-			<s2 name="FAQ">
+			<subtitle>FAQ</subtitle>
+
 				<p><a href="faq.html">Frequently Asked Questions</a>.</p>
-			</s2>
 
-      <s2 name="API">
-				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a> (<a href="../current/doc/javadoc/user/overview-summary.html">no frames</a>).
-        </p>
-			</s2>
+      <subtitle>API</subtitle>
+
+				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a>
+          (<a href="../current/doc/javadoc/user/overview-summary.html">no
+            frames</a>).</p>
 
     </s1>
 	</body>

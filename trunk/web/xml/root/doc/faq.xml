@@ -28,9 +28,12 @@
 <li><a href="#Q10">10. How do I get the bytecode of an existing class?</a></li>
 <li><a href="#Q11">11. How do I generate [some Java code] with ASM?</a></li>
 <li><a href="#Q12">12. How does the [xxx] bytecode instruction work?</a></li>
+<li><a href="#Q13">13. Is ASM thread safe?</a></li>
+<li><a href="#Q14">14. What is the earliest JDK required to use ASM?</a></li>
     </ul>
 
-<s2 name="1. How do I remove a method/field?" anchor="Q1">
+<subtitle anchor="Q1">1. How do I remove a method/field?</subtitle>
+
 <p>Use the ClassAdapter and return nothing:</p>
 <source>  visitField (String name, ...) {
     if (removeField(name)) {
@@ -40,22 +43,22 @@
       super.visitField(name, ...);
     }
   }</source>
-</s2>
 
-<s2 name="2. How do I replace a method/field? I end up with duplicated members!" anchor="Q2">
+<subtitle anchor="Q2">2. How do I replace a method/field? I end up with duplicated members!</subtitle>
+
 <p>You must either return the replacement method/field when you visit the original one using the
 ClassAdapter, or you must first remove the original method/field in the ClassAdapter (see
 <a href="#Q1">"1. How do I remove a method/field?"</a>), and then add the new method/field
 by calling a visit method on the ClassWriter.</p>
-</s2>
 
-<s2 name="3. How do I make ASM calculate visitMaxs for me?" anchor="Q3">
+<subtitle anchor="Q3">3. How do I make ASM calculate visitMaxs for me?</subtitle>
+
 <p>When calling the constructor for ClassWriter pass true. You must also
 still include the visitMaxs instruction, but the values you give are
 ignored, so visitMaxs(0,0) is fine.</p>
-</s2>
 
-<s2 name="4. Why do I get the error 'Register 1 contains wrong type'?" anchor="Q4">
+<subtitle anchor="Q4">4. Why do I get the error 'Register 1 contains wrong type'?</subtitle>
+
 <p>When making "return" on a method you must call the appropriate constant.
 Check Constants.java for a list of all constants. Likewise, make sure you use
 the appropriate constant for LOAD and STORE intructions, depending on the
@@ -68,9 +71,10 @@ and a given bytecode instruction.</p>
   DRETURN, DLOAD, DSTORE, ... // double
   ARETURN, ALOAD, ASTORE, ... // reference to an object
   RETURN  // return void</source>
-</s2>
 
-<s2 name="5. How do I add my bytecode class to the system class loader?" anchor="Q5">
+
+<subtitle anchor="Q5">5. How do I add my bytecode class to the system class loader?</subtitle>
+
 <p>You must first have the security to do this, as defined in the policy
 file - there are no security restrictions as default for a standard java
 install. Use ClassLoader.defineClass, this however is a "protected" method, so
@@ -97,9 +101,10 @@ you must use reflection to gain access to it:</p>
   }</source>
 <p>Alternatively you can create your own ClassLoader by extending the
 existing class loader (example needed here).</p>
-</s2>
 
-<s2 name="6. How do I rename my class?" anchor="Q6">
+
+<subtitle anchor="Q6">6. How do I rename my class?</subtitle>
+
 <p>It is not enough to rename just the class, you must also rename all the
 references to class members using the CodeAdapter.</p>
 <source>class ClassRenamer extends ClassAdapter implements Constants {
@@ -174,9 +179,10 @@ references to class members using the CodeAdapter.</p>
     return desc;
   }
 }</source>
-</s2>
 
-<s2 name="7. How do method descriptors work?" anchor="Q7">
+
+<subtitle anchor="Q7">7. How do method descriptors work?</subtitle>
+
 <p>To understand this best it's good to read the source code of Type.java.
 Here is a quick overview:</p>
 <ul>
@@ -210,9 +216,10 @@ Here is a quick overview:</p>
 <li>public String method(String s, int i, boolan flag)
 <ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;IZ)Ljava/lang/String;", null);</code></li></ul></li>
 </ul>
-</s2>
 
-<s2 name="8. How can ASM help me create my descriptor types?" anchor="Q8">
+
+<subtitle anchor="Q8">8. How can ASM help me create my descriptor types?</subtitle>
+
 <p>Types.java provides the static method Type.getDescriptor, which takes a
 Class as a parameter.</p>
 <p>Examples:</p><ul>
@@ -220,9 +227,10 @@ Class as a parameter.</p>
 <li><code>String desc = Type.getDescriptor(int.class);</code></li>
 <li><code>String desc = Type.getDescriptor(java.io.ObjectOutput.class);</code></li>
 </ul>
-</s2>
 
-<s2 name="9. How do I generate Setters and Getters for my class?" anchor="Q9">
+
+<subtitle anchor="Q9">9. How do I generate Setters and Getters for my class?</subtitle>
+
 <p>Use the following code (this assumes that visitMaxs are computed by ASM - see
 <a href="#Q3">"3. How do I make ASM calculate visitMaxs for me?"</a>):</p>
 <source>  private void createSetter(String propertyName, String type, Class c) {
@@ -275,9 +283,10 @@ Class as a parameter.</p>
     }
     cv.visitMaxs(0, 0);
   }</source>
-</s2>
 
-<s2 name="10. How do I get the bytecode of an existing class?" anchor="Q10">
+
+<subtitle anchor="Q10">10. How do I get the bytecode of an existing class?</subtitle>
+
 <p>If you want the bytecode instructions themselves, use TraceClassVisitor. If you
 want the ASM code to generate these bytecode instructions, use DumpClassVisitor.
 Both classes provide a "main" method to allow them to be
@@ -286,22 +295,66 @@ parameter.
 Example:</p>
 <p><code>java -classpath "asm.jar;asm-util.jar;yourjar.jar"
 org.objectweb.asm.util.DumpClassVisitor org.domain.package.YourClass</code></p>
-</s2>
 
-<s2 name="11. How do I generate [some Java code] with ASM?" anchor="Q11">
-<p>If you want to know how how to generate a synchronized block, a try catch
+
+<subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
+
+<p>If you want to know how to generate a synchronized block, a try catch
 block, a finally statement, or any other Java construct, write the Java code
 you want to generate in a temporary class, compile it with javac, and then
 use DumpClassVisitor to get the ASM code that will generate this class (see
 <a href="#Q10">"10. How do I get the bytecode of an existing class?"</a>).
 </p>
-</s2>
 
-<s2 name="12. How does the [xxx] bytecode instruction work?" anchor="Q12">
+
+<subtitle anchor="Q12">12. How does the [xxx] bytecode instruction work?</subtitle>
+
 <p>See <a href="http://java.sun.com/docs/books/vmspec/2nd-edition/html/Instructions.doc.html">chapter
 6</a> of the Java Virtual Machine Specification.
 </p>
-</s2>
+
+
+<subtitle anchor="Q13">13. Is ASM thread safe?</subtitle>
+
+<p>The Type and ClassReader classes are thread safe, i.e. several threads can
+use a single Type object or a single ClassReader object concurrently without
+problems. The ClassWriter and CodeWriter classes are <em>not</em> thread safe,
+i.e. a single class cannot be generated by several concurrent threads (but,
+of course, several threads can generate distinct classes concurrently, if each
+thread uses its own ClassWriter instance). In order to generate a single class
+by using several concurrent threads, one should use ClassAdapter and
+CodeAdapter instances that delegate to normal ClassWriter and CodeWriter
+instances, and whose methods are all synchronized.</p>
+<p>More generally, ClassVisitor and CodeVisitor implementations, such as
+ClassWriter and ClassAdapter, do not have to be thread safe. However, non thread
+safe visitors can be made thread safe just by using a synchronizing class
+adapter in front of them.</p>
+
+
+<subtitle anchor="Q14">14. What is the earliest JDK required to use ASM?</subtitle>
+
+<p>The org.objectweb.asm package should work with JDK 1.1, or even with JDK 1.0
+if Type is not use. Indeed, this package only requires the following JDK classes
+and methods:</p>
+<ul>
+  <li>in java.io: InputStream, IOException (only in two constructors of
+  ClassReader)</li>
+  <li>in java.lang.reflect: Method (only in Type)</li>
+  <li>in java.lang:
+    <ul>
+      <li>Object, String, StringBuffer</li>
+      <li>Long, Double, Float, Void, Byte, Boolean ...</li>
+      <li>System.arraycopy</li>
+      <li>ClassLoader.getSystemClassLoader,
+      ClassLoader.getSystemResourceAsStream (only in one constructor of
+      ClassReader)</li>
+    </ul>
+  </li>
+</ul>
+<p>The asm.util and asm.tree packages require JDK 1.2, since they use the
+List interface and the ArrayList class.
+</p>
+
 
     </s1>
 	</body>
