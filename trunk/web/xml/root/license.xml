@@ -11,7 +11,7 @@
 	</properties>
 
 	<body>
-		<s1 name="License status">
+		<s1 name="License Status">
 			<p>ASM is licensed under the
       <a href="http://www.gnu.org/copyleft/lesser.html">GNU Lesser
       General Public License</a>.</p>
