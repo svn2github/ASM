@@ -14,6 +14,13 @@
 
     <s1 name="History">
 
+      <subtitle>1 March 2004: ASM 1.4.2 (cvs-tag: ASM_1_4_2)</subtitle>
+
+        <ul>
+          <li>Improved build files to facilitate Linux packaging</li>
+          <li>Bug fixes</li>
+        </ul>
+
       <subtitle>12 December 2003: ASM 1.4.1 (cvs-tag: ASM_1_4_1)</subtitle>
 
         <ul>
