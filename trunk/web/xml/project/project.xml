@@ -21,8 +21,8 @@
 
     <menu>
       <legend>Developers' Corner</legend>
-      <menuitem><a href="http://debian-sf.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
-      <menuitem><a href="http://debian-sf.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
     </menu>
 
     <menu>
@@ -37,7 +37,7 @@
       <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/resources/cvs.html">CVS Repositories</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/resources/search.html">Search</a></menuitem>
-      <menuitem><a href="http://debian-sf.objectweb.org/">ObjectWeb Forge</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/">ObjectWeb Forge</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/mirrors.html">Mirror Sites</a></menuitem>
     </menu>
 
