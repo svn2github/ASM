@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../../common/dtd/objectweb.dtd'>
+
+<document>
+
+	<properties>
+		<author email="fractal@objectweb.org">asm-team</author>
+		<title>Download</title>
+		<filename>index.xml</filename>
+		<pathtoroot>..</pathtoroot>
+	</properties>
+
+	<body>
+		<s1 name="Documentation">
+			<p>The documentation of the latest packaged release are available on this
+      page.</p>
+
+			<s2 name="API">
+				<p>The ASM API is browsable <a href="javadoc/user/index.html">here</a>
+        (<a href="javadoc/user/org/objectweb/asm/package-summary.html">no frames</a>).
+        </p>
+			</s2>
+
+		</s1>
+	</body>
+</document>
