@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+	<properties>
+		<author email="fractal@objectweb.org">asm-team</author>
+		<title>Team</title>
+		<filename>team.xml</filename>
+		<pathtoroot>.</pathtoroot>
+	</properties>
+
+	<body>
+  
+		<s1 name="Project team">
+		<p>Currently the ASM team is composed of:</p>
+      <ul>
+			  <li>Eric Bruneton (<a href="http://www.rd.francetelecom.com/">France T&#233;l&#233;com R&amp;D</a>)</li>
+      </ul>
+		</s1>
+
+	</body>
+</document>

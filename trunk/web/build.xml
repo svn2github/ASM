@@ -1,0 +1,260 @@
+<project default="publish" basedir=".">
+
+  <!-- customizable properties -->
+  <property file="build.properties" />
+
+  <!-- uncustomizable properties -->
+  <property name="common_web.archive" value="common_web.zip" />
+  <property name="xml.dir" value="${basedir}/xml" />
+  <property name="html.src" value="${basedir}/html" />
+
+  <property name="common.dir" value="${basedir}/common" />
+  <property name="dtd.dir" value="${common.dir}/dtd" />  
+
+  <property name="common.images.src" value="${common.dir}/images" />
+  <property name="common.images.dest" value="${common.html.dest}/images" />
+
+  <property name="stylesheets.dir" value="${common.dir}/stylesheets" />
+  <property name="stylesheet.browsable" value="${stylesheets.dir}/browsable.xsl" />
+  <property name="stylesheet.printable" value="${stylesheets.dir}/printable.xsl" />
+
+  <property name="last-modified.pattern" value="yyyy-MM-dd hh:mm aa" />
+
+  <!-- classpath -->
+  <path id="externals.classpath">
+    <fileset dir="${common.dir}/lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <!-- ===================================================================== -->
+  <!-- publish -->
+  <!-- ===================================================================== -->
+
+  <target name="publish"
+	  depends="prepare,html_print,html"
+	  description="Build the website" />
+
+  <!-- ===================================================================== -->
+  <!-- prepare -->
+  <!-- ===================================================================== -->
+
+  <target name="prepare"
+	  depends="unzip_common_web,install_common_web, check"
+	  description="Prepare the website build">
+
+    <!-- mkdirs -->
+    <mkdir dir="${common.html.dest}"/>
+    <mkdir dir="${common.images.dest}"/>
+    <mkdir dir="${html.dest}"/>
+
+    <!-- set the time build -->
+    <tstamp>
+      <format property="last.modified" pattern="${last-modified.pattern}"/>
+    </tstamp>
+
+    <!-- deal with DTDs, stylesheets and project files dependencies -->
+    <dependset>
+      <srcfileset dir="${dtd.dir}" includes="*.dtd"/>
+      <srcfileset dir="${stylesheets.dir}" includes="*.xsl"/>
+      <srcfileset dir="${xml.dir}/project" includes="*.xml"/>
+      <targetfileset dir="${html.dest}"
+	 	     includes="**/*.html"
+		     excludes="${release-files}"/>
+    </dependset>
+
+    <!-- copy css stylesheet into ${common.html.dest} -->
+    <copy todir="${common.html.dest}">
+      <fileset dir="${stylesheets.dir}">
+        <include name="*.css"/>
+      </fileset>
+    </copy>
+
+    <!-- copy HTML files into ${html.dest} -->
+    <copy todir="${html.dest}">
+      <fileset dir="${html.src}" />
+    </copy>
+
+		<!-- doc directory: copy as is -->
+		<copy todir="${html.dest}/doc">
+			<fileset dir="../${dist.doc}">
+				<include name="**"/>
+			</fileset>
+		</copy>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- check -->
+  <!-- ===================================================================== -->
+
+  <target name="check"
+	  depends="unzip_common_web"
+	  description="Check the XML files syntax"
+	  if="validation.required">
+
+    <xmlvalidate failonerror="yes"
+		 lenient="no"
+		 warn="yes"
+		 classname="org.apache.xerces.parsers.SAXParser">
+
+      <classpath refid="externals.classpath"/>
+      <fileset dir="${xml.dir}">
+        <include name="**/*.xml"/>
+      </fileset>
+    </xmlvalidate>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- zip_common_web -->
+  <!-- ===================================================================== -->
+
+  <target name="zip_common_web"
+	  description="Zip the ${common.dir} directory into ${common_web.archive}">
+
+    <zip zipfile="${common_web.archive}">
+      <zipfileset dir="${common.dir}" />
+    </zip>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- unzip_common_web -->
+  <!-- ===================================================================== -->
+
+  <target name="unzip_common_web"
+	  description="Unzip the ${common_web.archive} file into ${common.dir}">
+
+    <unzip src="${common_web.archive}"
+	   dest="${common.dir}"
+	   overwrite="false"/>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- install_common_web -->
+  <!-- ===================================================================== -->
+
+  <target name="install_common_web"
+	  description="Copy common images into ${common.images.dest}"
+	  if="install.common">
+
+    <copy todir="${common.images.dest}">
+      <fileset dir="${common.images.src}" />
+    </copy>
+    
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- html_print -->
+  <!-- ===================================================================== -->
+
+  <target name="html_print"
+	  description="Build website (printable version)">
+
+    <!-- root website -->
+    <antcall target="real_html">
+      <param name="srcdir" value="${xml.dir}/root" />
+      <param name="destdir" value="${html.dest}" />
+      <param name="project.file" value="project/project.xml" />
+      <param name="style" value="${stylesheet.printable}" />
+      <param name="extension" value="_print.html" />	       
+      <param name="path-to-objectweb" value=".." />
+    </antcall>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- html -->
+  <!-- ===================================================================== -->
+
+  <target name="html"
+	  description="Build website (browsable version)">
+
+    <!-- root website -->
+    <antcall target="real_html">
+      <param name="srcdir" value="${xml.dir}/root" />
+      <param name="destdir" value="${html.dest}" />
+      <param name="project.file" value="project/project.xml" />
+      <param name="style" value="${stylesheet.browsable}" />
+      <param name="extension" value=".html" />
+      <param name="path-to-objectweb" value=".." />
+    </antcall>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- real_html -->
+  <!-- ===================================================================== -->
+
+  <target name="real_html"
+	  description="Do the real transformation xml -> html">
+
+    <style basedir="${srcdir}"
+	   destdir="${destdir}"	  
+	   style="${style}"
+	   extension="${extension}"
+	   processor="org.objectweb.util.ant.Xalan2Liaison">
+
+      <include name="**/*.xml"/>
+      <exclude name="${project.file}"/>
+      
+      <classpath refid="externals.classpath"/>
+      <param name="project-file" expression="${xml.dir}/${project.file}" />
+      <param name="last-modified" expression="${last.modified}" />
+      <param name="path-to-objectweb" expression="${path-to-objectweb}" />
+    </style>
+
+  </target>
+
+  <!-- ===================================================================== -->
+  <!-- setenv -->
+  <!-- ===================================================================== -->
+
+  <target name="setenv"
+    description="Print environment variables">
+
+    <echo>
+---- customizable properties ----
+common.html.dest=${common.html.dest}
+html.dest=${html.dest}
+install.common=${install.common}
+validation.required=${validation.required}
+release-files=${release-files}
+
+---- uncustomizable properties ----
+common_web.archive=${common_web.archive}
+xml.dir=${xml.dir}
+html.src=${html.src}
+
+common.dir=${common.dir}
+dtd.dir=${dtd.dir}
+
+common.images.src=${common.images.src}
+common.images.dest=${common.images.dest}
+
+stylesheets.dir=${stylesheets.dir}
+stylesheet.browsable=${stylesheet.browsable}
+stylesheet.printable=${stylesheet.printable}
+last-modified.pattern=${last-modified.pattern}
+    </echo>
+  </target>
+    
+  <!-- ===================================================================== -->
+  <!-- clean -->
+  <!-- ===================================================================== -->
+
+  <target name="clean"
+	  description="Delete the ${html.dest} directory">
+
+    <delete includeEmptyDirs="true" quiet="true">
+      <fileset dir="${html.dest}"
+	       excludes="${release-files}"
+	       includes="**/**" />
+      <fileset dir="${common.dir}"/>
+    </delete>
+
+  </target>
+
+</project>
