@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: "ASM Utilities"
+Implementation-Version: "@product.version@"
+Implementation-Vendor: "France Telecom R&D"
