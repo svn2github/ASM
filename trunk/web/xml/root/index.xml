@@ -51,7 +51,7 @@
 
     <p><strong>The best way to learn to use ASM is to write a Java source file 
     that is equivalent to what you want to generate and then use the ASMifier mode of the 
-    <a href="eclipse.html">Bytecode Outline</a> plugin for Eclipse (or the 
+    <a href="eclipse/index.html">Bytecode Outline</a> plugin for Eclipse (or the 
     <a href="doc/faq.html#Q10">ASMifier</a> tool) to see the equivalent ASM code. If you want
     to implement a class transformer, write two Java source files (before and after 
     transformation) and use the compare view of the plugin in ASMifier mode to compare the

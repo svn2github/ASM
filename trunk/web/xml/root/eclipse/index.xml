@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 
-<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+<!DOCTYPE document SYSTEM '../../../common/dtd/objectweb.dtd'>
 
 <document>
   <properties>
     <author email="asm-team@objectweb.org">asm-team</author>
     <title>Eclipse plugin</title>
-    <filename>eclipse.xml</filename>
-    <pathtoroot>.</pathtoroot>
+    <filename>index.xml</filename>
+    <pathtoroot>..</pathtoroot>
   </properties>
 
   <body>
@@ -19,12 +19,12 @@
     
     <subtitle>Screen shots</subtitle>
     <p>
-    <a href="images/bco_1.gif"><img src="images/bco_1_small.gif" border="0" 
+    <a href="../images/bco_1.gif"><img src="../images/bco_1_small.gif" border="0" 
     width="399" height="311" alt="Screen shot 1"/></a>
     </p>
     
     <p>
-    <a href="images/bco_4.gif"><img src="images/bco_4_small.gif" border="0" 
+    <a href="../images/bco_4.gif"><img src="../images/bco_4_small.gif" border="0" 
     width="399" height="311" alt="Screen shot 2"/></a>
     </p>
     
