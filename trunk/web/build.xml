@@ -69,6 +69,11 @@
       <fileset dir="${common.dir}/images" />
     </copy>
 
+    <!-- copy js into ${html.dest} -->
+    <copy todir="${html.dest}/js">
+      <fileset dir="${common.dir}/js" />
+    </copy>
+
     <!-- copy HTML files into ${html.dest} -->
     <copy todir="${html.dest}">
       <fileset dir="${html.src}" />
