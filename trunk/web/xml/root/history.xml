@@ -14,6 +14,14 @@
 
     <s1 name="History">
 
+      <subtitle>9 July 2003: ASM 1.3.4 (cvs-tag: ASM_1_3_4)</subtitle>
+
+        <ul>
+          <li>Added kASM jar (needed a small refactoring)</li>
+        </ul>
+
+        <hr/>
+
       <subtitle>3 October 2002: ASM 1.3.3 (cvs-tag: ASM_1_3_3)</subtitle>
 
         <ul>
