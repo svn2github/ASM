@@ -13,11 +13,12 @@
 
 	<body>
 		<s1 name="Documentation">
-			<p>The documentation of the latest packaged release are available on this
+			<p>The documentation of the latest packaged release is available on this
       page.</p>
 
 			<s2 name="API">
-				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a>
+				<p>The ASM API is available
+        <a href="../current/doc/javadoc/user/index.html">here</a>
         (<a href="../current/doc/javadoc/user/org/objectweb/asm/package-summary.html">no frames</a>).
         </p>
 			</s2>
