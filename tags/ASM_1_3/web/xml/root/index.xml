@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+	<properties>
+		<author email="fractal@objectweb.org">asm-team</author>
+		<title>Home page</title>
+		<filename>index.xml</filename>
+		<pathtoroot>.</pathtoroot>
+	</properties>
+
+	<body>
+    <s1 name="Recent news">
+      <subtitle>11 July 2002: release of the ASM 2.3 version</subtitle>
+    </s1>
+
+		<s1 name="ASM">
+
+    <p>
+    <strong>ASM</strong> is a Java bytecode manipulation framework. It can be used
+    to dynamically generate stub classes or other proxy classes, directly in binary
+    form, or to dynamically modify classes at load time, i.e., just before they are
+    loaded into the Java Virtual Machine.</p>
+
+    <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel">BCEL</a>
+    or <a href="http://serp.sourceforge.net">SERP</a>, but is much more smaller (22KB
+    instead of 350KB for BCEL and 150KB for SERP)
+    and faster than these tools (the overhead of a load time class transformation
+    is of the order of 60% with ASM, 700% or more with BCEL, and 1100% or more with SERP).
+    Indeed ASM was designed to be used in a dynamic way* and
+    was therefore designed and implemented to be as small and as fast as possible.</p>
+
+    <p>(*) ASM can of course be used in a static way too.</p>
+
+    </s1>
+	</body>
+</document>

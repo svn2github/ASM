@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE project SYSTEM '../../common/dtd/project.dtd'>
+
+<project>
+
+    <title>ASM</title>
+
+    <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
+
+    <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
+
+    <body>
+
+    <menu>
+      <connect href="index.xml">ASM</connect>
+      <menuitem><connect href="download/index.xml">Download</connect></menuitem>
+      <menuitem><connect href="doc/index.xml">Documentation</connect></menuitem>
+      <menuitem><connect href="license.xml">License</connect></menuitem>
+    </menu>
+
+    <menu>
+      <legend>Resources</legend>
+      <menuitem><a href="http://www.objectweb.org/faq">FAQ</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
+      <menuitem><connect href="../resources/search.xml">Search</connect></menuitem>
+      <menuitem><connect href="../resources/cvs.xml">CVS Repositories</connect></menuitem>
+    </menu>
+
+    <menu>
+      <legend>Misc</legend>
+      <menuitem><connect href="team.xml">Team</connect></menuitem>
+      <menuitem><a href="mailto:fractal@objectweb.org">Contacts</a></menuitem>
+    </menu>
+
+    </body>
+</project>
