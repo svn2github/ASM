@@ -1,0 +1,325 @@
+<!--
+ ! ASM: a very small and fast Java bytecode manipulation framework
+ ! Copyright (c) 2000,2002,2003 INRIA, France Telecom
+ ! All rights reserved.
+ !
+ ! Redistribution and use in source and binary forms, with or without
+ ! modification, are permitted provided that the following conditions
+ ! are met:
+ ! 1. Redistributions of source code must retain the above copyright
+ !    notice, this list of conditions and the following disclaimer.
+ ! 2. Redistributions in binary form must reproduce the above copyright
+ !    notice, this list of conditions and the following disclaimer in the
+ !    documentation and/or other materials provided with the distribution.
+ ! 3. Neither the name of the copyright holders nor the names of its
+ !    contributors may be used to endorse or promote products derived from
+ !    this software without specific prior written permission.
+ !
+ ! THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ ! AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ ! IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ ! ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ ! LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ ! CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ ! SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ ! INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ ! CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ ! ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ ! THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<project name="ASM" default="compile">
+
+  <!-- ======================================================================= -->
+  <!-- This file requires the org.objectweb.util.ant.MultipleAnt class         -->
+  <!-- This file requires the org.objectweb.util.ant.MultipleCopy class        -->
+  <!-- This file requires the org.objectweb.util.ant.JavadocMultipleLink class -->
+  <!-- ======================================================================= -->
+
+  <property file="build.properties"/>
+
+  <!-- ==================================== -->
+  <!-- ======== PROPERTY DEFINITION ======= -->
+  <!-- ==================================== -->
+
+  <property name="src"                value="${basedir}/src"/>
+  <property name="test"               value="${basedir}/test"/>
+  <property name="doc"                value="${basedir}/doc"/>
+  <property name="jdoc"               value="${basedir}/jdoc"/>
+  <property name="web"                value="${basedir}/web"/>
+  <property name="externals"          value="${basedir}/externals"/>
+  <property name="examples"           value="${basedir}/examples"/>
+  <property name="examples.common"    value="${examples}/common"/>
+  <property name="config"             value="${basedir}/config"/>
+  <property name="archive"            value="${basedir}/archive"/>
+
+  <property name="out"                value="${basedir}/output"/>
+  <property name="out.build"          value="${out}/build"/>
+  <property name="out.dist"           value="${out}/dist"/>
+  <property name="out.dist.lib"       value="${out.dist}/lib"/>
+  <property name="out.dist.doc"       value="${out.dist}/doc"/>
+  <property name="out.dist.jdoc"      value="${out.dist.doc}/javadoc"/>
+  <property name="out.dist.examples"  value="${out.dist}/examples"/>
+  <property name="out.dist.externals" value="${out.dist}/externals"/>
+  <property name="out.test"           value="${out}/test"/>
+  <property name="out.zip"            value="${out}/zip"/>
+
+  <!-- Build a path that contains the external jars -->
+
+  <path id="classpath">
+    <fileset dir="${basedir}">
+      <include name="externals/**/*.jar"/>
+    </fileset>
+    <pathelement location="${out.build}"/>
+  </path>
+
+  <!-- ================================== -->
+  <!-- ======== TARGET DEFINITION ======= -->
+  <!-- ================================== -->
+
+  <taskdef name="multipleAnt"
+    classname="org.objectweb.util.ant.MultipleAnt"
+    classpath="${config}/ow_util_ant_tasks.jar"/>
+
+  <taskdef name="javadocMultipleLink"
+    classname="org.objectweb.util.ant.JavadocMultipleLink"
+    classpath="${config}/ow_util_ant_tasks.jar"/>
+
+  <taskdef name="multipleCopy"
+    classname="org.objectweb.util.ant.MultipleCopy"
+    classpath="${config}/ow_util_ant_tasks.jar"/>
+
+  <!-- ==================================== -->
+  <!-- ==========     HELP       ========== -->
+  <!-- ==================================== -->
+
+  <target name="help">
+    <echo message="The available targets are the following:"/>
+    <echo message="  compile: compiles the product into ${out.build}"/>
+    <echo message="  dist: creates the product's distributions into ${out.dist}"/>
+    <echo message="  zip: creates the product's distributions zip files into ${out.zip}"/>
+    <echo message="  clean: removes all generated files."/>
+    <echo message="  jar: creates all jars in ${out.dist.lib}"/>
+    <echo message="  test: run all tests"/>
+    <echo message=""/>
+    <echo message="There are some options to run tests:"/>
+    <echo message="  -Dtest.group=&lt;group name&gt;  Only a group of test: The default target of"/>
+    <echo message="    the xml file is called the test.group contains the xml file name with"/>
+    <echo message="    directory ex: ant -Dtest.group=conform/toto test =&gt; calls the default"/>
+    <echo message="    target of the file ${test}/conform/toto.xml"/>
+    <echo message="  -Dtest.type=&lt;type name&gt;  Only a type of test: conform, deviance, stress,"/>
+    <echo message="    thread or perf. The test.type properties contains the directory name of"/>
+    <echo message="    the test type ex: ant -Dtest.type=conform test"/>
+    <echo message="  -Dtest.name=&lt;test name&gt;  Only a single test. The target &lt;test name&gt; is called"/>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========    COMPILE    ========== -->
+  <!-- =================================== -->
+
+  <target name="compile">
+    <mkdir dir="${out.build}"/>
+    <javac destdir="${out.build}" optimize="on">
+      <classpath refid="classpath"/>
+      <src path="${src}"/>
+      <src path="${out.build}"/>
+      <include name="**/*.java"/>
+    </javac>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========      TEST     ========== -->
+  <!-- =================================== -->
+
+  <target name="test" depends="compile" description="Run tests">
+    <ant antfile="${test}/build.xml" target="test" inheritRefs="true"/>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========    EXAMPLES   ========== -->
+  <!-- =================================== -->
+
+  <target name="example" depends="jar">
+    <condition property="examples.dir.exist">
+      <available file="${examples}"/>
+    </condition>
+    <antcall target="dist.examples"/>
+    <ant
+      inheritAll="false"
+      dir="${out.dist.examples}/${example.name}"
+      target="execute"/>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========      WEB      ========== -->
+  <!-- =================================== -->
+
+  <target name="web">
+    <ant dir="${web}"/>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========      DIST     ========== -->
+  <!-- =================================== -->
+
+  <!-- Produce a distribution (jars, javadocs, examples and scripts) -->
+
+  <target name="dist">
+
+    <mkdir dir="${out.dist}"/>
+    <mkdir dir="${out.dist.doc}"/>
+
+    <!-- create a zip of the src directory, in the dist directory -->
+
+    <zip zipFile="${out.dist}/src.zip" basedir="${src}"/>
+
+    <!-- copy all files and all non empty directories available in the doc -->
+    <!-- directory into dist/doc -->
+
+    <copy todir="${out.dist.doc}"
+      preservelastmodified="yes"
+      includeEmptyDirs="false">
+      <fileset dir="${doc}">
+        <include name="**/*"/>
+        <exclude name="**/*.fig"/>
+      </fileset>
+    </copy>
+
+    <!-- create all jars -->
+
+    <antcall target="jar"/>
+
+    <!-- create all javadoc-->
+
+    <antcall target="jdoc"/>
+
+    <!-- distribute the examples if they exist -->
+
+    <condition property="examples.dir.exist">
+      <available file="${examples}"/>
+    </condition>
+    <antcall target="dist.examples"/>
+  </target>
+
+  <!-- Distribute the example -->
+
+  <target name="dist.examples" if="examples.dir.exist">
+
+    <mkdir dir="${out.dist.examples}"/>
+
+    <!-- Copy the examples -->
+
+    <copy todir="${out.dist.examples}"
+      preservelastmodified="yes"
+      includeEmptyDirs="yes">
+      <fileset dir="${examples}">
+        <exclude name="common"/>
+        <exclude name="common/**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- Copy the common build.xml into each examples if a build.xml -->
+    <!-- doest not already exist                                     -->
+
+    <multipleCopy file="${examples}/common/build.xml"
+      toDir="${out.dist.examples}"
+      notReplace="yes"
+      preservelastmodified="yes">
+      <include name="*"/>
+      <exclude name="etc"/>
+      <exclude name="lib"/>
+    </multipleCopy>
+
+    <!-- Copy the common part of the examples -->
+
+    <copy toDir="${out.dist.examples}" preservelastmodified="yes">
+      <fileset dir="${examples.common}">
+        <include name="**/*"/>
+        <exclude name="build.xml"/>
+      </fileset>
+    </copy>
+
+  </target>
+
+  <!-- Create a debian package -->
+
+  <target name="dist.deb" depends="jar">
+
+    <exec dir="${basedir}" executable="fakeroot" failonerror="true">
+      <arg value="/bin/sh"/>
+      <arg value="${basedir}/debian/create-package.sh"/>
+      <arg value="${basedir}"/>
+      <arg value="${out.dist.lib}"/>
+      <arg value="${out.build}/debian"/>
+      <arg value="${product.name}"/>
+      <arg value="${product.version}"/>
+      <arg value="${out.build}"/>
+    </exec>
+
+  </target>
+
+  <!-- calls the default target of each xml file in ${archive} directory -->
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${out.dist.lib}"/>
+    <!-- copies the external libraries -->
+    <copy todir="${out.dist}">
+      <fileset dir=".">
+        <include name="externals/*.jar"/>
+        <exclude name="externals/junit.jar"/>
+      </fileset>
+    </copy>
+    <!-- creates the project's libraries -->
+    <multipleAnt dir="${archive}" />
+  </target>
+
+  <!-- calls the default target of each xml file in ${jdoc} directory -->
+
+  <target name="jdoc">
+    <mkdir dir="${out.dist.jdoc}"/>
+    <multipleAnt dir="${jdoc}" />
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========     ZIP       ========== -->
+  <!-- =================================== -->
+
+  <!-- creates zip files of the different distribution (source, binaries) -->
+
+  <target name="zip" depends="dist">
+    <mkdir dir="${out.zip}"/>
+    <zip zipFile="${out.zip}/${product.name}_${product.version}_src.zip">
+      <zipfileset dir="${basedir}" prefix="${product.name}/dev">
+        <exclude name="output/**"/>
+        <exclude name="web/**/*"/>
+        <exclude name="CVSROOT/**/*"/>
+        <exclude name="CVSROOT"/>
+      </zipfileset>
+    </zip>
+    <zip zipFile="${out.zip}/${product.name}_${product.version}_bin.zip">
+      <zipfileset dir="${out.dist}" prefix="${product.name}"/>
+    </zip>
+  </target>
+
+  <!-- =================================== -->
+  <!-- ==========     CLEAN     ========== -->
+  <!-- =================================== -->
+
+  <!-- remove all directories -->
+
+  <target name="clean">
+    <delete dir="${out.build}"/>
+    <delete dir="${out.dist}"/>
+    <delete dir="${out.zip}"/>
+    <delete dir="${out.test}"/>
+    <condition property="web.exist">
+      <available file="${web}/build.xml"/>
+    </condition>
+    <antcall target="clean.web"/>
+  </target>
+
+  <target name="clean.web" if="web.exist">
+    <ant dir="${web}" target="clean"/>
+  </target>
+
+</project>
