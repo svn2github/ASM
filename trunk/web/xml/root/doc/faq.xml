@@ -117,9 +117,9 @@ references to class members using the CodeAdapter.</p>
     this.newName = newName;
   }
 
-  public void visit(int access, String name, String superName, String[] interfaces, String sourceFile) {
+  public void visit(int version, int access, String name, String superName, String[] interfaces, String sourceFile) {
     oldNames.add(name);
-    cv.visit(ACC_PUBLIC, newName, superName, interfaces, null);
+    cv.visit(version, ACC_PUBLIC, newName, superName, interfaces, null);
   }
 
   public void visitInnerClass(String name, String outerName, String innerName, int access) {
@@ -334,7 +334,7 @@ adapter in front of them.</p>
 <subtitle anchor="Q14">14. What is the earliest JDK required to use ASM?</subtitle>
 
 <p>The org.objectweb.asm package should work with JDK 1.1, or even with JDK 1.0
-if Type is not use. Indeed, this package only requires the following JDK classes
+if Type is not used. Indeed, this package only requires the following JDK classes
 and methods:</p>
 <ul>
   <li>in java.io: InputStream, IOException (only in two constructors of
