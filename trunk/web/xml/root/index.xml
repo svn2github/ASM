@@ -23,8 +23,8 @@
     form, or to dynamically modify classes at load time, i.e., just before they are
     loaded into the Java Virtual Machine.</p>
 
-    <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel">BCEL</a>
-    or <a href="http://serp.sourceforge.net">SERP</a>, but is much more smaller (22KB
+    <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel/">BCEL</a>
+    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much more smaller (22KB
     instead of 350KB for BCEL and 150KB for SERP)
     and faster than these tools (the overhead of a load time class transformation
     is of the order of 60% with ASM, 700% or more with BCEL, and 1100% or more with SERP).
