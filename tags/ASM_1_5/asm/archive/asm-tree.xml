@@ -1,0 +1,9 @@
+<project name="asm" default="dist">
+  <target name="dist">
+    <jar jarfile="${out.dist.lib}/asm-tree.jar"
+         basedir="${out.build}"
+         manifest="${out.tmp}/asm-tree.mf">
+      <include name="org/objectweb/asm/tree/*.class"/>
+    </jar>
+  </target>
+</project>
