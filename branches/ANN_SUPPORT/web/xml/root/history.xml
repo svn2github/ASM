@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+  <properties>
+    <author email="asm-team@objectweb.org">asm-team</author>
+    <title>History</title>
+    <filename>history.xml</filename>
+    <pathtoroot>.</pathtoroot>
+  </properties>
+
+  <body>
+
+    <s1 name="History">
+
+      <subtitle>30 August 2004: ASM 1.5 (cvs-tag: ASM_1_5)</subtitle>
+
+        <ul>
+          <li>Added support for class version in ClassVisitor</li>
+          <li>Changed behavior for unrecognized attributes</li>
+          <li>Added new analyzer in tree.analysis package (contribution from Bing Ran)</li>
+          <li>Improved build files</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>11 May 2004: ASM 1.4.3 (cvs-tag: ASM_1_4_3)</subtitle>
+
+        <ul>
+          <li>Added tree.analysis package</li>
+          <li>Added xml package, contributed by Eugene Kuleshov</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>1 March 2004: ASM 1.4.2 (cvs-tag: ASM_1_4_2)</subtitle>
+
+        <ul>
+          <li>Improved build files to facilitate Linux packaging</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>12 December 2003: ASM 1.4.1 (cvs-tag: ASM_1_4_1)</subtitle>
+
+        <ul>
+          <li>Added attrs package, contributed by Eugene Kuleshov</li>
+        </ul>
+
+      <subtitle>13 November 2003: ASM 1.4 (cvs-tag: ASM_1_4)</subtitle>
+
+        <ul>
+          <li>Added attribute support</li>
+        </ul>
+
+      <subtitle>3 November 2003: ASM 1.3.6 (cvs-tag: ASM_1_3_6)</subtitle>
+
+        <ul>
+          <li>Changed license from LGPL to BSD</li>
+        </ul>
+
+      <subtitle>8 October 2003: ASM 1.3.5 (cvs-tag: ASM_1_3_5)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>Added thread safety support in ClassReader</li>
+          <li>Added equals and hashcode in Type</li>
+          <li>Added FAQ</li>
+        </ul>
+
+      <subtitle>9 July 2003: ASM 1.3.4 (cvs-tag: ASM_1_3_4)</subtitle>
+
+        <ul>
+          <li>Added kASM jar (needed a small refactoring)</li>
+        </ul>
+
+      <subtitle>3 October 2002: ASM 1.3.3 (cvs-tag: ASM_1_3_3)</subtitle>
+
+        <ul>
+          <li>Added tree package</li>
+          <li>Added support for GOTO_W and JSR_W</li>
+          <li>Added an ant target to create a debian package</li>
+        </ul>
+
+      <subtitle>6 September 2002: ASM 1.3.2 (cvs-tag: ASM_1_3_2)</subtitle>
+
+        <ul>
+          <li>Added util package</li>
+        </ul>
+
+      <subtitle>6 September 2002: ASM 1.3.1 (cvs-tag: ASM_1_3_1)</subtitle>
+
+        <ul>
+          <li>Bug fix</li>
+        </ul>
+
+      <subtitle>11 July 2002: ASM 1.3 (cvs-tag: ASM_1_3)</subtitle>
+
+        <ul>
+          <li>First public version</li>
+        </ul>
+
+    </s1>
+
+  </body>
+</document>
