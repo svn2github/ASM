@@ -27,9 +27,7 @@
 			</s2>
 
 			<s2 name="API">
-				<p>The ASM API is available
-        <a href="../current/doc/javadoc/user/index.html">here</a>
-        (<a href="../current/doc/javadoc/user/overview-summary.html">no frames</a>).
+				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a> (<a href="../current/doc/javadoc/user/overview-summary.html">no frames</a>).
         </p>
 			</s2>
 
