@@ -24,7 +24,7 @@
     loaded into the Java Virtual Machine.</p>
 
     <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel/">BCEL</a>
-    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much more smaller (22KB
+    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much more smaller (25KB
     instead of 350KB for BCEL and 150KB for SERP)
     and faster than these tools (the overhead of a load time class transformation
     is of the order of 60% with ASM, 700% or more with BCEL, and 1100% or more with SERP).
@@ -37,7 +37,7 @@
 
     <s1 name="Recent News">
 
-      <subtitle>3 November 2003: release of the ASM 1.3.6 version</subtitle>
+      <subtitle>13 November 2003: release of the ASM 1.4 version</subtitle>
 
     </s1>
 

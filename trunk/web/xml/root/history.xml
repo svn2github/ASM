@@ -14,6 +14,12 @@
 
     <s1 name="History">
 
+      <subtitle>13 November 2003: ASM 1.4 (cvs-tag: ASM_1_4)</subtitle>
+
+        <ul>
+          <li>Added attribute support</li>
+        </ul>
+
       <subtitle>3 November 2003: ASM 1.3.6 (cvs-tag: ASM_1_3_6)</subtitle>
 
         <ul>
