@@ -70,11 +70,13 @@
     </copy>
 
     <!-- doc directory: copy as is -->
+<!--
     <copy todir="${html.dest}/doc">
       <fileset dir="../doc">
         <include name="**"/>
       </fileset>
     </copy>
+-->
   </target>
 
   <!-- ===================================================================== -->
