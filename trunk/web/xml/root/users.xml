@@ -40,6 +40,26 @@
         </tr>
         <tr>
           <td align="center" valign="middle">
+            <a href="https://dynaop.dev.java.net/dynaop">dynaop</a>
+          </td>
+          <td valign="middle">dynaop is a proxy-based Aspect-Oriented 
+          Programming (AOP) framework, which enhances Object-Oriented (OO) 
+          design in the following areas:  code reuse, decomposition,
+          dependency reduction.
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">
+            <a href="http://groovy.codehaus.org/">Groovy</a>
+          </td>
+          <td valign="middle">Groovy is a new agile dynamic language for the JVM 
+          combining lots of great features from languages like Python, Ruby and 
+          Smalltalk and making them available to the Java developers using a 
+          Java-like syntax.
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">
           <a href="http://proactive.objectweb.org/">
           <img src="http://www-sop.inria.fr/oasis/ProActive/images/ProActiveLogo650x117.jpg"
             border="0" width="300" height="54" alt="Proactive logo" align="middle"/>
