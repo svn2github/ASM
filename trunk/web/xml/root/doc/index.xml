@@ -5,7 +5,7 @@
 <document>
 
 	<properties>
-		<author email="fractal@objectweb.org">asm-team</author>
+		<author email="asm-team@objectweb.org">asm-team</author>
 		<title>Documentation</title>
 		<filename>index.xml</filename>
 		<pathtoroot>..</pathtoroot>
@@ -17,8 +17,8 @@
       page.</p>
 
 			<s2 name="API">
-				<p><a href="javadoc/user/index.html">ASM API</a>
-        (<a href="javadoc/user/org/objectweb/asm/package-summary.html">no frames</a>).
+				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a>
+        (<a href="../current/doc/javadoc/user/org/objectweb/asm/package-summary.html">no frames</a>).
         </p>
 			</s2>
 

@@ -31,7 +31,7 @@
 
     <menu>
       <legend>Misc</legend>
-      <menuitem><a href="mailto:fractal@objectweb.org">Contacts</a></menuitem>
+      <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
       <menuitem><connect href="team.xml">Team</connect></menuitem>
       <menuitem><connect href="../mirrors.xml">Mirror sites</connect></menuitem>
     </menu>
