@@ -10,7 +10,7 @@
   <property name="html.src" value="${basedir}/html" />
 
   <property name="common.dir" value="${basedir}/common" />
-  <property name="dtd.dir" value="${common.dir}/dtd" />  
+  <property name="dtd.dir" value="${common.dir}/dtd" />
 
   <property name="common.images.src" value="${common.dir}/images" />
   <property name="common.images.dest" value="${common.html.dest}/images" />
@@ -33,16 +33,16 @@
   <!-- ===================================================================== -->
 
   <target name="publish"
-	  depends="prepare,html_print,html"
-	  description="Build the website" />
+    depends="prepare,html_print,html"
+    description="Build the website" />
 
   <!-- ===================================================================== -->
   <!-- prepare -->
   <!-- ===================================================================== -->
 
   <target name="prepare"
-	  depends="unzip_common_web,install_common_web, check"
-	  description="Prepare the website build">
+    depends="unzip_common_web,install_common_web, check"
+    description="Prepare the website build">
 
     <!-- mkdirs -->
     <mkdir dir="${common.html.dest}"/>
@@ -60,8 +60,8 @@
       <srcfileset dir="${stylesheets.dir}" includes="*.xsl"/>
       <srcfileset dir="${xml.dir}/project" includes="*.xml"/>
       <targetfileset dir="${html.dest}"
-	 	     includes="**/*.html"
-		     excludes="${release-files}"/>
+          includes="**/*.html"
+         excludes="${release-files}"/>
     </dependset>
 
     <!-- copy HTML files into ${html.dest} -->
@@ -71,9 +71,9 @@
 
     <!-- doc directory: copy as is -->
     <copy todir="${html.dest}/doc">
-	<fileset dir="${dist.doc}">
-		<include name="**"/>
-	</fileset>
+      <fileset dir="../doc">
+        <include name="**"/>
+      </fileset>
     </copy>
   </target>
 
@@ -82,14 +82,14 @@
   <!-- ===================================================================== -->
 
   <target name="check"
-	  depends="unzip_common_web"
-	  description="Check the XML files syntax"
-	  if="validation.required">
+    depends="unzip_common_web"
+    description="Check the XML files syntax"
+    if="validation.required">
 
     <xmlvalidate failonerror="yes"
-		 lenient="no"
-		 warn="yes"
-		 classname="org.apache.xerces.parsers.SAXParser">
+     lenient="no"
+     warn="yes"
+     classname="org.apache.xerces.parsers.SAXParser">
 
       <classpath refid="externals.classpath"/>
       <fileset dir="${xml.dir}">
@@ -104,7 +104,7 @@
   <!-- ===================================================================== -->
 
   <target name="zip_common_web"
-	  description="Zip the ${common.dir} directory into ${common_web.archive}">
+    description="Zip the ${common.dir} directory into ${common_web.archive}">
 
     <zip zipfile="${common_web.archive}">
       <zipfileset dir="${common.dir}" />
@@ -117,11 +117,11 @@
   <!-- ===================================================================== -->
 
   <target name="unzip_common_web"
-	  description="Unzip the ${common_web.archive} file into ${common.dir}">
+    description="Unzip the ${common_web.archive} file into ${common.dir}">
 
     <unzip src="${common_web.archive}"
-	   dest="${common.dir}"
-	   overwrite="false"/>
+     dest="${common.dir}"
+     overwrite="false"/>
 
   </target>
 
@@ -130,8 +130,8 @@
   <!-- ===================================================================== -->
 
   <target name="install_common_web"
-	  description="Copy common images into ${common.images.dest}"
-	  if="install.common">
+    description="Copy common images into ${common.images.dest}"
+    if="install.common">
 
     <!-- copy css stylesheet into ${common.html.dest} -->
     <copy todir="${common.html.dest}">
@@ -144,7 +144,7 @@
     <copy todir="${common.images.dest}">
       <fileset dir="${common.images.src}" />
     </copy>
-    
+
   </target>
 
   <!-- ===================================================================== -->
@@ -152,7 +152,7 @@
   <!-- ===================================================================== -->
 
   <target name="html_print"
-	  description="Build website (printable version)">
+    description="Build website (printable version)">
 
     <!-- root website -->
     <antcall target="real_html">
@@ -160,7 +160,7 @@
       <param name="destdir" value="${html.dest}" />
       <param name="project.file" value="project/project.xml" />
       <param name="style" value="${stylesheet.printable}" />
-      <param name="extension" value="_print.html" />	       
+      <param name="extension" value="_print.html" />
       <param name="path-to-objectweb" value=".." />
     </antcall>
 
@@ -171,7 +171,7 @@
   <!-- ===================================================================== -->
 
   <target name="html"
-	  description="Build website (browsable version)">
+    description="Build website (browsable version)">
 
     <!-- root website -->
     <antcall target="real_html">
@@ -190,17 +190,17 @@
   <!-- ===================================================================== -->
 
   <target name="real_html"
-	  description="Do the real transformation xml -> html">
+    description="Do the real transformation xml -> html">
 
     <style basedir="${srcdir}"
-	   destdir="${destdir}"	  
-	   style="${style}"
-	   extension="${extension}"
-	   processor="org.objectweb.util.ant.Xalan2Liaison">
+     destdir="${destdir}"
+     style="${style}"
+     extension="${extension}"
+     processor="org.objectweb.util.ant.Xalan2Liaison">
 
       <include name="**/*.xml"/>
       <exclude name="${project.file}"/>
-      
+
       <classpath refid="externals.classpath"/>
       <param name="project-file" expression="${xml.dir}/${project.file}" />
       <param name="last-modified" expression="${last.modified}" />
@@ -242,18 +242,18 @@ stylesheet.printable=${stylesheet.printable}
 last-modified.pattern=${last-modified.pattern}
     </echo>
   </target>
-    
+
   <!-- ===================================================================== -->
   <!-- clean -->
   <!-- ===================================================================== -->
 
   <target name="clean"
-	  description="Delete the ${html.dest} directory">
+    description="Delete the ${html.dest} directory">
 
     <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${html.dest}"
-	       excludes="${release-files}"
-	       includes="**/**" />
+         excludes="${release-files}"
+         includes="**/**" />
       <fileset dir="${common.dir}"/>
     </delete>
 
