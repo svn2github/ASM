@@ -18,6 +18,7 @@
 
         <ul>
           <li>Cleaned up ASMifierClassVisitor</li>
+          <li>Removed AnnotationElementValue</li>
           <li>Added more tests for attributes and Java 5 annotations</li>
           <li>Added new annotations example</li>
           <li>Build package for Maven's ibiblio repository</li>
