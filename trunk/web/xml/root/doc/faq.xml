@@ -16,6 +16,7 @@
 <p>Here are some frequently asked questions about ASM, gathered by
   <a href="mailto:m.proctor@bigfoot.com">Mark Proctor</a>.</p>
     <ul>
+<li><a href="#Q0">0. How do I start using ASM?</a></li>
 <li><a href="#Q1">1. How do I remove a method/field?</a></li>
 <li><a href="#Q2">2. How do I replace a method/field? I end up with duplicated members!</a></li>
 <li><a href="#Q3">3. How do I make ASM calculate visitMaxs for me?</a></li>
@@ -31,6 +32,26 @@
 <li><a href="#Q13">13. Is ASM thread safe?</a></li>
 <li><a href="#Q14">14. What is the earliest JDK required to use ASM?</a></li>
     </ul>
+
+<subtitle anchor="Q0">0. How do I start using ASM?</subtitle>
+
+<p>If you want to use ASM to generate classes from scratch, write a Java source 
+file that is representative of the classes you want to generate, compile it(*), and
+then run the <a href="#Q10">ASMifier</a> on the compiled class to see the Java source code that 
+generates this class with ASM. If you are using Eclipse it is even easier,
+thanks to the <a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
+
+<p>If you want to use ASM to transform classes, write two Java source files - 
+first with and second without features that has to be added or removed and try
+to keep other differences as minimal as you can, compile them(*), and then run the 
+<a href="#Q10">ASMifier</a> on both of them. Then compare the results with some visual diff tool. 
+If you are using Eclipse it is even easier, thanks to the compare tool of the
+<a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
+
+<p>(*) Note that javac may produce different code for different -target, 
+so you'll have to compile for your target environment, repeat that 
+excercise for all required target's or use the earliest bytecode version 
+if possible.</p>
 
 <subtitle anchor="Q1">1. How do I remove a method/field?</subtitle>
 
@@ -300,6 +321,8 @@ org.objectweb.asm.util.ASMifierClassVisitor org.domain.package.YourClass</code><
 <p>or</p>
 <p><code>java -classpath "asm.jar;asm-util.jar"
 org.objectweb.asm.util.ASMifierClassVisitor org/domain/package/YourClass.class</code></p>
+<p>Another, much easier method, if you are using Eclipse, is to use the 
+<a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
 
 <subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
 

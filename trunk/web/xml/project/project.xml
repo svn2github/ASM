@@ -14,7 +14,7 @@
       <legend>Project Links</legend>
       <menuitem><a href="index.html">Home</a></menuitem>
       <menuitem><a href="download/index.html">Download</a></menuitem>
-      <menuitem><a href="doc/index.html">Documentation</a></menuitem>
+      <menuitem><a href="eclipse.html">Eclipse plugin</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/wws/lists/projects/asm">Mailing Lists</a></menuitem>
       <menuitem><a href="license.html">License</a></menuitem>
       <menuitem><a href="history.html">History</a></menuitem>
