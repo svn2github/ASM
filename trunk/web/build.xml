@@ -29,7 +29,7 @@
   <!-- publish -->
   <!-- ===================================================================== -->
   <target name="publish"
-	  depends="prepare, check, html_print, html" 
+	  depends="prepare, check, html_print, html, postprocess" 
 	  description="Build the Web site">
 
     <touch file="${basedir}/.build"/>
@@ -184,6 +184,15 @@
 
   </target>
 
+  <!-- ===================================================================== -->
+  <!-- post processing -->
+  <!-- ===================================================================== -->
+  <target name="postprocess">
+    <exec dir="${html.dest}" executable="sh">
+      <arg value="${basedir}/postprocess.sh"/>
+    </exec>
+  </target>
+  
   <!-- ===================================================================== -->
   <!-- clean -->
   <!-- ===================================================================== -->

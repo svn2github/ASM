@@ -1,0 +1,786 @@
+
+<h2>
+<img src="../images/111-bytecode.gif" height="91" width="111" alt="Using the ASM Toolkit for Bytecode Manipulation" border="0" align="left" hspace="10" vspace="0">
+Using the ASM Toolkit for Bytecode Manipulation</h2>
+by Eugene Kuleshov<br />
+10/06/2004<br clear="all" />
+
+<p>Sometimes Java developers need to generate or change Java bytecode in the runtime.
+Is can be necessary for AOP or debugging, or even for performance optimization.
+There are several frameworks available that provide different level of abstraction
+for runtime code generation. One of the oldest bytecode manipulation frameworks,
+<a href="http://jakarta.apache.org/bcel/">Byte Code Engineering Library</a> (BCEL),
+is used in a number of projects; however, it is rather difficult to learn and use. It is also adds significant 
+overhead to memory and processor usage for runtime code transformations. </p>
+
+<p>The <a href="http://asm.objectweb.org/">ASM bytecode manipulation framework</a>
+has been designed and implemented to be small and as fast as possible.
+ASM's runtime .jar is only 25KB, compared to 350KB for BCEL.
+The load time overhead caused by class transformation with ASM is about 60 percent with ASM, 
+compared to 700 percent or more with BCEL. These factors have been
+recognized by the Java community and several well known projects have switched to ASM, such as
+<a href="http://cglib.sourceforge.net/">CGLIB</a> and 
+<a href="http://aspectwerkz.codehaus.org">AspectWerkz</a>.
+The list of projects that are using form the beginning ASM also includes
+<a href="http://speedo.objectweb.org/">Speedo</a>,
+<a href="http://groovy.codehaus.org/">Groovy</a>,
+<a href="http://dynaop.dev.java.net/">dynaop</a>,
+<a href="http://www.beanshell.org/">BeanShell</a>, and a
+<a href="http://asm.objectweb.org/users.html">number of others</a>.</p>
+
+<p>To achieve such performance, ASM's design is based on an event-driven model. 
+If you are familiar with the <a href="http://www.saxproject.org">SAX API</a> for XML 
+processing, it will be easy to get into ASM, which uses a 
+<a href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor pattern</a>
+to avoid representing visited structures with objects. Visitors receive events for particular pieces of the structure from the event generator. In SAX, <code>XMLReader</code> is the most commonly used event generator. 
+ASM framework provides a similar <code>ClassReader</code> class, which 
+knows how to parse Java bytecode from existing classes and how to fire 
+appropriate events to the underlying visitors. This flow of events can be also generated manually,
+as we'll  see in the next section. </p>
+
+<p>All possible events are defined by the <code>ClassVisitor</code> and <code>CodeVisitor</code> interfaces.
+The order of events is very important. Custom visitors can hook up into the flow of events and change it in order to implement bytecode transformations. <code>ClassAdapter</code> and <code>CodeAdapter</code> provide an empty implementation of the <code>ClassVisitor</code> and <code>CodeVisitor</code> interfaces and delegate all events to the linked visitor. Custom visitors can be inherited from these classes and override necessary methods and change event flow before delegating it to the next visitor. Usually, events end up in the <code>ClassWriter</code> and <code>CodeWriter</code> classes, which know how to convert a chain of events back into bytecode. Those two classes are sufficient to generate bytecode 
+from scratch.</p>
+
+<h3>Bytecode Generation</h3>
+
+<p>Let's look at a simple example. Imagine that you need to generate bytecode for the <code>Notifier</code> interface,
+which would be compiled from following Java code.</p>
+
+<pre><code>public interface Notifier {
+  void notify( String msg);
+  void addListener( Listener observer);
+}</code></pre>
+
+<p>We can write code that will send an appropriate event to <code>ClassWriter</code> and <code>CodeWriter</code>.
+Figure 1 shows a Sequence UML diagram for this.</p>
+
+<p><img src="../images/asm1-gen-sequence.gif" alt="Figure 1" /><br />
+<i>Figure 1. Sequence diagram for typical bytecode generation</i></p>
+
+<p>ASM code to generate the above interface will look like the following
+(please note that examples in this article are based on ASM version 1.5.1).</p>
+
+<pre><code>import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.CodeVisitor;
+import org.objectweb.asm.Constants;
+
+public class NotifierGenerator
+    implements Constants {
+...
+
+ClassWriter cw = new ClassWriter(false);
+cw.visit( ACC_PUBLIC+ACC_ABSTRACT+ACC_INTERFACE,
+    <b>"asm1/Notifier",    // class name</b>
+    "java/lang/Object", // super class
+    null,               // interfaces
+    "Notifier.java");   // source file
+
+CodeVisitor cv;
+cv = cw.visitMethod( ACC_PUBLIC+ACC_ABSTRACT, 
+    "notify",                // method name
+    "(Ljava/lang/String;)V", // method descriptor
+    null,                    // exceptions
+    null);                   // method attributes
+
+cv = cw.visitMethod( ACC_PUBLIC+ACC_ABSTRACT, 
+    "addListener",           // method name
+    <b>"(Lasm1/Listener;)V",    // method descriptor</b>
+    null,                    // exceptions       
+    null);                   // method attributes
+
+cw.visitEnd();
+
+byte[] bytecode = cw.toByteArray();</code></pre>
+
+<p>
+In this example, <code>ClassWriter</code> is receiving manually crafted events and
+creating corresponding bytecode. Notice the internal representation
+of the class name in the <code>visit()</code> method and the method descriptor in
+<code>visitMethod()</code>. Construction of such values is a common task 
+in bytecode generation. Fortunately, the <code>Type</code> class provides
+several helper methods for this:
+</p>
+
+<ul>
+<li><p><code>getDescriptor(Class)</code> converts a class name into bytecode representation.</p></li>
+<li><p><code>getMethodDescriptor(Type, Type[])</code> constructs a method descriptor. For example, a descriptor for the <code>addListener()</code> method could be created using the code below.</p>
+
+<pre><code>  String desc = Type.getMethodDescriptor(
+      Type.getType(Void.TYPE),
+      new Type[] {Type.getType(Listener.class)})
+    );</code></pre>
+</li>
+</ul>
+
+<p>Ideally, it is good to have an understanding of the bytecode structure and JVM opcodes (see the <a href="/pub/a/onjava/2004/10/06/asm1.html?page=4#resources">Resources</a> section below), but it is possible to start digging in even without such knowledge.
+ASM includes an utility class that can take a .class file and create Java source code
+that, when compiled, will produce an equivalent ASM-generated class. So you can compile <i>Notifier.java</i> and then use the command</p>
+
+<pre><code>asmifier.cmd Notifier.class</code></pre>
+
+<p>to generate equivalent code to that shown above.</p>
+
+<p>Here is what <i>asmifier.cmd</i> looks like:</p>
+
+<pre><code>set cp=%cp%;%ASM_HOME%\asm.jar
+set cp=%cp%;%ASM_HOME%\asm-attrs.jar
+set cp=%cp%;%ASM_HOME%\asm-util.jar
+set c=org.objectweb.asm.util.ASMifierClassVisitor
+java -cp %cp% %c% %1</code></pre>
+
+<h3>ASM Overview</h3>
+
+<p>Before looking at bytecode transformation,  we need a better understanding
+of the events defined for the <code>ClassVisitor</code> interface. </p>
+
+<p>These events should come in the following order and contain parameters as described below.</p>
+
+<table border="1" cellspacing="0" cellpadding="5" class="secondary">
+<tr>
+<td>Once</td>
+<td><code>visit</code></td>
+<td>Class access flags (public, private, static, etc.), bytecode version, name,
+  super class, implemented interfaces, and source file name.</td>
+</tr>
+<tr>
+<td rowspan="4" valign="top">Multiple<br />times</td>
+<td><code>visitField</code></td>
+<td>Field access flags, name and signature, init value, and field attributes (e.g., annotations).</td>
+</tr>
+<tr>
+<td><code>visitMethod</code></td>
+<td>Method access flags, name and signature and method attributes.</td>
+</tr>
+<tr>
+<td><code>visitInnerClass</code></td>
+<td>Inner class access flags, its name and outer name</td>
+</tr>
+<tr>
+<td><code>visitAttribute</code></td>
+<td>Class-level attributes</td>
+</tr>
+<tr>
+<td>Once</td>
+<td><code>visitEnd</code></td>
+<td>Complete processing</td>
+</tr>
+</table>
+
+<p><code>visitMethod</code> is different from the others, because it returns a new instance of 
+<code>CodeVisitor</code> for every call. That instance will
+handle processing events for method bytecode (including method and parameter
+attributes, information for <code>try</code>-<code>catch</code> blocks, etc.). </p>
+
+<p>The table below outlines the methods of <code>CodeVisitor</code>.
+These methods must be called in the sequential order of the
+bytecode instructions of the visited code. Each method can either handle bytecode instructions
+grouped by the similar parameters or other bytecode artifacts, such as the local variable table,
+line numbers, <code>try</code>-<code>catch</code> blocks, and nonstandard attributes (marked grey in the table below).
+</p>
+
+<table border="1" cellpadding="5" cellspacing="0" class="secondary">
+<tr>
+<td><code>visitInsn</code></td>
+<td>Visits a zero operand instruction: <code>NOP, ACONST_NULL, ICONST_M1, ICONST_0, ICONST_1, ICONST_2, ICONST_3, ICONST_4, ICONST_5, LCONST_0, LCONST_1, FCONST_0, FCONST_1, FCONST_2, DCONST_0, DCONST_1, IALOAD, LALOAD, FALOAD, DALOAD, AALOAD, BALOAD, CALOAD, SALOAD, IASTORE, LASTORE, FASTORE, DASTORE, AASTORE, BASTORE, CASTORE, SASTORE, POP, POP2, DUP, DUP_X1, DUP_X2, DUP2, DUP2_X1, DUP2_X2, SWAP, IADD, LADD, FADD, DADD, ISUB, LSUB, FSUB, DSUB, IMUL, LMUL, FMUL, DMUL, IDIV, LDIV, FDIV, DDIV, IREM, LREM, FREM, DREM, INEG, LNEG, FNEG, DNEG, ISHL, LSHL, ISHR, LSHR, IUSHR, LUSHR, IAND, LAND, IOR, LOR, IXOR, LXOR, I2L, I2F, I2D, L2I, L2F, L2D, F2I, F2L, F2D, D2I, D2L, D2F, I2B, I2C, I2S, LCMP, FCMPL, FCMPG, DCMPL, DCMPG, IRETURN, LRETURN, FRETURN, DRETURN, ARETURN, RETURN, ARRAYLENGTH, ATHROW, MONITORENTER,</code> or <code>MONITOREXIT</code>.</td>
+</tr>
+<tr>
+<td><code>visitFieldInsn</code></td>
+<td>Visits a field instructions: <code>GETSTATIC, PUTSTATIC, GETFIELD</code>, or <code>PUTFIELD</code>.</td>
+</tr>
+<tr>
+<td><code>visitIntInsn</code></td>
+<td>Visits an instruction with a single <code>int</code> operand: <code>BIPUSH, SIPUSH</code>, or <code>NEWARRAY</code>.</td>
+</tr>
+<tr>
+<td><code>visitJumpInsn</code></td>
+<td>Visits a jump instruction: <code>IFEQ, IFNE, IFLT, IFGE, IFGT, IFLE, IF_ICMPEQ, IF_ICMPNE, IF_ICMPLT, IF_ICMPGE, IF_ICMPGT, IF_ICMPLE, IF_ACMPEQ, IF_ACMPNE, GOTO, JSR, IFNULL</code>, or <code>IFNONNULL</code>.</td>
+</tr>
+<tr>
+<td><code>visitTypeInsn</code></td>
+<td>Visits a type instruction: <code>NEW, ANEWARRAY, CHECKCAST</code>, or <code>INSTANCEOF</code>.</td>
+</tr>
+<tr>
+<td><code>visitVarInsn</code></td>
+<td>Visits a local variable instruction: <code>ILOAD, LLOAD, FLOAD, DLOAD, ALOAD, ISTORE, LSTORE, FSTORE, DSTORE, ASTORE</code>, or <code>RET</code>.</td>
+</tr>
+<tr>
+<td><code>visitMethodInsn</code></td>
+<td>Visits a method instruction: <code>INVOKEVIRTUAL, INVOKESPECIAL, INVOKESTATIC</code>, or <code>INVOKEINTERFACE</code>.</td>
+</tr>
+<tr>
+<td><code>visitIincInsn</code></td>
+<td>Visits an <code>IINC</code> instruction.</td>
+</tr>
+<tr>
+<td><code>visitLdcInsn</code></td>
+<td>Visits a <code>LDC</code> instruction.</td>
+</tr>
+<tr>
+<td><code>visitMultiANewArrayInsn</code></td>
+<td>Visits a <code>MULTIANEWARRAY</code> instruction.</td>
+</tr>
+<tr>
+<td><code>visitLookupSwitchInsn</code></td>
+<td>Visits a <code>LOOKUPSWITCH</code> instruction.</td>
+</tr>
+<tr>
+<td><code>visitTableSwitchInsn</code></td>
+<td>Visits a <code>TABLESWITCH</code> instruction.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitLabel</code></td>
+<td>Visits a label.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitLocalVariable</code></td>
+<td>Visits a local variable declaration.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitLineNumber</code></td>
+<td>Visits a line-number declaration.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitTryCatchBlock</code></td>
+<td>Visits a <code>try</code>-<code>catch</code> block.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitMaxs</code></td>
+<td>Visits the maximum stack size and the maximum number of local variables of the method.</td>
+</tr>
+
+<tr bgcolor="lightgray">
+<td><code>visitAttribute</code></td>
+<td>Visits a non-standard attribute of the code.</td>
+</tr>
+</table>
+
+<p>
+The <code>visitMaxs</code> method is called
+after all of the instructions have been visited. The <code>visitTryCatchBlock</code>,
+<code>visitLocalVariable</code>, and <code>visitLineNumber</code> methods may be 
+called in any order, at any time (provided the labels passed as arguments have 
+already been visited with <code>visitLabel</code>).
+</p>
+
+<p>
+In order to specify positions in the method bytecode and not have to use absolute
+offsets, ASM uses the <code>Label</code> class. <code>Label</code> instances
+are passed as parameters of <code>visitJumpInsn</code>,
+<code>visitLookupSwitchInsn</code>, <code>visitTableSwitchInsn</code>, 
+<code>visitTryCatchBlock</code>, <code>visitLocalVariable</code>, and <code>visitLineNumber</code>,
+to refer to a specific place in method code; a <code>visitLabel</code> method with the
+same <code>Label</code> instance is used to actually mark that place.
+</p>
+
+
+<p>
+The next section shows how the <code>ClassVisitor</code> and <code>CodeVisitor</code>
+interfaces can  work together in a bytecode transformation scenario.
+</p>
+
+<h3>Bytecode Transformation</h3>
+
+<p>
+Imagine that we need to transform some classes in the runtime, and implement
+the <code>Notifier</code> interface from the example above. In our case,
+all registered observers should receive events when any of the methods
+of the original class have been called. We can pick some simple class and
+use <code>ASMifierClassVisitor</code> to see what the transformation
+should look like.</p>
+
+<p>For example:</p>
+
+<pre><code>public class Counter1 {
+  private int n;
+    
+  public void increment() {
+    n++;
+  }
+
+  private int count() {
+    return n;
+  }
+
+}</code></pre>
+
+<p>After implementing the <code>Notifier</code> interface, this class may look like something like the following:</p>
+
+<pre><code>import java.util.ArrayList;
+import java.util.Observer;
+
+public class Counter2 implements Notifier {
+  private int n;
+  private ArrayList __lst = new ArrayList();
+    
+  public void increment() {
+    notify( "increment()");
+    n++;
+  }
+
+  private int count() {
+    notify( "count()");
+    return n;
+  }
+
+
+  // Listener implementation
+
+  public void notify( String msg) {
+    for( int i = 0; i&lt;__lst.size(); i++) {
+      ((Listener)__lst.get(i)).update(this, msg);
+    }
+  }
+
+  public void addListener( Listener listener) {
+    __lst.add( listener);
+  }
+
+}</code></pre>
+
+<p>Now you can compile both sources, run <code>ASMifierClassVisitor</code> as described 
+above, and then compare the resulting files using your favorite <code>diff</code> application.
+Here are the comparison results. Removed lines are shown in red with
+a minus sign (<code>-</code>) at the left, while additions are shown in green  with 
+a plus sign (<code>+</code>).</p>
+
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td><pre><code>  ...
+  ClassWriter cw = new ClassWriter(false);
+  CodeVisitor cv;
+</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>- cw.<b>visit</b>(ACC_PUBLIC + ACC_SUPER, "asm1/Counter1",</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cw.<b>visit</b>(ACC_PUBLIC + ACC_SUPER, "asm1/Counter2",</code></pre></td>
+</tr><tr>
+<td><pre><code>      "java/lang/Object",</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>-     null,</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+     new String[] { "asm1/Notifier" },</code></pre></td>
+<td><code>[ 1 ]</code></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>-     "Counter1.java");</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+     "Counter2.java");</code></pre></td>
+</tr><tr>
+<td><pre><code>
+  cw.<b>visitField</b>(ACC_PRIVATE, "n", "I",null,null);
+
+</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cw.<b>visitField</b>(ACC_PRIVATE, "__lst", 
++     "Ljava/util/ArrayList;", null, null);</code></pre></td>
+<td><code>[ 2 ]</code></td>
+</tr><tr>
+<td><pre><code>
+  {
+  cv = cw.<b>visitMethod</b>(ACC_PUBLIC, 
+      "&lt;init&gt;", "()V", null, null);
+  cv.visitVarInsn(ALOAD, 0);
+  cv.visitMethodInsn(INVOKESPECIAL, 
+      "java/lang/Object", "&lt;init&gt;", "()V");</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitVarInsn(ALOAD, 0);
++ cv.visitTypeInsn(NEW, "java/util/ArrayList");
++ cv.visitInsn(DUP);
++ cv.visitMethodInsn(INVOKESPECIAL, 
++     "java/util/ArrayList", "&lt;init&gt;", "()V");
++ cv.visitFieldInsn(PUTFIELD, "asm1/Counter2", 
++     "__lst", "Ljava/util/ArrayList;");</code></pre></td>
+<td><code>[ 3 ]</code></td>
+</tr><tr>
+<td><pre><code>  cv.visitInsn(RETURN);</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>- cv.visitMaxs(1, 1);</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitMaxs(3, 1);</code></pre></td>
+<td><code>[ 4 ]</code></td>
+</tr><tr>
+<td><pre><code>  }
+  {
+  cv = cw.<b>visitMethod</b>(ACC_PUBLIC, "increment", 
+      "()V", null, null);</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitVarInsn(ALOAD, 0);
++ cv.visitLdcInsn("increment()");
++ cv.visitMethodInsn(INVOKEVIRTUAL, "asm1/Counter2", 
++     "notify", "(Ljava/lang/String;)V");</code></pre></td>
+<td><code>[ 5 ]</code></td>
+</tr><tr>
+<td><pre><code>  cv.visitVarInsn(ALOAD, 0);
+  cv.visitInsn(DUP);</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>- cv.visitFieldInsn(GETFIELD, "asm1/Counter1","n","I");</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitFieldInsn(GETFIELD, "asm1/Counter2","n","I");</code></pre></td>
+</tr><tr>
+<td><pre><code>  cv.visitInsn(ICONST_1);
+  cv.visitInsn(IADD);</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>- cv.visitFieldInsn(PUTFIELD, "asm1/Counter1","n","I");</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitFieldInsn(PUTFIELD, "asm1/Counter2","n","I");</code></pre></td>
+</tr><tr>
+<td><pre><code>  cv.visitInsn(RETURN);
+  cv.visitMaxs(3, 1);
+  }
+  {
+  cv = cw.<b>visitMethod</b>(ACC_PRIVATE, "count", 
+      "()I", null, null);</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitVarInsn(ALOAD, 0);
++ cv.visitLdcInsn("count()");
++ cv.visitMethodInsn(INVOKEVIRTUAL, "asm1/Counter2", 
++     "notify", "(Ljava/lang/String;)V");</code></pre></td>
+<td><code>[ 5 ]</code></td>
+</tr><tr>
+<td><pre><code>  cv.visitVarInsn(ALOAD, 0);</code></pre></td>
+</tr><tr>
+<td bgcolor="#ffc0c0"><pre><code>- cv.visitFieldInsn(GETFIELD, "asm1/Counter1","n","I");</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitFieldInsn(GETFIELD, "asm1/Counter2","n","I");</code></pre></td>
+</tr><tr>
+<td><pre><code>  cv.visitInsn(IRETURN);</code></pre></td></tr>
+<tr>
+<td bgcolor="#ffc0c0"><pre><code>- cv.visitMaxs(1, 1);</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv.visitMaxs(2, 1);</code></pre></td>
+<td><code>[ 4 ]</code></td>
+</tr><tr>
+<td><pre><code>  }
+  {</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv = cw.<b>visitMethod</b>(ACC_PUBLIC, "notify", 
++     "(Ljava/lang/String;)V", null, null);
++ cv.visitInsn(ICONST_0);
++ cv.visitVarInsn(ISTORE, 2);
++ Label l0 = new Label();
++ cv.visitLabel(l0);
++ cv.visitVarInsn(ILOAD, 2);
++ cv.visitVarInsn(ALOAD, 0);
++ cv.visitFieldInsn(GETFIELD, "asm1/Counter2", 
++     "__lst", "Ljava/util/ArrayList;");
++ cv.visitMethodInsn(INVOKEVIRTUAL, 
++     "java/util/ArrayList", "size", "()I");
++ Label l1 = new Label();
++ cv.visitJumpInsn(IF_ICMPGE, l1);
++ cv.visitVarInsn(ALOAD, 0);
++ cv.visitFieldInsn(GETFIELD, "asm1/Counter2", 
++     "__lst", "Ljava/util/ArrayList;");
++ cv.visitVarInsn(ILOAD, 2);
++ cv.visitMethodInsn(INVOKEVIRTUAL, 
++     "java/util/ArrayList", "get", 
++     "(I)Ljava/lang/Object;");
++ cv.visitTypeInsn(CHECKCAST, "asm1/Listener");
++ cv.visitVarInsn(ALOAD, 0);
++ cv.visitVarInsn(ALOAD, 1);
++ cv.visitMethodInsn(INVOKEINTERFACE,
++     "asm1/Listener", "notify", 
++     "(Ljava/lang/Object;Ljava/lang/Object;)V");
++ cv.visitIincInsn(2, 1);
++ cv.visitJumpInsn(GOTO, l0);
++ cv.visitLabel(l1);
++ cv.visitInsn(RETURN);
++ cv.visitMaxs(3, 3);</code></pre></td>
+<td><code>[ 6 ]</code></td>
+</tr><tr>
+<td><pre><code>  }
+  {</code></pre></td>
+</tr><tr>
+<td bgcolor="#d0ffd0"><pre><code>+ cv = cw.<b>visitMethod</b>(ACC_PUBLIC, "addListener",
++     "(Lasm1/Listener;)V", null, null);
++ cv.visitVarInsn(ALOAD, 0);
++ cv.visitFieldInsn(GETFIELD, "asm1/Counter2",
++     "__lst", "Ljava/util/ArrayList;");
++ cv.visitVarInsn(ALOAD, 1);
++ cv.visitMethodInsn(INVOKEVIRTUAL, 
++    "java/util/ArrayList", "add", 
++    "(Ljava/lang/Object;)Z");
++ cv.visitInsn(POP);
++ cv.visitInsn(RETURN);
++ cv.visitMaxs(2, 2);</code></pre></td>
+<td><code>[ 6 ]</code></td>
+</tr><tr>
+<td><pre><code>  }
+  cw.visitEnd();
+  ...</code></pre></td>
+</tr>
+</table>
+
+<p>You can see the following groups of changes:</p>
+
+<ol>
+<li>A new interface was added to the class declaration.</li>
+<li>One new field was added.</li>
+<li>Some instructions were added to the end of the <code>&lt;init&gt;</code> method, 
+   representing code for constructor and class initialization.</li>
+<li><code>visitMaxs()</code> have different parameters (used stack has
+    been changed in modified bytecode).</li>
+<li>Some instructions were added to the beginning of existing class methods.</li>
+<li>Two new methods were added.</li>
+</ol>
+
+<p>Let's take them one by one, but I should remind you that ASM's visitors can be chained very much the same way as SAX's handlers or filters. Figure 1 shows class transformation, where green classes will be substituted by custom <code>NotifierClassVisitor</code> and <code>NotifierCodeVisitor</code> that will do the
+actual bytecode transformation.</p>
+
+<p><img src="../images/asm1-sequence.gif" alt="Figure 2" /><br />
+<i>Figure 2. Sequence diagram for typical bytecode transformation</i></p>
+
+<p>The code below uses <code>NotifierClassVisitor</code> to apply all required transformations.</p>
+
+<pre><code>byte[] bytecode;
+...
+ClassWriter cw = new ClassWriter(true);
+
+NotifierClassVisitor ncv = 
+    new NotifierClassVisitor(cw)
+
+ClassReader cr = new ClassReader(bytecode);
+cr.accept(ncv);</code></pre>
+
+<p>Notice the <code>true</code> parameter in the <code>ClassWriter</code> constructor,
+which enables the automatic calculation of maximum size of stack and local variables.
+In this case, all values passed to the <code>CodeVisitor.visitMax()</code> method
+will be ignored and <code>ClassWriter</code> will calculate these values
+based on the actual bytecode of the method. However, the <code>CodeVisitor.visitMax()</code> 
+method still must be called, which happens in its default implementation in 
+<code>CodeAdapter</code>. This is important because, as you can see in the comparison
+results, these values are different for changed bytecode, and with this flag
+they will be recalculated automatically, covering item #6 in the list above.
+The rest of items will be handled by <code>NotifierClassVisitor</code>.</p>
+
+<pre><code>public class NotifierClassVisitor 
+    extends ClassAdapter implements Constants {
+  ...</code></pre>
+
+<p>The first difference appears in parameters of the <code>visit</code> method, 
+where the new interface should be added.  The code below will cover item #1.
+Notice that the <code>cv.visit()</code> method is called to redirect
+the transformed processing event to the nested class visitor, which is 
+actually going to be a <code>ClassWriter</code> object.
+We also need to save the class name, since it will be needed later.</p>
+
+<pre><code>public void visit( int version, int access, 
+    String name, String superName,
+    String[] interfaces, String sourceFile) {
+  this.className = name;
+
+  String[] c;
+  if( interfaces==null) {
+    c = new String[ 1];
+  } else {
+    int n = 1+interfaces.length;
+    c = new String[ n];
+    System.arraycopy(interfaces, 0, c, 0, n);
+  }
+  c[ c.length-1] = Notifier.class.getName(); 
+  cv.visit( version, access, name, superName,
+      c, sourceFile);
+}</code></pre>
+
+<p>All new elements can be added in the <code>visitEnd()</code>
+method just before calling <code>visitEnd()</code> on the chained visitor. 
+That will cover items #2 and #3 from the list above. Notice that the class name
+saved in the <code>visit()</code> method is used instead of a hard-coded constant,
+which makes the transformation more generic.</p>
+
+<pre><code>public void visitEnd() {
+  // adding new field
+  cv.visitField(ACC_PRIVATE, "__lst", 
+      "Ljava/util/ArrayList;", null, null);
+
+  // adding new methods
+  CodeVisitor cd;
+  {
+  cd = cv.visitMethod(ACC_PUBLIC, "notify", 
+      "(Ljava/lang/String;)V", null, null);
+  cd.visitInsn(ICONST_0);
+  cd.visitVarInsn(ISTORE, 2);
+  Label l0 = new Label();
+  cd.visitLabel(l0);
+  cd.visitVarInsn(ILOAD, 2);
+  cd.visitVarInsn(ALOAD, 0);
+  cd.visitFieldInsn(GETFIELD, <b>className</b>,
+      "__lst", "Ljava/util/ArrayList;");
+  ... 
+  ... <i>see diff above</i>
+  ... 
+  cd.visitInsn(RETURN);
+  cd.visitMaxs(1, 1);
+  }
+  {
+  cd = cv.visitMethod(ACC_PUBLIC, "addListener",
+     "(Lasm1/Listener;)V", null, null);
+  cd.visitVarInsn(ALOAD, 0);
+  ... 
+  ... <i>see diff above</i>
+  ... 
+  cd.visitInsn(RETURN);
+  cd.visitMaxs(1, 1);
+  }
+
+  cv.visitEnd();
+}</code></pre>
+
+<p>The rest of the changes belong to method bytecode, so it's necessary
+to overwrite the <code>visitMethod()</code> method.
+There are two cases have to be covered: </p>
+
+<ul>
+<li>Add instructions to call <code>notify()</code> method to all non-static methods.</li>
+<li>Add initialization code to all <code>&lt;init&gt;</code> methods.</li>
+</ul>
+
+<p>In the first case, new instructions are always added to the beginning of the method bytecode,
+so chained <code>CodeVisitor</code> can be fired directly.
+However, in case of the <code>&lt;init&gt;</code> method, instructions should be added
+to the end of method, so they have to be inserted before <code>visitInsn(RETURN)</code>,
+meaning a custom <code>CodeVisitor</code> is required here. This is how
+<code>visitMethod()</code> will look:</p>
+
+<pre><code>public CodeVisitor visitMethod( int access,
+    String name, String desc, 
+    String[] exceptions, Attribute attrs) {
+  CodeVisitor cd = cv.visitMethod( access, 
+      name, desc, exceptions, attrs);
+  if( cd==null) return null;
+
+  if( "&lt;init&gt;".equals( name)) {
+    return <b>new NotifierCodeVisitor( cd, className);</b>
+  }
+  if((access & Constants.ACC_STATIC)==0) {
+    <b>// insert instructions to call notify()
+    cd.visitVarInsn(ALOAD, 0);
+    cd.visitLdcInsn(name+desc);
+    cd.visitMethodInsn(INVOKEVIRTUAL, className,
+        "notify", "(Ljava/lang/String;)V");</b>
+  }
+  return cd;
+}</code></pre>
+
+<p>Similar to <code>ClassAdapter</code>, we can extend the <code>CodeAdapter</code> class
+and overwrite only those methods that should change the stream of processing events.
+In this case, we change the <code>visitInsn()</code> method to
+verify if it is an event for the <code>RETURN</code> command and, if so, insert
+required commands before delegating the event to the next <code>CodeVisitor</code>
+in the chain.</p>
+
+<pre><code>public class NotifierCodeVisitor 
+    extends CodeAdapter {
+  ...
+
+  public void visitInsn( int opcode) {
+    if( opcode==RETURN) {
+      String type = "java/util/ArrayList";
+      <b>cv.visitVarInsn(ALOAD,0);
+      cv.visitTypeInsn(NEW,type);
+      cv.visitInsn(DUP);
+      cv.visitMethodInsn(INVOKESPECIAL, 
+          type,"&lt;init&gt;","()V");
+      cv.visitFieldInsn(PUTFIELD, "asm1/Counter",
+          "__lst", "L"+type+";");</b>
+    }
+    cv.visitInsn(opcode);
+  }
+}</code></pre>
+
+<p>That is basically it. The only piece we have left is the unit test for the whole
+transformation.</p>
+
+<h3>Testing</h3>
+
+<p>First of all, we need to ensure that transformed class is functioning
+properly after transformation, and that the injected code actually works.
+These two test cases are represented by the <code>testCounter()</code> and 
+<code>testNotifier()</code> methods below.</p>
+
+<pre><code>public class NotifierClassVisitorTest 
+    extends TestCase {
+  private TestListener listener;
+  private Counter counter;
+
+  public void <b>testCounter</b>() {
+    int n1 = counter.count();
+    counter.increment();
+    int n2 = counter.count();
+    assertEquals( n1+1, n2);
+  }
+
+  public void <b>testNotifier</b>() {
+    counter.count();
+    counter.increment();
+    counter.count();
+
+    List events = listener.getEvents();
+    assertEquals( 3, events.size());
+  }
+...</code></pre>
+
+<p>The <code>testCounter()</code> method is a typical test case
+that should ensure that code is functioning as expected.
+The <code>testNotifier()</code> tests new functionality
+added by the transformer. In both cases, all initialization is done in
+the following <code>setUp()</code> method.</p>
+
+<pre><code>  public void setUp() throws Exception {
+    super.setUp();
+    
+    Class cc = loadClass( TEST_CLASS);
+    counter = ( Counter) cc.newInstance();
+    
+    listener = new TestListener();
+    (( Notifier) counter).addListener( listener);
+  }</code></pre>  
+
+<p>The transformed class is loaded in the <code>loadClass()</code>
+method and a new instance is created. The same instance
+is cast to the <code>Notifier</code> interface in order
+to register <code>TestListener</code>, which records
+notifications and enables retrieving them with the <code>getEvents()</code>
+method, which is used in <code>testNotifier()</code>.</p>
+
+<p>The <code>loadClass()</code> method uses a custom <code>ClassLoader</code>,
+which transforms classes on the fly using ASM with <code>NotifierClassVisitor</code>. </p>
+
+<pre><code>  private Class loadClass(final String className) throws ClassNotFoundException {
+    ClassLoader cl = new TestClassLoader( className);
+    return cl.loadClass( className);
+  }</code></pre>
+
+<p>The code above assumes that a default constructor exists.
+The complete source code is available in the <a href="#resources">Resources</a>
+section below.</p>
+
+<h3>Conclusion</h3>
+
+<p>As shown above, ASM allows us to write very compact code for generating new classes
+and transforming existing bytecode. Using the described approach and 
+<code>ASMifierClassVisitor</code>, it is easy to implement quite advanced transformations.
+In some cases, it could make sense to use <a href="http://cglib.sourceforge.net">CGLIB</a>
+which provides code transformation templates and a more high-level API on top of ASM,
+but a lack of documentation and tutorials make it difficult to learn.</p>
+
+<h3><a name="resources">Resources</a></h3>
+
+<ul>
+<li><a href="http://asm.objectweb.org/">ASM home page</a></li>
+<li>"<a href="http://asm.objectweb.org/current/asm-eng.pdf">ASM: A code manipulation tool to implement adaptable systems</a>" (PDF)</li>
+<li><a href="http://asm.objectweb.org/doc/faq.html">Frequently Asked Questions</a> collected by Mark Proctor</li>
+<li><a href="">CGLIB</a> project</li>
+<li><a href="http://java.sun.com/docs/books/vmspec/">Java Virtual Machine Specification</a> and
+<a href="http://java.sun.com/docs/books/vmspec/2nd-edition/html/Instructions.doc.html">JVM Instruction Set</a>.</li>
+<li><a href="/onjava/2004/10/06/examples/asm1.zip">Source code</a> for this article</li>
+</ul>
+
+<p><i>
+Eugene Kuleshov 
+is a senior Java developer. He is working for a middleware market and implementing B2B applications on the J2EE platform. He also does research in security and cryptography for the Java platform and XML.
+</i></p>
