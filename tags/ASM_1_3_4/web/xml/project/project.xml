@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE project SYSTEM '../../common/dtd/project.dtd'>
+
+<project>
+
+  <title>ASM</title>
+  <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
+  <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
+
+  <body>
+
+    <menu>
+      <a href="index.html">ASM</a>
+      <menuitem><a href="download/index.html">Download</a></menuitem>
+      <menuitem><a href="doc/index.html">Documentation</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/wws/lists/projects/asm">Mailing Lists</a></menuitem>
+      <menuitem><a href="license.html">License</a></menuitem>
+      <menuitem><a href="history.html">History</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>Developers' Corner</legend>
+      <menuitem><a href="http://forge.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>About ASM</legend>
+      <menuitem><a href="users.html">Users</a></menuitem>
+      <menuitem><a href="team.html">Team</a></menuitem>
+      <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>ObjectWeb Resources</legend>
+      <menuitem><a href="http://www.objectweb.org/faq">FAQ</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/resources/cvs.html">CVS Repositories</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/resources/search.html">Search</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/">ObjectWeb Forge</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/mirrors.html">Mirror Sites</a></menuitem>
+    </menu>
+
+  </body>
+</project>
