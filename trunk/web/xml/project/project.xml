@@ -6,7 +6,7 @@
 
   <title>ASM</title>
   <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
-  <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
+  <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,BSD</keywords>
 
   <body>
 

@@ -12,9 +12,7 @@
 
 	<body>
 		<s1 name="License Status">
-			<p>ASM is licensed under the
-      <a href="http://www.gnu.org/copyleft/lesser.html">GNU Lesser
-      General Public License</a>.</p>
+			<p>ASM is licensed under the BSD License.</p>
 		</s1>
 	</body>
 </document>

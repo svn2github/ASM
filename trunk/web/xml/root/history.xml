@@ -14,6 +14,12 @@
 
     <s1 name="History">
 
+      <subtitle>3 November 2003: ASM 1.3.6 (cvs-tag: ASM_1_3_6)</subtitle>
+
+        <ul>
+          <li>Changed license from LGPL to BSD</li>
+        </ul>
+
       <subtitle>8 October 2003: ASM 1.3.5 (cvs-tag: ASM_1_3_5)</subtitle>
 
         <ul>
