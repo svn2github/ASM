@@ -14,6 +14,7 @@
     <s1 name="Users">
 
 <!-- TODO jalopy source code formatter http://www.triemax.com/products/jalopy/ -->
+<!-- TODO aspectwerkz -->
 
       <table border="1" width="100%">
         <tr>
@@ -44,8 +45,8 @@
           <td align="center" valign="middle">
             <a href="https://dynaop.dev.java.net/dynaop">dynaop</a>
           </td>
-          <td valign="middle">dynaop is a proxy-based Aspect-Oriented 
-          Programming (AOP) framework, which enhances Object-Oriented (OO) 
+          <td valign="middle">dynaop is a proxy-based Aspect-Oriented
+          Programming (AOP) framework, which enhances Object-Oriented (OO)
           design in the following areas:  code reuse, decomposition,
           dependency reduction.
           </td>
@@ -54,9 +55,9 @@
           <td align="center" valign="middle">
             <a href="http://groovy.codehaus.org/">Groovy</a>
           </td>
-          <td valign="middle">Groovy is a new agile dynamic language for the JVM 
-          combining lots of great features from languages like Python, Ruby and 
-          Smalltalk and making them available to the Java developers using a 
+          <td valign="middle">Groovy is a new agile dynamic language for the JVM
+          combining lots of great features from languages like Python, Ruby and
+          Smalltalk and making them available to the Java developers using a
           Java-like syntax.
           </td>
         </tr>
@@ -64,11 +65,11 @@
           <td align="center" valign="middle">
             <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
           </td>
-          <td valign="middle">Jamaica is a JVM Macro Assembler language. Its 
-          compiler uses a JavaClassCreator facade to delegate JVM class 
-          creation; currently it supports ASM and BCEL. "I like ASM," said 
-          James Huang, the author of Jamaica and JudoScript, "this is a JVM 
-          class creation API done right. For redistributing software, the 
+          <td valign="middle">Jamaica is a JVM Macro Assembler language. Its
+          compiler uses a JavaClassCreator facade to delegate JVM class
+          creation; currently it supports ASM and BCEL. "I like ASM," said
+          James Huang, the author of Jamaica and JudoScript, "this is a JVM
+          class creation API done right. For redistributing software, the
           compactness of ASM API is a great advantage, too."
           </td>
         </tr>
@@ -76,10 +77,10 @@
           <td align="center" valign="middle">
             <a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a>
           </td>
-          <td valign="middle">JDBCPersistence is an Object-Relational mapping 
-          persistence framework. It differs from its peers in that it generates 
-          the bytecode required to map a class to a table. It has been created 
-          with the following requirements in mind: be fast to load, support 
+          <td valign="middle">JDBCPersistence is an Object-Relational mapping
+          persistence framework. It differs from its peers in that it generates
+          the bytecode required to map a class to a table. It has been created
+          with the following requirements in mind: be fast to load, support
           CLOBs and BLOBs, load persistent objects from java.sql.ResultSet,
           have compact API, have minimal dependencies on other projects,
           support configuration via API.

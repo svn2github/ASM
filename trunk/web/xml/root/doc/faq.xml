@@ -35,12 +35,13 @@
 <subtitle anchor="Q1">1. How do I remove a method/field?</subtitle>
 
 <p>Use the ClassAdapter and return nothing:</p>
-<source>  visitField (String name, ...) {
+<source>  public FieldVisitor visitField (String name, ...) {
     if (removeField(name)) {
       // do nothing, in order to remove this field
+      return null;
     } else {
       // make the next visitor visit this field, in order to keep it
-      super.visitField(name, ...);
+      return super.visitField(name, ...);
     }
   }</source>
 
@@ -113,7 +114,7 @@ you forgot to call the visit method.</p>
 file - there are no security restrictions as default for a standard java
 install. Use ClassLoader.defineClass, this however is a "protected" method, so
 you must use reflection to gain access to it:</p>
-<source>  private Class loadClass(byte[] b) {
+<source>  private Class loadClass (byte[] b) {
     //override classDefine (as it is protected) and define the class.
     Class clazz = null;
     try {
@@ -143,8 +144,9 @@ existing class loader (example needed here).</p>
 <subtitle anchor="Q6">6. How do I rename my class?</subtitle>
 
 <p>It is not enough to rename just the class, you must also rename all the
-references to class members using the CodeAdapter.</p>
-<source>class ClassRenamer extends ClassAdapter implements Constants {
+references to class members using the MethodAdapter.</p>
+<source>class ClassRenamer extends ClassAdapter implements Opcodes {
+
   private Set oldNames;
   private final String newName;
 
@@ -154,66 +156,61 @@ references to class members using the CodeAdapter.</p>
     this.newName = newName;
   }
 
-  public void visit(int version, int access, String name, String superName, String[] interfaces, String sourceFile) {
+  public void visit (int version, int access, String name, String signature, String superName, String[] interfaces) {
     oldNames.add(name);
-    cv.visit(version, ACC_PUBLIC, newName, superName, interfaces, null);
+    cv.visit(version, ACC_PUBLIC, newName, signature, superName, interfaces);
   }
 
-  public void visitInnerClass(String name, String outerName, String innerName, int access) {
-    cv.visitInnerClass(name, outerName, innerName, access); //TODO: handle innner classes with ASM
-  }
-
-  public void visitField (int access, final String name, String desc, Object value, Attribute attrs) {
-    cv.visitField(access, name, desc, value, attrs);
-  }
-
-  public CodeVisitor visitMethod(int access, String name, String desc, String[] exceptions, Attribute attrs) {
-    CodeVisitor cv = this.cv.visitMethod(access, name, fixDesc(desc), exceptions, attrs);
-    if (cv != null &amp;&amp; (access &amp; Constants.ACC_ABSTRACT) == 0) {
-      cv = new CodeRenamer(cv);
+  public MethodVisitor visitMethod (int access, String name, String desc, String signature, String[] exceptions) {
+    MethodVisitor mv = cv.visitMethod(access, name, fixDesc(desc), fix(signature), exceptions);
+    if (mv != null &amp;&amp; (access &amp; ACC_ABSTRACT) == 0) {
+      mv = new MethodRenamer(mv);
     }
-    return cv;
+    return mv;
   }
 
-  class CodeRenamer extends CodeAdapter {
-    public CodeRenamer(final CodeVisitor cv) {
-      super(cv);
+  class MethodRenamer extends MethodAdapter {
+  
+    public MethodRenamer (final MethodVisitor mv) {
+      super(mv);
     }
 
-    public void visitTypeInsn(int i, String s) {
+    public void visitTypeInsn (int i, String s) {
       if (oldNames.contains(s)) {
         s = newName;
       }
-      cv.visitTypeInsn(i, s);
+      mv.visitTypeInsn(i, s);
     }
 
-    public void visitFieldInsn(int opcode, String owner, String name, String desc) {
+    public void visitFieldInsn (int opcode, String owner, String name, String desc) {
       if (oldNames.contains(owner)) {
-        cv.visitFieldInsn(opcode, newName, name, fixDesc(desc));
+        mv.visitFieldInsn(opcode, newName, name, fix(desc));
       } else {
-        cv.visitFieldInsn(opcode, owner, name, fixDesc(desc));
+        mv.visitFieldInsn(opcode, owner, name, fix(desc));
       }
     }
 
-    public void visitMethodInsn(int opcode, String owner, String name, String desc) {
+    public void visitMethodInsn (int opcode, String owner, String name, String desc) {
       if (oldNames.contains(owner)) {
-        cv.visitMethodInsn(opcode, newName, name, fixDesc(desc));
+        mv.visitMethodInsn(opcode, newName, name, fix(desc));
       } else {
-        cv.visitMethodInsn(opcode, owner, name, fixDesc(desc));
+        mv.visitMethodInsn(opcode, owner, name, fix(desc));
       }
     }
   }
 
-  private String fixDesc(String desc) {
-    Iterator it = oldNames.iterator();
-    String name;
-    while (it.hasNext()) {
-      name = (String) it.next();
-      if (desc.indexOf(name) != -1) {
-        desc = desc.replaceAll(name, newName);
+  private String fix (String s) {
+    if (s != null) {
+      Iterator it = oldNames.iterator();
+      String name;
+      while (it.hasNext()) {
+        name = (String) it.next();
+        if (s.indexOf(name) != -1) {
+          s = desc.replaceAll(name, newName);
+        }
       }
     }
-    return desc;
+    return s;
   }
 }</source>
 
@@ -270,56 +267,24 @@ Class as a parameter.</p>
 
 <p>Use the following code (this assumes that visitMaxs are computed by ASM - see
 <a href="#Q3">"3. How do I make ASM calculate visitMaxs for me?"</a>):</p>
-<source>  private void createSetter(String propertyName, String type, Class c) {
-    String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+<source>void createSetter (String propertyName, String type, Class c) {
+  String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+  MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
+  mv.visitVarInsn(ALOAD, 0);
+  mv.visitVarInsn(Type.getType(c).getOpcode(ILOAD, 1));
+  mv.visitFieldInsn(PUTFIELD, className, propertyName, type);
+  mv.visitInsn(RETURN);
+  mv.visitMaxs(0, 0);
+}
 
-    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
-    cv.visitVarInsn(ALOAD, 0);
-
-    //return is based on class type
-    //TODO: make work with arrays
-    if (!c.isPrimitive()) {
-          cv.visitVarInsn(ALOAD, 1);
-    } else {
-        if (c == double.class) {
-              cv.visitVarInsn(DLOAD, 1);
-            } else if (c == float.class) {
-              cv.visitVarInsn(FLOAD, 1);
-            } else if (c == long.class) {
-              cv.visitVarInsn(LLOAD, 1);
-            } else { //byte,short,boolean,int are all IRETURN
-                cv.visitVarInsn(ILOAD, 1);
-            }
-    }
-    cv.visitFieldInsn(PUTFIELD, className, propertyName, type);
-    cv.visitInsn(RETURN);
-    cv.visitMaxs(0, 0);
-  }
-
-  private void createGetter(String propertyName, String returnType, Class c) {
-    String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
-
-    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null, null);
-    cv.visitVarInsn(ALOAD, 0);
-    cv.visitFieldInsn(GETFIELD, internalClassName, propertyName, returnType);
-
-    //return is based on class type
-    //TODO: make work with arrays
-    if (!c.isPrimitive()) {
-          cv.visitInsn(ARETURN);
-    } else {
-        if (c == double.class) {
-              cv.visitInsn(DRETURN);
-            } else if (c == float.class) {
-              cv.visitInsn(FRETURN);
-            } else if (c == long.class) {
-              cv.visitInsn(LRETURN);
-            } else { //byte,short,boolean,int are all IRETURN
-                cv.visitInsn(IRETURN);
-            }
-    }
-    cv.visitMaxs(0, 0);
-  }</source>
+void createGetter (String propertyName, String returnType, Class c) {
+  String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+  MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null, null);
+  mv.visitVarInsn(ALOAD, 0);
+  mv.visitFieldInsn(GETFIELD, internalClassName, propertyName, returnType);
+  mv.visitInsn(Type.getType(c).getOpcode(IRETURN));
+  mv.visitMaxs(0, 0);
+}</source>
 
 
 <subtitle anchor="Q10">10. How do I get the bytecode of an existing class?</subtitle>
@@ -357,14 +322,14 @@ use the ASMifierClassVisitor to get the ASM code that will generate this class (
 
 <p>The Type and ClassReader classes are thread safe, i.e. several threads can
 use a single Type object or a single ClassReader object concurrently without
-problems. The ClassWriter and CodeWriter classes are <em>not</em> thread safe,
+problems. The ClassWriter and MethodWriter classes are <em>not</em> thread safe,
 i.e. a single class cannot be generated by several concurrent threads (but,
 of course, several threads can generate distinct classes concurrently, if each
 thread uses its own ClassWriter instance). In order to generate a single class
 by using several concurrent threads, one should use ClassAdapter and
-CodeAdapter instances that delegate to normal ClassWriter and CodeWriter
+MethodAdapter instances that delegate to normal ClassWriter and MethodWriter
 instances, and whose methods are all synchronized.</p>
-<p>More generally, ClassVisitor and CodeVisitor implementations, such as
+<p>More generally, ClassVisitor and MethodVisitor implementations, such as
 ClassWriter and ClassAdapter, do not have to be thread safe. However, non thread
 safe visitors can be made thread safe just by using a synchronizing class
 adapter in front of them.</p>
