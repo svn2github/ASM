@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+	<properties>
+		<author email="fractal@objectweb.org">asm-team</author>
+		<title>History</title>
+		<filename>history.xml</filename>
+		<pathtoroot>.</pathtoroot>
+	</properties>
+
+	<body>
+
+    <s1 name="History">
+
+      <subtitle>11 July 2002: release of the ASM 2.3 version</subtitle>
+
+    </s1>
+
+	</body>
+</document>
