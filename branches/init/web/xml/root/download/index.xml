@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../../common/dtd/objectweb.dtd'>
+
+<document>
+
+  <properties>
+    <author email="fractal@objectweb.org">asm-team</author>
+    <title>Download</title>
+    <filename>index.xml</filename>
+    <pathtoroot>..</pathtoroot>
+  </properties>
+
+  <body>
+    <s1 name="Download">
+
+      <p>See the ASM <a href=
+      "http://debian-sf.objectweb.org/projects/asm/">SourceForge page</a>.
+      </p>
+
+    </s1>
+
+  </body>
+
+</document>
+
