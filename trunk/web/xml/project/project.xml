@@ -5,7 +5,7 @@
 <project>
 
   <title>ASM</title>
-  <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>  
+  <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
   <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
 
   <body>
@@ -27,6 +27,7 @@
 
     <menu>
       <legend>About ASM</legend>
+      <menuitem><a href="users.html">Users</a></menuitem>
       <menuitem><a href="team.html">Team</a></menuitem>
       <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
     </menu>
