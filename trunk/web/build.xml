@@ -10,10 +10,7 @@
   <property name="html.src" value="${basedir}/html" />
 
   <property name="common.dir" value="${basedir}/common" />
-  <property name="dtd.dir" value="${common.dir}/dtd" />
-
-  <property name="common.images.src" value="${common.dir}/images" />
-  <property name="common.images.dest" value="${common.html.dest}/images" />
+  <property name="dtd.dir" value="${common.dir}/dtd" />  
 
   <property name="stylesheets.dir" value="${common.dir}/stylesheets" />
   <property name="stylesheet.browsable" value="${stylesheets.dir}/browsable.xsl" />
@@ -31,22 +28,28 @@
   <!-- ===================================================================== -->
   <!-- publish -->
   <!-- ===================================================================== -->
-
   <target name="publish"
-    depends="prepare,html_print,html"
-    description="Build the website" />
+	  depends="prepare, check, html_print, html" 
+	  description="Build the Web site">
+
+    <touch file="${basedir}/.build"/>
+  </target>
 
   <!-- ===================================================================== -->
   <!-- prepare -->
   <!-- ===================================================================== -->
-
   <target name="prepare"
-    depends="unzip_common_web,install_common_web, check"
-    description="Prepare the website build">
+	  depends="unzip_common_web"
+	  description="Prepare the Web site build">	  
+
+    <!-- rebuild HTML files only when needed -->
+    <uptodate property="rebuild.notNeeded" targetfile="${basedir}/.build">
+      <srcfiles dir="${dtd.dir}" includes="**/*.dtd"/>
+      <srcfiles dir="${stylesheets.dir}" includes="**/*.xsl"/>
+      <srcfiles dir="${xml.dir}" includes="**/*.xml"/>
+    </uptodate>
 
     <!-- mkdirs -->
-    <mkdir dir="${common.html.dest}"/>
-    <mkdir dir="${common.images.dest}"/>
     <mkdir dir="${html.dest}"/>
 
     <!-- set the time build -->
@@ -54,48 +57,40 @@
       <format property="last.modified" pattern="${last-modified.pattern}"/>
     </tstamp>
 
-    <!-- deal with DTDs, stylesheets and project files dependencies -->
-    <dependset>
-      <srcfileset dir="${dtd.dir}" includes="*.dtd"/>
-      <srcfileset dir="${stylesheets.dir}" includes="*.xsl"/>
-      <srcfileset dir="${xml.dir}/project" includes="*.xml"/>
-      <targetfileset dir="${html.dest}"
-          includes="**/*.html"
-         excludes="${release-files}"/>
-    </dependset>
+    <!-- copy css stylesheet into ${html.dest} -->
+    <copy todir="${html.dest}">
+      <fileset dir="${stylesheets.dir}">
+	<include name="*.css"/>
+      </fileset>
+    </copy>
+    
+    <!-- copy common images into ${html.dest}/images -->
+    <copy todir="${html.dest}/images">
+      <fileset dir="${common.dir}/images" />
+    </copy>
 
     <!-- copy HTML files into ${html.dest} -->
     <copy todir="${html.dest}">
       <fileset dir="${html.src}" />
     </copy>
 
-    <!-- doc directory: copy as is -->
-<!--
-    <copy todir="${html.dest}/doc">
-      <fileset dir="../doc">
-        <include name="**"/>
-      </fileset>
-    </copy>
--->
   </target>
 
   <!-- ===================================================================== -->
   <!-- check -->
   <!-- ===================================================================== -->
-
   <target name="check"
-    depends="unzip_common_web"
-    description="Check the XML files syntax"
-    if="validation.required">
+	  depends="unzip_common_web"
+	  description="Check the XML files syntax"
+	  unless="rebuild.notNeeded">
 
     <xmlvalidate failonerror="yes"
-     lenient="no"
-     warn="yes"
-     classname="org.apache.xerces.parsers.SAXParser">
-
+		 lenient="no"
+		 warn="yes"
+		 classname="org.apache.xerces.parsers.SAXParser">
       <classpath refid="externals.classpath"/>
       <fileset dir="${xml.dir}">
-        <include name="**/*.xml"/>
+	<include name="**/*.xml"/>
       </fileset>
     </xmlvalidate>
 
@@ -104,9 +99,8 @@
   <!-- ===================================================================== -->
   <!-- zip_common_web -->
   <!-- ===================================================================== -->
-
   <target name="zip_common_web"
-    description="Zip the ${common.dir} directory into ${common_web.archive}">
+	  description="Zip the ${common.dir} directory into ${common_web.archive}">  
 
     <zip zipfile="${common_web.archive}">
       <zipfileset dir="${common.dir}" />
@@ -117,53 +111,29 @@
   <!-- ===================================================================== -->
   <!-- unzip_common_web -->
   <!-- ===================================================================== -->
-
   <target name="unzip_common_web"
-    description="Unzip the ${common_web.archive} file into ${common.dir}">
+	  description="Unzip the ${common_web.archive} file into ${common.dir}">
 
     <unzip src="${common_web.archive}"
-     dest="${common.dir}"
-     overwrite="false"/>
-
-  </target>
-
-  <!-- ===================================================================== -->
-  <!-- install_common_web -->
-  <!-- ===================================================================== -->
-
-  <target name="install_common_web"
-    description="Copy common images into ${common.images.dest}"
-    if="install.common">
-
-    <!-- copy css stylesheet into ${common.html.dest} -->
-    <copy todir="${common.html.dest}">
-      <fileset dir="${stylesheets.dir}">
-        <include name="*.css"/>
-      </fileset>
-    </copy>
-
-    <!-- copy common images -->
-    <copy todir="${common.images.dest}">
-      <fileset dir="${common.images.src}" />
-    </copy>
+	   dest="${common.dir}"
+	   overwrite="false"/>
 
   </target>
 
   <!-- ===================================================================== -->
   <!-- html_print -->
   <!-- ===================================================================== -->
-
   <target name="html_print"
-    description="Build website (printable version)">
+	  description="Build Web site (printable version)"
+	  unless="rebuild.notNeeded">
 
-    <!-- root website -->
+    <!-- root Web site -->
     <antcall target="real_html">
       <param name="srcdir" value="${xml.dir}/root" />
       <param name="destdir" value="${html.dest}" />
       <param name="project.file" value="project/project.xml" />
       <param name="style" value="${stylesheet.printable}" />
-      <param name="extension" value="_print.html" />
-      <param name="path-to-objectweb" value=".." />
+      <param name="extension" value="_print.html" />	       
     </antcall>
 
   </target>
@@ -171,18 +141,17 @@
   <!-- ===================================================================== -->
   <!-- html -->
   <!-- ===================================================================== -->
-
   <target name="html"
-    description="Build website (browsable version)">
+	  description="Build Web site (browsable version)"
+	  unless="rebuild.notNeeded">
 
-    <!-- root website -->
+    <!-- root Web site -->
     <antcall target="real_html">
       <param name="srcdir" value="${xml.dir}/root" />
       <param name="destdir" value="${html.dest}" />
       <param name="project.file" value="project/project.xml" />
       <param name="style" value="${stylesheet.browsable}" />
-      <param name="extension" value=".html" />
-      <param name="path-to-objectweb" value=".." />
+      <param name="extension" value=".html" />	       
     </antcall>
 
   </target>
@@ -190,75 +159,38 @@
   <!-- ===================================================================== -->
   <!-- real_html -->
   <!-- ===================================================================== -->
-
   <target name="real_html"
-    description="Do the real transformation xml -> html">
+	  description="Do the real transformation xml -> html">
 
     <style basedir="${srcdir}"
-     destdir="${destdir}"
-     style="${style}"
-     extension="${extension}"
-     processor="org.objectweb.util.ant.Xalan2Liaison">
+	   destdir="${destdir}"	  
+	   style="${style}"
+	   extension="${extension}"
+	   processor="org.objectweb.util.ant.Xalan2Liaison"
+	   force="true">
 
       <include name="**/*.xml"/>
       <exclude name="${project.file}"/>
-
+      
       <classpath refid="externals.classpath"/>
       <param name="project-file" expression="${xml.dir}/${project.file}" />
       <param name="last-modified" expression="${last.modified}" />
-      <param name="path-to-objectweb" expression="${path-to-objectweb}" />
     </style>
 
   </target>
 
   <!-- ===================================================================== -->
-  <!-- setenv -->
-  <!-- ===================================================================== -->
-
-  <target name="setenv"
-    description="Print environment variables">
-
-    <echo>
----- customizable properties ----
-common.html.dest=${common.html.dest}
-html.dest=${html.dest}
-install.common=${install.common}
-validation.required=${validation.required}
-release-files=${release-files}
-
----- uncustomizable properties ----
-common_web.archive=${common_web.archive}
-lib.dir=${lib.dir}
-xml.dir=${xml.dir}
-html.src=${html.src}
-
-common.dir=${common.dir}
-dtd.dir=${dtd.dir}
-
-common.images.src=${common.images.src}
-common.images.dest=${common.images.dest}
-
-stylesheets.dir=${stylesheets.dir}
-stylesheet.browsable=${stylesheet.browsable}
-stylesheet.printable=${stylesheet.printable}
-last-modified.pattern=${last-modified.pattern}
-    </echo>
-  </target>
-
-  <!-- ===================================================================== -->
   <!-- clean -->
   <!-- ===================================================================== -->
-
   <target name="clean"
-    description="Delete the ${html.dest} directory">
+	  description="Delete the generated files">
 
     <delete includeEmptyDirs="true" quiet="true">
-      <fileset dir="${html.dest}"
-         excludes="${release-files}"
-         includes="**/**" />
+      <fileset dir="${html.dest}"/>
       <fileset dir="${common.dir}"/>
     </delete>
 
+    <delete file="${basedir}/.build"/>
   </target>
 
 </project>
