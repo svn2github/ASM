@@ -288,13 +288,13 @@ Class as a parameter.</p>
 <subtitle anchor="Q10">10. How do I get the bytecode of an existing class?</subtitle>
 
 <p>If you want the bytecode instructions themselves, use TraceClassVisitor. If you
-want the ASM code to generate these bytecode instructions, use DumpClassVisitor.
+want the ASM code to generate these bytecode instructions, use ASMifierClassVisitor.
 Both classes provide a "main" method to allow them to be
 called from the command line, passing your fully qualified class name as a
 parameter.
 Example:</p>
 <p><code>java -classpath "asm.jar;asm-util.jar;yourjar.jar"
-org.objectweb.asm.util.DumpClassVisitor org.domain.package.YourClass</code></p>
+org.objectweb.asm.util.ASMifierClassVisitor org.domain.package.YourClass</code></p>
 
 
 <subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
@@ -302,7 +302,7 @@ org.objectweb.asm.util.DumpClassVisitor org.domain.package.YourClass</code></p>
 <p>If you want to know how to generate a synchronized block, a try catch
 block, a finally statement, or any other Java construct, write the Java code
 you want to generate in a temporary class, compile it with javac, and then
-use DumpClassVisitor to get the ASM code that will generate this class (see
+use the ASMifierClassVisitor to get the ASM code that will generate this class (see
 <a href="#Q10">"10. How do I get the bytecode of an existing class?"</a>).
 </p>
 
