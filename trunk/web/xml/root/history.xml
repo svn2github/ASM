@@ -14,6 +14,31 @@
 
     <s1 name="History">
 
+      <subtitle>8 November 2004: ASM 2.0 alpha (cvs-tag: ASM_2_0_ALPHA)</subtitle>
+
+        <ul>
+          <li>Major API changes for Java 5 attributes
+            <ul>
+              <li>added new FieldVisitor interface</li>
+              <li>added new AnnotationVisitor interface</li>
+              <li>renamed CodeVisitor into MethodVisitor</li>
+              <li>renamed Constants into Opcodes</li>
+              <li>added and changed methods in ClassVisitor and CodeVisitor</li>
+              <li>removed almost all classes in attrs package</li>
+              <li>removed TreeClassAdapter and TreeCodeAdapter</li>
+              <li>added new MemberNode, AnnotationNode and LabelNode classes</li>
+              <li>many changes in asm.util package</li>
+            </ul>
+          </li>
+          <li>Added many new tests, reorganized tests classes and scripts</li>
+        </ul>
+
+      <subtitle>8 November 2004: ASM 1.5.2 (cvs-tag: ASM_1_5_2)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+        </ul>
+
       <subtitle>23 September 2004: ASM 1.5.1 (cvs-tag: ASM_1_5_1)</subtitle>
 
         <ul>
