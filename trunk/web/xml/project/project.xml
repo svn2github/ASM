@@ -17,10 +17,12 @@
       <menuitem><connect href="download/index.xml">Download</connect></menuitem>
       <menuitem><connect href="doc/index.xml">Documentation</connect></menuitem>
       <menuitem><connect href="license.xml">License</connect></menuitem>
+      <menuitem><connect href="history.xml">History</connect></menuitem>
     </menu>
 
     <menu>
       <legend>Resources</legend>
+      <menuitem><a href="http://debian-sf.objectweb.org/projects/asm/">debian-sf page</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/faq">FAQ</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
       <menuitem><connect href="../resources/search.xml">Search</connect></menuitem>
@@ -29,8 +31,9 @@
 
     <menu>
       <legend>Misc</legend>
-      <menuitem><connect href="team.xml">Team</connect></menuitem>
       <menuitem><a href="mailto:fractal@objectweb.org">Contacts</a></menuitem>
+      <menuitem><connect href="team.xml">Team</connect></menuitem>
+      <menuitem><connect href="../mirrors.xml">Mirror sites</connect></menuitem>
     </menu>
 
     </body>
