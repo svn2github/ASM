@@ -14,7 +14,17 @@
 
     <s1 name="History">
 
-      <subtitle>11 May 2004: ASM 1.4.3 (cvs-tag: ASM_1_4_4)</subtitle>
+      <subtitle>30 August 2004: ASM 1.5 (cvs-tag: ASM_1_5)</subtitle>
+
+        <ul>
+          <li>Added support for class version in ClassVisitor</li>
+          <li>Changed behavior for unrecognized attributes</li>
+          <li>Added new analyzer in tree.analysis package (contribution from Bing Ran)</li>
+          <li>Improved build files</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>11 May 2004: ASM 1.4.3 (cvs-tag: ASM_1_4_3)</subtitle>
 
         <ul>
           <li>Added tree.analysis package</li>
