@@ -3,15 +3,15 @@
 <!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
 
 <document>
-	<properties>
-		<author email="asm-team@objectweb.org">asm-team</author>
-		<title>Home Page</title>
-		<filename>index.xml</filename>
-		<pathtoroot>.</pathtoroot>
-	</properties>
+  <properties>
+    <author email="asm-team@objectweb.org">asm-team</author>
+    <title>Home Page</title>
+    <filename>index.xml</filename>
+    <pathtoroot>.</pathtoroot>
+  </properties>
 
-	<body>
-		<s1 name="ASM">
+  <body>
+    <s1 name="ASM">
 
     <p>
     <img src="images/asm.png" border="0" width="320" height="200" alt="ASM logo"/>
@@ -24,7 +24,7 @@
     loaded into the Java Virtual Machine.</p>
 
     <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel/">BCEL</a>
-    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much more smaller (25KB
+    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much more smaller (31KB
     instead of 350KB for BCEL and 150KB for SERP)
     and faster than these tools (the overhead of a load time class transformation
     is of the order of 60% with ASM, 700% or more with BCEL, and 1100% or more with SERP).
@@ -41,5 +41,5 @@
 
     </s1>
 
-	</body>
+  </body>
 </document>
