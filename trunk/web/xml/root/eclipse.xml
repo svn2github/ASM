@@ -32,8 +32,7 @@
     
     <p>You can download the plugin from the
     <a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>
-    or from the <a href="http://andrei.gmxhome.de/bytecode/links.html">home 
-    page</a> of its author.</p>
+    site.</p>
     
     <subtitle>Installation</subtitle>
     
@@ -45,9 +44,22 @@
     
     <subtitle>Usage</subtitle>
     
-    <p>"Window -&gt; Show View -&gt; Other -&gt; Java -&gt; Bytecode" to see 
-    the bytecode of the current Java or Class file.</p>
-    
+    <p>To see the bytecode of the current .java or .class file:</p>
+    <ul>
+      <li>Window -&gt; Show View -&gt; Other -&gt; Java -&gt; Bytecode</li>
+    </ul>
+
+    <p>To compare the bytecode of two .java or .class files:</p>
+    <ul>
+      <li>select two *.class or *.java files -&gt; right click -&gt; Compare with -&gt; Each Other Bytecode</li>
+    </ul>
+    <p><em>or</em></p>
+    <ul>
+      <li>select one *.class or *.java file -&gt; right click -&gt; Compare with -&gt; Another Class Bytecode</li>
+    </ul>
+    <p>Compare also works for *.class files included in any referenced *.jar library.
+    Additional details can be found on author home page at <a href="http://andrei.gmxhome.de/bytecode/index.html">http://andrei.gmxhome.de/bytecode/index.html</a></p>
+
     </s1>
   </body>
 </document>
