@@ -74,6 +74,19 @@
         </tr>
         <tr>
           <td align="center" valign="middle">
+            <a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a>
+          </td>
+          <td valign="middle">JDBCPersistence is an Object-Relational mapping 
+          persistence framework. It differs from its peers in that it generates 
+          the bytecode required to map a class to a table. It has been created 
+          with the following requirements in mind: be fast to load, support 
+          CLOBs and BLOBs, load persistent objects from java.sql.ResultSet,
+          have compact API, have minimal dependencies on other projects,
+          support configuration via API.
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">
           <a href="http://proactive.objectweb.org/">
           <img src="http://www-sop.inria.fr/oasis/ProActive/images/ProActiveLogo650x117.jpg"
             border="0" width="300" height="54" alt="Proactive logo" align="middle"/>
