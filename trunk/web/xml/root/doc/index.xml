@@ -25,9 +25,11 @@
         extensible component systems</a>, november 2002, Grenoble, France. Also
         available in <a href="../current/asm-fr.pdf">french</a>.</p>
 
-			<subtitle>Tutorial</subtitle>
+			<subtitle>Tutorials</subtitle>
 
 				<p><a href="tutorial.html">Tutorial for ASM 1.5.1</a>.</p>
+
+				<p><a href="tutorial-annotations.html">Tutorial for using J2SE 5.0 Annotations with ASM 1.5.1</a>.</p>
 
 			<subtitle>FAQ</subtitle>
 
