@@ -11,7 +11,8 @@
   <body>
 
     <menu>
-      <a href="index.html">ASM</a>
+      <legend>Project Links</legend>
+      <menuitem><a href="index.html">Home</a></menuitem>
       <menuitem><a href="download/index.html">Download</a></menuitem>
       <menuitem><a href="doc/index.html">Documentation</a></menuitem>
       <menuitem><a href="http://www.objectweb.org/wws/lists/projects/asm">Mailing Lists</a></menuitem>
@@ -26,20 +27,10 @@
     </menu>
 
     <menu>
-      <legend>About ASM</legend>
+      <legend>About</legend>
       <menuitem><a href="users.html">Users</a></menuitem>
       <menuitem><a href="team.html">Team</a></menuitem>
       <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
-    </menu>
-
-    <menu>
-      <legend>ObjectWeb Resources</legend>
-      <menuitem><a href="http://www.objectweb.org/faq">FAQ</a></menuitem>
-      <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
-      <menuitem><a href="http://www.objectweb.org/resources/cvs.html">CVS Repositories</a></menuitem>
-      <menuitem><a href="http://www.objectweb.org/resources/search.html">Search</a></menuitem>
-      <menuitem><a href="http://forge.objectweb.org/">ObjectWeb Forge</a></menuitem>
-      <menuitem><a href="http://www.objectweb.org/mirrors.html">Mirror Sites</a></menuitem>
     </menu>
 
   </body>
