@@ -4,44 +4,42 @@
 
 <project>
 
-    <title>ASM</title>
+  <title>ASM</title>
+  <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>  
+  <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
 
-    <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
-
-    <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,LGPL</keywords>
-
-    <body>
+  <body>
 
     <menu>
-      <connect href="index.xml">ASM</connect>
-      <menuitem><connect href="download/index.xml">Download</connect></menuitem>
-      <menuitem><connect href="doc/index.xml">Documentation</connect></menuitem>
-      <menuitem><a href="http://www.objectweb.org/wws/lists/projects/asm">Mailing lists</a></menuitem>
-      <menuitem><connect href="license.xml">License</connect></menuitem>
-      <menuitem><connect href="history.xml">History</connect></menuitem>
+      <a href="index.html">ASM</a>
+      <menuitem><a href="download/index.html">Download</a></menuitem>
+      <menuitem><a href="doc/index.html">Documentation</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/wws/lists/projects/asm">Mailing Lists</a></menuitem>
+      <menuitem><a href="license.html">License</a></menuitem>
+      <menuitem><a href="history.html">History</a></menuitem>
     </menu>
 
     <menu>
-      <legend>Developers' corner</legend>
-      <menuitem><a href="http://debian-sf.objectweb.org/cvs/?group_id=23">CVS repository</a></menuitem>
-      <menuitem><a href="http://debian-sf.objectweb.org/projects/asm/">ObjectWeb Forge site</a></menuitem>
+      <legend>Developers' Corner</legend>
+      <menuitem><a href="http://debian-sf.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
+      <menuitem><a href="http://debian-sf.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
     </menu>
 
     <menu>
       <legend>About ASM</legend>
-      <menuitem><connect href="team.xml">Team</connect></menuitem>
+      <menuitem><a href="team.html">Team</a></menuitem>
       <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
     </menu>
 
     <menu>
-      <legend>ObjectWeb resources</legend>
+      <legend>ObjectWeb Resources</legend>
       <menuitem><a href="http://www.objectweb.org/faq">FAQ</a></menuitem>
-      <menuitem><a href="http://www.objectweb.org/wws">Mailing lists</a></menuitem>
-      <menuitem><connect href="../resources/cvs.xml">CVS repositories</connect></menuitem>
-      <menuitem><connect href="../resources/search.xml">Search</connect></menuitem>
+      <menuitem><a href="http://www.objectweb.org/wws">Mailing Lists</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/resources/cvs.html">CVS Repositories</a></menuitem>
+      <menuitem><a href="http://www.objectweb.org/resources/search.html">Search</a></menuitem>
       <menuitem><a href="http://debian-sf.objectweb.org/">ObjectWeb Forge</a></menuitem>
-      <menuitem><connect href="../mirrors.xml">Mirror sites</connect></menuitem>
+      <menuitem><a href="http://www.objectweb.org/mirrors.html">Mirror Sites</a></menuitem>
     </menu>
 
-    </body>
+  </body>
 </project>
