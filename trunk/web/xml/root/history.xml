@@ -14,6 +14,26 @@
 
     <s1 name="History">
 
+      <subtitle>7 February 2005: ASM 2.0.RC1 (cvs-tag: ASM_2_0_RC1)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>New visitCode() method in MethodVisitor to easily detect first instruction</li>
+          <li>signature support (contribution from Thomas Hallgren)</li>
+          <li>commons package (contribution from CLIB and other projects; not yet stable)</li>
+          <li>memory usage optimization in tree package (contribution from Rene Treffer)</li>
+          <li>performance improvements in core package</li>
+          <li>performance improvements in analysis package (dataflowinterpreter is now two times faster)</li>
+          <li>asm library plugin for Eclipse, used by Bytecode Outline plugin</li>
+        </ul>
+
+      <subtitle>21 January 2005: ASM 1.5.3 (cvs-tag: ASM_1_5_3)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>New behavior for visitLineNumber</li>
+        </ul>
+
       <subtitle>8 November 2004: ASM 2.0 alpha (cvs-tag: ASM_2_0_ALPHA)</subtitle>
 
         <ul>
