@@ -5,61 +5,28 @@
 <document>
   <properties>
     <author email="asm-team@objectweb.org">asm-team</author>
-    <title>Eclipse plugin</title>
+    <title>Eclipse plugins</title>
     <filename>index.xml</filename>
     <pathtoroot>..</pathtoroot>
   </properties>
 
   <body>
-    <s1 name="Bytecode Outline plugin for Eclipse">
+    <s1 name="Eclipse plugins">
     
-    <p>Bytecode Outline plugin shows disassembled bytecode of current Java 
-    editor or class file, allows bytecode compare for Java/class files and 
-    shows ASMifier code for current bytecode.</p>
-    
-    <subtitle>Screen shots</subtitle>
-    <p>
-    <a href="../images/bco_1.gif"><img src="../images/bco_1_small.gif" border="0" 
-    width="399" height="311" alt="Screen shot 1"/></a>
-    </p>
-    
-    <p>
-    <a href="../images/bco_4.gif"><img src="../images/bco_4_small.gif" border="0" 
-    width="399" height="311" alt="Screen shot 2"/></a>
-    </p>
-    
-    <subtitle>Download</subtitle>
-    
-    <p>You can download the plugin from the
-    <a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>
-    site.</p>
-    
-    <subtitle>Installation</subtitle>
-    
-    <p>All what you need to install Bytecode Outline plugin is to unzip the 
-    zip file into your %Eclipse%/plugin directory and restart Eclipse. You 
-    don't need to do anymore to install Bytecode Outline.</p>
-    <p><strong>Note:</strong> Bytecode Outline tested and works on Eclipse 
-    3.0 / 3.0.1 / 3.1M2</p>
-    
-    <subtitle>Usage</subtitle>
-    
-    <p>To see the bytecode of the current .java or .class file:</p>
-    <ul>
-      <li>Window -&gt; Show View -&gt; Other -&gt; Java -&gt; Bytecode</li>
-    </ul>
+    <s2 name="ASM Framework plugin">
 
-    <p>To compare the bytecode of two .java or .class files:</p>
-    <ul>
-      <li>select two *.class or *.java files -&gt; right click -&gt; Compare with -&gt; Each Other Bytecode</li>
-    </ul>
-    <p><em>or</em></p>
-    <ul>
-      <li>select one *.class or *.java file -&gt; right click -&gt; Compare with -&gt; Another Class Bytecode</li>
-    </ul>
-    <p>Compare also works for *.class files included in any referenced *.jar library.
-    Additional details can be found on author home page at <a href="http://andrei.gmxhome.de/bytecode/index.html">http://andrei.gmxhome.de/bytecode/index.html</a></p>
+    <p><a href="asm/index.html">ASM Framework plugin</a> provides the ASM 
+    Framework libraries.</p>
 
+    </s2>
+    
+    <s2 name="Bytecode Outline plugin">
+    
+    <p><a href="bco/index.html">Bytecode Outline plugin</a> shows disassembled 
+    bytecode of current Java editor or class file, allows bytecode compare for 
+    Java/class files and shows ASMifier code for current bytecode.</p>
+   
+    </s2>
     </s1>
   </body>
 </document>
