@@ -14,12 +14,10 @@
     <s1 name="Users">
 
       <table border="1" width="100%">
-        <!--tr>
+        <tr>
           <td align="center" valign="middle">
-          <a href="http://www.beanshell.org/">
-          <img src="http://www.beanshell.org/images/bshsplash3.gif" border="0"
-            height="146" width="262" alt="Beanshell logo" align="middle"/>
-          </a>
+          <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/bshsplash3.gif" border="0"
+            height="146" width="262" alt="Beanshell logo" align="middle"/></a>
           </td>
           <td valign="middle">Pat Niemeyer said: "I'm very excited about ASM
           because it's exactly what I need to finish BeanShell scripted classes...
@@ -28,7 +26,7 @@
           generate a proxy class for an arbitrary type (delegate all the methods
           to a reflective style handler) which I believe will now be easy.
           </td>
-        </tr-->
+        </tr>
         <tr>
           <td align="center" valign="middle">
           <a href="http://cglib.sourceforge.net/">
@@ -58,10 +56,8 @@
         </tr>
         <tr>
           <td align="center" valign="middle">
-          <a href="http://speedo.objectweb.org/">
-          <img src="http://speedo.objectweb.org/doc/logo.gif" border="0"
-            width="183" height="171" alt="Speedo logo" align="middle"/>
-          </a>
+          <a href="http://speedo.objectweb.org/"><img src="http://speedo.objectweb.org/doc/logo.gif" border="0"
+            width="183" height="171" alt="Speedo logo" align="middle"/></a>
           </td>
           <td valign="middle">Speedo is an open source implementation of the
           JDO specification. Speedo uses ASM to enhance the bytecode of
