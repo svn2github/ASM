@@ -19,7 +19,7 @@
 <li><a href="#Q1">1. How do I remove a method/field?</a></li>
 <li><a href="#Q2">2. How do I replace a method/field? I end up with duplicated members!</a></li>
 <li><a href="#Q3">3. How do I make ASM calculate visitMaxs for me?</a></li>
-<li><a href="#Q4">4. Why do I get the error 'Register 1 contains wrong type'?"</a></li>
+<li><a href="#Q4">4. Why do I get the [xxx] verifier error?"</a></li>
 <li><a href="#Q5">5. How do I add my bytecode class to the system class loader?</a></li>
 <li><a href="#Q6">6. How do I rename my class?</a></li>
 <li><a href="#Q7">7. How do method descriptors work?</a></li>
@@ -57,21 +57,55 @@ by calling a visit method on the ClassWriter.</p>
 still include the visitMaxs instruction, but the values you give are
 ignored, so visitMaxs(0,0) is fine.</p>
 
-<subtitle anchor="Q4">4. Why do I get the error 'Register 1 contains wrong type'?</subtitle>
+<subtitle anchor="Q4">4. Why do I get the [xxx] verifier error?</subtitle>
 
-<p>When making "return" on a method you must call the appropriate constant.
-Check Constants.java for a list of all constants. Likewise, make sure you use
-the appropriate constant for LOAD and STORE intructions, depending on the
-type of the local variable you want to load or store. The Type.getOpcode
-method can be used to get the constant corresponding to a given Type
-and a given bytecode instruction.</p>
-<source>  IRETURN, ILOAD, ISTORE, ... // int (also use for char,byte)
-  LRETURN, LLOAD, LSTORE, ... // long
-  FRETURN, FLOAD, FSTORE, ... // float
-  DRETURN, DLOAD, DSTORE, ... // double
-  ARETURN, ALOAD, ASTORE, ... // reference to an object
-  RETURN  // return void</source>
+<p>If the message given by the JVM class verifier does not help you, you can
+use the verifier provided by ASM. For example, if you use a wrong constant when 
+making "return" on a method, or if you do not use the appropriate LOAD or STORE
+instruction, depending on the local variable type, the JVM class verifier gives
+a "Register x contains wrong type" or "Expecting to find x on stack" error which 
+does not say anything about the instruction that caused the error. In this case 
+you can use the class verifier provided by ASM:</p>
 
+<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-util.jar"
+org.objectweb.asm.util.CheckClassAdapter org/domain/package/YourClass.class</code></p>
+
+<p>For example, in the helloworld example in the ASM distribution, if you replace
+visitLdc("Hello world!") with visitLdc(new Integer(1234)) you get the following
+error message when the generated class is verified as above:</p>
+
+<source>org.objectweb.asm.tree.analysis.AnalyzerException: Error at instruction 2: Argument 1: expected Ljava/lang/String;, but found I
+        at org.objectweb.asm.tree.analysis.Analyzer.analyze(Unknown Source)
+        at org.objectweb.asm.util.CheckClassAdapter.main(Unknown Source)
+main([Ljava/lang/String;)V
+00000 [Ljava/lang/String;.  :     GETSTATIC java/lang/System out Ljava/io/PrintStream;
+00001 [Ljava/lang/String;. Ljava/io/PrintStream; :     LDC 1234
+00002 [Ljava/lang/String;. Ljava/io/PrintStream;I :     INVOKEVIRTUAL java/io/PrintStream println (Ljava/lang/String;)V
+00003 null  :     RETURN</source>
+
+<p>This shows that the error comes from instruction 2 in method main. The instruction list
+shows that this instruction is INVOKEVIRTUAL. It also shows the types of the local variables
+and of the operand stack values just before this instruction will be executed (here local
+variable 0 contains a String, local variable 1 is not initialized, and the stack contains
+a PrintStream and an int). As explained in the error message, the println method called by 
+INVOKEVIRTUAL expects a String as first argument, but the stack value corresponding to this
+argument is an int. Then either the INVOKEVIRTUAL instruction is wrong, or the instruction
+that pushed the integer is wrong.</p>
+
+<p>If your class is so "corrupted" that you cannot read it with a ClassReader, 
+try to generate it by using a CheckClassAdapter in front of a ClassWriter:</p>
+<source>  ClassWriter cv = new ClassWriter(true);
+  cv = new CheckClassAdapter(cv);
+  // generate your class here:
+  cv.visit(...);
+  ...</source>
+<p>You will probably get an exception which will indicate why your generated class
+is incorrect. For example, if you forget to call visit(...) (which can happen if you
+forget to call super.visit(...) in a class adapter), the generated class
+contains an invalid constant pool index, and ClassReader is unable to read it. If 
+you generate your class by using a CheckClassAdapter, as above, you get an
+exception "Cannot visit member before visit has been called.", which shows that
+you forgot to call the visit method.</p>
 
 <subtitle anchor="Q5">5. How do I add my bytecode class to the system class loader?</subtitle>
 
@@ -295,7 +329,9 @@ parameter.
 Example:</p>
 <p><code>java -classpath "asm.jar;asm-util.jar;yourjar.jar"
 org.objectweb.asm.util.ASMifierClassVisitor org.domain.package.YourClass</code></p>
-
+<p>or</p>
+<p><code>java -classpath "asm.jar;asm-util.jar"
+org.objectweb.asm.util.ASMifierClassVisitor org/domain/package/YourClass.class</code></p>
 
 <subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
 
