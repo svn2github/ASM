@@ -126,12 +126,12 @@ references to class members using the CodeAdapter.</p>
     cv.visitInnerClass(name, outerName, innerName, access); //TODO: handle innner classes with ASM
   }
 
-  public void visitField (int access, final String name, String desc, Object value) {
-    cv.visitField(access, name, desc, value);
+  public void visitField (int access, final String name, String desc, Object value, Attribute attrs) {
+    cv.visitField(access, name, desc, value, attrs);
   }
 
-  public CodeVisitor visitMethod(int access, String name, String desc, String[] exceptions) {
-    CodeVisitor cv = this.cv.visitMethod(access, name, fixDesc(desc), exceptions);
+  public CodeVisitor visitMethod(int access, String name, String desc, String[] exceptions, Attribute attrs) {
+    CodeVisitor cv = this.cv.visitMethod(access, name, fixDesc(desc), exceptions, attrs);
     if (cv != null &amp;&amp; (access &amp; Constants.ACC_ABSTRACT) == 0) {
       cv = new CodeRenamer(cv);
     }
@@ -210,11 +210,11 @@ Here is a quick overview:</p>
 <p>Examples:</p>
 <ul>
 <li>public void method()
-<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "()V", null);</code></li></ul></li>
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "()V", null, null);</code></li></ul></li>
 <li>public void method(String s, int i)
-<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;I)V", null);</code></li></ul></li>
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;I)V", null, null);</code></li></ul></li>
 <li>public String method(String s, int i, boolan flag)
-<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;IZ)Ljava/lang/String;", null);</code></li></ul></li>
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;IZ)Ljava/lang/String;", null, null);</code></li></ul></li>
 </ul>
 
 
@@ -236,7 +236,7 @@ Class as a parameter.</p>
 <source>  private void createSetter(String propertyName, String type, Class c) {
     String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
 
-    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null);
+    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
     cv.visitVarInsn(ALOAD, 0);
 
     //return is based on class type
@@ -262,7 +262,7 @@ Class as a parameter.</p>
   private void createGetter(String propertyName, String returnType, Class c) {
     String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
 
-    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null);
+    CodeVisitor cv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null, null);
     cv.visitVarInsn(ALOAD, 0);
     cv.visitFieldInsn(GETFIELD, internalClassName, propertyName, returnType);
 
