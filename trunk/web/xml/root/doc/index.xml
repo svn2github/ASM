@@ -26,11 +26,15 @@
         </p>
 			</s2>
 
-			<s2 name="API">
+			<s2 name="FAQ">
+				<p><a href="faq.html">Frequently Asked Questions</a>.</p>
+			</s2>
+
+      <s2 name="API">
 				<p><a href="../current/doc/javadoc/user/index.html">ASM API</a> (<a href="../current/doc/javadoc/user/overview-summary.html">no frames</a>).
         </p>
 			</s2>
 
-		</s1>
+    </s1>
 	</body>
 </document>
