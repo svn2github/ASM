@@ -5,6 +5,7 @@
 
   <!-- uncustomizable properties -->
   <property name="common_web.archive" value="common_web.zip" />
+  <property name="lib.dir" value="${basedir}/lib" />
   <property name="xml.dir" value="${basedir}/xml" />
   <property name="html.src" value="${basedir}/html" />
 
@@ -22,7 +23,7 @@
 
   <!-- classpath -->
   <path id="externals.classpath">
-    <fileset dir="${common.dir}/lib">
+    <fileset dir="${lib.dir}">
       <include name="**/*.jar"/>
     </fileset>
   </path>
@@ -63,25 +64,19 @@
 		     excludes="${release-files}"/>
     </dependset>
 
-    <!-- copy css stylesheet into ${common.html.dest} -->
-    <copy todir="${common.html.dest}">
-      <fileset dir="${stylesheets.dir}">
-        <include name="*.css"/>
-      </fileset>
-    </copy>
-
     <!-- copy HTML files into ${html.dest} -->
     <copy todir="${html.dest}">
       <fileset dir="${html.src}" />
     </copy>
 
-		<!-- doc directory: copy as is -->
-		<copy todir="${html.dest}/doc">
-			<fileset dir="../${dist.doc}">
-				<include name="**"/>
-			</fileset>
-		</copy>
-
+    <!-- doc directory: copy as is -->
+<!--
+    <copy todir="${html.dest}/doc">
+	<fileset dir="${dist.doc}">
+		<include name="**"/>
+	</fileset>
+    </copy>
+-->
   </target>
 
   <!-- ===================================================================== -->
@@ -140,6 +135,14 @@
 	  description="Copy common images into ${common.images.dest}"
 	  if="install.common">
 
+    <!-- copy css stylesheet into ${common.html.dest} -->
+    <copy todir="${common.html.dest}">
+      <fileset dir="${stylesheets.dir}">
+        <include name="*.css"/>
+      </fileset>
+    </copy>
+
+    <!-- copy common images -->
     <copy todir="${common.images.dest}">
       <fileset dir="${common.images.src}" />
     </copy>
@@ -225,6 +228,7 @@ release-files=${release-files}
 
 ---- uncustomizable properties ----
 common_web.archive=${common_web.archive}
+lib.dir=${lib.dir}
 xml.dir=${xml.dir}
 html.src=${html.src}
 
