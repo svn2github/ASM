@@ -14,21 +14,18 @@
     <s1 name="ASM Framework plugin for Eclipse">
     
     <p>ASM Framework plugin provides the ASM Framework libraries.</p>
-    
-    <subtitle>Download</subtitle>
-    
-    <p>You can download the plugin from the
-    <a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>
-    site.</p>
-    
+        
     <subtitle>Installation</subtitle>
     
-    <p>All what you need to install ASM Framework plugin is to unzip the 
-    zip file into your %Eclipse%/plugin directory and restart Eclipse. You 
-    don't need to do anymore to install ASM Framework.</p>
-    <p><strong>Note:</strong> ASM Framework tested and works on Eclipse 
-    3.0 / 3.0.1 / 3.1M2</p>
+    <p>The ASM Framework plugin can be installed from the <a href=
+    "http://help.eclipse.org/help30/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-34.htm">Eclipse 
+    Update Manager</a> with the ObjectWeb Eclipse Update Site <a href=
+    "http://download.forge.objectweb.org/eclipse-update/">http://download.forge.objectweb.org/eclipse-update/</a></p>
 
+    <p>Alternatively, the plugin can be downloaded from the
+    <a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>
+    site, and manually installed in the Eclipse plugins directory.</p>
+    
     </s1>
   </body>
 </document>
