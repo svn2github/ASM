@@ -14,6 +14,12 @@
 
     <s1 name="History">
 
+      <subtitle>17 May 2005: ASM 2.0 (cvs-tag: ASM_2_0)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+        </ul>
+
       <subtitle>7 February 2005: ASM 2.0.RC1 (cvs-tag: ASM_2_0_RC1)</subtitle>
 
         <ul>
