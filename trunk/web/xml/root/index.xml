@@ -13,13 +13,13 @@
   <body>
     <s1 name="ASM">
 
-    <table border="0">
-    <tr>
-    <td>
-    
     <p>
     <img src="images/asm.png" border="0" width="288" height="180" alt="ASM logo"/>
     </p>
+
+    <table border="0">
+    <tr>
+    <td>    
     
     <p><strong>ASM</strong> is a Java bytecode manipulation framework. It can be used
     to dynamically generate stub classes or other proxy classes, directly in binary
