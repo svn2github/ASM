@@ -31,6 +31,8 @@
 <li><a href="#Q12">12. How does the [xxx] bytecode instruction work?</a></li>
 <li><a href="#Q13">13. Is ASM thread safe?</a></li>
 <li><a href="#Q14">14. What is the earliest JDK required to use ASM?</a></li>
+<li><a href="#Q15">15. How to resolve conflicts between different ASM API 
+    versions available in a global classpath or within the same ClassLoader?</a></li>
     </ul>
 
 <subtitle anchor="Q0">0. How do I start using ASM?</subtitle>
@@ -382,6 +384,14 @@ and methods:</p>
 List interface and the ArrayList class.
 </p>
 
+
+<subtitle anchor="Q15">15. How to resolve conflicts between different ASM API 
+    versions available in a global classpath or within the same ClassLoader?</subtitle>
+
+<p>Tools and frameworks that are using ASM for bytecode 
+processing (e.g. Hibernate, CGLIB, AspectWerkz) should repackage 
+ASM code within their own name space. This can be automated with 
+<a href="http://tonicsystems.com/products/jarjar/">Jar Jar Links</a> tool.</p>
 
     </s1>
 	</body>
