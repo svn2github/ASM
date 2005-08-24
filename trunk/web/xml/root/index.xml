@@ -13,14 +13,14 @@
   <body>
     <s1 name="ASM">
 
-    <p>
-    <img src="images/asm.png" border="0" width="288" height="180" alt="ASM logo"/>
-    </p>
-
     <table border="0">
     <tr>
     <td>    
     
+    <p>
+    <img src="images/asm2.png" border="0" width="200" height="125" alt="ASM logo"/>
+    </p>
+
     <p><strong>ASM</strong> is a Java bytecode manipulation framework. It can be used
     to dynamically generate stub classes or other proxy classes, directly in binary
     form, or to dynamically modify classes at load time, i.e., just before they are
@@ -36,17 +36,15 @@
     
     <p>(*) ASM can of course be used in a static way too.</p>
     
-    </td>
-    <td>
-
-    <p><strong>Overview</strong></p><hr/>
-        
     <p><a href="current/asm-eng.pdf">"ASM: a code manipulation tool to implement adaptable systems"</a>,
     E. Bruneton, R. Lenglet and T. Coupaye,
     <a href="http://arcad.essi.fr/2002-10-composants.html">Adaptable and
     extensible component systems</a>, november 2002, Grenoble, France. Also
     available in <a href="current/asm-fr.pdf">french</a>.</p>
             
+    </td>
+    <td>
+
     <p><strong>Tutorials</strong></p><hr/>
 
     <p><strong>The best way to learn to use ASM is to write a Java source file 
