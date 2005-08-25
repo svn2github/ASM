@@ -14,6 +14,31 @@
 
     <s1 name="History">
 
+      <subtitle>17 May 2005: ASM 2.1 (cvs-tag: ASM_2_1)</subtitle>
+
+        <ul>
+          <li>support for StackMapTable attribute in asm.attrs</li>
+          <li>restructured StackMap attribute implementation (SM and SMT are using the same frames)</li>
+          <li>addition of Traceable interface in asm.util.attrs</li>
+          <li>new "dependencies" example</li>
+          <li>improved commons.Method</li>
+          <li>deprecated asm.tree.Insn.getByOpcode()</li>
+          <li>public constructor in InsnNode</li>
+          <li>better exception handling in analyzer</li>
+          <li>added Opcodes.V1_6 constant</li>
+          <li>javadoc improvements</li>
+          <li>asm-all jar</li>
+          <li>bug fixes
+          <ul>
+            <li>correct handling of synthetic attribute vs. synthetic flag</li>
+            <li>bug in TraceClassVisitor</li>
+            <li>bug in analyzer.Frame for ASTORE</li>
+            <li>added BasicValue.hashCode() and DataflowValue.hashCode()</li>
+            <li>bug about size calculation for custom attributes</li>
+          </ul>
+          </li>
+        </ul>
+
       <subtitle>17 May 2005: ASM 2.0 (cvs-tag: ASM_2_0)</subtitle>
 
         <ul>
