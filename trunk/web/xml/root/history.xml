@@ -27,7 +27,7 @@
           <li>better exception handling in analyzer</li>
           <li>added Opcodes.V1_6 constant</li>
           <li>javadoc improvements</li>
-          <li>changed code style (Eclipse formatter & Sun conventions with minor changes)</li>
+          <li>changed code style (Eclipse formatter + Sun conventions with minor changes)</li>
           <li>asm-all jar</li>
           <li>bug fixes
           <ul>
