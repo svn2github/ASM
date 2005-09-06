@@ -41,14 +41,14 @@
 file that is representative of the classes you want to generate, compile it(*), and
 then run the <a href="#Q10">ASMifier</a> on the compiled class to see the Java source code that 
 generates this class with ASM. If you are using Eclipse it is even easier,
-thanks to the <a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
+thanks to the <a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
 
 <p>If you want to use ASM to transform classes, write two Java source files - 
 first with and second without features that has to be added or removed and try
 to keep other differences as minimal as you can, compile them(*), and then run the 
 <a href="#Q10">ASMifier</a> on both of them. Then compare the results with some visual diff tool. 
 If you are using Eclipse it is even easier, thanks to the compare tool of the
-<a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
+<a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
 
 <p>(*) Note that javac may produce different code for different -target, 
 so you'll have to compile for your target environment, repeat that 
@@ -324,7 +324,7 @@ org.objectweb.asm.util.ASMifierClassVisitor org.domain.package.YourClass</code><
 <p><code>java -classpath "asm.jar;asm-util.jar"
 org.objectweb.asm.util.ASMifierClassVisitor org/domain/package/YourClass.class</code></p>
 <p>Another, much easier method, if you are using Eclipse, is to use the 
-<a href="../eclipse.html">Bytecode Outline</a> plugin.</p>
+<a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
 
 <subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
 
