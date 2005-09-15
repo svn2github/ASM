@@ -43,8 +43,6 @@
           have their performance metrics exported through a dedicated API, 
           third party tools, or through the management console.
           </td>
-          <td valign="middle">
-          </td>
         </tr>
 
         <tr>
@@ -63,10 +61,10 @@
         <tr>
           <td align="center" valign="middle">
           <a href="http://cglib.sourceforge.net/">
-          Code Generation Library
+          CGLIB
           </a>
           </td>
-          <td valign="middle">cglib is a powerful, high performance and quality
+          <td valign="middle">CGLIB is a powerful, high performance and quality
           Code Generation Library. It is used to extend JAVA classes and
           implement interfaces at runtime.
           </td>
