@@ -33,6 +33,22 @@
 
         <tr>
           <td align="center" valign="middle">
+          <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="161" height="96" alt="ASM logo"/></a>
+          </td>
+          <td valign="middle">BEA WebLogic Server 9 includes an 
+          advanced diagnostic framework (WebLogic Diagnostic Framework) that 
+          enables users to monitor a production system. ASM is used for high 
+          performant bytecode enhancements tailored for WebLogic Server. Key 
+          components of the server as well as custom ones can be observed and 
+          have their performance metrics exported through a dedicated API, 
+          third party tools, or through the management console.
+          </td>
+          <td valign="middle">
+          </td>
+        </tr>
+
+        <tr>
+          <td align="center" valign="middle">
           <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/bshsplash3.gif" border="0"
             height="146" width="262" alt="Beanshell logo" align="middle"/></a>
           </td>
