@@ -1,0 +1,31 @@
+<project name="conform" default="test">
+
+  <target name="test">
+    <jar jarfile="${out.test}/agent3.jar"
+         basedir="${out}">
+      <include name="build/org/objectweb/asm/*.class"/>
+      <include name="test/org/objectweb/asm/ClassWriterTest3.class"/>
+      <manifest>
+        <attribute name="Premain-Class" value="org.objectweb.asm.ClassWriterTest3"/>
+      </manifest>
+    </jar>
+    <junit fork="yes" 
+           printsummary="yes"
+           errorproperty="test.failed"
+           failureproperty="test.failed">
+      <batchtest fork="yes" todir="${out.test}/reports">
+        <fileset dir="${test}/conform">
+          <include name="**/ClassWriterTest3.java"/>
+        </fileset>
+      </batchtest>
+      <formatter type="xml"/>
+      <classpath refid="test.classpath"/>
+      <jvmarg value="-javaagent:${out.test}/agent3.jar"/>
+      <jvmarg value="-Dasm.test=${java.home}/lib/rt.jar"/>
+      <jvmarg value="-Dasm.test.class=${asm.test.class}"/>
+      <jvmarg value="-XX:-FailOverToOldVerifier"/>
+      <jvmarg value="-Xverify:all"/>
+    </junit>
+  </target>
+
+</project>

@@ -1,0 +1,37 @@
+<project name="conform" default="test">
+
+  <target name="test">
+    <jar jarfile="${out.test}/agent4.jar"
+         basedir="${out}">
+      <include name="build/org/objectweb/asm/*.class"/>
+      <include name="test/org/objectweb/asm/ClassWriterTest4.class"/>
+      <manifest>
+        <attribute name="Premain-Class" value="org.objectweb.asm.ClassWriterTest4"/>
+      </manifest>
+    </jar>
+    <condition property="testclasses" value="${asm.test.class}">
+      <not><equals arg1="${asm.test.class}" arg2=""/></not>
+    </condition>
+    <condition property="testclasses" value="com.sun.corba">
+      <equals arg1="${asm.test.class}" arg2=""/>
+    </condition>
+    <junit fork="yes" 
+           printsummary="yes"
+           errorproperty="test.failed"
+           failureproperty="test.failed">
+      <batchtest fork="yes" todir="${out.test}/reports">
+        <fileset dir="${test}/conform">
+          <include name="**/ClassWriterTest4.java"/>
+        </fileset>
+      </batchtest>
+      <formatter type="xml"/>
+      <classpath refid="test.classpath"/>
+      <jvmarg value="-javaagent:${out.test}/agent4.jar=${testclasses}"/>
+      <jvmarg value="-Dasm.test=${java.home}/lib/rt.jar"/>
+      <jvmarg value="-Dasm.test.class=${testclasses}"/>
+      <jvmarg value="-XX:-FailOverToOldVerifier"/>
+      <jvmarg value="-Xverify:all"/>
+    </junit>
+  </target>
+
+</project>
