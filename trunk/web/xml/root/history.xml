@@ -14,7 +14,27 @@
 
     <s1 name="History">
 
-      <subtitle>17 May 2005: ASM 2.1 (cvs-tag: ASM_2_1)</subtitle>
+      <subtitle>24 November 2005: ASM 2.2 (cvs-tag: ASM_2_2)</subtitle>
+      
+        <ul>
+          <li>pass through behavior for unknown attributes</li>
+          <li>optimizations for "mostly add" transformations (new ClassWriter constructor)</li>
+          <li>removed constraint for visitTryCatchBlock call order with respect to visitLabel
+          <ul>
+            <li>visitTryCatchBlock can be called before or after its labels are visited</li>
+            <li>ClassReader now calls visitTryCatchBloc at the beginning of the method body</li>
+          </ul>
+          </li>        
+          <li>new AdviceAdapter class in commons</li>
+          <li>new constructor in GeneratorAdapter for better integration with the plain visitors/adapters</li>
+          <li>fixed potential endles loop in IntMap.get()</li>
+          <li>bug fixes in xml package</li>
+          <li>improved javadocs (commons, tree)</li>
+          <li>new tests</li>
+          <li>corbertura added to the build</li>
+        </ul>
+
+      <subtitle>25 August 2005: ASM 2.1 (cvs-tag: ASM_2_1)</subtitle>
 
         <ul>
           <li>support for StackMapTable attribute in asm.attrs</li>
