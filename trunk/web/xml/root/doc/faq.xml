@@ -118,8 +118,8 @@ that pushed the integer is wrong.</p>
 
 <p>If your class is so "corrupted" that you cannot read it with a ClassReader, 
 try to generate it by using a CheckClassAdapter in front of a ClassWriter:</p>
-<source>  ClassWriter cv = new ClassWriter(true);
-  cv = new CheckClassAdapter(cv);
+<source>  ClassWriter cw = new ClassWriter(true);
+  ClassVisitor cv = new CheckClassAdapter(cw);
   // generate your class here:
   cv.visit(...);
   ...</source>
