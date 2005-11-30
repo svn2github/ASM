@@ -18,7 +18,8 @@
           <td align="center" valign="middle">
           <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a>
           </td>
-          <td valign="middle">AspectWerkz utilizes bytecode modification to 
+          <td valign="top"><a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 
+          utilizes bytecode modification to 
           weave your classes at project build-time, class load time or runtime. 
           It hooks in using standardized JVM level APIs. It has a rich and 
           highly orthogonal join point model. Aspects, advices and 
@@ -35,7 +36,7 @@
           <td align="center" valign="middle">
           <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="161" height="96" alt="ASM logo"/></a>
           </td>
-          <td valign="middle">BEA WebLogic Server 9 includes an 
+          <td valign="top"><a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an 
           advanced diagnostic framework (WebLogic Diagnostic Framework) that 
           enables users to monitor a production system. ASM is used for high 
           performant bytecode enhancements tailored for WebLogic Server. Key 
@@ -47,33 +48,54 @@
 
         <tr>
           <td align="center" valign="middle">
+          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="http://www.ibm.com/i/v14/t/ibm-logo.gif" border="0"
+            height="52" width="110" alt="IBM logo" align="middle"/></a>
+          </td>
+          <td valign="top">The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
+          (AUS) tool can help developers to scan one product 
+          code to detect the use of another product?s internal APIs. 
+          Once these usages are identified, the situation can be remedied by 
+          replacing those internal APIs with published ones. If a suitable 
+          published API is not available, the development team can alert the API provider 
+          of the existence of fragile interfaces between the two pieces of software and 
+          request an agreement to hold that API stable until a suitable replacement 
+          can be provided. Several IBM flagship software products have already 
+          done this with great success.
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="center" valign="middle">
+          <!--
           <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/bshsplash3.gif" border="0"
             height="146" width="262" alt="Beanshell logo" align="middle"/></a>
+          -->  
+          <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/homebutton.gif" border="0"
+            height="45" width="45" alt="BeanShell logo" align="middle"/></a>
           </td>
-          <td valign="middle">Pat Niemeyer said: "I'm very excited about ASM
-          because it's exactly what I need to finish BeanShell scripted classes...
+          <td valign="top">Pat Niemeyer said: "I'm very excited about ASM
+          because it's exactly what I need to finish <a href="http://www.beanshell.org/">BeanShell</a> scripted classes...
           [...] I didn't want to use BCEL because it's huge relative to BeanShell
           (my core language is about 100K). All I really need is the ability to
           generate a proxy class for an arbitrary type (delegate all the methods
           to a reflective style handler) which I believe will now be easy.
           </td>
         </tr>
+        
         <tr>
           <td align="center" valign="middle">
-          <a href="http://cglib.sourceforge.net/">
-          CGLIB
-          </a>
+            <a href="http://cglib.sourceforge.net/">CGLIB</a>
           </td>
-          <td valign="middle">CGLIB is a powerful, high performance and quality
-          Code Generation Library. It is used to extend JAVA classes and
-          implement interfaces at runtime.
+          <td valign="top"><a href="http://cglib.sourceforge.net/">CGLIB</a> is a powerful, 
+          high performance and quality Code Generation Library. 
+          It is used to extend JAVA classes and implement interfaces at runtime.
           </td>
         </tr>
         <tr>
           <td align="center" valign="middle">
-            <a href="https://dynaop.dev.java.net/dynaop">dynaop</a>
+            <a href="https://dynaop.dev.java.net/">dynaop</a>
           </td>
-          <td valign="middle">dynaop is a proxy-based Aspect-Oriented
+          <td valign="top"><a href="https://dynaop.dev.java.net/">dynaop</a> is a proxy-based Aspect-Oriented
           Programming (AOP) framework, which enhances Object-Oriented (OO)
           design in the following areas:  code reuse, decomposition,
           dependency reduction.
@@ -81,9 +103,10 @@
         </tr>
         <tr>
           <td align="center" valign="middle">
-            <a href="http://groovy.codehaus.org/">Groovy</a>
+            <a href="http://groovy.codehaus.org/"><img src="http://groovy.codehaus.org/images/groovy-logo.png" border="0"
+              height="112" width="227" alt="Groovy logo" align="middle"/></a>
           </td>
-          <td valign="middle">Groovy is a new agile dynamic language for the JVM
+          <td valign="top"><a href="http://groovy.codehaus.org/">Groovy</a> is a new agile dynamic language for the JVM
           combining lots of great features from languages like Python, Ruby and
           Smalltalk and making them available to the Java developers using a
           Java-like syntax.
@@ -93,8 +116,8 @@
           <td align="center" valign="middle">
             <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
           </td>
-          <td valign="middle">Jamaica is a JVM Macro Assembler language. Its
-          compiler uses a JavaClassCreator facade to delegate JVM class
+          <td valign="top"><a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a> 
+          is a JVM Macro Assembler language. Its compiler uses a JavaClassCreator facade to delegate JVM class
           creation; currently it supports ASM and BCEL. "I like ASM," said
           James Huang, the author of Jamaica and JudoScript, "this is a JVM
           class creation API done right. For redistributing software, the
@@ -105,7 +128,7 @@
           <td align="center" valign="middle">
             <a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a>
           </td>
-          <td valign="middle">JDBCPersistence is an Object-Relational mapping
+          <td valign="top"><a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a> is an Object-Relational mapping
           persistence framework. It differs from its peers in that it generates
           the bytecode required to map a class to a table. It has been created
           with the following requirements in mind: be fast to load, support
@@ -117,11 +140,11 @@
         <tr>
           <td align="center" valign="middle">
           <a href="http://proactive.objectweb.org/">
-          <img src="http://www-sop.inria.fr/oasis/ProActive/images/ProActiveLogo650x117.jpg"
-            border="0" width="300" height="54" alt="Proactive logo" align="middle"/>
+          <img src="http://www-sop.inria.fr/oasis/ProActive/doc/api/org/objectweb/proactive/doc-files/ProActiveLogo200x34.gif"
+            border="0" width="200" height="23" alt="Proactive logo" align="middle"/>
           </a>
           </td>
-          <td valign="middle">ProActive is a Java library for parallel,
+          <td valign="top"><a href="http://proactive.objectweb.org/">ProActive</a> is a Java library for parallel,
           distributed, and concurrent computing, also featuring mobility and
           security in a uniform framework. With a reduced set of simple
           primitives, ProActive provides a comprehensive API allowing to
@@ -133,9 +156,9 @@
         <tr>
           <td align="center" valign="middle">
           <a href="http://speedo.objectweb.org/"><img src="http://speedo.objectweb.org/doc/logo.gif" border="0"
-            width="183" height="171" alt="Speedo logo" align="middle"/></a>
+            width="203" height="117" alt="Speedo logo" align="middle"/></a>
           </td>
-          <td valign="middle">Speedo is an open source implementation of the
+          <td valign="top"><a href="http://speedo.objectweb.org/">Speedo</a> is an open source implementation of the
           JDO specification. Speedo uses ASM to enhance the bytecode of
           persistent classes (i.e. mainly to replace access field instructions
           with calls to getter and setter methods generated by Speedo).</td>
@@ -147,7 +170,7 @@
             width="300" height="154" alt="Fractal logo" align="middle"/>
           </a>
           </td>
-          <td valign="middle">Fractal is a general software composition
+          <td valign="top"><a href="http://fractal.objectweb.org/">Fractal</a> is a general software composition
           framework that supports component-based programming, including
           components (type) definition, configuration, composition and
           administration. The reference implementation of Fractal uses
