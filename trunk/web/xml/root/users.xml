@@ -53,7 +53,7 @@
           </td>
           <td valign="top">The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
           (AUS) tool can help developers to scan one product 
-          code to detect the use of another product?s internal APIs. 
+          code to detect the use of another product's internal APIs. 
           Once these usages are identified, the situation can be remedied by 
           replacing those internal APIs with published ones. If a suitable 
           published API is not available, the development team can alert the API provider 
