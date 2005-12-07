@@ -66,6 +66,23 @@
         
         <tr>
           <td align="center" valign="middle">
+          <a href="http://www.terracottatech.com/"><img src="images/terracotta.png" border="0"
+            height="31" width="200" alt="Terracotta logo" align="middle"/></a>
+          </td>
+          <td valign="top">
+          <a href="http://www.terracottatech.com/">Terracotta</a> believes that enterprise 
+          Java is too complex, and scaling out (or clustering) Java applications only makes it worse. 
+          Terracotta believes that operational concerns should be clearly separated from business logic. 
+          The ?Terracotta Virtualization Server? uses byte-code modification to layer in 
+          enterprise-class infrastructure services, such as clustering and caching, 
+          into applications transparently at runtime, freeing the developer to focus on 
+          implementing the business logic with their framework of choice, 
+          using simple, single JVM, natural Java.
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="center" valign="middle">
           <!--
           <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/bshsplash3.gif" border="0"
             height="146" width="262" alt="Beanshell logo" align="middle"/></a>
