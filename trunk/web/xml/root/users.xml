@@ -34,7 +34,7 @@
 
         <tr>
           <td align="center" valign="middle">
-          <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="161" height="96" alt="ASM logo"/></a>
+          <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="100" height="60" alt="BEA logo"/></a>
           </td>
           <td valign="top"><a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an 
           advanced diagnostic framework (WebLogic Diagnostic Framework) that 
@@ -48,7 +48,7 @@
 
         <tr>
           <td align="center" valign="middle">
-          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="http://www.ibm.com/i/v14/t/ibm-logo.gif" border="0"
+          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
             height="52" width="110" alt="IBM logo" align="middle"/></a>
           </td>
           <td valign="top">The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
