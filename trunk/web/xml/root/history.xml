@@ -14,6 +14,33 @@
 
     <s1 name="History">
 
+      <subtitle>14 December 2005: ASM 3.0 beta (cvs-tag: ASM_3_0_BETA)</subtitle>
+
+        <ul>
+          <li>Major changes for the new Java 6 StackMapTable attribute
+            <ul>
+              <li>StackMapTable support integrated in core package (new 
+              visitFrame method in MethodVisitor)</li>
+              <li>asm.attrs package removed</li>              
+              <li>new commons.AnalyzerAdapter class</li>
+              <li>incremental stack map frames update in LocalVariablesSorter</li>
+            </ul>
+          </li>
+          <li>ClassReader and ClassWriter constructors changed</li>
+          <li>...</li>
+        </ul>
+        
+      <subtitle>14 December 2005: ASM 2.2.1 (cvs-tag: ASM_2_2_1)</subtitle>
+
+        <ul>
+          <li>bug fix in ClassReader for empty annotation array values</li>
+          <li>new accept method in MethodNode</li>
+          <li>new checks in asm.util</li>
+          <li>performance optimizations in LocalVariablesSorter</li>
+          <li>more precise type system used in analysis package</li>
+          <li>javadoc fixes and improvements</li>
+        </ul>
+        
       <subtitle>24 November 2005: ASM 2.2 (cvs-tag: ASM_2_2)</subtitle>
       
         <ul>
