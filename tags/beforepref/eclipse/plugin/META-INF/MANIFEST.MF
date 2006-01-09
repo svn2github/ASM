@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-Name: Bytecode Outline Plug-in
+Bundle-SymbolicName: de.loskutov.BytecodeOutline;singleton=true
+Bundle-Version: 2.0.4
+Bundle-ClassPath: BytecodeOutline.jar
+Bundle-Activator: de.loskutov.bco.BytecodeOutlinePlugin
+Bundle-Vendor: Andrei Loskutov
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.ui.editors,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.core.filebuffers,
+ org.eclipse.jdt.core,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.jdt.ui,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.compare,
+ org.eclipse.ui.console,
+ org.eclipse.help.base,
+ org.eclipse.help.appserver,
+ org.objectweb.asm;bundle-version="2.0.0"
+Eclipse-AutoStart: true

@@ -1,0 +1,109 @@
+<project name="BytecodeOutline" default="plugin">
+
+  <property file="${user.home}/asm-build.properties"/>
+  <property file="build.properties"/>
+
+  <property name="src"                value="${basedir}/src"/>
+  <property name="externals"          value="${basedir}/externals"/>
+  <property name="out"                value="${basedir}/output"/>
+  <property name="out.build"          value="${out}/build"/>
+
+  <property name="plugin.jar"   value="${plugin.id}_${plugin.version}.jar"/>
+  <property name="feature.jar"  value="${plugin.id}.feature_${plugin.version}.jar"/>
+  
+
+  <target name="init">
+    <path id="classpath">
+      <fileset dir="${eclipse.home}" includes="plugins/**/*.jar"/>
+      <fileset dir="${asm.project.dir}" includes="**/*.jar"/>
+    </path>
+  </target>
+
+  <target name="compile" depends="init">
+    <mkdir dir="${out.build}"/>
+    <!-- Eclipse requires JDK 1.4, also we can set both properties to 1.4 -->
+    <javac destdir="${out.build}" debug="on" source="1.4" target="1.4">
+      <classpath refid="classpath"/>
+      <src path="${src}"/>
+      <include name="**/*.java"/>
+    </javac>      
+  </target>
+
+  <target name="jars" depends="compile">
+    <copy todir="${out.build}">
+      <fileset dir="${src}">      
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>      
+    <jar jarfile="${out}/BytecodeOutline.jar" basedir="${out.build}">
+      <include name="**/*"/>
+      <manifest>
+        <attribute name="Implementation-Title" value="BytecodeOutline"/>
+        <attribute name="Implementation-Version" value="${plugin.version}"/>
+      </manifest>
+    </jar>
+    
+    <zip zipfile="${out}/BytecodeOutlinesrc.zip">
+      <zipfileset dir="${src}" includes="**/*" prefix="src"/>
+      <fileset dir=".">
+        <include name="icons/*"/>
+        <include name="plugin.xml"/>
+        <include name="build.properties"/>
+        <include name="META-INF/*"/>
+        <include name="build.xml"/>
+        <include name="build.config"/>
+        <include name=".project"/>
+        <include name=".classpath"/>
+        <include name="README.txt"/>
+        <include name="LICENSE.txt"/>
+      </fileset>
+      <fileset dir="site">
+        <include name="feature.xml"/>
+        <include name="site.xml"/>
+      </fileset> 
+    </zip>
+  </target>
+
+  <target name="plugin" depends="jars,xslt">
+    <zip zipfile="${out}/${plugin.jar}">
+      <zipfileset dir="${out}" includes="BytecodeOutline.jar,BytecodeOutlinesrc.zip"/>
+      <fileset dir=".">
+        <include name="META-INF/MANIFEST.MF"/>
+        <include name="icons/**/*"/>
+        <include name="plugin.xml"/>
+        <include name="about.html"/>
+        <include name="*.txt"/>
+      </fileset>
+      <zipfileset dir="${out}/doc" includes="toc.xml,ref-*.html" prefix="doc"/>
+    </zip>
+  </target>
+  
+  <target name="feature" depends="plugin">
+    <jar zipfile="${out}/${feature.jar}">
+      <fileset dir="site" includes="feature.xml"/>
+    </jar>
+  </target>
+  
+  <target name="site" depends="feature">
+    <zip zipfile="${out}/${plugin.id}.update_${plugin.version}.zip">
+      <zipfileset dir="site" includes="site.xml"/>
+      <zipfileset dir="${out}" includes="${feature.jar}" prefix="features"/>
+      <zipfileset dir="${out}" includes="${plugin.jar}"  prefix="plugins"/>
+    </zip>
+  </target>
+  
+  <target name="clean">
+    <delete failonerror="false" includeEmptyDirs="true">
+      <fileset dir="${out}" includes="**/*"/>
+    </delete>
+  </target>
+
+	<target name="xslt">
+		<mkdir dir="${out}/doc"/>
+	  <xslt basedir="." destdir="${out}/doc" includes="opcodes.xml"
+	  	    style="opcodes-doc.xsl" force="true">
+	  	<factory name="net.sf.saxon.TransformerFactoryImpl"/>
+	  </xslt>
+	</target>
+	
+</project>
