@@ -1,0 +1,1808 @@
+<h2>
+<img src="../images/111-bytecode.gif" height="91" width="111" alt=""
+border="0" align="left" hspace="10" vspace="0">ASM 3.0 Developer Guide</h2>
+by Eric Bruneton
+<br/>
+02/02/2006
+<br clear="all"/>
+
+<h2>1 Introduction</h2>
+
+<p>This guide is primarily intended for ASM users that would like to contribute
+to the ASM code base, although it can be of interest for other users as well.
+It explains the organization of the code, the main data structures and the most
+complex algorithms. It also explains the strategies that have been used to
+optimize ASM performances as well as to minimize its code size, and illustrates
+this through a concrete example.</p>
+
+<!--p>The reader is supposed to be familiar with the ASM API and with the
+class file format specification.</p-->
+
+<h2><a name="install"></a>2 Installation</h2>
+
+<p>This section explains how to compile the ASM source code, how to test it, and
+how to build a distribution, which is the first thing to know before
+contributing to this project.</p>
+
+<h3>2.1 Overview</h3>
+
+<p>The ASM source distribution is organized in several directories, in a way
+that is shared with several ObjectWeb projects. These directories are the
+following (see also the <code>README.txt</code> files contained in these
+directories):</p>
+
+<ul>
+<li><code>archive</code> contains one Ant file per jar file that must be
+included in the ASM distribution.</li>
+<li><code>config</code> contains jar files that are needed to build ASM, but
+which are not needed at runtime.</li>
+<li><code>doc</code> contains non Javadoc based documentation for ASM. It is
+currently empty.</li>
+<li><code>examples</code> contains examples showing how ASM can be used.</li>
+<li><code>jdoc</code> contains one Ant file per Javadoc documentation that must
+be included in the ASM distribution.</li>
+<li><code>output</code> contains the results and artifacts produced by the
+building process. It is created automatically.</li>
+<li><code>src</code> contains the ASM source code.</li>
+<li><code>test</code> contains the ASM conformance and performance tests.</li>
+</ul>
+
+<p>The <code>build.xml</code> file defines the targets that are used to build,
+test and package the ASM source code. These targets are presented in the
+following sections.</p>
+
+<h3>2.2 Building</h3>
+
+<p>The source code, in the <code>src</code> directory, can be compiled with
+<b><code>ant compile</code></b> (this requires a Java 1.3 or higher compiler).
+The compiled code is stored in <code>output/build/tmp</code>, and is then
+optimized to reduce its size. The optimized code is finally stored in
+<code>output/build</code>.</p>
+
+<p><small>Note: the optimization step can be skipped with <b><code>ant
+-Dproduct.noshrink=true compile</code></b>.</small></p>
+
+<h3>2.3 Running tests</h3>
+
+<p>Tests are stored in the <code>test</code> directory. Conformance tests are
+stored in the <code>conform</code> sub directory, while performance tests are
+stored in the <code>perf</code> sub directory. The <code>lib</code> sub
+directory contains jar files that are needed only to run tests. The tests can
+be run in several different ways (note that some tests require a Java 1.6 or
+higher runtime):</p>
+
+<ul>
+<li><b><code>ant test</code></b> runs <i>all</i> the tests, which takes a long
+time. Note that it is not necessary to explicitly compile the code before
+running tests: this is done automatically if needed.</li>
+<li><b><code>ant -Dtest.type=<i>type</i> test</code></b> runs only one type
+of tests, where <i>type</i> can be <code>conform</code> for conformance tests or
+<code>perf</code> for performance tests.</li>
+<li><b><code>ant -Dtest.group=<i>group</i> test</code></b> runs only one group
+of tests, where <i>group</i> is the name of an Ant file without the
+<code>.xml</code> extension. For instance <b><code>ant
+-Dtest.group=conform/classwriter test</code></b> runs the
+<code>conform/classwriter.xml</code> script, which itself runs the
+<code>ClassWriterTest</code> test suite.</li>
+</ul>
+
+<p>The <code>test</code> target compiles the tests into the
+<code>output/test</code> directory. It also generates some <code>.class</code>
+files that are used as input for these tests (these test cases are generated in
+the <code>output/test/cases</code> directory by the
+<code>org.objectweb.asm.test.cases.Generator</code> class). Finally it runs the
+requested tests and stores the reports in <code>output/test/reports</code>.</p>
+
+<p>Test coverage can be computed and reported with the <b><code>ant
+coverage</code></b> and <b><code>ant coverage.report</code></b> targets. The
+first target instruments the ASM classes and stores the instrumented classes in
+<code>output/instr</code>, and then run all the conformance tests on the test
+cases in <code>output/test/cases</code>. The second target generates an HTML
+report in <code>output/coverage</code>.</p>
+
+<p>New conformance tests can be added by writing a new JUnit test class in
+<code>test/conform/org/objectweb/asm/...</code>, and by adding a new Ant script
+to run these tests in <code>test/conform</code>. Note that, by convention, test
+classes are named like the class they test, with a <code>Test</code> or
+<code>UnitTest</code> suffix (<i>X</i><code>Test</code> work on full compiled
+Java classes, while <i>X</i><code>UnitTest</code> work on class fragments).</p>
+
+<p><small>Note: by default tests are run with the optimized ASM classes, which
+do not contain debug info. In order to have line numbers in stack traces, it is
+possible to run the tests with the unoptimized ASM classes, with <b><code>ant
+-Ddebug=true test</code></b>.</small></p>
+
+<h3>2.4 Running examples</h3>
+
+<p>Examples can be run by building a binary distribution (see 
+<a href="#dist">next section</a>), and then by running each example from its
+directory in this generated distribution. But there is an easier way, that does
+not require to create a binary distribution. In fact the <i>example</i> example
+can be run with <b><code>ant -Dexample.name=<i>example</i> example</code></b>
+(where <i>example</i> is the name of a directory in the <code>examples</code>
+directory).</p>
+
+<h3><a name="dist"></a>2.5 Creating a distribution</h3>
+
+<p>A binary distribution, containing the compiled ASM libraries, the Javadoc and
+the ASM examples, can be created with <b><code>ant dist</code></b>. The result
+is generated in the <code>output/dist</code> directory. It is also possible to
+generate this distribution in a <code>zip</code> file format, with <b><code>ant
+zip</code></b>. The result is generated in the <code>output/zip</code> directory
+(this also generates a source distribution in a <code>tar.gz</code> file).
+Finally ASM can also be distributed as an Eclipse plugin, which can be generated
+with <b><code>ant eclipse.site</code></b>. Optionally <b><code>ant
+clean</code></b> can be used before creating a distribution, in order to rebuild
+everything from scratch (indeed this target removes everything in the
+<code>output</code> directory).</p>
+
+<p><small>Note: the version number used in the files produced when creating a
+distribution is defined in the <code>build.properties</code> file.</small></p>
+
+<h2 style="page-break-before:always;">3 Code review</h2>
+
+<p>This section presents the ASM source code organization, the main data
+structures and the most complex algorithms, which is the next important thing to
+know, after the installation and building issues, in order to contribute to this
+project.</p>
+
+<h3>3.1 Code organization</h3>
+
+<p>ASM is organized in several packages:</p>
+
+<br/>
+<center>
+<a href="../images/asm-package-dependencies.png">
+<img src="../images/asm-package-dependencies.png" witdh="600" height="272"/>
+</a>
+</center>
+<br/>
+
+<ul>
+<li><code>org.objectweb.asm</code> is the core package. It defines the ASM
+visitor API and provides the <code>ClassReader</code> and
+<code>ClassWriter</code> classes to read and write compiled Java classes. This
+package does not depend on the other ones and can be used alone.</li>
+<li><code>org.objectweb.asm.signature</code> provides an API to read and write
+generics signatures. It is independent of the core package but complements
+it.</li>
+<li><code>org.objectweb.asm.tree</code> provides a DOM like API on top of SAX
+like API provided by the core package. It can be used to implement complex class
+transformations, for which the core package would be too complicated to
+use.</li>
+<li><code>org.objectweb.asm.tree.analysis</code> provides a static bytecode
+analysis framework on top of the tree package. It can be used in addition to the
+tree package to implement really complex class transformations that need to know
+the state of the stack map frames for each instruction.</li>
+<li><code>org.objectweb.asm.util</code> provides some useful class visitors and
+adapters that can be used for debugging purposes. It is generally not needed at
+runtime.</li>
+<li><code>org.objectweb.asm.xml</code> provides the ability to convert classes
+to and from XML. It can be used to prototype classes transformations quickly, by
+using XLST. But it is not recommended for real world class adapters, since the
+performances of this package are much lower than the performances of the core
+package.</li>
+<li><code>org.objectweb.asm.commons</code> provides some useful class adapters
+that are based on the core package. These adapters can be used as is or can be
+extended to implement more specific class transformations.</li>
+<li><code>org.objectweb.asm.optimizer</code> is not part of the ASM
+distribution. Indeed it is the optimization tool used to reduce the size of ASM
+classes, which is itself based on ASM. The renaming of class members is defined
+in the <code>shrink.properties</code> file.</li>
+</ul>
+
+<p>From an implementation point of view the core package is the most complex
+one. The <code>tree</code>, <code>util</code> and <code>xml</code> packages are
+very simple (they just convert classes from one high level representation to
+another one, which is much simpler than converting classes from a low level
+representation - namely a byte array - to a high level one or vice versa). The
+<code>signature</code> package is also quite simple (it consists in a parser and
+a pretty printer for a small grammar). In fact the only packages that are not
+completely trivial, except the core package, are the <code>commons</code> and
+<code>tree.analysis</code> packages. This explains why this guide is focused on
+the core package only.</p>
+
+<h3>3.2 Main data structures</h3>
+
+<p>The core package is made of 19 classes and interfaces. If we exclude the 5
+interfaces and the 3 utility classes (<code>ClassAdapter</code>,
+<code>MethodAdapter</code> and <code>Type</code>), this leaves only 11 classes,
+which are depicted on the figure below.</p>
+
+<br/>
+<center>
+<a href="../images/asm-package-overview.png">
+<img src="../images/asm-package-overview.png" witdh="600" height="316"/>
+</a>
+</center>
+<br/>
+
+<p>The conversion of compiled classes to visit events is done by only one class,
+namely the <code>ClassReader</code> class. The inverse process is done by the
+other ten classes, which are organized around the <code>ClassWriter</code>
+class:</p>
+
+<ul>
+<li>Classes:
+<ul>
+<li>the <code>ClassWriter</code> class is the main entry point. It contains
+fields that describe the class version, access flags, name, etc. It also
+contains references to other objects that represent the constant pool, the
+fields, the methods, the annotations and the attributes of the class.</li>
+</ul>
+</li>
+<li>Constant pool:
+<ul>
+<li>the <code>Item</code> class is used to represent constant pool items. Only
+one class is used in order to save code size, which explains why the
+<code>Item</code> class has as many fields as possible constant pool item
+types.</li>
+</ul>
+</li>
+<li>Fields:
+<ul>
+<li>the <code>FieldWriter</code> class is used to write fields. It contains
+fields that describe the field's name, type, signature, value, etc. It also
+contains references to other objects that represent the field's annotations and
+attributes.</li>
+</ul>
+</li>
+<li>Methods:
+<ul>
+<li>the <code>MethodWriter</code> class is used to write methods. It contains
+fields that describe the method's name, signature, exceptions, etc. It also
+contains references to other objects that represent the method's annotations and
+attributes. The method's code is stored in a byte array that is constructed
+during the visit of bytecode instructions. The labels used to reference
+instructions are stored in a linked list of <code>Label</code>
+instructions.</li>
+<li>the <code>Handler</code> class is used to represent try catch blocks. Each
+handler references three <code>Label</code> objects that define the start and
+end of the try block, and the start of the catch block.</li>
+<li>the <code>Label</code> class is used to reference instructions, but also to
+represent basic blocks, which are used for the automatic computation of the
+maximum stack size and of the stack map frame table of a method.</li>
+<li>the <code>Edge</code> class is used to represent the control flow graph of a
+method, which is a graph of basic blocks, i.e. of <code>Label</code> objects. An
+<code>Edge</code> is an edge between two <code>Label</code> objects in this
+graph.</li>
+</ul>
+</li>
+<li>Annotations:
+<ul>
+<li>the <code>AnnotationWriter</code> class is used to write annotations. This
+class is referenced from the <code>ClassWriter</code>, <code>FieldWriter</code>
+and <code>MethodWriter</code> classes, since classes, fields and methods can
+have annotations.</li>
+</ul>
+</li>
+<li>Attributes:
+<ul>
+<li>the <code>Attribute</code> class is used to read and write non standard
+class attributes. It must be subclassed for each specific non standard attribute
+that must be read and written. This class is referenced from the
+<code>ClassWriter</code>, <code>FieldWriter</code> and <code>MethodWriter</code>
+classes, since classes, fields and methods can have attributes.</li>
+</ul>
+</li>
+<li>Ressources:
+<ul>
+<li>the <code>ByteVector</code> class is used to serialize the class elements
+while they are visited. It is used to represent the constant pool, the
+annotation values, the method's code, the stack map tables, the line number
+tables, etc.</li>
+</ul>
+</li>
+</ul>
+
+<p>The core package does not use any <code>java.util</code> class. Collections
+are represented as linked lists whose links are stored directly in the list
+elements themselves. For instance a list of <code>FieldWriter</code> objects is
+represented as the <code>FieldWriter</code> objects themselves, linked through
+their <code>next</code> field. Likewise for <code>MethodWriter</code>,
+<code>AnnotationWriter</code>, <code>Label</code>, etc. The advantage of this
+method, compared to using separate objects to store the linked list itself (as
+in <code>java.util.LinkedList</code>) is that it saves memory. The drawback is
+that a given element cannot belong to several lists at the same time, but this
+is not a problem in the ASM case.</p>
+
+<p>The core package does not use hash tables, except one in the
+<code>ClassWriter</code> class, that is used to represent a set of
+<code>Item</code> objects. It is implemented with an array of <code>Item</code>
+objects that can be chained together through their <code>next</code> field to
+handle the case of hash code collisions. In other words, like for lists, the
+hash table structure is embedded in the hash table elements themselves. The
+advantages and drawbacks are the same (saves memory but elements cannot belong
+to several hash tables at once).</p>
+
+<br/>
+<center>
+<a href="../images/controlflow-graph-example.png">
+<img src="../images/controlflow-graph-example.png" witdh="400" height="450"/>
+</a>
+</center>
+<br/>
+
+<p>Like for the previous data structure, the control flow graph (see
+<a href="#controlflow">section 3.5</a>) data structure is embedded in the graph
+nodes  themselves, i.e. in the <code>Label</code> objects. Since
+<code>Label</code> objects must be stored in several data structures at the same
+time, they have several distinct fields that encode these data structures:</p>
+
+<ul>
+<li>the <code>successor</code> field is used to encode the list of labels of a
+method, in the order they are visited.</li>
+<li>the <code>next</code> field is used to encode the list of "changed" basic
+blocks that is used in <code>visitMaxs</code> (see 
+<a href="#fixpoint">section 3.5.1</a>).</li>
+<li>the <code>successors</code> field is used to store the list of
+<code>Edge</code> objects that represent the control flow graph data
+structure.</li>
+</ul>
+
+<p>In addition to these fields, the <code>first</code> field is used to
+reference the first label in a series of successive labels (successive labels
+designate the same instruction and therefore the same basic block. In this case
+only the first one is used to store the basic block state).</p>
+
+<h3>3.3 Main algorithms</h3>
+
+<h4><a name="classreader"></a>3.3.1 ClassReader</h4>
+
+<p>The <code>ClassReader</code> algorithm is quite straightforward, but the
+length of the <code>accept</code> method can make it difficult to see. For this
+reason it is summarized in this section.</p>
+
+<ul>
+<li>parse the constant pool</li>
+<ul>
+<li>store the start index of each constant pool item in <code>items</code></li>
+<li>store the size of the longest string constant in
+<code>maxStringLength</code></li>
+</ul>
+<li>parse the class</li>
+<ul>
+<li>parse the header</li>
+<li>skip fields and methods</li>
+<li>parse the class attributes. Depending on the attribute:</li>
+<ul>
+<li>either analyze it directly (e.g. <code>Signature</code>)</li>
+<li>or just store its start index (e.g. <code>Annotations</code>)</li>
+</ul>
+<li>call <code>visit</code>, <code>visitSource</code>,
+<code>visitOuterClass</code></li>
+<li>parse annotations and call <code>visitAnnotation</code> for each
+annotation</li>
+<li>call <code>visitAttribute</code> for each non standard attribute parsed
+during third step</li>
+<li>parses inner classes info and call <code>visitInnerClass</code> for
+each</li>
+<li>for each field</li>
+<ul>
+<li>parse the header</li>
+<li>parse the field attributes. Depending on the attribute:</li>
+<ul>
+<li>either analyze it directly (e.g. <code>Signature</code>)</li>
+<li>or just store its start index (e.g. <code>Annotations</code>)</li>
+</ul>
+<li>call <code>visitField</code></li>
+<li>parse annotations and call <code>visitAnnotation</code> for each
+annotation</li>
+<li>call <code>visitAttribute</code> for each non standard attribute parsed
+during second step</li>
+<li>call <code>visitEnd</code></li>
+</ul>
+<li>for each method</li>
+<ul>
+<li>parse the header</li>
+<li>parse the method attributes. Depending on the attribute:</li>
+<ul>
+<li>either analyze it directly (e.g. <code>Signature</code>)</li>
+<li>or just store its start index (e.g. <code>Annotations</code>)</li>
+</ul>
+<li>call <code>visitMethod</code></li>
+<li>if the returned visitor is a <code>MethodWriter</code>, and if its
+<code>ClassWriter</code>'s constant pool was copied from this reader (see
+<a href="#classwriter">section 3.3.2</a>), the method bytes can be copied as is:
+then all steps below are skipped.</li>
+<li>parse annotations and call <code>visitAnnotation</code> for each
+annotation</li>
+<li>call <code>visitAttribute</code> for each non standard attribute parsed
+during second step</li>
+<li>find labels and store then in <code>labels</code> array</li>
+<ul>
+<li>look for labels in the code</li>
+<li>look for labels in the exception handlers</li>
+<li>look for labels in the line number and local variable tables</li>
+<li>look for labels in the other code attributes</li>
+</ul>
+<li>if there is a stack map table, parse the first frame</li>
+<li>parse the instructions
+<ul>
+<li>if there is a stack map frame for this offset, call <code>visitFrame</code>,
+and parse next frame</li>
+<li>if there is a label for this offset, call <code>visitLabel</code>
+<li>if there is a line number entry for this offset, call
+<code>visitLineNumber</code></li>
+<li>call <code>visit</code><i>X</i><code>Insn</code></li>
+</ul>
+</li>
+<li>call <code>visitAttribute</code> for each non standard code attribute parsed
+during second step</li>
+<li>call <code>visitMaxs</code></li>
+<li>call <code>visitEnd</code></li>
+</ul>
+<li>call <code>visitEnd</code></li>
+</ul>
+</ul>
+
+<p>Some points are interesting to note:</p>
+
+<ul>
+<li>the visit of line numbers and stack map frames is interleaved with the visit
+of instructions. In the case of stack map frames, not only the visit, but also
+the <i>parsing</i> of the stack map table and of the method's code is
+interleaved. The advantage, compared to a parsing of the stack map table
+followed by a parsing of the method's code, is that no complex data structure
+is needed to store the parsed frames for the second step.</li>
+<li>constant pool items are parsed every time they are referenced, except UTF8
+items, whose values are cached in the <code>strings</code> array. Not also that
+a single array is reused to parse these items. It must be large enough to parse
+the longest string, hence the computation of <code>maxStringLength</code>.</li>
+</ul>
+
+<h4><a name="classwriter"></a>3.3.2 ClassWriter, AnnotationWriter, FieldWriter and MethodWriter</h4>
+
+<p>Since the visit of the class members can be interleaved (it is possible to
+start visiting a field, then start visiting a method, go back to visit
+annotations of the field, continue with some instructions of the method, visit
+attributes of the field, add new instructions to the method, and so on), it is
+not possible to construct the class' byte array in a sequential order, from
+beginning to end. Instead it is necessary to use several byte vectors that can
+grow simultaneously. This is why there are several writer classes, unlike for
+the reader case.</p>
+
+<p>The <code>ClassWriter</code> class is the main entry point. Its most
+important role, beside storing the class header elements and referencing the
+list of its fields and methods, is to manage the constant pool. For that the
+<code>ClassWriter</code> class uses a hash map, which is used as a set, in order
+to avoid adding the same item several times in the constant pool (which is
+represented by a simple byte vector). The constant pool can be copied from an
+existing one by passing a <code>ClassReader</code> argument to the
+<code>ClassWriter</code> constructor (see the <code>copyPool</code> method in
+<code>ClassReader</code>). This allows unchanged methods to be detected and
+copied as is from reader to writer, without visiting their content (see 
+<a href="#classreader">section 3.3.1</a>).</p>
+
+<p>The <code>AnnotationWriter</code> and <code>FieldWriter</code> classes are
+quite simple: they convert visit events to a byte array representation, by using
+<code>ClassWriter</code> in order to add constant pool items when necessary. The
+most complex writer class is the <code>MethodWriter</code> class, because it
+manages advanced features such as automatic maxStack and maxLocals computation,
+automatic stack map frames computation, and automatic handling of wide goto and
+jsr. Without these features, each <code>visit<i>X</i>Insn</code> method would be
+very simple, i.e. it would just add the bytecode representation of an
+instruction to the <code>code</code> byte vector.</p>
+
+<p>In order to be able to automatically compute maxStack and maxLocals, and to
+compute stack map frames, each <code>visit<i>X</i>Insn</code> method does in
+fact more than that: it constructs the control flow graph of the method (see
+<a href="#controlflow">section 3.5</a>), keeps track of the maximum number of
+local variables used, and simulates the execution of the visited instruction to
+keep track of the maximum stack size (for computing maxStack) or of the actual
+stack element types (for computing stack map frames). In fact the general form
+of a <code>visit<i>X</i>Insn</code> method is the following:</p>
+
+<ul>
+<li>if (currentBlock != null) // == if computeMaxs or computeFrames, and if this
+instruction is reachable</li>
+<ul>
+<li>if (computeFrames)</li>
+<ul>
+<li>simulate the execution of this instruction on stack</li>
+</ul>
+<li>else // computeMaxs</li>
+<ul>
+<li>simulate the execution of this instruction on stack <i>height</i></li>
+</ul>
+<li>keep track of the local variables used, if any</li>
+<li>keep track of the successors of this instruction</li>
+<li>update currentBlock</li>
+</ul>
+<li>append instruction to the <code>code</code> byte vector</li>
+</ul>
+
+<p>Also the <code>visitMaxs</code> method is more complicated due to these
+advanced features. It is indeed here that maxStack, maxLocals and stack map
+frames are computed, based on the control flow graph constructed in the
+<code>visit<i>X</i>Insn</code> methods (see 
+<a href="#controlflow">section 3.5</a> for more details).</p>
+
+<h4>3.3.3 Label</h4>
+
+<p>From a user point of view the <code>Label</code> class is used to reference
+instructions. Internally it is used to store the position in bytecode of an
+instruction, and to compute bytecode offsets bewteen this instruction and any
+other instruction (it is also used to represent basic blocks, which are used for
+the automatic computation of the maximum stack size and of the stack map frame
+table of a method - see <a href="#controlflow">section 3.5</a>).</p>
+
+<p>Jump instructions such as <code>IFEQ</code> or <code>GOTO</code> are stored
+in bytecode as an opcode followed by an offset to the target instruction (this
+offset is the difference between the position in bytecode of the target
+instruction and the position in bytecode of the jump instruction). This offset
+can be computed easily in the case of a backward jump (i.e. a jump to an
+instruction that is before the jump instruction in the bytecode), but it cannot
+be computed at all in the case of a forward jump (i.e. a jump to an instruction
+that is after the jump instruction) since, in this case, the target instruction
+has not been visited yet, and so its position is unknown. The case of forward
+jumps is solved in the following way:</p>
+
+<ul>
+<li>The jump instruction is written with a (temporary) null offset.</li>
+<li>The target <code>Label</code> object is updated to memorize the fact that
+this jump instruction makes a forward reference to this label (the
+<code>srcAndRefPositions</code> array in <code>Label</code> is used for
+that).</li>
+<li>When this label is visited, i.e. when its position becomes known, all the
+forward jump instructions to this label (given by
+<code>srcAndRefPositions</code>) are updated, to replace the temporary null
+offsets with their real values, which can now be computed.</li>
+</ul>
+
+<h4>3.3.4 toByteArray</h4>
+
+<p>The <code>toByteArray</code> method in <code>ClassWriter</code> puts together
+all the pieces constructed in the various writer classes in order to get the
+full byte representation of the class. This is done in two steps:</p>
+
+<ul>
+<li>the size of the class is computed by summing the size of all the pieces,
+which is given by the <code>getSize</code> method (this method can add items to
+the constant pool, which modifies its size; this is why the constant pool size
+is added only at the very end).</li>
+<li>a byte vector of this size is allocated, and the pieces are copied into this
+vector in the right order. This is done by calling the <code>put</code> method
+on each piece.</li>
+</ul>
+
+<h3>3.4 Instruction resizing algorithm</h3>
+
+<p>By default the jump instructions such as <code>IFEQ</code> and
+<code>GOTO</code> store a bytecode offset in two bytes. This offset can
+therefore vary between -32768 and 32767. However the bytecode of a method can be
+as large as 65535 bytes: it is therefore possible to have bytecode offsets that
+cannot be represented in two bytes. Hopefully there are two special jump
+instructions that store their bytecode offset in four bytes, namely
+<code>GOTO_W</code> and <code>JSR_W</code>.</p>
+
+<p>In the case of backward jumps the jump offset is known when the jump
+instruction is visited. It then easy to use <code>GOTO</code> or
+<code>GOTO_W</code>, depending on the value of this offset. But in the case of
+forward jumps this is not possible. A first solution is to assume that this
+offset will require 4 bytes, and to reserve enough space for that. But this is
+not very optimal. A second solution is to assume that this offset will require 2
+bytes, and to reserve only 2 bytes for it. The problem is that if the offset
+turns out to require 4 bytes, the jump instruction must be resized to insert two
+additional bytes. In ASM the second solution was choosen. It requires a method
+to resize the forward jump instructions that turn out to require long offsets.
+The algorithm used in this resizing method is presented in this section.</p>
+
+<h4><a name="resizebasic"></a>3.4.1 Basic algorithm</h4>
+
+<p>The first idea is to resize instructions in only one pass, instead of
+resizing them on the fly, in <code>visitLabel</code>, each time a forward jump
+turns out to require a long offset. Indeed the resizing method requires a full
+parsing of the bytecode, which is quite slow. It is therefore important to avoid
+parsing the bytecode several times.</p>
+
+<p>But this introduces a new problem: indeed long forward jumps must somehow be
+memorized until the end of the method is reached, but they cannot be stored in
+bytecode since the space reserved for them (2 bytes), is insufficient. In fact
+this <i>is</i> possible, because the maximum method size, and therefore forward
+jump offset, is 65535, which can be stored in an <i>unsigned</i> short. Also not
+all byte values correspond to valid opcodes, so it is possible to define new
+opcodes (that we note <code>GOTO_L</code>, <code>JSR_L</code>,
+<code>IFEQ_L</code>, and so on) for long forward jump instructions, whose offset
+is stored, by definition, as an unsigned short. Given these elements, if it
+turns out, in <code>visitLabel</code>, that a forward offset is greater than
+32737, the opcode of the corresponding instruction is changed to the equivalent
+non standard opcode with unsigned offset, and the offset is stored as an
+unsigned short.</p>
+
+<p>We now have all the elements to resize the forward jump instructions that
+require long offsets in one pass, once all the method has been visited. In
+practice this consists in replacing the non standard opcodes introduced in the
+previous step with standard ones. This resizing is done in several steps:</p>
+
+<ul>
+<li>first the bytecode is scanned in order to find the instructions that need to
+be resized, and to find where and how much extra bytes must be inserted in
+bytecode.</li>
+<li>then the bytecode is scanned a second time. This time a new bytecode array
+is constructed in parallel, containing the resized instructions. All offsets
+(either short or long) are recomputed, based on the information collected in the
+first step (given a list of insertion points, it is easy to count the number of
+extra bytes that must be inserted between a given source and target instruction,
+and therefore to update an offset value).</li>
+</ul>
+
+<p>The complex step is the first one. This is because the instructions that need
+to be resized are not limited to the long forward jump instructions that were
+detected during the visit of the method's bytecode. Indeed resizing an
+instruction may transform a normal jump instruction into a long jump
+instruction, which must then be resized too (see the example in 
+<a href="#resizeexample">section 3.4.3</a>). The first step is therefore
+iterative. If, in an iteration, some new instructions to be resized are found,
+a new iteration is performed. If, on the contrary, no new instructions to be 
+resized are found, the algorithm stops (in fact other iterations are necessary,
+due to the padding of <code>TABLESWITCH</code> and <code>LOOKUPSWITCH</code>
+instructions - see the comments in source code for more details).</p>
+
+<h4>3.4.2 Impact on code attributes</h4>
+
+<p>Some code attributes contain bytecode offsets, and must be updated when
+instructions are resized. This is the case for example of the <code>
+LineNumberTable</code> and <code>LocalVariableTable</code> attributes. These
+attributes are updated by parsing them and by updating offsets in place (by
+chance all these offsets are stored in four bytes, so no resizing is
+necessary).</p>
+
+<p>The stack map table attribute also contains bytecode offsets, and must be
+updated when instructions are resized. But this is much more complicated than
+with the previous attributes. One reason is that, depending on offsets between
+frames, frames are not compressed in the same way (for instance
+<code>SAME_FRAME</code> or <code>SAME_FRAME_EXTENDED</code>). Another reason is
+that long forward <code>IF</code><i>X</i> instructions are resized by
+transforming them into <code>IF</code><i>NOTX</i> <code>GOTO_W</code>, which
+changes the control flow graph of the method, and therefore the frames that must
+be stored in the stack map table.</p>
+
+<p>For these reasons it is not possible to incrementally update the stack map
+table, as in the <code>LineNumberTable</code> case for example. Instead the
+stack map table is recomputed "from scratch", i.e. from the (modified) control
+flow graph (see <a href="#controlflow">section 3.5</a>). But this is possible
+only if this control flow graph was computed, i.e. if the
+<code>COMPUTE_FRAMES</code> option was used. The solution used for the other
+cases is to reparse and rewrite and the whole class, this time with the
+<code>COMPUTE_FRAMES</code> option (this is done in <code>toByteArray</code>,
+if the <code>invalidFrames</code> flag indicating that a method containing a
+stack map frame table was resized is set).</p>
+
+<h4><a name="resizeexample"></a>3.4.3 An example</h4>
+
+<p>Consider the following Java code:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<pre>
+public void m(int i, int j) {
+    for (; cond(i); --i) {
+        if (j == 0) {
+            break;
+        }
+        ...
+    }
+}
+</pre>
+</td></tr></table>
+</center>
+<br/>
+
+<p>It is compiled into:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<pre>
+public m(II)V
+  GOTO L1
+ L2
+  ILOAD 2
+  IFNE L3
+  GOTO L4
+ L3
+  ...
+  IINC 1 -1
+ L1
+  ALOAD 0
+  ILOAD 1
+  INVOKEVIRTUAL C.cond(I)Z
+  IFNE L2
+ L4
+   RETURN
+</pre>
+</td></tr></table>
+</center>
+<br/>
+
+<p>During the visit of each instruction, offsets are computed step by step as
+follows:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="0" width="100%" border="0">
+<tr>
+  <th width="15%">Position</th>
+  <th width="25%">Instruction</th>
+  <th width="60%">Comment</th>
+</tr>
+<tr>
+  <td class="alt1">0</td>
+  <td><code>&nbsp;GOTO L1</code></td>
+  <td>offset unknown when this instruction is visited</td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>L2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>&nbsp;ILOAD 2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">4</td>
+  <td><code>&nbsp;IFNE L3</code></td>
+  <td>offset unknown when this instruction is visited</td>
+</tr>
+<tr>
+  <td class="alt1">7</td>
+  <td><code>&nbsp;GOTO L4</code></td>
+  <td>offset unknown when this instruction is visited</td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>L3</code></td>
+  <td>offset for <code>IFNE L3</code> becomes known: 10 - 4 = 6</td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>&nbsp;</code>...</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32764</td>
+  <td><code>&nbsp;IINC 1 -1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>L1</code></td>
+  <td>offset for <code>GOTO L1</code> becomes known: 32767 - 0 = 32767</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>&nbsp;ALOAD 0</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32768</td>
+  <td><code>&nbsp;ILOAD 1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32769</td>
+  <td><code>&nbsp;INVOKEVIRTUAL</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32772</td>
+  <td><code>&nbsp;IFNE L2</code></td>
+  <td>offset = 3 - 32772 = -32769</td>
+<tr>
+  <td class="alt1">&nbsp;</td>
+  <td><code>L4</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">&nbsp;</td>
+  <td><code>&nbsp;RETURN</code></td>
+  <td>&nbsp;</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<p>The offset computed for <code>IFNE L2</code> is -32769, which cannot be
+stored in a short. The instruction is therefore transformed into
+<code>IFEQ</code> <code>GOTO_W L2</code> on the fly:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="0" width="100%" border="0">
+<tr>
+  <td class="alt1" width="15%">0</td>
+  <td width="25%"><code>&nbsp;GOTO L1</code></td>
+  <td width="60%">offset = 32767, changed during visit of <code>L1</code></td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>L2</code></td>
+  <td>&nbsp;</td></tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>&nbsp;ILOAD 2</code></td>
+  <td>&nbsp;</td></tr>
+<tr>
+  <td class="alt1">4</td>
+  <td><code>&nbsp;IFNE L3</code></td>
+  <td>offset = 6, changed during visit of <code>L3</code></td>
+</tr>
+<tr>
+  <td class="alt1">7</td>
+  <td><code>&nbsp;GOTO L4</code></td>
+  <td>offset still unknown</td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>L3</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>&nbsp;</code>...</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32764</td>
+  <td><code>&nbsp;IINC 1 -1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>L1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>&nbsp;ALOAD 0</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32768</td>
+  <td><code>&nbsp;ILOAD 1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32769</td>
+  <td><code>&nbsp;INVOKEVIRTUAL</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32772</td>
+  <td><code>&nbsp;IFEQ L4</code></td>
+  <td>offset = 8</td>
+<tr>
+  <td class="alt1">32775</td>
+  <td><code>&nbsp;GOTO_W L2</code></td>
+  <td>offset = 3 - 32775 = -32772</td>
+<tr>
+  <td class="alt1">32780</td>
+  <td><code>L4</code></td>
+  <td>offset for <code>GOTO L4</code> becomes known: 32780 - 7 = 32773</td>
+</tr>
+<tr>
+  <td class="alt1">&nbsp;</td>
+  <td><code>&nbsp;RETURN</code></td>
+  <td>&nbsp;</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<p>The offset computed for <code>GOTO L4</code> is 32773, which cannot be stored
+as a signed short. As explained in <a href="#resizebasic">section 3.4.1</a>, the
+<code>GOTO</code> instruction is then replaced with a non standard
+<code>GOTO_L</code> instruction, whose offset is stored as an unsigned
+short:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="0" width="100%" border="0">
+<tr>
+  <td class="alt1" width="15%">0</td>
+  <td width="25%"><code>&nbsp;GOTO L1</code></td>
+  <td width="60%">offset = 32767, changed during visit of <code>L1</code></td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>L2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td><code>&nbsp;ILOAD 2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">4</td>
+  <td><code>&nbsp;IFNE L3</code></td>
+  <td>offset = 6, changed during visit of <code>L3</code></td>
+</tr>
+<tr>
+  <td class="alt1">7</td>
+  <td><code>&nbsp;<font color="red">GOTO_L</font> L4</code></td>
+  <td>offset = 32773, changed during visit of <code>L4</code></td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>L3</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">10</td>
+  <td><code>&nbsp;</code>...</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32764</td>
+  <td><code>&nbsp;IINC 1 -1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>L1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32767</td>
+  <td><code>&nbsp;ALOAD 0</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32768</td>
+  <td><code>&nbsp;ILOAD 1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32769</td>
+  <td><code>&nbsp;INVOKEVIRTUAL</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32772</td>
+  <td><code>&nbsp;IFEQ L4</code></td>
+  <td>offset = 8</td>
+<tr>
+  <td class="alt1">32775</td>
+  <td><code>&nbsp;GOTO_W L2</code></td>
+  <td>offset = 3 - 32775 = -32772</td>
+<tr>
+  <td class="alt1">32780</td>
+  <td><code>L4</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32780</td>
+  <td><code>&nbsp;RETURN</code></td>
+  <td>&nbsp;</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<p>Since the bytecode contains at least one non standard instruction, the
+<code>resizeInstructions</code> method is called in order to replace them with
+standard ones. As explained in <a href="#resizebasic">section 3.4.1</a>, the
+first step, iterative, consists in finding where and how much extra bytes must
+be inserted into the bytecode. The first iteration of this first step finds that
+<code>GOTO_L</code> must be replaced with a <code>GOTO_W</code> and that,
+consequently, 2 extra bytes must be inserted before index 10. Since at least one
+new instruction to be resized was found, a new iteration is performed. This
+time, when looking at the first instruction, <code>GOTO L1</code>, it is found
+that the jump offset, taking into account the fact that 2 extra bytes will be
+inserted before index 10, will become 32769. The first instruction wil therefore
+need to be resized too, and 2 extra bytes must be inserted before index 3. The
+second iteration ends without detecting other instructions needing to be
+resized. However, since a new instruction to be resized was found, a third
+iteration is performed. This time no new instruction to be resized is found, and
+so the first step ends with the following result: insert 2 bytes before index 3,
+and 2 bytes before index 10 (in original bytecode).</p>
+
+<p>The second step parses the bytecode a fourth and last time, and constructs
+the resized instructions at the same time, copying instructions as is if they
+do not need to be resized (except for offsets, which are all recomputed), or
+changing them in the other case. The result is shown below:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="0" width="100%" border="0">
+<tr>
+  <td class="alt1" width="15%">0</td>
+  <td width="25%"><code>&nbsp;GOTO_W L1</code></td>
+  <td width="60%">offset = 32771</td>
+</tr>
+<tr>
+  <td class="alt1">5</td>
+  <td><code>L2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">5</td>
+  <td><code>&nbsp;ILOAD 2</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">6</td>
+  <td><code>&nbsp;IFNE L3</code></td>
+  <td>offset = 8</td>
+</tr>
+<tr>
+  <td class="alt1">9</td>
+  <td><code>&nbsp;GOTO_W L4</code></td>
+  <td>offset = 32775</td>
+</tr>
+<tr>
+  <td class="alt1">14</td>
+  <td><code>L3</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">14</td>
+  <td><code>&nbsp;</code>...</td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32768</td>
+  <td><code>&nbsp;IINC 1 -1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32771</td>
+  <td><code>L1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32771</td>
+  <td><code>&nbsp;ALOAD 0</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32772</td>
+  <td><code>&nbsp;ILOAD 1</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32773</td>
+  <td><code>&nbsp;INVOKEVIRTUAL</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32776</td>
+  <td><code>&nbsp;IFEQ L4</code></td>
+  <td>offset = 8</td>
+<tr>
+  <td class="alt1">32779</td>
+  <td><code>&nbsp;GOTO_W L2</code></td>
+  <td>offset = -32774</td>
+<tr>
+  <td class="alt1">32784</td>
+  <td><code>L4</code></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td class="alt1">32784</td>
+  <td><code>&nbsp;RETURN</code></td>
+  <td>&nbsp;</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<h3><a name="controlflow"></a>3.5 Control flow analysis algorithm</h3>
+
+<p>This section presents the algorithm used to compute the maximum stack size
+and the stack map frame table of a method. This algorithm is a control and data 
+flow analysis algorithm, based on the decomposition of the method into a 
+<i>control flow graph</i> of <i>basic blocks</i>. A basic block is a sequence of
+instructions where only the first instruction is the target of a jump
+instruction, and where only the last instruction can jump to other basic
+blocks. The control flow graph of a method is the graph whose nodes are the
+basic blocks, and whose edges connect the basic blocks that are linked by jump
+instructions. As an example, the control flow graph of the method defined in
+<a href="#fixpoint">section 3.5.1</a> is the one shown in 
+<a href="#install">section 2</a>.</p>
+
+<h4><a name="fixpoint"></a>3.5.1 Basic algorithm</h4>
+
+<p>Stack map frames are computed in a two steps process:</p>
+
+<ul>
+<li>During the visit of each instruction, the state of the frame at the end of
+the current basic block is updated by simulating the action of the instruction
+on the previous state of this so called "output frame".</li>
+<li>In visitMaxs, a fix point algorithm is used to compute the "input frame" of
+each basic block, i.e. the stack map frame at the begining of the basic block,
+starting from the input frame of the first basic block (which is computed from
+the method descriptor), and by using the previously computed output frames to
+compute the input state of the other blocks.</li>
+</ul>
+
+<p>Let's take a simple example in order to explain the details of this
+algorithm. Consider the following very simple method:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<pre>
+public static m(Z)LA;
+  GETSTATIC B.VALUE : LB;
+  ASTORE 1
+  GOTO L0
+ L1
+  GETSTATIC A.VALUE : LA;
+  ASTORE 1
+ L0
+  ILOAD 0
+  IFNE L1
+  ALOAD 1
+  ARETURN
+</pre>
+</td></tr></table>
+</center>
+<br/>
+
+<h5>First step</h5>
+
+<p>As stated above, during the first step of the algorithm, which takes place
+in each <code>visit<i>X</i>Insn</code> method in <code> ClassWriter</code>, the
+state of the output frame of each basic block is updated by simulating the
+action of the visited instruction. It is important to note that the algorithm
+works at the basic block level, and not at the instruction level. This means
+that input and output frames are associated to basic blocks, and not to
+individual instructions. In practice, they are associated to <code>Label</code>
+objects, which mark the beginning of basic blocks.</p>
+
+<p>The effect of this first step for the above example method is illustrated on
+the table below:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="1" width="100%" border="0">
+<tr>
+  <th>Label</th>
+  <th>Instruction</th>
+  <th>Output frame</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>GETSTATIC B.VALUE : LB;</code></td>
+  <td>O1 = [?] [?B]</td>
+  <td>getstatic pushes a value of type B on the stack</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>ASTORE 1</code></td>
+  <td>O1 = [?B] [?]</td>
+  <td>astore consumes this value and stores it in local 1</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>GOTO L0</code></td>
+  <td>O1 = [?B] [?]</td>
+  <td>goto does not change the frame</td>
+</tr>
+<tr>
+  <td colSpan=4>&nbsp;</td>
+</tr>
+<tr>
+  <td><code>L1</code></td>
+  <td><code>GETSTATIC A.VALUE : LA;</code></td>
+  <td>O2 = [?] [?A]</td>
+  <td>each basic block starts with a new, unknown frame</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>ASTORE 1</code></td>
+  <td>O2 = [?A] [?]</td>
+  <td>astore stores the value produced by getstatic in local 1</td>
+</tr>
+<tr>
+  <td colSpan=4>&nbsp;</td>
+</tr>
+<tr>
+  <td><code>L0</code></td>
+  <td><code>ILOAD 0</code></td>
+  <td>O3 = [?] [?I]</td>
+  <td>iload pushes the value of local 0, which is of type int</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>IFNE L1</code></td>
+  <td>O3 = [?] [?]</td>
+  <td>ifne consumes this value</td>
+</tr>
+<tr>
+  <td colSpan=4>&nbsp;</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>ALOAD 1</code></td>
+  <td>O4 = [?] [?L1]</td>
+  <td>aload pushes the value of local 1, which is unknown</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td><code>ARETURN</code></td>
+  <td>O4 = [?] [?]</td>
+  <td>areturn consumes this value</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<p>At the beginning, the ouput frame O1 of the first basic block is completely
+unknown. During the visit of the first instruction, the action of
+<code>GETSTATIC</code> is simulated: the result is that a new value of type B is
+pushed on the stack, on top of the previous values (although we know here that
+the stack is initially empty, we do not take this into account and do as if the
+stack could previously contain any number of values of any type - hence the
+[<b>?</b>B]). During the visit of the second instruction, the output frame O1 is
+updated to simulate the effect of <code>ASTORE</code>: the result is that the
+value previously pushed on the stack is poped and stored in the local variable
+1. The visit of the third instruction does not change the output frame O1, but
+changes the current basic block to <code>null </code>.</p>
+
+<p>The visit of the L1 label makes L1 become the new current basic block. Like
+for the first basic block, the output frame O2 of this basic block is initially
+completely unknown. The visit of the instructions of this basic block is then
+similar to the visit of the previous instructions.</p>
+
+<p>The visit of the L0 label makes L0 become the new current basic block. Here
+again we start with a completely unknown output frame O3 although, in this
+case, we could start from the value of O2 (since this basic block is a
+successor of the previous one). The <code>ILOAD</code> instruction loads the
+value of local variable 0, which is necessarily of type int (the whole
+algorithm is based on the assumption that the code is correct), and pushes it
+on the stack. The <code>IFNE</code> instruction consumes this value.</p>
+
+<p>Another effect of simulating the action of the <code>IFNE</code> instruction
+is to create a new basic block, and to make it the new current basic block.
+This is why, although there is no label just after this instruction, the basic
+block changes. Here again, the output frame O4 of this basic block is initially
+completely unknown (although, as before and for the same reason, we could start
+from the value of O3). The <code>ALOAD</code> instruction loads the value of
+local variable 1, whose type is unknown since the frame is initially completely
+unknown. The only thing we know is that, after the execution of this method,
+the stack contains one additional value whose type is the type of local
+variable 1 before this instruction was executed (hence the [?<b>L1</b>]).</p>
+
+<h5>Second step</h5>
+
+<p>During the second step of the algorithm, which takes place in the <code>
+visitMaxs</code> method, the  input frames of each basic block are computed by
+using an iterative fix point algorithm (i.e. an algorithm to find a fix point 
+<i>x</i> of a function <i>f</i>, defined by <i>f(x)=x</i>. If <i>x</i> values
+define a complete lattice and if <i>f</i> is monotonic, 
+<i>x<sub>n+1</sub>=f(x<sub>n</sub>)</i> converges to the smallest fix point of 
+<i>f</i>, according to the 
+<a href="http://en.wikipedia.org/wiki/Knaster%E2%80%93Tarski_theorem">Tarski</a>
+theorem. Here <i>x</i> is a control flow graph with input and output frames,
+<i>f</i> is a "merge" function and the order relation is based on the subtyping
+relation for the verification type system). First the input frame I1 of the
+first basic block is computed from the method descriptor "public static
+m(Z)LA;", which gives I1 = [I] []. Then the first basic block is marked as
+"changed", and the fix point algorithm starts:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="0" width="90%" border="1"><tr><td>
+<table cellSpacing="1" cellPadding="1" width="100%" border="0">
+<tr>
+  <th>Iteration</th>
+  <th>Changed</th>
+  <th>Ouput frames</th>
+  <th>Input frames</th>
+  <th>Comment</th>
+</tr>
+<tr>
+  <td class="alt1">0</td>
+  <td>B1</td>
+  <td>O1 = [?B] [?]<br>O2 = [?A] [?]<br>O3 = [?] [?]<br>O4 = [?] [?]</td>
+  <td><b>I1= [I] []</b><br>I2 = [?] [?]<br>I3 = [?] [?]<br>I4 = [?] [?]</td>
+  <td>Initialization of input frame I1 from the method's descriptor,<br>B1
+  marked as "changed"</td>
+</tr>
+<tr>
+  <td class="alt1">1</td>
+  <td>B3</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br>I2 = [?] [?]<br><b>I3 = [IB] []</b><br>I4 = [?] [?]</td>
+  <td>B1 marked as "unchanged",<br>merge of I1 and O1 into I3 (B3 is a successor
+  of B1),<br>B3 marked as "changed"</td>
+</tr>
+<tr>
+  <td class="alt1">2</td>
+  <td>B2, B4</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br><b>I2 = [IB][]</b><br>I3 = [IB] []<br><b>I4 = [IB] []</b></td>
+  <td>B3 marked as "unchanged",<br>merge of I3 and O3 into I2 (B2 is a successor
+  of B3),<br>B2 marked as changed,<br>merge of I3 and O3 into I4 (B4 is as
+  successor of B3),<br>B4 marked as changed</td>
+</tr>
+<tr>
+  <td class="alt1">3</td>
+  <td>B4, B3</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br>I2 = [IB] []<br><b>I3 = [IA] []</b><br>I4 = [IB] []</td>
+  <td>B2 marked as "unchanged",<br>merge of I2 and O2 into I3 (B3 is a successor
+  of B2),<br>B3 marked as changed.</td>
+</tr>
+<tr>
+  <td class="alt1">4</td>
+  <td>B3</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br>I2 = [IB] []<br>I3 = [IA] []<br>I4 = [IB] []</td>
+  <td>B4 marked as "unchanged"</td>
+</tr>
+<tr>
+  <td class="alt1">5</td>
+  <td>B2, B4</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br><b>I2 = [IA] []</b><br>I3 = [IA] []<br><b>I4 = [IA] []</b></td>
+  <td>B3 marked as "unchanged",<br>merge of I3 and O3 into I2 (B2 is a successor
+  of B3),<br>B2 marked as changed,<br>merge of I3 and O3 into I4 (B4 is as
+  successor of B3),<br>B4 marked as changed</td>
+</tr>
+<tr>
+  <td class="alt1">6</td>
+  <td>B4</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br>I2 = [IA] []<br>I3 = [IA] []<br>I4 = [IA] []</td>
+  <td>B2 marked as "unchanged",<br>merge of I2 and O2 into I3 (B3 is a successor
+  of B2),<br>B3 <b>not</b> marked as changed.</td>
+</tr>
+<tr>
+  <td class="alt1">7</td>
+  <td>&nbsp;</td>
+  <td>&nbsp;</td>
+  <td>I1= [I] []<br>I2 = [IA] []<br>I3 = [IA] []<br>I4 = [IA] []</td>
+  <td>B4 marked as "unchanged"</td>
+</tr>
+</table>
+</td></tr></table>
+</center>
+<br/>
+
+<!-- third step? use the input frames to compute the stackmaptable
+attribute -->
+
+<h4>3.5.2 Uninitialized types</h4>
+
+<p>The simulation of a <code>NEW</code> <i>T</i> instruction results in a
+special <i>uninitialized</i> type being pushed on the stack. This special type
+contains the offset of the <code>NEW</code> instruction that created it. When
+an <code>INVOKESPECIAL</code> instruction for a <i>T</i> constructor is
+simulated, all occurences of this special type in the current stack map frame
+must be replaced with the normal <i>T</i> type.</p>
+
+<p>The basic block input and output frame data structures presented in the
+previous section are not sufficient to take uninitialized types into account.
+Indeed, when a constructor invocation is visited, the type of the target may be
+unknow, and many local variable and operand stack types may also be unknown. It
+is therefore impossible to replace all occurences of the target type everywhere
+in the stack map frame.</p>
+
+<p>For this reason an additional data structure is associated to each basic
+block, namely the list of types that are initialized in this basic block (these
+types can be relative to the unknown input stack map frame of the basic block).
+This data structure is constructed during the visit of instructions, and is
+used in <code>visitMaxs</code>, when all the types are known.</p>
+
+<h4>3.5.3 Exception handlers</h4>
+
+<p>For all the instructions covered by an exception handler, the control flow
+can jump to the exception handler block. This means that, inside the region
+covered by an exception handler, and as a consequence of the definition of
+basic blocks, basic blocks are reduced to individual instructions. In this case
+the advantage of using an algorithm working at the basic block level is lost,
+since there are as many basic blocks as instructions.</p>
+
+<p>Hopefully it is not necessary to really use one basic block per instruction
+inside regions covered by exception handlers. This is because not all the
+frames associated to these instructions have an impact on the input frame of
+the exception handler. Indeed this input frame only contains local variable
+types, and its stack is reduced to a single element that depends only on the
+type of exception caught by this handler. As a consequence only the frames
+associated to the instructions that affect local variables are important. In
+practice, this means that, inside regions covered by exception handlers,
+<i>x</i><code>STORE</code> instructions end the current basic block (and start a
+new one) like, for instance, an <code>IFEQ </code> instruction.</p>
+
+<p>As an example, consider the following method:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<pre>
+public m(Ljava/lang/Integer;Ljava/lang/Float;)Ljava/lang/Number;
+  TRYCATCHBLOCK L0 L1 L1 java/lang/Exception
+  ACONST_NULL
+  ASTORE 3
+ L0
+  ALOAD 1
+  ASTORE 3
+  ALOAD 2
+  ASTORE 3
+  ALOAD 3
+  ARETURN
+ L1
+  ASTORE 4
+  ALOAD 3
+  ARETURN
+</pre>
+</td></tr></table>
+</center>
+<br/>
+
+<p>Normally, due to the exception handler, each instruction between L0 and L1
+should be a distinct basic block, which would give 6 basic blocks inside this
+region. In pratice, thanks to the above optimization, only the
+<code>ASTORE</code> instructions change the current basic block, which gives 3
+basic blocks (<code>ALOAD 1 ASTORE 3</code>, <code>ALOAD 2 ASTORE 3</code> and
+<code>ALOAD 3 ARETURN</code>). Note that if the instructions between L0 and L1
+were considered as a single basic block, the frame computed for L1 would be
+incorrect: it would indeed be the same as the output frame of the previous
+block, where local variable 3 is of type <code>Float</code>.</p>
+
+<h4>3.5.4 Dead code</h4>
+
+<p>The fix point algorithm used in the second step of the algorithm described
+in <a href="#fixpoint">section 3.5.1</a> is limited to reachable code. Indeed,
+by definition, reachable code is code that can be reached from the initial basic
+block in the control flow graph, and the fix point algorithm is precisely
+looking at these blocks. As a consequence the algorithm does not compute the
+input frame of dead basic blocks.</p>
+
+<p>Unfortunately the Java 6 split verifier requires a stack map frame for every
+basic block, even unreachable ones. The problem, as shown above, is that these
+frames are not computed and, even worse, <i>cannot</i> be computed. Indeed an
+unreachable basic block can contain illegal bytecode sequences, such as
+<code>ISTORE 1 ALOAD 1</code> (more precisely this <i>was</i > possible with the
+JVM verifier prior to Java 6; but this is no longer possible with the new
+verifier).</p>
+
+<p>The consequence of all this is that dead code must either be removed or
+replaced with any bytecode sequence, provided it is legal. The first solution
+was judged too complicated (although the <code>resizeInstructions</code>
+method could help). So the second solution has been choosen.</p>
+
+<p>A simple solution is to replace dead code with <code>NOP</code>
+instructions. In this case any stack map frame will be ok for these blocks. The
+only problem is that execution can fall from the end of a dead code block to
+the end of the method or to the start of a reachable block. So either the stack
+map frame for the dead code block must be consistent with the frame of the next
+block, or the last instruction of the dead code block must not be replaced with
+a <code>NOP</code> but with an instruction without successor, such as
+<code>RETURN</code>, <code>GOTO</code>, or <code>ATHROW</code>.</p>
+
+<p>The first solution is too complicated; the second one is possible, but the
+fact that the dead code block can be reduced to a single byte must be taken
+into account: there is not always enough room to replace it with <code> NOP
+</code> instructions followed by a <code>GOTO</code>, for example. <i>x</i>
+<code>RETURN</code> can be used (this is a single byte instruction), but this
+requires adjustements to the method's return type. The <code>ATHROW</code>
+instruction does not have this problem, and is also a single byte instruction.
+It was therefore choosen to end the dead code blocks.</p>
+
+<p>Note that it is not necessary to insert instructions to create something on
+stack before <code>ATHROW</code>: the stack map frame for this block can
+"declare" that, when the execution of this basic block begins, there is already
+an exception on stack (there will be no consistency problem with other frames
+since this block is unreachable. Also there is no problem with declared
+exceptions, because the verifier does not check that <code>ATHROW</code>
+instructions are consistent with declared exceptions).</p>
+
+<p>Choosing <code>ATHROW</code> and declaring a stack map frame of the form []
+[java/lang/Throwable] for dead basic blocks gives the additional benefit of not
+requiring any adjustement to exception handlers. Indeed, if a dead basic block
+is an exception handler, either its stack map frame must be consistent with []
+[exception type], or this exception handler declaration must be removed. Since
+[] [java/lang/Throwable] is consistent with any [] [exception type] frame,
+exception handler declarations for dead code blocks do not need to be removed,
+which saves code.</p>
+
+<p>In summary, the solution for dead code blocks is to replace these blocks
+with <code>NOP</code> ... <code>NOP</code> <code>ATHROW</code>, and to declare
+a [] [java/lang/Throwable] stack map frame for these blocks.</p>
+
+<h2 style="page-break-before:always;">4 Code optimizations</h2>
+
+<p>The main objective of ASM is to get the smallest and fastest code as
+possible, while keeping a quite "clean" public API. This section explains the
+techniques used <i>in this project</i> to achieve these objectives (many of
+them are <i>not</i> recommended for mainstream development).</p>
+
+<h3>4.1 Optimizing performances</h3>
+
+<p>The first and most important step to get good performances is to use the
+right API and good algorithms [R0]. Sometimes it is hard to decide which API or
+algorithm is best without actually implementing and testing all options. In
+this case, take the time to implement and test all options to find the best
+one. There are however some general rules that can be used when designing an
+API and when implementing it, in order to get good performances (a side effect
+of these rules is to reduce code size):</p>
+
+<ul>
+<li>[R1] the API must stay very close to the internal class file structures, in
+order to avoid costly conversions during parsing and writing. Many examples of
+this rule can be seen in the existing API: internal class names, type
+descriptors and signatures are passed as argument in visit methods in the same
+form as they are stored in the class file. Stack map frames are also visited as
+they as stored in the class file, i.e. in a compressed form (although there is
+an option to uncompress them). The drawback of this rule is when several class
+adapters need a high level view of these encoded structures (for example a
+<code>SignatureVisitor</code> based view of a signature string): indeed, in this
+case, the decoding and encoding steps will be executed in each adapter, while
+they could be executed only once in <code>ClassReader</code> and
+<code>ClassWriter</code>.</li>
+<li>[R2] the implementation must not include any check or verification, at any
+level (class file parsing, preconditions of methods, validity of bytecode
+sequences, etc). These verifications must be added in
+<code>Check</code><i>X</i><code>Adapter</code> classes.</li>
+</ul>
+
+<p>Once the best API and algorithms have been found, several "low level"
+techniques can be used to optimize performances:</p>
+
+<ul>
+<li>[R3] avoid string manipulation operations. These operations generally have a
+high cost. Examples of this can be seen in <code>ClassReader</code>: the
+<code>strings</code> array is used to avoid parsing and building strings several
+times for the same constant pool UTF8 item. Another example is in the
+<code>Label</code> class: the types used for stack map frames are encoded as int
+values instead of strings (they were initially stored as strings; the change to
+int values improved performances a lot).</li>
+<li>[R4] avoid array copy operations. Several examples of this principle can be
+seen in the existing implementation. For example the <code>toByteArray</code> 
+method first computes the size of the class, then allocates a 
+<code>ByteVector</code> of this size, and finally writes the class content in 
+this vector. This avoids many calls to the <code>enlarge</code> method in
+<code>ByteVector</code>, and therefore many array copy operations.</li>
+<li>[R5] avoid getter and setter methods, at least for non public or protected
+fields. Some JVMs do not inline these methods, in which case accessing fields
+directly is faster than using getter and setters. This also saves code. The core
+package does not use any such method. The tree package also exposes many fields
+directly.</li>
+<li>[R6] copy frequently accessed instance fields to local variables to reduce
+field access operations (this is the logical continuation of the previous
+technique). See for example the <code>ByteVector</code> class: the 
+<code>length</code> and <code>data</code> fields are copied into local variables
+in methods that access them several times. A variant of this rule is to replace
+fields with method parameters (this variant was used in the 
+<code>signature</code> package - see
+<a href="#optimizeexample">section 4.3</a>).</li>
+<li>[R7] cache the result of complex functions in order to execute them only
+once. This rule is used, for example, in the <code>visitMethod</code> method in
+<code>MethodWriter</code>: the result of <code>getArgumentsAndReturnSizes</code>
+for a method <code>Item</code> is cached in an unused field of method
+<code>Item</code>s. It is also used in <code>ClassReader</code>: the
+<code>strings</code> array is used as a cache to avoid parsing the same string
+constant pool item several times.</li>
+<li>[R8] use <code>int</code> coded data structures in order to replace slow
+data structure access methods with fast arithmetic or bitwise operations (this
+also reduces code size). Several examples of this rule can be seen in the
+existing code: the boolean stack encoded as an <code>int</code> in 
+<code>SignatureWriter</code>, the verification types encoded as <code>int</code>
+in <code>Label</code>, etc.</li>
+<li>[R9] use <code>switch</code> statements that can be compiled into
+<code>TABLESWITCH</code> instead of <code>LOOKUPSWITCH</code> (the first opcode
+executes faster), where possible (this requires switch case constants that are
+not sparse).</li>
+</ul>
+
+<p>These techniques must be used with care (because they can make code harder
+to understand and to maintain) and only when they bring a real performance
+benefit. In order to see if it is the case, the performances of every proposed
+optimization must be compared to the performances of the current code (if
+possible on several JVMs, in order to exclude singularities due to specific JVM
+optimization strategies).</p>
+
+<p>Of course optimizations must be applied in priority to the code that is
+responsible for the most important part of the total execution time, in order
+to get the best performance improvements. In order to detect these "hotspots",
+a code profiler can be used. It is also possible to turn some code sections on
+or off, in order to measure, by difference to the normal case, the cost of this
+section.</p>
+
+<h3>4.2 Optimizing code size</h3>
+
+<p>The obvious way to reduce code size is to reduce the number of classes and
+methods! This begins by reducing the number of interfaces in the public API
+(not because interfaces themselves are big, but because it indirectly reduces
+the number of classes and methods) [R10]. This reduction generally requires
+compromises with what a "clean" object oriented API would be. Whether these
+compromises are worthwhile or not must be decided on a case by case basis.
+Several such compromises can be detected in the current public ASM API. For
+example the <code>AnnotationVisitor</code> interface is used both for
+annotations and annotation arrays although, in the second case, the 
+<code>name</code> argument is useless and would not have been used if an 
+<code>AnnotationArrayVisitor</code> interface were defined. Another example is
+the <code>SignatureVisitor</code> interface: a single interface is used to
+represent a quite complex recursive data structure that, in a "normal" object
+oriented design, would be represented with up to 8 interfaces.</p>
+
+<p>The number of classes can be reduced in several ways. The most "elegant" one
+is to use appropriate design patterns [R11]. For instance the <code>
+ClassReader</code> class needs <code>Attribute</code> factories in order to
+create attribute objects for the class, method and field attributes. But
+instead of using the Factory design pattern, which requires two classes, ASM
+uses the Prototype pattern, which uses only one class.</p>
+
+<p>The number of classes can also be reduced by merging several related classes
+into a single one [R12]. For instance a single <code>Item</code> class is used
+to represent the eleven constant pool item types, and the <code>Label </code>
+class is used to represent both bytecode positions and basic blocks. The
+drawback of this approach is that it increase memory requirements (an integer
+<code>Item</code> object, for example, uses 11 fields while an
+<code>IntegerItem</code> class would require only 4 fields).</p>
+
+<p>The number of methods can be reduced by inlining methods that are called at
+only one place in the code (a method that is called from several places can
+also be inlined if the client code can be refactored to call it at only one
+place) [R13]. This technique has been used in the <code>ClassReader</code>
+class: the <code>accept</code> method is very big because it inlines many
+auxilliary methods that, in a normal object oriented design, would have been
+defined separately in order to get methods of reasonnable sizes. Another
+benefit of this technique is that it increases performances.</p>
+
+<p>Finally some tricks can be used in very specific cases to reduce code
+size:</p>
+
+<ul>
+<li>[R14] use string constant values directly in code, instead of declaring them
+in <code>final static String</code> fields. It saves space by removing field
+declarations.</li>
+<li>[R15] avoid using array initializers like <code>{</code> 
+<i>value1</i><code>,</code> <i>...</i> <i>valueN</i> <code>}</code>. These
+initializers can be replaced with a loop that initializes each array element
+from a string representation of the whole array. This technique is used in
+<code>ClassWriter</code> and <code>asm.util.AbstractVisitor</code>, for 
+example.</li>
+<li>[R16] some switch instructions can be replaced with an array access. For
+instance a switch that associates A, C or Z to 0, 1 or 3 respectively can be
+replaced with <code>new</code> <code>char[]</code> <code>{</code> 
+<code>'A',</code> <code>'C',</code> <code>0,</code> <code>'Z'</code>
+<code>}</code><code>[i]</code>, which can itself be optimized in
+<code>"AC Z".charAt(i)</code> (by using [R15]).</li>
+</ul>
+
+<p>The last technique used in ASM to reduce code size is to rename private and
+package class members with shorter names, and to sort the constants in the
+constant pools (in order to get better <code>jar</code> compression ratios).
+This is done with the <code>asm.optimizer</code> package.</p>
+
+<h3><a name="optimizeexample"></a>4.3 An example</h3>
+
+<p>This section illustrates the previous optimization techniques on a real
+example, namely the <code>asm.signature</code> package. The goal of this package
+is to provide an event based API, a parser and a writer for the generics
+signature grammar, given below:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<i>ClassSignature</i>:<br/>
+&nbsp;&nbsp;<i>FormalTypeParameters</i>? <i>ClassTypeSignature</i>
+<i>ClassTypeSignature</i>*<br/>
+<br/>
+<i>FormalTypeParameters</i>:<br/>
+&nbsp;&nbsp;<font color="red">&lt;</font> <i>FormalTypeParameter</i>+
+<font color="red">&gt;</font><br/>
+<br/>
+<i>FormalTypeParameter</i>:<br/>
+&nbsp;&nbsp;<font color="red">Identifier</font> <i>FieldTypeSignature</i>?
+<i>FieldTypeSignature</i>*<br/>
+<br/>
+<i>FieldTypeSignature</i>:<br/>
+&nbsp;&nbsp;<i>ClassTypeSignature</i> | <i>ArrayTypeSignature</i> |
+<i>TypeVariableSignature</i><br/>
+<br/>
+<i>ClassTypeSignature</i>:<br/>
+&nbsp;&nbsp;<font color="red">L</font> <font color="red">Identifier</font> (
+<font color="red">/</font> <font color="red">Identifier</font> )*
+<i>TypeArguments</i>? ( <font color="red">.</font>
+<font color="red">Identifier</font> <i>TypeArguments</i>? )*
+<font color="red">;</font><br/>
+<br/>
+<i>TypeArguments</i>:<br/>
+&nbsp;&nbsp;<font color="red">&lt;</font> <i>TypeArgument</i>+
+<font color="red">&gt;</font><br/>
+<br/>
+<i>TypeArgument</i>:<br/>
+&nbsp;&nbsp;<font color="red">*</font> | ( ( <font color="red">+</font> |
+<font color="red">-</font> )? <i>FieldTypeSignature</i> )<br/>
+<br/>
+<i>ArrayTypeSignature</i>:<br/>
+&nbsp;&nbsp;<font color="red">[</font> <i>TypeSignature</i><br/>
+<br/>
+<i>TypeVariableSignature</i>:<br/>
+&nbsp;&nbsp;<font color="red">T</font> <font color="red">Identifier</font>
+<font color="red">;</font><br/>
+<br/>
+<i>TypeSignature</i>:<br/>
+&nbsp;&nbsp;<font color="red">Z</font> | <font color="red">C</font> |
+<font color="red">B</font> | <font color="red">S</font> |
+<font color="red">I</font> | <font color="red">F</font> |
+<font color="red">J</font> | <font color="red">D</font> |
+<i>FieldTypeSignature</i><br/>
+<br/>
+<i>MethodTypeSignature</i>:<br/>
+&nbsp;&nbsp;<i>FormalTypeParameters</i>? <font color="red">(</font>
+<i>TypeSignature</i>* <font color="red">)</font> ( <i>TypeSignature</i> |
+<font color="red">V</font> ) (
+<font color="red">^</font><i>ClassTypeSignature</i> |
+<font color="red">^</font><i>TypeVariableSignature</i> )*<br/>
+</td></tr></table>
+</center>
+<br/>
+
+<p>The first design of this package used 7 interfaces, roughly corresponding to
+the grammar non terminals:</p>
+
+<ul>
+<li><code>ClassSignatureVisitor</code></li>
+<li><code>FormalTypeParameterVisitor</code></li>
+<li><code>FieldTypeSignatureVisitor</code></li>
+<li><code>ClassTypeSignatureVisitor</code></li>
+<li><code>TypeArgumentsVisitor</code></li>
+<li><code>TypeSignatureVisitor</code></li>
+<li><code>MethodTypeSignatureVisitor</code></li>
+</ul>
+
+<p>The parser was generated with <code>JavaCC</code> and the writer used 7
+classes, one per interface.</p>
+
+<p>The second step was to replace the generated parser with a hand written,
+recursive descent parser, containing 11 recursive methods (one per rule of the
+grammar). This led to major performance improvements, and to a huge code size
+reduction. This was due to the fact that hand written code can be more
+performant than generated code, and also to the fact that all lexical and
+syntaxic verifications were removed ([R2]).</p>
+
+<p>In the third step a refactoring reduced the number of writer classes to 6
+instead of 7 (by using inheritance).</p>
+
+<p>In the fourth step the number of interfaces was reduced to 4 ([R10]), and
+the 6 writer classes were merged into a single one ([R12]), using a boolean
+stack encoded as an <code>int</code> ([R8]). The parser was mostly unchanged.
+The reduced API allowed invalid signatures to be generated (it corresponded to
+a generalized grammar where <i>FieldType</i>, <i>ClassType </i>,
+<i>ArrayType</i>, <i>TypeVariable</i> and <i>Type</i> are merged into a single
+<i>Type</i> non terminal), but this was seen as an acceptable compromise.</p>
+
+<p>In the sixth step the parser was optimized by replacing some fields that
+represented the last parsed character and its index with method arguments
+([R6]). In addition some methods were inlined, which removed 6 parsing methods
+out of 11 ([R13]).</p>
+
+<p>Finally, after some feedback from users, the API was reduced to only one
+interface (although it allowed even more invalid signatures to be generated,
+this was judged more practical to define <code>SignatureAdapter</code>s), and
+this provided more opportunities to inline parser methods: the final parser
+contains only 3 parsing methods.</p>
+
+<p>The code size decreased from 22KB at the first step, to 6.8KB at the second
+step, 4.5KB at the fourth step, and less than 4KB at the last step. At the same
+time the average time to parse and rebuild a signature decreased from 74 micro
+seconds at the first step, to 15 micro seconds at the second step, 5.4 micro
+seconds at the fourth step, and less than 5 micro seconds at the last step.</p>
+
+<p>As can be seen from this example (more details can be found on the 
+<a href="http://www.objectweb.org/wws/arc/asm/2005-01/msg00041.html">ASM
+mailing list archives</a> of January 2005), improving performances often leads
+to code size reductions, and vice versa!</p>
