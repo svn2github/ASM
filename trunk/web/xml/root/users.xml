@@ -195,6 +195,26 @@
           optimization purposes, and to provide a basic mixin based
           inheritance mechanism.</td>
         </tr>
+        
+        <tr>
+          <td align="center" valign="middle">
+          <a href="http://jiprof.sourceforge.net/">
+          <img src="http://jiprof.sourceforge.net/images/jip-logo-90.png" border="0"
+            width="90" height="132" alt="JiP logo" align="middle"/>
+          </a>
+          </td>
+          <td valign="top">The <a href="http://jiprof.sourceforge.net/">Java Interactive Profiler</a> 
+          is a code profiler that is written in 100% Java. JIP allows the developer
+          to start and stop profiling interactively while the target program
+          is running. In addition, JIP lets the developer filter out classes 
+          and packages so that the resulting profile is less cluttered. By using 
+          the Java5 agent interface, this is accompilshed without the need to 
+          recomple or have special libraries included with the target program.
+          "ASM is a great product that was instrumental in allowing me to develop
+          JIP", writes Andrew Wilcox, JIP's creator. "It's lightweight, easy to use
+          and really allowed me to focus on the product I was creating rather than 
+          the details of byte code enhancement."</td>
+        </tr>
       </table>
 
     </s1>
