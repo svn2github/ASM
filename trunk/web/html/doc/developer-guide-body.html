@@ -166,7 +166,7 @@ package does not depend on the other ones and can be used alone.</li>
 <li><code>org.objectweb.asm.signature</code> provides an API to read and write
 generics signatures. It is independent of the core package but complements
 it.</li>
-<li><code>org.objectweb.asm.tree</code> provides a DOM like API on top of SAX
+<li><code>org.objectweb.asm.tree</code> provides a DOM like API on top of the SAX
 like API provided by the core package. It can be used to implement complex class
 transformations, for which the core package would be too complicated to
 use.</li>
@@ -199,7 +199,9 @@ representation - namely a byte array - to a high level one or vice versa). The
 <code>signature</code> package is also quite simple (it consists in a parser and
 a pretty printer for a small grammar). In fact the only packages that are not
 completely trivial, except the core package, are the <code>commons</code> and
-<code>tree.analysis</code> packages. This explains why this guide is focused on
+<code>tree.analysis</code> packages. But the algorithms used in 
+<code>tree.analysis</code> package are similar to the one explained in section 
+<a href="#controlflow">3.5</a>. This explains why this guide is focused on
 the core package only.</p>
 
 <h3>3.2 Main data structures</h3>
@@ -409,7 +411,7 @@ then all steps below are skipped.</li>
 annotation</li>
 <li>call <code>visitAttribute</code> for each non standard attribute parsed
 during second step</li>
-<li>find labels and store then in <code>labels</code> array</li>
+<li>find labels and store then in the <code>labels</code> array</li>
 <ul>
 <li>look for labels in the code</li>
 <li>look for labels in the exception handlers</li>
@@ -509,7 +511,7 @@ instruction is reachable</li>
 <li>keep track of the successors of this instruction</li>
 <li>update currentBlock</li>
 </ul>
-<li>append instruction to the <code>code</code> byte vector</li>
+<li>append the instruction to the <code>code</code> byte vector</li>
 </ul>
 
 <p>Also the <code>visitMaxs</code> method is more complicated due to these
@@ -1000,7 +1002,7 @@ consequently, 2 extra bytes must be inserted before index 10. Since at least one
 new instruction to be resized was found, a new iteration is performed. This
 time, when looking at the first instruction, <code>GOTO L1</code>, it is found
 that the jump offset, taking into account the fact that 2 extra bytes will be
-inserted before index 10, will become 32769. The first instruction wil therefore
+inserted before index 10, will become 32769. The first instruction will therefore
 need to be resized too, and 2 extra bytes must be inserted before index 3. The
 second iteration ends without detecting other instructions needing to be
 resized. However, since a new instruction to be resized was found, a third
@@ -1255,7 +1257,7 @@ stack could previously contain any number of values of any type - hence the
 updated to simulate the effect of <code>ASTORE</code>: the result is that the
 value previously pushed on the stack is poped and stored in the local variable
 1. The visit of the third instruction does not change the output frame O1, but
-changes the current basic block to <code>null </code>.</p>
+changes the current basic block to <code>null</code>.</p>
 
 <p>The visit of the L1 label makes L1 become the new current basic block. Like
 for the first basic block, the output frame O2 of this basic block is initially
@@ -1457,7 +1459,9 @@ basic blocks (<code>ALOAD 1 ASTORE 3</code>, <code>ALOAD 2 ASTORE 3</code> and
 <code>ALOAD 3 ARETURN</code>). Note that if the instructions between L0 and L1
 were considered as a single basic block, the frame computed for L1 would be
 incorrect: it would indeed be the same as the output frame of the previous
-block, where local variable 3 is of type <code>Float</code>.</p>
+block, where local variable 3 is of type <code>Float</code> (whereas the correct
+value is the common super type of <code>Integer</code> and <code>Float</code>,
+i.e. <code>Number</code>).</p>
 
 <h4>3.5.4 Dead code</h4>
 
@@ -1477,9 +1481,10 @@ JVM verifier prior to Java 6; but this is no longer possible with the new
 verifier).</p>
 
 <p>The consequence of all this is that dead code must either be removed or
-replaced with any bytecode sequence, provided it is legal. The first solution
-was judged too complicated (although the <code>resizeInstructions</code>
-method could help). So the second solution has been choosen.</p>
+replaced with a valid bytecode sequence whose stack map frame can be easily
+computed. The first solution was judged too complicated (although the
+<code>resizeInstructions</code> method could help). So the second solution has
+been chosen.</p>
 
 <p>A simple solution is to replace dead code with <code>NOP</code>
 instructions. In this case any stack map frame will be ok for these blocks. The
@@ -1493,11 +1498,11 @@ a <code>NOP</code> but with an instruction without successor, such as
 <p>The first solution is too complicated; the second one is possible, but the
 fact that the dead code block can be reduced to a single byte must be taken
 into account: there is not always enough room to replace it with <code> NOP
-</code> instructions followed by a <code>GOTO</code>, for example. <i>x</i>
-<code>RETURN</code> can be used (this is a single byte instruction), but this
-requires adjustements to the method's return type. The <code>ATHROW</code>
+</code> instructions followed by a <code>GOTO</code>, for example. 
+<code><i>x</i>RETURN</code> can be used (this is a single byte instruction), but
+this requires adjustements to the method's return type. The <code>ATHROW</code>
 instruction does not have this problem, and is also a single byte instruction.
-It was therefore choosen to end the dead code blocks.</p>
+It was therefore chosen to end the dead code blocks.</p>
 
 <p>Note that it is not necessary to insert instructions to create something on
 stack before <code>ATHROW</code>: the stack map frame for this block can
@@ -1647,7 +1652,7 @@ uses the Prototype pattern, which uses only one class.</p>
 into a single one [R12]. For instance a single <code>Item</code> class is used
 to represent the eleven constant pool item types, and the <code>Label </code>
 class is used to represent both bytecode positions and basic blocks. The
-drawback of this approach is that it increase memory requirements (an integer
+drawback of this approach is that it increases memory requirements (an integer
 <code>Item</code> object, for example, uses 11 fields while an
 <code>IntegerItem</code> class would require only 4 fields).</p>
 
