@@ -89,9 +89,10 @@ making "return" on a method, or if you do not use the appropriate LOAD or STORE
 instruction, depending on the local variable type, the JVM class verifier gives
 a "Register x contains wrong type" or "Expecting to find x on stack" error which 
 does not say anything about the instruction that caused the error. In this case 
-you can use the class verifier provided by ASM:</p>
+you can use the class verifier provided by ASM (asm-attrs.jar is needed with
+ASM 2.x only):</p>
 
-<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-util.jar"
+<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-attrs.jar;asm-util.jar"
 org.objectweb.asm.util.CheckClassAdapter org/domain/package/YourClass.class</code></p>
 
 <p>For example, in the helloworld example in the ASM distribution, if you replace
