@@ -24,6 +24,9 @@
              and TableSwitchInsnNode of the tree package are mutable (non-final)</li>
           <li>additional checks in CheckClassAdapter, CheckMethodAdapter and
              CheckAnnotationAdapter</li>
+          <li>new constructor in SimpleVerifier with list of interfaces of the 
+             class being verified to allow isAssignableFrom check without 
+             loading this class (which may be invalid)</li>
         </ul>
         
       <subtitle>14 December 2005: ASM 3.0 beta (cvs-tag: ASM_3_0_BETA)</subtitle>
