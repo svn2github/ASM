@@ -21,9 +21,9 @@
           <li>bug fix in LocalVariableSorter when same variable slot is used to
              save different types</li>
           <li>all fields in classes ClassNode, MethodNode, LookupSwitchInsnNode
-             and TableSwitchInsnNode of the tree package are mutable (non-final)
+             and TableSwitchInsnNode of the tree package are mutable (non-final)</li>
           <li>additional checks in CheckClassAdapter, CheckMethodAdapter and
-             CheckAnnotationAdapter           
+             CheckAnnotationAdapter</li>
         </ul>
         
       <subtitle>14 December 2005: ASM 3.0 beta (cvs-tag: ASM_3_0_BETA)</subtitle>
