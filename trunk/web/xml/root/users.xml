@@ -215,6 +215,22 @@
           and really allowed me to focus on the product I was creating rather than 
           the details of byte code enhancement."</td>
         </tr>
+        
+        <tr>
+          <td align="center" valign="middle">
+          <a href="http://easybeans.objectweb.org/">
+          <img src="images/logoeasybeans.gif" border="0"
+            width="200" height="47" alt="EasyBeans logo" align="middle"/>
+          </a>
+          </td>
+          <td valign="top">The <a href="http://easybeans.objectweb.org/">EasyBeans</a> 
+          is an open source implementation by ObjectWeb of the EJB3 container specification.
+          It uses ASM in many cases: for the annotations processing (to detect @Stateless, 
+          @Stateful, etc classes or to search annotations on fields/methods), 
+          to manage the new EJB3 interceptors (to allow to intercept business methods or 
+          to be notified of some lifecycle events), or for the dependency injection part 
+          (to add a method which do the job in the bean's class).</td>
+        </tr>
       </table>
 
     </s1>
