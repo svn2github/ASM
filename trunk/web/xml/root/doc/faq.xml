@@ -295,7 +295,7 @@ Class as a parameter.</p>
   String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
   MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
   mv.visitVarInsn(ALOAD, 0);
-  mv.visitVarInsn(Type.getType(c).getOpcode(ILOAD, 1));
+  mv.visitVarInsn(Type.getType(c).getOpcode(ILOAD), 1);
   mv.visitFieldInsn(PUTFIELD, className, propertyName, type);
   mv.visitInsn(RETURN);
   mv.visitMaxs(0, 0);
