@@ -114,7 +114,7 @@ possible to run the tests with the unoptimized ASM classes, with <b><code>ant
 
 <h3>2.4 Running examples</h3>
 
-<p>Examples can be run by building a binary distribution (see 
+<p>Examples can be run by building a binary distribution (see
 <a href="#dist">next section</a>), and then by running each example from its
 directory in this generated distribution. But there is an easier way, that does
 not require to create a binary distribution. In fact the <i>example</i> example
@@ -199,16 +199,16 @@ representation - namely a byte array - to a high level one or vice versa). The
 <code>signature</code> package is also quite simple (it consists in a parser and
 a pretty printer for a small grammar). In fact the only packages that are not
 completely trivial, except the core package, are the <code>commons</code> and
-<code>tree.analysis</code> packages. But the algorithms used in 
-<code>tree.analysis</code> package are similar to the one explained in section 
+<code>tree.analysis</code> packages. But the algorithms used in
+<code>tree.analysis</code> package are similar to the one explained in section
 <a href="#controlflow">3.5</a>. This explains why this guide is focused on
 the core package only.</p>
 
 <h3>3.2 Main data structures</h3>
 
-<p>The core package is made of 19 classes and interfaces. If we exclude the 5
+<p>The core package is made of 20 classes and interfaces. If we exclude the 5
 interfaces and the 3 utility classes (<code>ClassAdapter</code>,
-<code>MethodAdapter</code> and <code>Type</code>), this leaves only 11 classes,
+<code>MethodAdapter</code> and <code>Type</code>), this leaves only 12 classes,
 which are depicted on the figure below.</p>
 
 <br/>
@@ -264,6 +264,8 @@ end of the try block, and the start of the catch block.</li>
 <li>the <code>Label</code> class is used to reference instructions, but also to
 represent basic blocks, which are used for the automatic computation of the
 maximum stack size and of the stack map frame table of a method.</li>
+<li>the <code>Frame</code> class is used for the automatic computation of the
+stack map frame table of a method.</li>
 <li>the <code>Edge</code> class is used to represent the control flow graph of a
 method, which is a graph of basic blocks, i.e. of <code>Label</code> objects. An
 <code>Edge</code> is an edge between two <code>Label</code> objects in this
@@ -335,17 +337,12 @@ time, they have several distinct fields that encode these data structures:</p>
 <li>the <code>successor</code> field is used to encode the list of labels of a
 method, in the order they are visited.</li>
 <li>the <code>next</code> field is used to encode the list of "changed" basic
-blocks that is used in <code>visitMaxs</code> (see 
+blocks that is used in <code>visitMaxs</code> (see
 <a href="#fixpoint">section 3.5.1</a>).</li>
 <li>the <code>successors</code> field is used to store the list of
 <code>Edge</code> objects that represent the control flow graph data
 structure.</li>
 </ul>
-
-<p>In addition to these fields, the <code>first</code> field is used to
-reference the first label in a series of successive labels (successive labels
-designate the same instruction and therefore the same basic block. In this case
-only the first one is used to store the basic block state).</p>
 
 <h3>3.3 Main algorithms</h3>
 
@@ -473,7 +470,7 @@ represented by a simple byte vector). The constant pool can be copied from an
 existing one by passing a <code>ClassReader</code> argument to the
 <code>ClassWriter</code> constructor (see the <code>copyPool</code> method in
 <code>ClassReader</code>). This allows unchanged methods to be detected and
-copied as is from reader to writer, without visiting their content (see 
+copied as is from reader to writer, without visiting their content (see
 <a href="#classreader">section 3.3.1</a>).</p>
 
 <p>The <code>AnnotationWriter</code> and <code>FieldWriter</code> classes are
@@ -517,7 +514,7 @@ instruction is reachable</li>
 <p>Also the <code>visitMaxs</code> method is more complicated due to these
 advanced features. It is indeed here that maxStack, maxLocals and stack map
 frames are computed, based on the control flow graph constructed in the
-<code>visit<i>X</i>Insn</code> methods (see 
+<code>visit<i>X</i>Insn</code> methods (see
 <a href="#controlflow">section 3.5</a> for more details).</p>
 
 <h4>3.3.3 Label</h4>
@@ -633,10 +630,10 @@ and therefore to update an offset value).</li>
 to be resized are not limited to the long forward jump instructions that were
 detected during the visit of the method's bytecode. Indeed resizing an
 instruction may transform a normal jump instruction into a long jump
-instruction, which must then be resized too (see the example in 
+instruction, which must then be resized too (see the example in
 <a href="#resizeexample">section 3.4.3</a>). The first step is therefore
 iterative. If, in an iteration, some new instructions to be resized are found,
-a new iteration is performed. If, on the contrary, no new instructions to be 
+a new iteration is performed. If, on the contrary, no new instructions to be
 resized are found, the algorithm stops (in fact other iterations are necessary,
 due to the padding of <code>TABLESWITCH</code> and <code>LOOKUPSWITCH</code>
 instructions - see the comments in source code for more details).</p>
@@ -1105,15 +1102,15 @@ changing them in the other case. The result is shown below:</p>
 <h3><a name="controlflow"></a>3.5 Control flow analysis algorithm</h3>
 
 <p>This section presents the algorithm used to compute the maximum stack size
-and the stack map frame table of a method. This algorithm is a control and data 
-flow analysis algorithm, based on the decomposition of the method into a 
+and the stack map frame table of a method. This algorithm is a control and data
+flow analysis algorithm, based on the decomposition of the method into a
 <i>control flow graph</i> of <i>basic blocks</i>. A basic block is a sequence of
 instructions where only the first instruction is the target of a jump
 instruction, and where only the last instruction can jump to other basic
 blocks. The control flow graph of a method is the graph whose nodes are the
 basic blocks, and whose edges connect the basic blocks that are linked by jump
 instructions. As an example, the control flow graph of the method defined in
-<a href="#fixpoint">section 3.5.1</a> is the one shown in 
+<a href="#fixpoint">section 3.5.1</a> is the one shown in
 <a href="#install">section 2</a>.</p>
 
 <h4><a name="fixpoint"></a>3.5.1 Basic algorithm</h4>
@@ -1163,8 +1160,9 @@ state of the output frame of each basic block is updated by simulating the
 action of the visited instruction. It is important to note that the algorithm
 works at the basic block level, and not at the instruction level. This means
 that input and output frames are associated to basic blocks, and not to
-individual instructions. In practice, they are associated to <code>Label</code>
-objects, which mark the beginning of basic blocks.</p>
+individual instructions. In practice, they are stored in a <code>Frame</code>
+object that is associated to a <code>Label</code> object, which marks the
+beginning of basic blocks.</p>
 
 <p>The effect of this first step for the above example method is illustrated on
 the table below:</p>
@@ -1287,11 +1285,11 @@ variable 1 before this instruction was executed (hence the [?<b>L1</b>]).</p>
 
 <p>During the second step of the algorithm, which takes place in the <code>
 visitMaxs</code> method, the  input frames of each basic block are computed by
-using an iterative fix point algorithm (i.e. an algorithm to find a fix point 
+using an iterative fix point algorithm (i.e. an algorithm to find a fix point
 <i>x</i> of a function <i>f</i>, defined by <i>f(x)=x</i>. If <i>x</i> values
-define a complete lattice and if <i>f</i> is monotonic, 
-<i>x<sub>n+1</sub>=f(x<sub>n</sub>)</i> converges to the smallest fix point of 
-<i>f</i>, according to the 
+define a complete lattice and if <i>f</i> is monotonic,
+<i>x<sub>n+1</sub>=f(x<sub>n</sub>)</i> converges to the smallest fix point of
+<i>f</i>, according to the
 <a href="http://en.wikipedia.org/wiki/Knaster%E2%80%93Tarski_theorem">Tarski</a>
 theorem. Here <i>x</i> is a control flow graph with input and output frames,
 <i>f</i> is a "merge" function and the order relation is based on the subtyping
@@ -1498,7 +1496,7 @@ a <code>NOP</code> but with an instruction without successor, such as
 <p>The first solution is too complicated; the second one is possible, but the
 fact that the dead code block can be reduced to a single byte must be taken
 into account: there is not always enough room to replace it with <code> NOP
-</code> instructions followed by a <code>GOTO</code>, for example. 
+</code> instructions followed by a <code>GOTO</code>, for example.
 <code><i>x</i>RETURN</code> can be used (this is a single byte instruction), but
 this requires adjustements to the method's return type. The <code>ATHROW</code>
 instruction does not have this problem, and is also a single byte instruction.
@@ -1573,9 +1571,9 @@ times for the same constant pool UTF8 item. Another example is in the
 values instead of strings (they were initially stored as strings; the change to
 int values improved performances a lot).</li>
 <li>[R4] avoid array copy operations. Several examples of this principle can be
-seen in the existing implementation. For example the <code>toByteArray</code> 
-method first computes the size of the class, then allocates a 
-<code>ByteVector</code> of this size, and finally writes the class content in 
+seen in the existing implementation. For example the <code>toByteArray</code>
+method first computes the size of the class, then allocates a
+<code>ByteVector</code> of this size, and finally writes the class content in
 this vector. This avoids many calls to the <code>enlarge</code> method in
 <code>ByteVector</code>, and therefore many array copy operations.</li>
 <li>[R5] avoid getter and setter methods, at least for non public or protected
@@ -1585,10 +1583,10 @@ package does not use any such method. The tree package also exposes many fields
 directly.</li>
 <li>[R6] copy frequently accessed instance fields to local variables to reduce
 field access operations (this is the logical continuation of the previous
-technique). See for example the <code>ByteVector</code> class: the 
+technique). See for example the <code>ByteVector</code> class: the
 <code>length</code> and <code>data</code> fields are copied into local variables
 in methods that access them several times. A variant of this rule is to replace
-fields with method parameters (this variant was used in the 
+fields with method parameters (this variant was used in the
 <code>signature</code> package - see
 <a href="#optimizeexample">section 4.3</a>).</li>
 <li>[R7] cache the result of complex functions in order to execute them only
@@ -1601,7 +1599,7 @@ constant pool item several times.</li>
 <li>[R8] use <code>int</code> coded data structures in order to replace slow
 data structure access methods with fast arithmetic or bitwise operations (this
 also reduces code size). Several examples of this rule can be seen in the
-existing code: the boolean stack encoded as an <code>int</code> in 
+existing code: the boolean stack encoded as an <code>int</code> in
 <code>SignatureWriter</code>, the verification types encoded as <code>int</code>
 in <code>Label</code>, etc.</li>
 <li>[R9] use <code>switch</code> statements that can be compiled into
@@ -1634,8 +1632,8 @@ compromises with what a "clean" object oriented API would be. Whether these
 compromises are worthwhile or not must be decided on a case by case basis.
 Several such compromises can be detected in the current public ASM API. For
 example the <code>AnnotationVisitor</code> interface is used both for
-annotations and annotation arrays although, in the second case, the 
-<code>name</code> argument is useless and would not have been used if an 
+annotations and annotation arrays although, in the second case, the
+<code>name</code> argument is useless and would not have been used if an
 <code>AnnotationArrayVisitor</code> interface were defined. Another example is
 the <code>SignatureVisitor</code> interface: a single interface is used to
 represent a quite complex recursive data structure that, in a "normal" object
@@ -1654,7 +1652,9 @@ to represent the eleven constant pool item types, and the <code>Label </code>
 class is used to represent both bytecode positions and basic blocks. The
 drawback of this approach is that it increases memory requirements (an integer
 <code>Item</code> object, for example, uses 11 fields while an
-<code>IntegerItem</code> class would require only 4 fields).</p>
+<code>IntegerItem</code> class would require only 4 fields) and object
+instantiation times (<code>Label</code> and <code>Frame</code> classes were
+initially merged but have been separated in order to improve performances).</p>
 
 <p>The number of methods can be reduced by inlining methods that are called at
 only one place in the code (a method that is called from several places can
@@ -1672,15 +1672,15 @@ size:</p>
 <li>[R14] use string constant values directly in code, instead of declaring them
 in <code>final static String</code> fields. It saves space by removing field
 declarations.</li>
-<li>[R15] avoid using array initializers like <code>{</code> 
+<li>[R15] avoid using array initializers like <code>{</code>
 <i>value1</i><code>,</code> <i>...</i> <i>valueN</i> <code>}</code>. These
 initializers can be replaced with a loop that initializes each array element
 from a string representation of the whole array. This technique is used in
-<code>ClassWriter</code> and <code>asm.util.AbstractVisitor</code>, for 
+<code>ClassWriter</code> and <code>asm.util.AbstractVisitor</code>, for
 example.</li>
 <li>[R16] some switch instructions can be replaced with an array access. For
 instance a switch that associates A, C or Z to 0, 1 or 3 respectively can be
-replaced with <code>new</code> <code>char[]</code> <code>{</code> 
+replaced with <code>new</code> <code>char[]</code> <code>{</code>
 <code>'A',</code> <code>'C',</code> <code>0,</code> <code>'Z'</code>
 <code>}</code><code>[i]</code>, which can itself be optimized in
 <code>"AC Z".charAt(i)</code> (by using [R15]).</li>
@@ -1807,7 +1807,7 @@ time the average time to parse and rebuild a signature decreased from 74 micro
 seconds at the first step, to 15 micro seconds at the second step, 5.4 micro
 seconds at the fourth step, and less than 5 micro seconds at the last step.</p>
 
-<p>As can be seen from this example (more details can be found on the 
+<p>As can be seen from this example (more details can be found on the
 <a href="http://www.objectweb.org/wws/arc/asm/2005-01/msg00041.html">ASM
 mailing list archives</a> of January 2005), improving performances often leads
 to code size reductions, and vice versa!</p>
