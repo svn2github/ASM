@@ -14,6 +14,19 @@
 
     <s1 name="History">
 
+      <subtitle>20 April 2006: ASM 3.0 beta2 (cvs-tag: ASM_3_0_BETA2)</subtitle>
+
+        <ul>
+          <li>visitFrame is now called after visitLabel in ClassReader</li>
+          <li>new SKIP_FRAMES and SKIP_CODE flags in ClassReader</li>
+          <li>fixed issue with dead code and COMPUTE_FRAMES option in ClassWriter</li>
+          <li>port of bug fixes from ASM_2_2_2</li>
+          <li>refactorings in core package to get same performances as in ASM 2.x 
+          (3.0 beta was slightly less performant than 2.x)</li>
+          <li>refactored tests and added many new tests. Tests now cover 100%
+          of the code, except in commons package.</li>
+        </ul>
+
       <subtitle>7 April 2006: ASM 2.2.2 (cvs-tag: ASM_2_2_2)</subtitle>
 
         <ul>
