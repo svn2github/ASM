@@ -101,6 +101,22 @@
         
         <tr>
           <td align="center" valign="middle">
+            <a href="http://cobertura.sourceforge.net/">Cobertura</a>
+          </td>
+          <td valign="top"><a href="http://cobertura.sourceforge.net/">Cobertura</a>
+          is a free Java tool that calculates the percentage of code accessed by
+          tests. It can be used to identify which parts of your Java program are
+          lacking test coverage. Since version 1.1, Cobertura switched "the 
+          instrumentation classes to use ASM instead of Apache BCEL. There are
+          three benefits to this: BCEL was throwing exceptions with some source
+          code compiled with JDK 1.5--ASM works fine. ASM is licensed under the
+          revised BSD license, which is compatable with the GPL, which allows us
+          to remove the questionable exception for BCEL from the license. 
+          Instrumentation is about 5 times faster with ASM than BCEL."           
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="middle">
             <a href="http://cglib.sourceforge.net/">CGLIB</a>
           </td>
           <td valign="top"><a href="http://cglib.sourceforge.net/">CGLIB</a> is a powerful, 
