@@ -6,7 +6,64 @@ by Eric Bruneton
 02/02/2006
 <br clear="all"/>
 
-<h2>1 Introduction</h2>
+<ol>
+<li value="1"><a href="#introduction">Introduction</a></li>
+<li value="2"><a href="#installation">Installation</a>
+  <ol>
+  <li value="21"><a href="#overview">Overview</a></li>
+  <li><a href="#building">Building</a></li>
+  <li><a href="#tests">Running tests</a></li>
+  <li><a href="#examples">Running examples</a></li>
+  <li><a href="#dist">Creating a distribution</a></li>
+  </ol>
+</li>
+
+<li><a href="#code">Code review</a>
+  <ol>
+  <li value="31"><a href="#organization">Code organization</a></li>
+  <li><a href="#structures">Main data structures</a></li>
+  <li><a href="#algorithms">Main algorithms</a>
+    <ol>
+    <li value="331"><a href="#classreader">ClassReader</a></li>
+    <li><a href="#classwriter">ClassWriter, AnnotationWriter, FieldWriter and MethodWriter</a></li>
+    <li><a href="#label">Label</a></li>
+    <li><a href="#toByteArray">toByteArray</a></li>
+    </ol>
+  </li>
+  <li><a href="#resizing">Instruction resizing algorithm</a>
+    <ol>
+    <li value="341"><a href="#resizebasic">Basic algorithm</a></li>
+    <li><a href="#codeattrs">Impact on code attributes</a></li>
+    <li><a href="#resizeexample">An example</a></li>
+    </ol>
+  </li>
+  <li><a href="#controlflow">Control flow analysis algorithm</a>
+    <ol>
+    <li value="351"><a href="#fixpoint">Basic algorithm</a>
+      <ul>
+      <li><a href="#firststep">First step</a></li>
+      <li><a href="#secondstep">Second step</a></li>
+      </ul>    
+    </li>
+    <li><a href="#uninitializedtypes">Uninitialized types</a></li>
+    <li><a href="#exceptionhandlers">Exception handlers</a></li>
+    <li><a href="#deadcode">Dead code</a></li>
+    </ol>
+  </li>
+  </ol>
+</li>
+
+<li value="4"><a href="#optimizations">Code optimizations</a>
+  <ol>
+  <li value="41"><a href="#optimizeperformance">Optimizing performance</a></li>
+  <li><a href="#optimizesize">Optimizing code size</a></li>
+  <li><a href="#optimizeexample">An example</a></li>
+  </ol>  
+</li>
+
+</ol>
+
+<h2><a name="introduction"></a>1 Introduction</h2>
 
 <p>This guide is primarily intended for ASM users that would like to contribute
 to the ASM code base, although it can be of interest for other users as well.
@@ -24,7 +81,7 @@ class file format specification.</p-->
 how to build a distribution, which is the first thing to know before
 contributing to this project.</p>
 
-<h3>2.1 Overview</h3>
+<h3><a name="overview"></a>2.1 Overview</h3>
 
 <p>The ASM source distribution is organized in several directories, in a way
 that is shared with several ObjectWeb projects. These directories are the
@@ -51,7 +108,7 @@ building process. It is created automatically.</li>
 test and package the ASM source code. These targets are presented in the
 following sections.</p>
 
-<h3>2.2 Building</h3>
+<h3><a name="building"></a>2.2 Building</h3>
 
 <p>The source code, in the <code>src</code> directory, can be compiled with
 <b><code>ant compile</code></b> (this requires a Java 1.3 or higher compiler).
@@ -62,7 +119,7 @@ optimized to reduce its size. The optimized code is finally stored in
 <p><small>Note: the optimization step can be skipped with <b><code>ant
 -Dproduct.noshrink=true compile</code></b>.</small></p>
 
-<h3>2.3 Running tests</h3>
+<h3><a name="tests"></a>2.3 Running tests</h3>
 
 <p>Tests are stored in the <code>test</code> directory. Conformance tests are
 stored in the <code>conform</code> sub directory, while performance tests are
@@ -112,7 +169,7 @@ do not contain debug info. In order to have line numbers in stack traces, it is
 possible to run the tests with the unoptimized ASM classes, with <b><code>ant
 -Ddebug=true test</code></b>.</small></p>
 
-<h3>2.4 Running examples</h3>
+<h3><a name="examples"></a>2.4 Running examples</h3>
 
 <p>Examples can be run by building a binary distribution (see
 <a href="#dist">next section</a>), and then by running each example from its
@@ -139,21 +196,21 @@ everything from scratch (indeed this target removes everything in the
 <p><small>Note: the version number used in the files produced when creating a
 distribution is defined in the <code>build.properties</code> file.</small></p>
 
-<h2 style="page-break-before:always;">3 Code review</h2>
+<h2 style="page-break-before:always;"><a name="code"></a>3 Code review</h2>
 
 <p>This section presents the ASM source code organization, the main data
 structures and the most complex algorithms, which is the next important thing to
 know, after the installation and building issues, in order to contribute to this
 project.</p>
 
-<h3>3.1 Code organization</h3>
+<h3><a name="organization"></a>3.1 Code organization</h3>
 
 <p>ASM is organized in several packages:</p>
 
 <br/>
 <center>
 <a href="../images/asm-package-dependencies.png">
-<img src="../images/asm-package-dependencies.png" witdh="600" height="272"/>
+<img src="../images/asm-package-dependencies-sm.gif" witdh="589" height="244"/>
 </a>
 </center>
 <br/>
@@ -204,7 +261,7 @@ completely trivial, except the core package, are the <code>commons</code> and
 <a href="#controlflow">3.5</a>. This explains why this guide is focused on
 the core package only.</p>
 
-<h3>3.2 Main data structures</h3>
+<h3><a name="structures"></a>3.2 Main data structures</h3>
 
 <p>The core package is made of 20 classes and interfaces. If we exclude the 5
 interfaces and the 3 utility classes (<code>ClassAdapter</code>,
@@ -214,7 +271,7 @@ which are depicted on the figure below.</p>
 <br/>
 <center>
 <a href="../images/asm-package-overview.png">
-<img src="../images/asm-package-overview.png" witdh="600" height="316"/>
+<img src="../images/asm-package-overview-sm.gif" witdh="600" height="288"/>
 </a>
 </center>
 <br/>
@@ -322,7 +379,7 @@ to several hash tables at once).</p>
 <br/>
 <center>
 <a href="../images/controlflow-graph-example.png">
-<img src="../images/controlflow-graph-example.png" witdh="400" height="450"/>
+<img src="../images/controlflow-graph-example-sm.gif" witdh="400" height="436"/>
 </a>
 </center>
 <br/>
@@ -344,7 +401,7 @@ blocks that is used in <code>visitMaxs</code> (see
 structure.</li>
 </ul>
 
-<h3>3.3 Main algorithms</h3>
+<h3><a name="algorithms"></a>3.3 Main algorithms</h3>
 
 <h4><a name="classreader"></a>3.3.1 ClassReader</h4>
 
@@ -517,7 +574,7 @@ frames are computed, based on the control flow graph constructed in the
 <code>visit<i>X</i>Insn</code> methods (see
 <a href="#controlflow">section 3.5</a> for more details).</p>
 
-<h4>3.3.3 Label</h4>
+<h4><a name="label"></a>3.3.3 Label</h4>
 
 <p>From a user point of view the <code>Label</code> class is used to reference
 instructions. Internally it is used to store the position in bytecode of an
@@ -549,7 +606,7 @@ forward jump instructions to this label (given by
 offsets with their real values, which can now be computed.</li>
 </ul>
 
-<h4>3.3.4 toByteArray</h4>
+<h4><a name="#toByteArray"></a>3.3.4 toByteArray</h4>
 
 <p>The <code>toByteArray</code> method in <code>ClassWriter</code> puts together
 all the pieces constructed in the various writer classes in order to get the
@@ -565,7 +622,7 @@ vector in the right order. This is done by calling the <code>put</code> method
 on each piece.</li>
 </ul>
 
-<h3>3.4 Instruction resizing algorithm</h3>
+<h3><a name="resizing"></a>3.4 Instruction resizing algorithm</h3>
 
 <p>By default the jump instructions such as <code>IFEQ</code> and
 <code>GOTO</code> store a bytecode offset in two bytes. This offset can
@@ -638,7 +695,7 @@ resized are found, the algorithm stops (in fact other iterations are necessary,
 due to the padding of <code>TABLESWITCH</code> and <code>LOOKUPSWITCH</code>
 instructions - see the comments in source code for more details).</p>
 
-<h4>3.4.2 Impact on code attributes</h4>
+<h4><a name="codeattrs"></a>3.4.2 Impact on code attributes</h4>
 
 <p>Some code attributes contain bytecode offsets, and must be updated when
 instructions are resized. This is the case for example of the <code>
@@ -1152,7 +1209,7 @@ public static m(Z)LA;
 </center>
 <br/>
 
-<h5>First step</h5>
+<h5><a name="firststep"></a>First step</h5>
 
 <p>As stated above, during the first step of the algorithm, which takes place
 in each <code>visit<i>X</i>Insn</code> method in <code> ClassWriter</code>, the
@@ -1281,7 +1338,7 @@ unknown. The only thing we know is that, after the execution of this method,
 the stack contains one additional value whose type is the type of local
 variable 1 before this instruction was executed (hence the [?<b>L1</b>]).</p>
 
-<h5>Second step</h5>
+<h5><a name="secondstep">Second step</h5>
 
 <p>During the second step of the algorithm, which takes place in the <code>
 visitMaxs</code> method, the  input frames of each basic block are computed by
@@ -1381,7 +1438,7 @@ m(Z)LA;", which gives I1 = [I] []. Then the first basic block is marked as
 <!-- third step? use the input frames to compute the stackmaptable
 attribute -->
 
-<h4>3.5.2 Uninitialized types</h4>
+<h4><a name="uninitializedtypes"></a>3.5.2 Uninitialized types</h4>
 
 <p>The simulation of a <code>NEW</code> <i>T</i> instruction results in a
 special <i>uninitialized</i> type being pushed on the stack. This special type
@@ -1403,7 +1460,7 @@ types can be relative to the unknown input stack map frame of the basic block).
 This data structure is constructed during the visit of instructions, and is
 used in <code>visitMaxs</code>, when all the types are known.</p>
 
-<h4>3.5.3 Exception handlers</h4>
+<h4><a name="exceptionhandlers"></a>3.5.3 Exception handlers</h4>
 
 <p>For all the instructions covered by an exception handler, the control flow
 can jump to the exception handler block. This means that, inside the region
@@ -1461,7 +1518,7 @@ block, where local variable 3 is of type <code>Float</code> (whereas the correct
 value is the common super type of <code>Integer</code> and <code>Float</code>,
 i.e. <code>Number</code>).</p>
 
-<h4>3.5.4 Dead code</h4>
+<h4><a name="deadcode"></a>3.5.4 Dead code</h4>
 
 <p>The fix point algorithm used in the second step of the algorithm described
 in <a href="#fixpoint">section 3.5.1</a> is limited to reachable code. Indeed,
@@ -1523,14 +1580,14 @@ which saves code.</p>
 with <code>NOP</code> ... <code>NOP</code> <code>ATHROW</code>, and to declare
 a [] [java/lang/Throwable] stack map frame for these blocks.</p>
 
-<h2 style="page-break-before:always;">4 Code optimizations</h2>
+<h2 style="page-break-before:always;"><a name="optimizations"></a>4 Code optimizations</h2>
 
 <p>The main objective of ASM is to get the smallest and fastest code as
 possible, while keeping a quite "clean" public API. This section explains the
 techniques used <i>in this project</i> to achieve these objectives (many of
 them are <i>not</i> recommended for mainstream development).</p>
 
-<h3>4.1 Optimizing performances</h3>
+<h3><a name="optimizeperformance"></a>4.1 Optimizing performances</h3>
 
 <p>The first and most important step to get good performances is to use the
 right API and good algorithms [R0]. Sometimes it is hard to decide which API or
@@ -1622,7 +1679,7 @@ a code profiler can be used. It is also possible to turn some code sections on
 or off, in order to measure, by difference to the normal case, the cost of this
 section.</p>
 
-<h3>4.2 Optimizing code size</h3>
+<h3><a name="optimizesize"></a>4.2 Optimizing code size</h3>
 
 <p>The obvious way to reduce code size is to reduce the number of classes and
 methods! This begins by reducing the number of interfaces in the public API
