@@ -174,7 +174,7 @@ possible to run the tests with the unoptimized ASM classes, with <b><code>ant
 <p>Examples can be run by building a binary distribution (see
 <a href="#dist">next section</a>), and then by running each example from its
 directory in this generated distribution. But there is an easier way, that does
-not require to create a binary distribution. In fact the <i>example</i> example
+not require creating a binary distribution. In fact the <i>example</i> example
 can be run with <b><code>ant -Dexample.name=<i>example</i> example</code></b>
 (where <i>example</i> is the name of a directory in the <code>examples</code>
 directory).</p>
@@ -368,7 +368,7 @@ that a given element cannot belong to several lists at the same time, but this
 is not a problem in the ASM case.</p>
 
 <p>The core package does not use hash tables, except one in the
-<code>ClassWriter</code> class, that is used to represent a set of
+<code>ClassWriter</code> class, which is used to represent a set of
 <code>Item</code> objects. It is implemented with an array of <code>Item</code>
 objects that can be chained together through their <code>next</code> field to
 handle the case of hash code collisions. In other words, like for lists, the
@@ -578,7 +578,7 @@ frames are computed, based on the control flow graph constructed in the
 
 <p>From a user point of view the <code>Label</code> class is used to reference
 instructions. Internally it is used to store the position in bytecode of an
-instruction, and to compute bytecode offsets bewteen this instruction and any
+instruction, and to compute bytecode offsets between this instruction and any
 other instruction (it is also used to represent basic blocks, which are used for
 the automatic computation of the maximum stack size and of the stack map frame
 table of a method - see <a href="#controlflow">section 3.5</a>).</p>
@@ -640,7 +640,7 @@ offset will require 4 bytes, and to reserve enough space for that. But this is
 not very optimal. A second solution is to assume that this offset will require 2
 bytes, and to reserve only 2 bytes for it. The problem is that if the offset
 turns out to require 4 bytes, the jump instruction must be resized to insert two
-additional bytes. In ASM the second solution was choosen. It requires a method
+additional bytes. In ASM the second solution was chosen. It requires a method
 to resize the forward jump instructions that turn out to require long offsets.
 The algorithm used in this resizing method is presented in this section.</p>
 
@@ -1179,7 +1179,7 @@ instructions. As an example, the control flow graph of the method defined in
 the current basic block is updated by simulating the action of the instruction
 on the previous state of this so called "output frame".</li>
 <li>In visitMaxs, a fix point algorithm is used to compute the "input frame" of
-each basic block, i.e. the stack map frame at the begining of the basic block,
+each basic block, i.e. the stack map frame at the beginning of the basic block,
 starting from the input frame of the first basic block (which is computed from
 the method descriptor), and by using the previously computed output frames to
 compute the input state of the other blocks.</li>
@@ -1302,7 +1302,7 @@ the table below:</p>
 </center>
 <br/>
 
-<p>At the beginning, the ouput frame O1 of the first basic block is completely
+<p>At the beginning, the output frame O1 of the first basic block is completely
 unknown. During the visit of the first instruction, the action of
 <code>GETSTATIC</code> is simulated: the result is that a new value of type B is
 pushed on the stack, on top of the previous values (although we know here that
@@ -1310,7 +1310,7 @@ the stack is initially empty, we do not take this into account and do as if the
 stack could previously contain any number of values of any type - hence the
 [<b>?</b>B]). During the visit of the second instruction, the output frame O1 is
 updated to simulate the effect of <code>ASTORE</code>: the result is that the
-value previously pushed on the stack is poped and stored in the local variable
+value previously pushed on the stack is popped and stored in the local variable
 1. The visit of the third instruction does not change the output frame O1, but
 changes the current basic block to <code>null</code>.</p>
 
@@ -1362,7 +1362,7 @@ m(Z)LA;", which gives I1 = [I] []. Then the first basic block is marked as
 <tr>
   <th>Iteration</th>
   <th>Changed</th>
-  <th>Ouput frames</th>
+  <th>Output frames</th>
   <th>Input frames</th>
   <th>Comment</th>
 </tr>
@@ -1444,14 +1444,14 @@ attribute -->
 special <i>uninitialized</i> type being pushed on the stack. This special type
 contains the offset of the <code>NEW</code> instruction that created it. When
 an <code>INVOKESPECIAL</code> instruction for a <i>T</i> constructor is
-simulated, all occurences of this special type in the current stack map frame
+simulated, all occurrences of this special type in the current stack map frame
 must be replaced with the normal <i>T</i> type.</p>
 
 <p>The basic block input and output frame data structures presented in the
 previous section are not sufficient to take uninitialized types into account.
 Indeed, when a constructor invocation is visited, the type of the target may be
-unknow, and many local variable and operand stack types may also be unknown. It
-is therefore impossible to replace all occurences of the target type everywhere
+unknown, and many local variable and operand stack types may also be unknown. It
+is therefore impossible to replace all occurrences of the target type everywhere
 in the stack map frame.</p>
 
 <p>For this reason an additional data structure is associated to each basic
@@ -1508,7 +1508,7 @@ public m(Ljava/lang/Integer;Ljava/lang/Float;)Ljava/lang/Number;
 
 <p>Normally, due to the exception handler, each instruction between L0 and L1
 should be a distinct basic block, which would give 6 basic blocks inside this
-region. In pratice, thanks to the above optimization, only the
+region. In practice, thanks to the above optimization, only the
 <code>ASTORE</code> instructions change the current basic block, which gives 3
 basic blocks (<code>ALOAD 1 ASTORE 3</code>, <code>ALOAD 2 ASTORE 3</code> and
 <code>ALOAD 3 ARETURN</code>). Note that if the instructions between L0 and L1
@@ -1555,7 +1555,7 @@ fact that the dead code block can be reduced to a single byte must be taken
 into account: there is not always enough room to replace it with <code> NOP
 </code> instructions followed by a <code>GOTO</code>, for example.
 <code><i>x</i>RETURN</code> can be used (this is a single byte instruction), but
-this requires adjustements to the method's return type. The <code>ATHROW</code>
+this requires adjustments to the method's return type. The <code>ATHROW</code>
 instruction does not have this problem, and is also a single byte instruction.
 It was therefore chosen to end the dead code blocks.</p>
 
@@ -1569,7 +1569,7 @@ instructions are consistent with declared exceptions).</p>
 
 <p>Choosing <code>ATHROW</code> and declaring a stack map frame of the form []
 [java/lang/Throwable] for dead basic blocks gives the additional benefit of not
-requiring any adjustement to exception handlers. Indeed, if a dead basic block
+requiring any adjustment to exception handlers. Indeed, if a dead basic block
 is an exception handler, either its stack map frame must be consistent with []
 [exception type], or this exception handler declaration must be removed. Since
 [] [java/lang/Throwable] is consistent with any [] [exception type] frame,
@@ -1718,8 +1718,8 @@ only one place in the code (a method that is called from several places can
 also be inlined if the client code can be refactored to call it at only one
 place) [R13]. This technique has been used in the <code>ClassReader</code>
 class: the <code>accept</code> method is very big because it inlines many
-auxilliary methods that, in a normal object oriented design, would have been
-defined separately in order to get methods of reasonnable sizes. Another
+auxiliary methods that, in a normal object oriented design, would have been
+defined separately in order to get methods of reasonable sizes. Another
 benefit of this technique is that it increases performances.</p>
 
 <p>Finally some tricks can be used in very specific cases to reduce code
@@ -1833,8 +1833,8 @@ classes, one per interface.</p>
 recursive descent parser, containing 11 recursive methods (one per rule of the
 grammar). This led to major performance improvements, and to a huge code size
 reduction. This was due to the fact that hand written code can be more
-performant than generated code, and also to the fact that all lexical and
-syntaxic verifications were removed ([R2]).</p>
+efficient than generated code, and also to the fact that all lexical and
+syntactic verifications were removed ([R2]).</p>
 
 <p>In the third step a refactoring reduced the number of writer classes to 6
 instead of 7 (by using inheritance).</p>
