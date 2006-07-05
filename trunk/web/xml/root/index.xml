@@ -41,7 +41,14 @@
     <a href="http://arcad.essi.fr/2002-10-composants.html">Adaptable and
     extensible component systems</a>, november 2002, Grenoble, France. Also
     available in <a href="current/asm-fr.pdf">french</a>.</p>
-            
+
+    <p>ASM already used by many Java <a href="users.html">products</a>.
+    Please let us know if your project is using ASM. 
+    You can also add "Powered by ASM" button to your project page.
+    </p>
+        
+    <a href="http://asm.objectweb.org/"><img src="images/poweredbyasm.gif" border="0" width="88" height="31" alt="Powered by ASM"/></a>
+
     </td>
     <td>
 
@@ -53,8 +60,9 @@
     <a href="doc/faq.html#Q10">ASMifier</a> tool) to see the equivalent ASM code. If you want
     to implement a class transformer, write two Java source files (before and after 
     transformation) and use the compare view of the plugin in ASMifier mode to compare the
-    equivalent ASM code.</strong> The following tutorial gives more 
-    details about this process:</p>
+    equivalent ASM code.</strong></p>
+    
+    <p>The following tutorial gives more details about this process:</p>
     
     <p><a href="doc/tutorial-asm-2.0.html">Tutorial for ASM 2.0</a>.</p>
 
