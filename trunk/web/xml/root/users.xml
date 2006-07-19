@@ -34,7 +34,8 @@
         <a href="#dynaop">dynaop</a> |
         <a href="#Cobertura">Cobertura</a> |
         <a href="#JDBCPersistence">JDBCPersistence</a> |
-        <a href="#JiP">JiP</a>
+        <a href="#JiP">JiP</a> |
+        <a href="#SonarJ">SonarJ</a>
         <br/>
         <br/>
       </p>
@@ -337,6 +338,24 @@
           the details of byte code enhancement."</td>
         </tr>
         
+        <tr>
+          <td align="center" valign="middle">
+          <a href="http://www.hello2morrow.com/en/sonarj/sonarj_eval.php">
+          <img src="images/Sonar.gif" border="0" width="48" height="48" alt="SonarJ" align="middle"/>
+          </a>
+          </td>
+          <td valign="top"><anchor name="SonarJ"/>
+          SonarJ is an innovative tool, which helps you to manage and monitor the
+          logical architecture and the technical quality of your Java projects. 
+          It allows you to define a logical architecture and map it to your system. 
+          By analyzing all the dependencies in your system it can efficiently 
+          identify all architecture violations (unwanted dependencies) and
+          cyclic dependencies. Most of the dependency information is gathered by
+          analyzing the compiled class files. For this purpose ASM is used and 
+          we are very pleased by the ease of use, the low overhead and the 
+          compelling performance of this library.</td>
+        </tr>
+
       </table>
 
     </s1>
