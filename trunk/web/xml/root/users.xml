@@ -340,12 +340,13 @@
         
         <tr>
           <td align="center" valign="middle">
-          <a href="http://www.hello2morrow.com/en/sonarj/sonarj_eval.php">
+          <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">
           <img src="images/Sonar.gif" border="0" width="48" height="48" alt="SonarJ" align="middle"/>
           </a>
           </td>
           <td valign="top"><anchor name="SonarJ"/>
-          SonarJ is an innovative tool, which helps you to manage and monitor the
+          <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
+          is an innovative tool, which helps you to manage and monitor the
           logical architecture and the technical quality of your Java projects. 
           It allows you to define a logical architecture and map it to your system. 
           By analyzing all the dependencies in your system it can efficiently 
