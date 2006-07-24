@@ -37,9 +37,9 @@ by Eric Bruneton
     <li><a href="#resizeexample">An example</a></li>
     </ol>
   </li>
-  <li><a href="#controlflow">Control flow analysis algorithm</a>
+  <li><a href="#controlflow">Control and data flow analysis algorithm</a>
     <ol>
-    <li value="351"><a href="#fixpoint">Basic algorithm</a>
+    <li value="351"><a href="#fixpoint">Basic data flow analysis algorithm</a>
       <ul>
       <li><a href="#firststep">First step</a></li>
       <li><a href="#secondstep">Second step</a></li>
@@ -48,6 +48,7 @@ by Eric Bruneton
     <li><a href="#uninitializedtypes">Uninitialized types</a></li>
     <li><a href="#exceptionhandlers">Exception handlers</a></li>
     <li><a href="#deadcode">Dead code</a></li>
+    <li><a href="#subroutines">Subroutines</a></li>
     </ol>
   </li>
   </ol>
@@ -551,7 +552,7 @@ of a <code>visit<i>X</i>Insn</code> method is the following:</p>
 
 <ul>
 <li>if (currentBlock != null) // == if computeMaxs or computeFrames, and if this
-instruction is reachable</li>
+instruction may be reachable</li>
 <ul>
 <li>if (computeFrames)</li>
 <ul>
@@ -1156,7 +1157,7 @@ changing them in the other case. The result is shown below:</p>
 </center>
 <br/>
 
-<h3><a name="controlflow"></a>3.5 Control flow analysis algorithm</h3>
+<h3><a name="controlflow"></a>3.5 Control and data flow analysis algorithm</h3>
 
 <p>This section presents the algorithm used to compute the maximum stack size
 and the stack map frame table of a method. This algorithm is a control and data
@@ -1166,11 +1167,12 @@ instructions where only the first instruction is the target of a jump
 instruction, and where only the last instruction can jump to other basic
 blocks. The control flow graph of a method is the graph whose nodes are the
 basic blocks, and whose edges connect the basic blocks that are linked by jump
-instructions. As an example, the control flow graph of the method defined in
+instructions. This graph is constructed during the visit of each instruction.
+As an example, the control flow graph of the method defined in
 <a href="#fixpoint">section 3.5.1</a> is the one shown in
 <a href="#install">section 2</a>.</p>
 
-<h4><a name="fixpoint"></a>3.5.1 Basic algorithm</h4>
+<h4><a name="fixpoint"></a>3.5.1 Basic data flow analysis algorithm</h4>
 
 <p>Stack map frames are computed in a two steps process:</p>
 
@@ -1518,6 +1520,14 @@ block, where local variable 3 is of type <code>Float</code> (whereas the correct
 value is the common super type of <code>Integer</code> and <code>Float</code>,
 i.e. <code>Number</code>).</p>
 
+<p><b>Note:</b> the edges of the control flow graph that connect basic blocks
+to  exception handler blocks are not constructed in the
+<tt>visitTryCatchBlock</tt> method but in the <tt>visitMaxs</tt> method.
+Indeed, since the <tt>visitTryCatchBlock</tt> method must be called before
+the labels passed as arguments to this method are visited, it is not possible
+to know in this method which labels belong to the range protected by this
+handler.</p>
+
 <h4><a name="deadcode"></a>3.5.4 Dead code</h4>
 
 <p>The fix point algorithm used in the second step of the algorithm described
@@ -1579,6 +1589,148 @@ which saves code.</p>
 <p>In summary, the solution for dead code blocks is to replace these blocks
 with <code>NOP</code> ... <code>NOP</code> <code>ATHROW</code>, and to declare
 a [] [java/lang/Throwable] stack map frame for these blocks.</p>
+
+<h4><a name="subroutines"></a>3.5.5 Subroutines</h4>
+
+<p>The <code>JSR</code> and <code>RET</code> instructions, used for
+subroutines, complicate the control flow and data flow analysis algorithms.
+Hopefully they must not be used with Java 6 classes, so they do not have any
+impact on the algorithm used to compute stack map frames. But they do
+complicate the algorithm used to compute the maximum stack size, with the
+<code>COMPUTE_MAXS</code> option. More precisely they do not impact the
+algorithm used to compute the maximum stack size from the control flow graph,
+but they complicate the construction of this graph.</p>
+
+<p>Like for exception handlers, the edges in the control flow graph that
+correspond to subroutines are computed in <tt>visitMaxs</tt>.</p>
+
+<p>The first step consists in finding, for each basic block, to which
+subroutine(s) it belongs. All the basic blocks that are reachable from the
+first one, without following a <code>JSR</code> or <code>RET</code> instruction,
+are marked as belonging to a main "subroutine". Likewise, for all 
+<code>JSR</code> targets, the basic blocks reachable from this target are marked
+as belonging to the subroutine defined by this <code>JSR</code> target.</p>
+
+<p>The second step consists in finding, for each <code>RET</code> instruction,
+to which possible basic blocks it can return to. For this all the basic blocks
+that are reachable from the first one, including via <code>JSR</code>
+instructions, are visited. Each time a <code>JSR</code> instruction is found,
+information about this subroutine call (i.e. the subroutine id and the return
+address) is pushed on a stack. When a <code>RET</code> instruction is found,
+this stack is used to find the return address for this instruction, and to
+create the corresponding control flow graph edge. This return address is the
+return address of the first subroutine call in the stack, starting from the
+bottom of the stack, such that the <code>RET</code> instruction belongs to
+the called subroutine.</p>
+
+<p>Let's take an example to illustrate this:</p>
+
+<br/>
+<center>
+<table cellSpacing="1" cellPadding="2" width="90%" border="1"><tr><td>
+<pre>
+public m(Z)V
+ L0
+  JSR L2
+ L1
+  RETURN
+ L2
+  ASTORE 2
+  JSR L4
+ L3
+  GOTO L5
+ L4
+  ASTORE 3
+  ILOAD 1
+  IFEQ L5
+  RET 3
+ L5
+  RET 2
+</pre>
+</td></tr></table>
+</center>
+<br/>
+
+<p>After all the instructions have been visited in <tt>MethodWriter</tt>, and
+just before <tt>visitMaxs</tt> is called, the control flow graph is the
+following (L1 and L3 are not real successors of L0 and L2: these edges are
+only used to keep track of <code>JSR</code>'s return addresses, and are
+ignored during the control flow graph analysis used to compute the maximum
+stack size):</p>
+
+<ul>
+  <li>L0 successors: L2, <i>L1</i></li>
+  <li>L1 successors: <i>none</i></li>
+  <li>L2 successors: L4, <i>L3</i></li>
+  <li>L3 successors: L5</li>
+  <li>L4 successors: L5</li>
+  <li>L5 successors: <i>none</i></li>
+</ul>
+
+<p>As explained above, the first step in <tt>visitMaxs</tt> consists in
+finding, for each basic block, to which subroutine(s) it belongs. The blocks
+that are reachable from L0 without following a <code>JSR</code> or a
+<code>RET</code> are L0 and L1: they are marked as belonging to subroutine
+#0. The blocks that are reachable in the same way from the subroutine
+starting at L2 are L2, L3 and L5. They are marked as belonging to
+subroutine #1. Finally the blocks that are reachable in the same way from
+the subroutine starting at L4 are L4 and L5. They are marked as belonging to
+subroutine #2. Note that L5 is marked as belonging to two subroutines. This
+is due to the fact the nested subroutine #2 can "return" to its parent
+subroutine #1 without a <code>RET</code>:</p>
+
+<ul>
+  <li>L0 belongs to: subroutine #0</li>
+  <li>L1 belongs to: subroutine #0</li>
+  <li>L2 belongs to: subroutine #1</li>
+  <li>L3 belongs to: subroutine #1</li>
+  <li>L4 belongs to: subroutine #2</li>
+  <li>L5 belongs to: subroutine #1 <i>and</i> subroutine #2</li>
+</ul>
+
+<p>The second step consits in finding the successors of the <code>RET</code>
+instructions. The visit of all reachable blocks, starting from L0, leads to
+L4 via two <code>JSR</code> instructions. L4 ends with a <code>RET</code>
+instruction, so the stack of <code>JSR</code> calls that were traversed to
+reach this block is examined. This stack contains two elements: the call
+from L0 to L2, and the call from L2 to L4. The bottom element is the call
+from L0 to L2. It leads to subroutine #1, but L4 belongs to subroutine #2.
+So the <code>RET</code> does not correspond to this <code>JSR</code>. The
+call from L2 to L4 does lead to the subroutine to which the
+<code>RET</code> belongs, so the call corresponding to the <code>RET</code>
+is this one. This means that a successor edge must be added from L4 to L3
+(the next basic block after the <code>JSR</code> in L2).</p>
+
+<p>The visit of all reachable blocks, starting from L0, also leads to L5
+via two <code>JSR</code> instructions and an IFEQ. L5 ends with a
+<code>RET</code> instruction, so the stack of <code>JSR</code> calls that
+were traversed to reach this block is examined. This stack contains two
+elements: the call from L0 to L2, and the call from L2 to L4. The bottom
+element is the call from L0 to L2. It leads to subroutine #1, a subroutine
+to which L5 also belongs. So the call corresponding to the <code>RET</code>
+in L5 is this one. This means that a successor edge must be added from L5 to
+L1 (the next basic block after the <code>JSR</code> in L0). Note that the
+second call in the stack, from L2 to L4, leads to subroutine #2, to which
+L5 also belongs. But it does not correspond to the <code>RET</code> in L5,
+and is not considered because the first stack element is examined first.</p>
+
+<p>The final control flow graph is the following:</p>
+<ul>
+  <li>L0 successors: L2, <i><font color="#DDDDDD">L1</font></i></li>
+  <li>L1 successors: <i>none</i></li>
+  <li>L2 successors: L4, <i><font color="#DDDDDD">L3</font></i></li>
+  <li>L3 successors: L5</li>
+  <li>L4 successors: L5, <b>L3</b></li>
+  <li>L5 successors: <b>L1</b></li>
+</ul>
+
+<p><b>Note:</b> you may have noticed that the L4 "basic block" is not a real
+basic block, because it contains several instructions that can lead to other
+blocks. In fact it is the union of two consecutive basic blocks. This is not
+an error: with the <code>COMPUTE_MAXS</code> option it is not always necessary
+to decompose the control flow graph down to individual basic blocks. Therefore,
+when possible, several consecutive basic blocks are represented as a single
+block, for optimization purposes.</p>
 
 <h2 style="page-break-before:always;"><a name="optimizations"></a>4 Code optimizations</h2>
 
