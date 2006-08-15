@@ -17,7 +17,8 @@
         <a href="#AspectWerkz/">AspectWerkz</a> | 
         <a href="#AspectJ">AspectJ</a> |
         <a href="#BEA">BEA WebLogic</a> | 
-        <a href="#IBM">IBM AUS</a> | 
+        <a href="#IBM">IBM AUS</a> |
+        <a href="#OracleBDB">Oracle BerkleyDB</a> |
         <a href="#Terracotta">Terracotta</a> | 
         <a href="#RIFE">RIFE</a> | 
         <a href="#EclipseME">EclipseME</a> |
@@ -109,6 +110,20 @@
           request an agreement to hold that API stable until a suitable replacement 
           can be provided. Several IBM flagship software products have already 
           done this with great success.</td>
+        </tr>
+        
+        <tr>
+          <td align="center" valign="middle">
+          <a href="http://www.oracle.com/technology/products/berkeley-db/index.html"><img src="images/oradlebdbje.png" border="0"
+            height="61" width="125" alt="Berkeley DB Java Edition" align="middle"/></a>
+          </td>
+          <td valign="top"><anchor name="OracleBDB"/>
+          <a href="http://www.oracle.com/technology/products/berkeley-db/index.html">Berkeley DB Java Edition</a> 
+          uses the ASM library to provide high performance object-data bindings.
+          By using ASM instead of reflection, binding overhead is no longer a factor in the overall 
+          performance of the database application.  ASM is very lightweight and has excellent 
+          performance -- two characteristics of Berkeley DB Java Edition that we cannot compromise.  
+          And ASM's license allows us to embed it without restrictions.</td>
         </tr>
         
         <tr>
