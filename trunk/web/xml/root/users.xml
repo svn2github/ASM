@@ -273,8 +273,8 @@
         <tr>
           <td align="center" valign="middle">
           <a href="http://proactive.objectweb.org/">
-          <img src="http://www-sop.inria.fr/oasis/ProActive/doc/api/org/objectweb/proactive/doc-files/ProActiveLogo200x34.gif"
-            border="0" width="200" height="23" alt="Proactive" align="middle"/>
+          <img src="images/proactive.gif"
+            border="0" width="180" height="28" alt="Proactive" align="middle"/>
           </a>
           </td>
           <td valign="top"><anchor name="ProActive"/>
