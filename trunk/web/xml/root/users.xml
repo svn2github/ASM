@@ -114,11 +114,11 @@
         
         <tr>
           <td align="center" valign="middle">
-          <a href="http://www.oracle.com/technology/products/berkeley-db/index.html"><img src="images/oradlebdbje.png" border="0"
+          <a href="http://www.oracle.com/database/berkeley-db.html"><img src="images/oradlebdbje.png" border="0"
             height="61" width="125" alt="Berkeley DB Java Edition" align="middle"/></a>
           </td>
           <td valign="top"><anchor name="OracleBDB"/>
-          <a href="http://www.oracle.com/technology/products/berkeley-db/index.html">Berkeley DB Java Edition</a> 
+          <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a> 
           uses the ASM library to provide high performance object-data bindings.
           By using ASM instead of reflection, binding overhead is no longer a factor in the overall 
           performance of the database application.  ASM is very lightweight and has excellent 
