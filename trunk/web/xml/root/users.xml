@@ -19,6 +19,7 @@
         <a href="#BEA">BEA WebLogic</a> | 
         <a href="#IBM">IBM AUS</a> |
         <a href="#OracleBDB">Oracle BerkleyDB</a> |
+        <a href="#OracleTopLink">Oracle TopLink</a> |
         <a href="#Terracotta">Terracotta</a> | 
         <a href="#RIFE">RIFE</a> | 
         <a href="#EclipseME">EclipseME</a> |
@@ -41,12 +42,9 @@
         <br/>
       </p>
 
-      <table border="1" width="100%">
+      <table border="0"  width="100%">
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a>
-          </td>
-          <td valign="top"><anchor name="AspectWerkz"/>
+          <td valign="top" colspan="2"><anchor name="AspectWerkz"/>
           <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 
           utilizes bytecode modification to 
           weave your classes at project build-time, class load time or runtime. 
@@ -57,16 +55,10 @@
           re-structure advice as well as swapping the implementation of your 
           introductions at runtime. Your aspects can be defined using either 
           Java 5 annotations, Java 1.3/1.4 custom doclets or a simple XML 
-          definition file.</td>
+          definition file.<br/><br/></td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://eclipse.org/aspectj">
-          <img src="images/aspectj.gif" border="0"
-            width="97" height="29" alt="AspectJ" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="AspectJ"/>
           <a href="http://eclipse.org/aspectj">AspectJ</a>
           is a seamless aspect-oriented extension to the Java programming language.
@@ -77,13 +69,14 @@
           For these types AspectJ doesn't need to load the instructions, it just
           needs to quickly load the structure - What is the signature? Is it
           generic? What are the methods? Do they have annotations? ASM is used
-          to quickly load this structural information.</td>
+          to quickly load this structural information.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://eclipse.org/aspectj"><img src="images/aspectj.gif" border="0"
+            width="97" height="29" alt="AspectJ" align="middle"/></a>
+          </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="100" height="60" alt="BEA"/></a>
-          </td>
           <td valign="top"><anchor name="BEA"/>
           <a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an 
           advanced diagnostic framework (WebLogic Diagnostic Framework) that 
@@ -91,14 +84,13 @@
           performant bytecode enhancements tailored for WebLogic Server. Key 
           components of the server as well as custom ones can be observed and 
           have their performance metrics exported through a dedicated API, 
-          third party tools, or through the management console.</td>
+          third party tools, or through the management console.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="100" height="60" alt="BEA"/></a>
+          </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
-            height="52" width="110" alt="IBM" align="middle"/></a>
-          </td>
           <td valign="top"><anchor name="IBM"/>
           The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
           (AUS) tool can help developers to scan one product 
@@ -109,28 +101,62 @@
           of the existence of fragile interfaces between the two pieces of software and 
           request an agreement to hold that API stable until a suitable replacement 
           can be provided. Several IBM flagship software products have already 
-          done this with great success.</td>
+          done this with great success.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
+            height="52" width="110" alt="IBM" align="middle"/></a>
+          </td>
         </tr>
         
         <tr>
+          <td valign="top"><anchor name="OracleBDB"/>
+          <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a> 
+            uses the ASM library to provide high performance object-data bindings.
+            By using ASM instead of reflection, binding overhead is no longer a factor in the overall 
+            performance of the database application.  ASM is very lightweight and has excellent 
+            performance -- two characteristics of Berkeley DB Java Edition that we cannot compromise.  
+            And ASM's license allows us to embed it without restrictions.<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://www.oracle.com/database/berkeley-db.html"><img src="images/oradlebdbje.png" border="0"
             height="61" width="125" alt="Berkeley DB Java Edition" align="middle"/></a>
           </td>
-          <td valign="top"><anchor name="OracleBDB"/>
-          <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a> 
-          uses the ASM library to provide high performance object-data bindings.
-          By using ASM instead of reflection, binding overhead is no longer a factor in the overall 
-          performance of the database application.  ASM is very lightweight and has excellent 
-          performance -- two characteristics of Berkeley DB Java Edition that we cannot compromise.  
-          And ASM's license allows us to embed it without restrictions.</td>
         </tr>
         
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://www.terracottatech.com/"><img src="images/terracotta.png" border="0"
-            height="31" width="200" alt="Terracotta" align="middle"/></a>
+          <td valign="top"><anchor name="OracleTopLink"/>
+          <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a> 
+            is a rich Java persistence solution. It provides a flexible, 
+            productive, and high performing persistence engine that addresses Object-Relational Mapping (ORM) 
+            for Java classes, Container and Bean Managed  (CMP, BMP) EJB 2 entity beans, 
+            and most recently EJB 3.0's Java Persistence API (JPA). 
+            In addition to solving ORM challenges TopLink also provides developers with a powerful Object-XML 
+            solution implementing JAXB and provides mapping support for non-relational data stores 
+            using the Java Connector Architecture. 
+            TopLink leverages the ASM library to enhance the application's persistent entities 
+            introducing transparent lazy loading and optimized change tracking.
+            <br/><br/></td>
+          <td align="center" valign="top">
+          <a href="http://www.oracle.com/technology/products/ias/toplink/index.html"><img src="images/oradletoplink.gif" border="0"
+            height="61" width="125" alt="Oracle TopLink" align="middle"/></a>
           </td>
+        </tr>
+            
+        <tr>
+          <td valign="top" colspan="2">
+            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">TopLink Essentials</a> 
+            is the Free Open Source edition of 
+            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a>. 
+            It is focused on object-relational persistence implementing EJB 3.0's Java Persistence API (JPA). 
+            TopLink Essentials is the reference implementation of JPA and is available through 
+            <a href="https://glassfish.dev.java.net/javaee5/persistence/entity-persistence-support.html">GlassFish entity-persistence module</a>
+            and is shipped within the 
+            <a href="http://www.oracle.com/technology/products/ias/index.html">Oracle Application Server 10.1.3.1</a>, 
+            Sun Application Server 9.0, 
+            and is included and integrated in the <a href="http://www.springframework.org/">Spring Framework</a> 2.0 release.
+            TopLink Essentials leverages the ASM library to enhance persistent entities 
+            introducing transparent lazy loading.<br/><br/></td>
+        </tr>
+        <tr>
           <td valign="top"><anchor name="Terracotta"/>
           <a href="http://www.terracottatech.com/">Terracotta</a> believes that enterprise 
           Java is too complex, and scaling out (or clustering) Java applications only makes it worse. 
@@ -139,16 +165,14 @@
           enterprise-class infrastructure services, such as clustering and caching, 
           into applications transparently at runtime, freeing the developer to focus on 
           implementing the business logic with their framework of choice, 
-          using simple, single JVM, natural Java.</td>
+          using simple, single JVM, natural Java.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://www.terracottatech.com/"><img src="images/terracotta.png" border="0"
+            height="31" width="200" alt="Terracotta" align="middle"/></a>
+          </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://rifers.org">
-          <img src="images/rife-logo_small.png" border="0"
-            width="126" height="53" alt="RIFE" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="RIFE"/>
           <a href="http://rifers.org">RIFE</a> relies on ASM for
           many of its core features. For example its templating engine generates regular Java
@@ -160,16 +184,15 @@
           specification mechanism in pure Java. Using this allows you to benefit from
           all the available development tools for the platform and to leverage
           expressiveness of the Java language to intuitively create complex
-          application flows.</td>
+          application flows.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://rifers.org">
+          <img src="images/rife-logo_small.png" border="0"
+            width="126" height="53" alt="RIFE" align="middle"/></a>
+          </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://eclipseme.org">
-          <img src="images/eclipseme.gif" border="0"
-            width="108" height="70" alt="EclipseME" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="EclipseME"/>
           <a href="http://eclipseme.org/">EclipseME</a>
           is a set of Eclipse plugins to help develop J2ME MIDlets.
@@ -179,15 +202,16 @@
           special needs of J2ME development. EclipseME provides a 100%
           pure Java CDLC preverifier implementation built using ASM, providing
           significantly better diagnostics, performance and platform-independence.
+          <br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://eclipseme.org">
+          <img src="images/eclipseme.gif" border="0"
+            width="108" height="70" alt="EclipseME" align="middle"/></a>
           </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://www.beanshell.org/"><img src="http://www.beanshell.org/images/homebutton.gif" border="0"
-            height="45" width="45" alt="BeanShell" align="middle"/></a>
-          </td>
-          <td valign="top"><anchor name="BeanShell"/>
+          <td valign="top" colspan="2"><anchor name="BeanShell"/>
           Pat Niemeyer said: "I'm very excited about ASM because it's
           exactly what I need to finish <a
           href="http://www.beanshell.org/">BeanShell</a> scripted
@@ -195,14 +219,11 @@
           relative to BeanShell (my core language is about 100K). All I
           really need is the ability to generate a proxy class for an
           arbitrary type (delegate all the methods to a reflective style
-          handler) which I believe will now be easy.</td>
+          handler) which I believe will now be easy.<br/><br/></td>
         </tr>
         
         <tr>
-          <td align="center" valign="middle">
-            <a href="http://cobertura.sourceforge.net/">Cobertura</a>
-          </td>
-          <td valign="top"><anchor name="Cobertura"/>
+          <td valign="top" colspan="2"><anchor name="Cobertura"/>
           <a href="http://cobertura.sourceforge.net/">Cobertura</a>
           is a free Java tool that calculates the percentage of code accessed by
           tests. It can be used to identify which parts of your Java program are
@@ -212,71 +233,53 @@
           code compiled with JDK 1.5--ASM works fine. ASM is licensed under the
           revised BSD license, which is compatable with the GPL, which allows us
           to remove the questionable exception for BCEL from the license. 
-          Instrumentation is about 5 times faster with ASM than BCEL."</td>
+          Instrumentation is about 5 times faster with ASM than BCEL."<br/><br/></td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-            <a href="http://cglib.sourceforge.net/">CGLIB</a>
-          </td>
-          <td valign="top"><anchor name="CGLIB"/>
+          <td valign="top" colspan="2"><anchor name="CGLIB"/>
           <a href="http://cglib.sourceforge.net/">CGLIB</a> is a powerful, 
           high performance and quality Code Generation Library. 
           It is used to extend JAVA classes and implement interfaces at runtime.
-          </td>
+          <br/><br/></td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-            <a href="https://dynaop.dev.java.net/">dynaop</a>
-          </td>
-          <td valign="top"><anchor name="dynaop"/>
+          <td valign="top" colspan="2"><anchor name="dynaop"/>
           <a href="https://dynaop.dev.java.net/">dynaop</a> is a proxy-based Aspect-Oriented
           Programming (AOP) framework, which enhances Object-Oriented (OO)
           design in the following areas:  code reuse, decomposition,
-          dependency reduction.</td>
+          dependency reduction.<br/><br/></td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-            <a href="http://groovy.codehaus.org/"><img src="images/groovy-logo.png" border="0"
-              height="56" width="113" alt="Groovy" align="middle"/></a>
-          </td>
           <td valign="top"><anchor name="Groovy"/>
           <a href="http://groovy.codehaus.org/">Groovy</a> is a new agile
           dynamic language for the JVM combining lots of great features
           from languages like Python, Ruby and Smalltalk and making them
-          available to the Java developers using a Java-like syntax.</td>
+          available to the Java developers using a Java-like syntax.<br/><br/></td>
+          <td align="center" valign="middle">
+            <a href="http://groovy.codehaus.org/"><img src="images/groovy-logo.png" border="0"
+              height="56" width="113" alt="Groovy" align="middle"/></a>
+          </td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-            <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
-          </td>
-          <td valign="top"><anchor name="Jamaica"/>
+          <td valign="top" colspan="2"><anchor name="Jamaica"/>
           <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a> 
           is a JVM Macro Assembler language. Its compiler uses a JavaClassCreator facade to delegate JVM class
           creation; currently it supports ASM and BCEL. "I like ASM," said
           James Huang, the author of Jamaica and JudoScript, "this is a JVM
           class creation API done right. For redistributing software, the
-          compactness of ASM API is a great advantage, too."</td>
+          compactness of ASM API is a great advantage, too."<br/><br/></td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-            <a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a>
-          </td>
-          <td valign="top"><anchor name="JDBCPersistence"/>
+          <td valign="top" colspan="2"><anchor name="JDBCPersistence"/>
           <a href="https://jdbcpersistence.dev.java.net/">JDBCPersistence</a> is an Object-Relational mapping
           persistence framework. It differs from its peers in that it generates
           the bytecode required to map a class to a table. It has been created
           with the following requirements in mind: be fast to load, support
           CLOBs and BLOBs, load persistent objects from java.sql.ResultSet,
           have compact API, have minimal dependencies on other projects,
-          support configuration via API.</td>
+          support configuration via API.<br/><br/></td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://proactive.objectweb.org/">
-          <img src="images/proactive.gif"
-            border="0" width="180" height="28" alt="Proactive" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="ProActive"/>
           <a href="http://proactive.objectweb.org/">ProActive</a> is a Java library for parallel,
           distributed, and concurrent computing, also featuring mobility and
@@ -285,26 +288,25 @@
           simplify the programming of applications that are distributed on
           Local Area Network (LAN), on cluster of workstations, or on
           Internet Grids. ProActive uses ASM to dynamically generate stub
-          and proxy classes.</td>
+          and proxy classes.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://proactive.objectweb.org/">
+          <img src="images/proactive.gif"
+            border="0" width="180" height="28" alt="Proactive" align="middle"/></a>
+          </td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://speedo.objectweb.org/"><img src="http://speedo.objectweb.org/doc/logo.gif" border="0"
-            width="203" height="117" alt="Speedo" align="middle"/></a>
-          </td>
           <td valign="top"><anchor name="Speedo"/>
           <a href="http://speedo.objectweb.org/">Speedo</a> is an open source implementation of the
           JDO specification. Speedo uses ASM to enhance the bytecode of
           persistent classes (i.e. mainly to replace access field instructions
-          with calls to getter and setter methods generated by Speedo).</td>
+          with calls to getter and setter methods generated by Speedo).<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://speedo.objectweb.org/"><img src="http://speedo.objectweb.org/doc/logo.gif" border="0"
+            width="203" height="117" alt="Speedo" align="middle"/></a>
+          </td>
         </tr>
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://fractal.objectweb.org/">
-          <img src="http://fractal.objectweb.org/images/fractal.jpg" border="0"
-            width="150" height="77" alt="Fractal" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="Fractal"/>
           <a href="http://fractal.objectweb.org/">Fractal</a> is a general
           software composition framework that supports component-based
@@ -312,16 +314,15 @@
           configuration, composition and administration. The reference
           implementation of Fractal uses ASM to generate interceptor
           classes, to merge classes for optimization purposes, and to
-          provide a basic mixin based inheritance mechanism.</td>
+          provide a basic mixin based inheritance mechanism.<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://fractal.objectweb.org/">
+          <img src="http://fractal.objectweb.org/images/fractal.jpg" border="0"
+            width="150" height="77" alt="Fractal" align="middle"/></a>
+          </td>
         </tr>
         
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://easybeans.objectweb.org/">
-          <img src="images/easybeans.gif" border="0"
-            width="200" height="49" alt="EasyBeans" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="EasyBeans"/>
           The <a href="http://easybeans.objectweb.org/">EasyBeans</a> 
           is an open source implementation by ObjectWeb of the EJB3 container specification.
@@ -329,16 +330,16 @@
           @Stateful, etc classes or to search annotations on fields/methods), 
           to manage the new EJB3 interceptors (to allow to intercept business methods or 
           to be notified of some lifecycle events), or for the dependency injection part 
-          (to add a method which do the job in the bean's class).</td>
+          (to add a method which do the job in the bean's class).<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://easybeans.objectweb.org/">
+          <img src="images/easybeans.gif" border="0"
+            width="200" height="49" alt="EasyBeans" align="middle"/>
+          </a>
+          </td>
         </tr>
 
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://jiprof.sourceforge.net/">
-          <img src="http://jiprof.sourceforge.net/images/jip-logo-90.png" border="0"
-            width="90" height="132" alt="JiP" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="JiP"/>
           The <a href="http://jiprof.sourceforge.net/">Java Interactive Profiler</a> 
           is a code profiler that is written in 100% Java. JIP allows the developer
@@ -350,26 +351,32 @@
           "ASM is a great product that was instrumental in allowing me to develop
           JIP", writes Andrew Wilcox, JIP's creator. "It's lightweight, easy to use
           and really allowed me to focus on the product I was creating rather than 
-          the details of byte code enhancement."</td>
+          the details of byte code enhancement."<br/><br/></td>
+          <td align="center" valign="middle">
+          <a href="http://jiprof.sourceforge.net/">
+          <img src="http://jiprof.sourceforge.net/images/jip-logo-90.png" border="0"
+            width="90" height="132" alt="JiP" align="middle"/>
+          </a>
+          </td>
         </tr>
         
         <tr>
-          <td align="center" valign="middle">
-          <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">
-          <img src="images/Sonar.gif" border="0" width="150" height="28" alt="SonarJ" align="middle"/>
-          </a>
-          </td>
           <td valign="top"><anchor name="SonarJ"/>
-          <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
-          is an innovative tool, which helps you to manage and monitor the
-          logical architecture and the technical quality of your Java projects. 
-          It allows you to define a logical architecture and map it to your system. 
-          By analyzing all the dependencies in your system it can efficiently 
-          identify all architecture violations (unwanted dependencies) and
-          cyclic dependencies. Most of the dependency information is gathered by
-          analyzing the compiled class files. For this purpose ASM is used and 
-          we are very pleased by the ease of use, the low overhead and the 
-          compelling performance of this library.</td>
+            <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
+            is an innovative tool, which helps you to manage and monitor the
+            logical architecture and the technical quality of your Java projects. 
+            It allows you to define a logical architecture and map it to your system. 
+            By analyzing all the dependencies in your system it can efficiently 
+            identify all architecture violations (unwanted dependencies) and
+            cyclic dependencies. Most of the dependency information is gathered by
+            analyzing the compiled class files. For this purpose ASM is used and 
+            we are very pleased by the ease of use, the low overhead and the 
+            compelling performance of this library.<br/><br/></td>
+          <td align="center" valign="middle">
+            <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">
+            <img src="images/Sonar.gif" border="0" width="150" height="28" alt="SonarJ" align="middle"/>
+            </a>
+          </td>
         </tr>
 
       </table>
