@@ -93,16 +93,16 @@
     <p><a href="asm153/javadoc/user/index.html">ASM 1.5.3 API</a>
     (<a href="asm153/javadoc/user/overview-summary.html">noframes</a>).</p>
             
-    <p><a href="asm233/javadoc/user/index.html">ASM 2.3.3 API</a>
-    (<a href="asm233/javadoc/user/overview-summary.html">noframes</a>).<br/>
-    changes from <a href="jdiff153to233/changes.html">1.5.3</a>
+    <p><a href="asm223/javadoc/user/index.html">ASM 2.3.3 API</a>
+    (<a href="asm223/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from <a href="jdiff153to223/changes.html">1.5.3</a>
     </p>
             
     <p><a href="asm30rc1/javadoc/user/index.html">ASM 3.0rc1 API</a>
     (<a href="asm30rc1/javadoc/user/overview-summary.html">noframes</a>).<br/>
     changes from 
       <a href="jdiff153to30rc1/changes.html">1.5.3</a>,
-      <a href="jdiff233to30rc1/changes.html">2.2.3</a>
+      <a href="jdiff223to30rc1/changes.html">2.2.3</a>
     </p>
             
     </td>
