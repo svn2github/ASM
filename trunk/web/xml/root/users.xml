@@ -38,6 +38,7 @@
         <a href="#JDBCPersistence">JDBCPersistence</a> |
         <a href="#JiP">JiP</a> |
         <a href="#SonarJ">SonarJ</a>
+        <a href="#Substance">Substance L&amp;F</a>
         <br/>
         <br/>
       </p>
@@ -377,6 +378,24 @@
             <img src="images/Sonar.gif" border="0" width="150" height="28" alt="SonarJ" align="middle"/>
             </a>
           </td>
+        </tr>
+        
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Substance"/>
+          Kirill Grouchnikov said about using ASM in 
+          <a href="https://substance.dev.java.net/">Substance</a> and 
+          <a href="https://laf-widget.dev.java.net/">Laf-Widget</a> projects:
+          "ASM is used during build process - every compiled UI delegate is changed to "inject" the 
+          <a href="https://laf-widget.dev.java.net/docs/how-it-works.html">additional functionality</a> 
+          that is common to all 40+ classes. This could have been done manually, of course, but then
+          it would be a mess to maintain in Substance and a major pain to adopt in
+          other LAFs. I considered a few alternatives such as dynamic proxies and
+          AOP and eventually decided to try ASM. Bytecode instrumentation has its disadvantages,
+          but at this moment it's the lesser of evils and 
+          <a href="http://asm.objectweb.org/current/doc/javadoc/user/org/objectweb/asm/util/ASMifierClassVisitor.html">ASMifierClassVisitor</a> 
+          was a definite winner for me".
+          </td>
+          
         </tr>
 
       </table>
