@@ -22,8 +22,9 @@
 
     <menu>
       <legend>Developers' Corner</legend>
-      <menuitem><a href="http://forge.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
       <menuitem><a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/cvs/?group_id=23">CVS Repository</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/tracker/?group_id=23">Issue Tracker</a></menuitem>
       <menuitem><a href="doc/developer-guide.html">Developer Guide</a></menuitem>
     </menu>
 
