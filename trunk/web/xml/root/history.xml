@@ -14,6 +14,31 @@
 
     <s1 name="History">
 
+      <subtitle>1 November 2006: ASM 3.0 (cvs-tag: ASM_3_0)</subtitle>
+
+        <ul>
+          <li>visit*Annotation methods can now return null</li>
+          <li>COMPUTE_MAXS now works with all subroutines, even very weird ones 
+          that cannot be produced by javac</li>
+          <li>new getters in ClassReader, SKIP_DEBUG now skips visitSource</li>
+          <li>new methods in Type: getObjectType, getConstructorDescriptor</li>
+          <li>InsnList now supports ListIterator interface</li>
+          <li>new insertBefore() and insert*() methods in InsnList class</li>
+          <li>improved Analyzer API, support for abstract and native methods</li>
+          <li>improved Method class behavior with default package</li>
+          <li>minor bug fixes
+          <ul>
+            <li>305716 bug in floating point constant handling in constant pool
+            writing</li>
+            <li>305917 optimizer.ClassConstantsCollector generates an invalid
+            class constant</li>
+            <li>306058 FieldNode.accept() cannot handle ClassVisitors yielding
+            null as FieldVisitor</li>
+          </ul></li>
+          <li>new tests</li>
+          <li>javadoc improvements</li>
+        </ul>
+
       <subtitle>06 July 2006: ASM 3.0 RC1 (cvs-tag: ASM_3_0_RC1)</subtitle>
 
         <ul>
