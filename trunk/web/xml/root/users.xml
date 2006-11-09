@@ -14,14 +14,14 @@
     <s1 name="Users">
 
       <p>
-        <a href="#AspectWerkz/">AspectWerkz</a> | 
+        <a href="#AspectWerkz/">AspectWerkz</a> |
         <a href="#AspectJ">AspectJ</a> |
-        <a href="#BEA">BEA WebLogic</a> | 
+        <a href="#BEA">BEA WebLogic</a> |
         <a href="#IBM">IBM AUS</a> |
         <a href="#OracleBDB">Oracle BerkleyDB</a> |
         <a href="#OracleTopLink">Oracle TopLink</a> |
-        <a href="#Terracotta">Terracotta</a> | 
-        <a href="#RIFE">RIFE</a> | 
+        <a href="#Terracotta">Terracotta</a> |
+        <a href="#RIFE">RIFE</a> |
         <a href="#EclipseME">EclipseME</a> |
 
         <a href="#Proactive">Proactive</a> |
@@ -37,8 +37,9 @@
         <a href="#Cobertura">Cobertura</a> |
         <a href="#JDBCPersistence">JDBCPersistence</a> |
         <a href="#JiP">JiP</a> |
-        <a href="#SonarJ">SonarJ</a>
-        <a href="#Substance">Substance L&amp;F</a>
+        <a href="#SonarJ">SonarJ</a> |
+        <a href="#Substance">Substance L&amp;F</a> |
+        <a href="#Retrotranslator">Retrotranslator</a>
         <br/>
         <br/>
       </p>
@@ -46,16 +47,16 @@
       <table border="0"  width="100%">
         <tr>
           <td valign="top" colspan="2"><anchor name="AspectWerkz"/>
-          <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a> 
-          utilizes bytecode modification to 
-          weave your classes at project build-time, class load time or runtime. 
-          It hooks in using standardized JVM level APIs. It has a rich and 
-          highly orthogonal join point model. Aspects, advices and 
-          introductions are written in plain Java and your target classes can 
-          be regular POJOs. You have the possibility to add, remove and 
-          re-structure advice as well as swapping the implementation of your 
-          introductions at runtime. Your aspects can be defined using either 
-          Java 5 annotations, Java 1.3/1.4 custom doclets or a simple XML 
+          <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a>
+          utilizes bytecode modification to
+          weave your classes at project build-time, class load time or runtime.
+          It hooks in using standardized JVM level APIs. It has a rich and
+          highly orthogonal join point model. Aspects, advices and
+          introductions are written in plain Java and your target classes can
+          be regular POJOs. You have the possibility to add, remove and
+          re-structure advice as well as swapping the implementation of your
+          introductions at runtime. Your aspects can be defined using either
+          Java 5 annotations, Java 1.3/1.4 custom doclets or a simple XML
           definition file.<br/><br/></td>
         </tr>
 
@@ -79,12 +80,12 @@
 
         <tr>
           <td valign="top"><anchor name="BEA"/>
-          <a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an 
-          advanced diagnostic framework (WebLogic Diagnostic Framework) that 
-          enables users to monitor a production system. ASM is used for high 
-          performant bytecode enhancements tailored for WebLogic Server. Key 
-          components of the server as well as custom ones can be observed and 
-          have their performance metrics exported through a dedicated API, 
+          <a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an
+          advanced diagnostic framework (WebLogic Diagnostic Framework) that
+          enables users to monitor a production system. ASM is used for high
+          performant bytecode enhancements tailored for WebLogic Server. Key
+          components of the server as well as custom ones can be observed and
+          have their performance metrics exported through a dedicated API,
           third party tools, or through the management console.<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://www.bea.com/"><img src="images/bea.png" border="0" width="100" height="60" alt="BEA"/></a>
@@ -94,46 +95,46 @@
         <tr>
           <td valign="top"><anchor name="IBM"/>
           The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
-          (AUS) tool can help developers to scan one product 
-          code to detect the use of another product's internal APIs. 
-          Once these usages are identified, the situation can be remedied by 
-          replacing those internal APIs with published ones. If a suitable 
-          published API is not available, the development team can alert the API provider 
-          of the existence of fragile interfaces between the two pieces of software and 
-          request an agreement to hold that API stable until a suitable replacement 
-          can be provided. Several IBM flagship software products have already 
+          (AUS) tool can help developers to scan one product
+          code to detect the use of another product's internal APIs.
+          Once these usages are identified, the situation can be remedied by
+          replacing those internal APIs with published ones. If a suitable
+          published API is not available, the development team can alert the API provider
+          of the existence of fragile interfaces between the two pieces of software and
+          request an agreement to hold that API stable until a suitable replacement
+          can be provided. Several IBM flagship software products have already
           done this with great success.<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
             height="52" width="110" alt="IBM" align="middle"/></a>
           </td>
         </tr>
-        
+
         <tr>
           <td valign="top"><anchor name="OracleBDB"/>
-          <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a> 
+          <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a>
             uses the ASM library to provide high performance object-data bindings.
-            By using ASM instead of reflection, binding overhead is no longer a factor in the overall 
-            performance of the database application.  ASM is very lightweight and has excellent 
-            performance -- two characteristics of Berkeley DB Java Edition that we cannot compromise.  
+            By using ASM instead of reflection, binding overhead is no longer a factor in the overall
+            performance of the database application.  ASM is very lightweight and has excellent
+            performance -- two characteristics of Berkeley DB Java Edition that we cannot compromise.
             And ASM's license allows us to embed it without restrictions.<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://www.oracle.com/database/berkeley-db.html"><img src="images/oradlebdbje.png" border="0"
             height="61" width="125" alt="Berkeley DB Java Edition" align="middle"/></a>
           </td>
         </tr>
-        
+
         <tr>
           <td valign="top"><anchor name="OracleTopLink"/>
-          <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a> 
-            is a rich Java persistence solution. It provides a flexible, 
-            productive, and high performing persistence engine that addresses Object-Relational Mapping (ORM) 
-            for Java classes, Container and Bean Managed  (CMP, BMP) EJB 2 entity beans, 
-            and most recently EJB 3.0's Java Persistence API (JPA). 
-            In addition to solving ORM challenges TopLink also provides developers with a powerful Object-XML 
-            solution implementing JAXB and provides mapping support for non-relational data stores 
-            using the Java Connector Architecture. 
-            TopLink leverages the ASM library to enhance the application's persistent entities 
+          <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a>
+            is a rich Java persistence solution. It provides a flexible,
+            productive, and high performing persistence engine that addresses Object-Relational Mapping (ORM)
+            for Java classes, Container and Bean Managed  (CMP, BMP) EJB 2 entity beans,
+            and most recently EJB 3.0's Java Persistence API (JPA).
+            In addition to solving ORM challenges TopLink also provides developers with a powerful Object-XML
+            solution implementing JAXB and provides mapping support for non-relational data stores
+            using the Java Connector Architecture.
+            TopLink leverages the ASM library to enhance the application's persistent entities
             introducing transparent lazy loading and optimized change tracking.
             <br/><br/></td>
           <td align="center" valign="top">
@@ -141,31 +142,31 @@
             height="55" width="149" alt="Oracle TopLink" align="middle"/></a>
           </td>
         </tr>
-            
+
         <tr>
           <td valign="top" colspan="2">
-            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">TopLink Essentials</a> 
-            is the Free Open Source edition of 
-            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a>. 
-            It is focused on object-relational persistence implementing EJB 3.0's Java Persistence API (JPA). 
-            TopLink Essentials is the reference implementation of JPA and is available through 
+            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">TopLink Essentials</a>
+            is the Free Open Source edition of
+            <a href="http://www.oracle.com/technology/products/ias/toplink/index.html">Oracle TopLink</a>.
+            It is focused on object-relational persistence implementing EJB 3.0's Java Persistence API (JPA).
+            TopLink Essentials is the reference implementation of JPA and is available through
             <a href="https://glassfish.dev.java.net/javaee5/persistence/entity-persistence-support.html">GlassFish entity-persistence module</a>
-            and is shipped within the 
-            <a href="http://www.oracle.com/technology/products/ias/index.html">Oracle Application Server 10.1.3.1</a>, 
-            Sun Application Server 9.0, 
+            and is shipped within the
+            <a href="http://www.oracle.com/technology/products/ias/index.html">Oracle Application Server 10.1.3.1</a>,
+            Sun Application Server 9.0,
             and is included and integrated in the <a href="http://www.springframework.org/">Spring Framework</a> 2.0 release.
-            TopLink Essentials leverages the ASM library to enhance persistent entities 
+            TopLink Essentials leverages the ASM library to enhance persistent entities
             introducing transparent lazy loading.<br/><br/></td>
         </tr>
         <tr>
           <td valign="top"><anchor name="Terracotta"/>
-          <a href="http://www.terracottatech.com/">Terracotta</a> believes that enterprise 
-          Java is too complex, and scaling out (or clustering) Java applications only makes it worse. 
-          Terracotta believes that operational concerns should be clearly separated from business logic. 
-          The "Terracotta Virtualization Server" uses byte-code modification to layer in 
-          enterprise-class infrastructure services, such as clustering and caching, 
-          into applications transparently at runtime, freeing the developer to focus on 
-          implementing the business logic with their framework of choice, 
+          <a href="http://www.terracottatech.com/">Terracotta</a> believes that enterprise
+          Java is too complex, and scaling out (or clustering) Java applications only makes it worse.
+          Terracotta believes that operational concerns should be clearly separated from business logic.
+          The "Terracotta Virtualization Server" uses byte-code modification to layer in
+          enterprise-class infrastructure services, such as clustering and caching,
+          into applications transparently at runtime, freeing the developer to focus on
+          implementing the business logic with their framework of choice,
           using simple, single JVM, natural Java.<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://www.terracottatech.com/"><img src="images/terracotta.png" border="0"
@@ -179,7 +180,7 @@
           many of its core features. For example its templating engine generates regular Java
           classes at runtime without resorting to Java compilation of sources,
           POJOs can remain clean and still be augmented through meta-data by merging
-          sibling classes together and correctly keeping related instances in sync, 
+          sibling classes together and correctly keeping related instances in sync,
           <a href="http://rifers.org/wiki/display/RIFE/Web+continuations">RIFE/Continuations</a>
           implements partial JVM continuations to provide a stateful flow
           specification mechanism in pure Java. Using this allows you to benefit from
@@ -222,24 +223,24 @@
           arbitrary type (delegate all the methods to a reflective style
           handler) which I believe will now be easy.<br/><br/></td>
         </tr>
-        
+
         <tr>
           <td valign="top" colspan="2"><anchor name="Cobertura"/>
           <a href="http://cobertura.sourceforge.net/">Cobertura</a>
           is a free Java tool that calculates the percentage of code accessed by
           tests. It can be used to identify which parts of your Java program are
-          lacking test coverage. Since version 1.1, Cobertura switched "the 
+          lacking test coverage. Since version 1.1, Cobertura switched "the
           instrumentation classes to use ASM instead of Apache BCEL. There are
           three benefits to this: BCEL was throwing exceptions with some source
           code compiled with JDK 1.5--ASM works fine. ASM is licensed under the
           revised BSD license, which is compatable with the GPL, which allows us
-          to remove the questionable exception for BCEL from the license. 
+          to remove the questionable exception for BCEL from the license.
           Instrumentation is about 5 times faster with ASM than BCEL."<br/><br/></td>
         </tr>
         <tr>
           <td valign="top" colspan="2"><anchor name="CGLIB"/>
-          <a href="http://cglib.sourceforge.net/">CGLIB</a> is a powerful, 
-          high performance and quality Code Generation Library. 
+          <a href="http://cglib.sourceforge.net/">CGLIB</a> is a powerful,
+          high performance and quality Code Generation Library.
           It is used to extend JAVA classes and implement interfaces at runtime.
           <br/><br/></td>
         </tr>
@@ -263,7 +264,7 @@
         </tr>
         <tr>
           <td valign="top" colspan="2"><anchor name="Jamaica"/>
-          <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a> 
+          <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
           is a JVM Macro Assembler language. Its compiler uses a JavaClassCreator facade to delegate JVM class
           creation; currently it supports ASM and BCEL. "I like ASM," said
           James Huang, the author of Jamaica and JudoScript, "this is a JVM
@@ -322,15 +323,15 @@
             width="150" height="77" alt="Fractal" align="middle"/></a>
           </td>
         </tr>
-        
+
         <tr>
           <td valign="top"><anchor name="EasyBeans"/>
-          The <a href="http://easybeans.objectweb.org/">EasyBeans</a> 
+          The <a href="http://easybeans.objectweb.org/">EasyBeans</a>
           is an open source implementation by ObjectWeb of the EJB3 container specification.
-          It uses ASM in many cases: for the annotations processing (to detect @Stateless, 
-          @Stateful, etc classes or to search annotations on fields/methods), 
-          to manage the new EJB3 interceptors (to allow to intercept business methods or 
-          to be notified of some lifecycle events), or for the dependency injection part 
+          It uses ASM in many cases: for the annotations processing (to detect @Stateless,
+          @Stateful, etc classes or to search annotations on fields/methods),
+          to manage the new EJB3 interceptors (to allow to intercept business methods or
+          to be notified of some lifecycle events), or for the dependency injection part
           (to add a method which do the job in the bean's class).<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://easybeans.objectweb.org/">
@@ -342,16 +343,16 @@
 
         <tr>
           <td valign="top"><anchor name="JiP"/>
-          The <a href="http://jiprof.sourceforge.net/">Java Interactive Profiler</a> 
+          The <a href="http://jiprof.sourceforge.net/">Java Interactive Profiler</a>
           is a code profiler that is written in 100% Java. JIP allows the developer
           to start and stop profiling interactively while the target program
-          is running. In addition, JIP lets the developer filter out classes 
-          and packages so that the resulting profile is less cluttered. By using 
-          the Java5 agent interface, this is accompilshed without the need to 
+          is running. In addition, JIP lets the developer filter out classes
+          and packages so that the resulting profile is less cluttered. By using
+          the Java5 agent interface, this is accompilshed without the need to
           recomple or have special libraries included with the target program.
           "ASM is a great product that was instrumental in allowing me to develop
           JIP", writes Andrew Wilcox, JIP's creator. "It's lightweight, easy to use
-          and really allowed me to focus on the product I was creating rather than 
+          and really allowed me to focus on the product I was creating rather than
           the details of byte code enhancement."<br/><br/></td>
           <td align="center" valign="middle">
           <a href="http://jiprof.sourceforge.net/">
@@ -360,18 +361,18 @@
           </a>
           </td>
         </tr>
-        
+
         <tr>
           <td valign="top"><anchor name="SonarJ"/>
             <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
             is an innovative tool, which helps you to manage and monitor the
-            logical architecture and the technical quality of your Java projects. 
-            It allows you to define a logical architecture and map it to your system. 
-            By analyzing all the dependencies in your system it can efficiently 
+            logical architecture and the technical quality of your Java projects.
+            It allows you to define a logical architecture and map it to your system.
+            By analyzing all the dependencies in your system it can efficiently
             identify all architecture violations (unwanted dependencies) and
             cyclic dependencies. Most of the dependency information is gathered by
-            analyzing the compiled class files. For this purpose ASM is used and 
-            we are very pleased by the ease of use, the low overhead and the 
+            analyzing the compiled class files. For this purpose ASM is used and
+            we are very pleased by the ease of use, the low overhead and the
             compelling performance of this library.<br/><br/></td>
           <td align="center" valign="middle">
             <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">
@@ -379,23 +380,36 @@
             </a>
           </td>
         </tr>
-        
+
         <tr>
           <td valign="top" colspan="2"><anchor name="Substance"/>
-          Kirill Grouchnikov said about using ASM in 
-          <a href="https://substance.dev.java.net/">Substance</a> and 
+          Kirill Grouchnikov said about using ASM in
+          <a href="https://substance.dev.java.net/">Substance</a> and
           <a href="https://laf-widget.dev.java.net/">Laf-Widget</a> projects:
-          "ASM is used during build process - every compiled UI delegate is changed to "inject" the 
-          <a href="https://laf-widget.dev.java.net/docs/how-it-works.html">additional functionality</a> 
+          "ASM is used during build process - every compiled UI delegate is changed to "inject" the
+          <a href="https://laf-widget.dev.java.net/docs/how-it-works.html">additional functionality</a>
           that is common to all 40+ classes. This could have been done manually, of course, but then
           it would be a mess to maintain in Substance and a major pain to adopt in
           other LAFs. I considered a few alternatives such as dynamic proxies and
           AOP and eventually decided to try ASM. Bytecode instrumentation has its disadvantages,
-          but at this moment it's the lesser of evils and 
-          <a href="http://asm.objectweb.org/current/doc/javadoc/user/org/objectweb/asm/util/ASMifierClassVisitor.html">ASMifierClassVisitor</a> 
+          but at this moment it's the lesser of evils and
+          <a href="http://asm.objectweb.org/current/doc/javadoc/user/org/objectweb/asm/util/ASMifierClassVisitor.html">ASMifierClassVisitor</a>
           was a definite winner for me".
           </td>
-          
+        </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Retrotranslator"/>
+          <a href="http://retrotranslator.sourceforge.net">Retrotranslator</a>
+          is a Java bytecode transformer that translates Java classes compiled with JDK 5.0
+          into classes that can be run on JVM 1.4.
+          Thanks to the ASM framework it is able to analyze and transform
+          classes in an easy and clear way without sacrificing performance.
+          Features supported on JRE 1.4: generics, annotations, reflection on
+          generics and annotations, enums, autoboxing, for-each loop,
+          varargs, covariant return types, formatted output, static import,
+          concurrency utilities, collections framework enhancements.
+         </td>
         </tr>
 
       </table>
