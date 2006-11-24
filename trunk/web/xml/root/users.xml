@@ -28,18 +28,21 @@
         <a href="#Speedo">Speedo</a> |
         <a href="#Fractal">Fractal</a> |
         <a href="#EasyBeans">EasyBeans</a> |
+        <a href="#JDBCPersistence">JDBCPersistence</a> |
+        <a href="#Ebean">Ebean</a> |
 
         <a href="#BeanShell">BeanShell</a> |
         <a href="#Groovy">Groovy</a> |
         <a href="#Jamaica">Jamaica</a> |
         <a href="#CGLIB">CGLIB</a> |
         <a href="#dynaop">dynaop</a> |
-        <a href="#Cobertura">Cobertura</a> |
-        <a href="#JDBCPersistence">JDBCPersistence</a> |
-        <a href="#JiP">JiP</a> |
-        <a href="#SonarJ">SonarJ</a> |
+        <a href="#Retrotranslator">Retrotranslator</a> |
+        
         <a href="#Substance">Substance L&amp;F</a> |
-        <a href="#Retrotranslator">Retrotranslator</a>
+
+        <a href="#Cobertura">Cobertura</a> |
+        <a href="#SonarJ">SonarJ</a> |
+        <a href="#JiP">JiP</a>
         <br/>
         <br/>
       </p>
@@ -411,6 +414,21 @@
           concurrency utilities, collections framework enhancements.
          </td>
         </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Ebean"/>
+          <a href="http://www.avaje.org/">Ebean</a>
+          is a open source ORM persistence layer - simplyfing Object Relational Mapping 
+          for Java Developers. It provides the functionality of the Java Persistence API 
+          (EJB3 Persistence) without requiring a container. It uses JPA annotated Entity 
+          Beans and provides cascading save/delete, batching, caching, clustering without 
+          requiring session objects (EntityManager). Ebean uses ASM to enhance the Entity 
+          Beans to support transparent "Lazy Loading" and "Old Values Creation". 
+          For performance reasons ASM is also used to generate code to replace standard 
+          reflection for bean getter and setter methods.
+         </td>
+        </tr>
+
 
       </table>
 
