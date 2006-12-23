@@ -42,7 +42,8 @@
 
         <a href="#Cobertura">Cobertura</a> |
         <a href="#SonarJ">SonarJ</a> |
-        <a href="#JiP">JiP</a>
+        <a href="#JiP">JiP</a> |
+        <a href="#R-OSGi">R-OSGi</a>
         <br/>
         <br/>
       </p>
@@ -429,6 +430,18 @@
          </td>
         </tr>
 
+        <tr>
+          <td valign="top" colspan="2"><anchor name="R-OSGi"/>
+          <a href="http://r-osgi.sourceforge.net/">R-OSGi</a>
+          is a technology to allow transparent access to remote services in OSGi frameworks. 
+          The idea is to allow the distribution of arbitrary OSGi services in networks with 
+          little management, such as ad-hoc networks. 
+          We use ASM to generate dynamic proxy bundles for remote services at runtime. 
+          One of our intended areas for applications is the world of mobile and embedded devices. 
+          The lightweight design of ASM is ideal for the bytecode manipulations that we require on 
+          the client side and the static code analysis on the service provider side.
+         </td>
+        </tr>
 
       </table>
 
