@@ -23,6 +23,7 @@
         <a href="#Terracotta">Terracotta</a> |
         <a href="#RIFE">RIFE</a> |
         <a href="#EclipseME">EclipseME</a> |
+        <a href="#SunJavaMEemulation">Sun Java ME emulation for Java SE</a> |
 
         <a href="#Proactive">Proactive</a> |
         <a href="#Speedo">Speedo</a> |
@@ -213,6 +214,21 @@
           <a href="http://eclipseme.org">
           <img src="images/eclipseme.gif" border="0"
             width="108" height="70" alt="EclipseME" align="middle"/></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="SunJavaMEemulation"/>
+          <a href="http://www.sun.com/">Sun Microsystems, Inc.</a> used ASM to
+          build an emulation or hosting environment, currently in prototype
+          form, for running Java ME applications (Connected Device Configuration
+          / Foundation Profile / Personal Basis Profile) on top of a compliant
+          Java SE implementation. The hosting environment supports generic rules
+          for interposing on various class, method, constructor, and field
+          references and calls, and currently contains all of the rules required
+          to pass the CDC and PBP TCKs. ASM was invaluable in supplying advanced
+          techniques such as dataflow over bytecodes which made it straightforward to 
+          build several of the rewrite rules in the hosting environment.
           </td>
         </tr>
 
