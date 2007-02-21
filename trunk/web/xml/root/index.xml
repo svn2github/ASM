@@ -73,6 +73,14 @@
     
     <p><a href="doc/tutorial-annotations.html">Tutorial for using J2SE 5.0 Annotations with ASM 1.5.x</a>.</p>
     
+    <p><strong>User guide</strong></p><hr/>
+
+    <p>The following document provides an in-depth introduction to ASM 3.0,
+    going from the basic features to advanced topics such as bytecode 
+    analysis.</p>
+
+    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
+
     <p><strong>External articles</strong></p><hr/>
 
     <p><a href="http://www-128.ibm.com/developerworks/java/library/j-cwt05125/index.html">ASM 2.0 Classworking</a>.</p>
