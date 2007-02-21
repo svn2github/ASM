@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Creator: fig2dev Version 3.2 Patchlevel 4 -->
+<!-- CreationDate: Tue Feb 20 09:09:09 2007 -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="8.3in"
+   height="11.7in"
+   viewBox="0 0 13858 20157"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.44"
+   sodipodi:docbase="/home/evasion/ebruneto/figures"
+   sodipodi:docname="perfs2.svg">
+  <metadata
+     id="metadata397">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs395">
+    <defs
+       id="defs6">
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile1">
+        <path
+           id="path9"
+           d="M 0 -100 200 16" />
+        <path
+           id="path11"
+           d="M 0 -60 200 56" />
+        <path
+           id="path13"
+           d="M 0 -20 200 96" />
+        <path
+           id="path15"
+           d="M 0 20 200 136" />
+        <path
+           id="path17"
+           d="M 0 60 200 176" />
+        <path
+           id="path19"
+           d="M 0 100 200 216" />
+        <path
+           id="path21"
+           d="M 0 140 200 256" />
+        <path
+           id="path23"
+           d="M 0 180 200 296" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile2">
+        <path
+           id="path26"
+           d="M 200 -100 0 16" />
+        <path
+           id="path28"
+           d="M 200 -60 0 56" />
+        <path
+           id="path30"
+           d="M 200 -20 0 96" />
+        <path
+           id="path32"
+           d="M 200 20 0 136" />
+        <path
+           id="path34"
+           d="M 200 60 0 176" />
+        <path
+           id="path36"
+           d="M 200 100 0 216" />
+        <path
+           id="path38"
+           d="M 200 140 0 256" />
+        <path
+           id="path40"
+           d="M 200 180 0 296" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile3">
+        <path
+           id="path43"
+           d="M 0 -100 200 16" />
+        <path
+           id="path45"
+           d="M 200 -100 0 16" />
+        <path
+           id="path47"
+           d="M 0 -60 200 56" />
+        <path
+           id="path49"
+           d="M 200 -60 0 56" />
+        <path
+           id="path51"
+           d="M 0 -20 200 96" />
+        <path
+           id="path53"
+           d="M 200 -20 0 96" />
+        <path
+           id="path55"
+           d="M 0 20 200 136" />
+        <path
+           id="path57"
+           d="M 200 20 0 136" />
+        <path
+           id="path59"
+           d="M 0 60 200 176" />
+        <path
+           id="path61"
+           d="M 200 60 0 176" />
+        <path
+           id="path63"
+           d="M 0 100 200 216" />
+        <path
+           id="path65"
+           d="M 200 100 0 216" />
+        <path
+           id="path67"
+           d="M 0 140 200 256" />
+        <path
+           id="path69"
+           d="M 200 140 0 256" />
+        <path
+           id="path71"
+           d="M 0 180 200 296" />
+        <path
+           id="path73"
+           d="M 200 180 0 296" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile4">
+        <path
+           id="path76"
+           d="M 100 0 200 100" />
+        <path
+           id="path78"
+           d="M 0 0 200 200" />
+        <path
+           id="path80"
+           d="M 0 100 100 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile5">
+        <path
+           id="path83"
+           d="M 100 0 0 100" />
+        <path
+           id="path85"
+           d="M 200 0 0 200" />
+        <path
+           id="path87"
+           d="M 200 100 100 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile6">
+        <path
+           id="path90"
+           d="M 100 0 200 100" />
+        <path
+           id="path92"
+           d="M 0 0 200 200" />
+        <path
+           id="path94"
+           d="M 0 100 100 200" />
+        <path
+           id="path96"
+           d="M 100 0 0 100" />
+        <path
+           id="path98"
+           d="M 200 0 0 200" />
+        <path
+           id="path100"
+           d="M 200 100 100 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile7">
+        <path
+           id="path103"
+           d="M 0 0 0 50" />
+        <path
+           id="path105"
+           d="M 0 50 200 50" />
+        <path
+           id="path107"
+           d="M 100 50 100 150" />
+        <path
+           id="path109"
+           d="M 0 150 200 150" />
+        <path
+           id="path111"
+           d="M 0 150 0 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile8">
+        <path
+           id="path114"
+           d="M 0 0 50 0" />
+        <path
+           id="path116"
+           d="M 50 0 50 200" />
+        <path
+           id="path118"
+           d="M 50 100 150 100" />
+        <path
+           id="path120"
+           d="M 150 0 150 200" />
+        <path
+           id="path122"
+           d="M 150 0 200 0" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile9">
+        <path
+           id="path125"
+           d="M 0 50 200 50" />
+        <path
+           id="path127"
+           d="M 0 150 200 150" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile10">
+        <path
+           id="path130"
+           d="M 50 0 50 200" />
+        <path
+           id="path132"
+           d="M 150 0 150 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile11">
+        <path
+           id="path135"
+           d="M 0 50 200 50" />
+        <path
+           id="path137"
+           d="M 0 150 200 150" />
+        <path
+           id="path139"
+           d="M 50 0 50 200" />
+        <path
+           id="path141"
+           d="M 150 0 150 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile12">
+        <path
+           id="path144"
+           d="M 0 0 25 50" />
+        <path
+           id="path146"
+           d="M 0 50 200 50" />
+        <path
+           id="path148"
+           d="M 100 50 125 150" />
+        <path
+           id="path150"
+           d="M 0 150 200 150" />
+        <path
+           id="path152"
+           d="M 0 150 25 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile13">
+        <path
+           id="path155"
+           d="M 200 0 175 50" />
+        <path
+           id="path157"
+           d="M 0 50 200 50" />
+        <path
+           id="path159"
+           d="M 100 50 75 150" />
+        <path
+           id="path161"
+           d="M 0 150 200 150" />
+        <path
+           id="path163"
+           d="M 200 150 175 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile14">
+        <path
+           id="path166"
+           d="M 0 0 50 25" />
+        <path
+           id="path168"
+           d="M 50 0 50 200" />
+        <path
+           id="path170"
+           d="M 50 100 150 125" />
+        <path
+           id="path172"
+           d="M 150 0 150 200" />
+        <path
+           id="path174"
+           d="M 150 0 200 25" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile15">
+        <path
+           id="path177"
+           d="M 0 25 50 0" />
+        <path
+           id="path179"
+           d="M 50 0 50 200" />
+        <path
+           id="path181"
+           d="M 50 125 150 100" />
+        <path
+           id="path183"
+           d="M 150 0 150 200" />
+        <path
+           id="path185"
+           d="M 150 25 200 0" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile16">
+        <path
+           id="path188"
+           d="M 0 50 A 50 50 0 1 0 100 50" />
+        <path
+           id="path190"
+           d="M 100 50 A 50 50 0 1 0 200 50" />
+        <path
+           id="path192"
+           d="M 50 100 A 50 50 0 1 0 150 100" />
+        <path
+           id="path194"
+           d="M 0 150 A 50 50 0 0 0 50 100" />
+        <path
+           id="path196"
+           d="M 150 100 A 50 50 0 1 0 200 50" />
+        <path
+           id="path198"
+           d="M 50 0 A 50 50 0 1 0 150 0" />
+        <path
+           id="path200"
+           d="M 150 0 A 50 50 0 0 0 200 50" />
+        <path
+           id="path202"
+           d="M 0 50 A 50 50 0 0 0 50 0" />
+        <path
+           id="path204"
+           d="M 0 150 A 50 50 0 1 0 100 150" />
+        <path
+           id="path206"
+           d="M 100 150 A 50 50 0 1 0 200 150" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="100"
+         width="100"
+         y="0"
+         x="0"
+         id="tile17">
+        <g
+           id="g209"
+           transform="scale(0.5)">
+          <path
+             id="path211"
+             d="M 0 50 A 50 50 0 1 0 100 50" />
+          <path
+             id="path213"
+             d="M 100 50 A 50 50 0 1 0 200 50" />
+          <path
+             id="path215"
+             d="M 50 100 A 50 50 0 1 0 150 100" />
+          <path
+             id="path217"
+             d="M 0 150 A 50 50 0 0 0 50 100" />
+          <path
+             id="path219"
+             d="M 150 100 A 50 50 0 1 0 200 50" />
+          <path
+             id="path221"
+             d="M 50 0 A 50 50 0 1 0 150 0" />
+          <path
+             id="path223"
+             d="M 150 0 A 50 50 0 0 0 200 50" />
+          <path
+             id="path225"
+             d="M 0 50 A 50 50 0 0 0 50 0" />
+          <path
+             id="path227"
+             d="M 0 150 A 50 50 0 1 0 100 150" />
+          <path
+             id="path229"
+             d="M 100 150 A 50 50 0 1 0 200 150" />
+        </g>
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile18">
+        <circle
+           id="circle232"
+           r="100"
+           cy="100"
+           cx="100" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile19">
+        <path
+           id="path235"
+           d="M 0 50 45 0 105 0 140 50 200 50 " />
+        <path
+           id="path237"
+           d="M 0 50 45 100 105 100 140 50 200 50" />
+        <path
+           id="path239"
+           d="M 0 150 45 100 105 100 140 150 200 150" />
+        <path
+           id="path241"
+           d="M 0 150 45 200 105 200 140 150 200 150" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile20">
+        <path
+           id="path244"
+           d="M 0 70 65 0 140 0 200 70 " />
+        <path
+           id="path246"
+           d="M 0 70 0 130 65 200 140 200 200 130 200 70" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile21">
+        <path
+           id="path249"
+           d="M 50 0 75 25 100 0 M 150 0 175 25 200 0" />
+        <path
+           id="path251"
+           d="M 0 50 25 25 75 75 125 25 175 75 200 50" />
+        <path
+           id="path253"
+           d="M 0 100 25 75 75 125 125 75 175 125 200 100" />
+        <path
+           id="path255"
+           d="M 0 150 25 125 75 175 125 125 175 175 200 150" />
+        <path
+           id="path257"
+           d="M 0 200 25 175 75 225 125 175 175 225 200 200" />
+      </pattern>
+      <pattern
+         patternUnits="userSpaceOnUse"
+         height="200"
+         width="200"
+         y="0"
+         x="0"
+         id="tile22">
+        <path
+           id="path260"
+           d="M 0 50 25 75 0 100 M 0 150 25 175 0 200" />
+        <path
+           id="path262"
+           d="M 50 0 25 25 75 75 25 125 75 175 50 200" />
+        <path
+           id="path264"
+           d="M 100 0 75 25 125 75 75 125 125 175 100 200" />
+        <path
+           id="path266"
+           d="M 150 0 125 25 175 75 125 125 175 175 150 200" />
+        <path
+           id="path268"
+           d="M 200 0 175 25 225 75 175 125 225 175 200 200" />
+      </pattern>
+    </defs>
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="971"
+     inkscape:window-width="1269"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     inkscape:zoom="1.4396961"
+     inkscape:cx="185.96649"
+     inkscape:cy="834.10159"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:current-layer="svg2"
+     showgrid="true" />
+  <path
+     id="path270"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 7534.5333,6308.7009 L 7534.5333,6639.7009" />
+  <path
+     id="path272"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 3991.5333,5930.7009 L 3991.5333,6261.7009" />
+  <path
+     id="path274"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2573.5333,4229.7009 L 2573.5333,4560.7009" />
+  <path
+     id="path276"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2715.5333,3851.7009 L 2715.5333,4182.7009" />
+  <path
+     id="path278"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2479.5333,6308.7009 L 2479.5333,6639.7009" />
+  <path
+     id="path280"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2479.5333,5930.7009 L 2479.5333,6261.7009" />
+  <path
+     id="path282"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2479.5333,4229.7009 L 2479.5333,4560.7009" />
+  <path
+     id="path284"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2479.5333,3851.7009 L 2479.5333,4182.7009" />
+  <path
+     id="path286"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2479.5333,3473.7009 L 2479.5333,3804.7009" />
+  <path
+     id="path288"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 3329.5333,5268.7009 L 3329.5333,5599.7009" />
+  <path
+     id="path290"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2337.5333,4891.7009 L 2337.5333,5221.7009" />
+  <path
+     id="path292"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2243.5333,5268.7009 L 2243.5333,5599.7009" />
+  <path
+     id="path294"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2243.5333,4891.7009 L 2243.5333,5221.7009" />
+  <path
+     id="path296"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2337.5333,1394.7009 L 2337.5333,1725.7009" />
+  <path
+     id="path298"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2384.5333,1017.7009 L 2384.5333,1347.7009" />
+  <path
+     id="path300"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2243.5333,1394.7009 L 2243.5333,1725.7009" />
+  <path
+     id="path302"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2243.5333,1017.7009 L 2243.5333,1347.7009" />
+  <path
+     id="path304"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 2243.5333,639.70085 L 2243.5333,969.70085" />
+  <path
+     id="path306"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,6308.7009 L 8432.5333,6308.7009 L 8432.5333,6639.7009 L 1818.5333,6639.7009 L 1818.5333,6308.7009" />
+  <path
+     id="path308"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,5930.7009 L 4888.5333,5930.7009 L 4888.5333,6261.7009 L 1818.5333,6261.7009 L 1818.5333,5930.7009" />
+  <path
+     id="path310"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,4891.7009 L 3140.5333,4891.7009 L 3140.5333,5221.7009 L 1818.5333,5221.7009 L 1818.5333,4891.7009" />
+  <path
+     id="path312"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,5268.7009 L 4132.5333,5268.7009 L 4132.5333,5599.7009 L 1818.5333,5599.7009 L 1818.5333,5268.7009" />
+  <path
+     id="path314"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,1394.7009 L 3140.5333,1394.7009 L 3140.5333,1725.7009 L 1818.5333,1725.7009 L 1818.5333,1394.7009" />
+  <path
+     id="path316"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,1017.7009 L 3188.5333,1017.7009 L 3188.5333,1347.7009 L 1818.5333,1347.7009 L 1818.5333,1017.7009" />
+  <path
+     id="path318"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,639.70085 L 3046.5333,639.70085 L 3046.5333,969.70085 L 1818.5333,969.70085 L 1818.5333,639.70085" />
+  <path
+     id="path320"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,3473.7009 L 3377.5333,3473.7009 L 3377.5333,3804.7009 L 1818.5333,3804.7009 L 1818.5333,3473.7009" />
+  <path
+     id="path322"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,3851.7009 L 3613.5333,3851.7009 L 3613.5333,4182.7009 L 1818.5333,4182.7009 L 1818.5333,3851.7009" />
+  <path
+     id="path324"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,4229.7009 L 3471.5333,4229.7009 L 3471.5333,4560.7009 L 1818.5333,4560.7009 L 1818.5333,4229.7009" />
+  <path
+     id="path326"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,2056.7009 L 2384.5333,2056.7009 L 2384.5333,2387.7009 L 1818.5333,2387.7009 L 1818.5333,2056.7009" />
+  <path
+     id="path328"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,2434.7009 L 2999.5333,2434.7009 L 2999.5333,2765.7009 L 1818.5333,2765.7009 L 1818.5333,2434.7009" />
+  <path
+     id="path330"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1818.5333,2812.7009 L 2904.5333,2812.7009 L 2904.5333,3142.7009 L 1818.5333,3142.7009 L 1818.5333,2812.7009" />
+  <path
+     id="path332"
+     style="fill:none;stroke:black;stroke-width:16"
+     d="M 1724.5333,639.70085 L 1724.5333,6639.7009" />
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text334"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="3694.6238"
+     x="3097.0779"
+     sodipodi:linespacing="125%">75</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text336"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="3694.6238"
+     x="2294.0779"
+     sodipodi:linespacing="125%">52</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text338"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="6529.6235"
+     x="8625.0771"
+     sodipodi:linespacing="125%">533</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text340"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="6151.6235"
+     x="5082.0776"
+     sodipodi:linespacing="125%">250</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text342"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="5490.6235"
+     x="4326.0776"
+     sodipodi:linespacing="125%">188</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text344"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="5112.6235"
+     x="3334.0779"
+     sodipodi:linespacing="125%">108</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text346"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="4450.624"
+     x="3664.0779"
+     sodipodi:linespacing="125%">134</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text348"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="4072.6238"
+     x="3806.0779"
+     sodipodi:linespacing="125%">143</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text350"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="3694.6238"
+     x="3570.0779"
+     sodipodi:linespacing="125%">127</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text352"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="3033.6238"
+     x="3097.0779"
+     sodipodi:linespacing="125%">88</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text354"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="2655.6238"
+     x="3192.0779"
+     sodipodi:linespacing="125%">95</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text356"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="2277.6238"
+     x="2578.0779"
+     sodipodi:linespacing="125%">47</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text358"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="860.62329"
+     x="3239.0779"
+     sodipodi:linespacing="125%">100</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text360"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="1616.6238"
+     x="3334.0779"
+     sodipodi:linespacing="125%">106</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text362"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="1238.6233"
+     x="3381.0779"
+     sodipodi:linespacing="125%">111</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text364"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="860.62329"
+     x="2662.6365"
+     sodipodi:linespacing="125%">64</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text366"
+     font-size="126"
+     font-weight="normal"
+     font-style="normal"
+     y="860.62329"
+     x="2047.6364"
+     sodipodi:linespacing="125%">36</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text368"
+     font-size="139"
+     font-weight="bold"
+     font-style="normal"
+     y="6544.7007"
+     x="1582.5332"
+     sodipodi:linespacing="125%">SimpleVerifier</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text370"
+     font-size="139"
+     font-weight="bold"
+     font-style="normal"
+     y="6166.7007"
+     x="1582.5332"
+     sodipodi:linespacing="125%">BasicInterpreter</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text372"
+     font-size="139"
+     font-weight="normal"
+     font-style="normal"
+     y="5505.7007"
+     x="1582.5332"
+     sodipodi:linespacing="125%">COMPUTE_FRAMES</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text374"
+     font-size="139"
+     font-weight="normal"
+     font-style="normal"
+     y="5127.7007"
+     x="1582.5332"
+     sodipodi:linespacing="125%">COMPUTE_MAXS</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text376"
+     font-size="139"
+     font-weight="normal"
+     font-style="normal"
+     y="1631.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Remove sequence</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text378"
+     font-size="139"
+     font-weight="normal"
+     font-style="normal"
+     y="1253.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Add timer</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text380"
+     font-size="139"
+     font-weight="normal"
+     font-style="normal"
+     y="875.70093"
+     x="1582.5332"
+     sodipodi:linespacing="125%">No adapter</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text382"
+     font-size="139"
+     font-weight="bold"
+     font-style="normal"
+     y="3709.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">No adapter</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text384"
+     font-size="139"
+     font-weight="bold"
+     font-style="normal"
+     y="4087.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Add timer</text>
+  <text
+     style="font-size:153.13960266px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text386"
+     font-size="139"
+     font-weight="bold"
+     font-style="normal"
+     y="4465.7012"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Remove sequence</text>
+  <text
+     style="font-size:153.13960266px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text388"
+     font-size="139"
+     font-weight="normal"
+     font-style="italic"
+     y="2292.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">No adapter</text>
+  <text
+     style="font-size:153.13960266px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text390"
+     font-size="139"
+     font-weight="normal"
+     font-style="italic"
+     y="2670.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Add timer</text>
+  <text
+     style="font-size:153.13960266px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:black;stroke:black;stroke-width:0.025in;font-family:Bitstream Charter"
+     id="text392"
+     font-size="139"
+     font-weight="normal"
+     font-style="italic"
+     y="3048.7009"
+     x="1582.5332"
+     sodipodi:linespacing="125%">Remove sequence</text>
+</svg>
