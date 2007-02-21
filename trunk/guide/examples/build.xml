@@ -61,6 +61,10 @@
     </java>
   </target>
 
+  <target name="dist" depends="clean">
+    <zip zipFile="asm-guide.zip" basedir="." excludes="CVS/*"/>
+  </target>
+
   <target name="clean">
     <delete dir="${out}"/>
   </target>
