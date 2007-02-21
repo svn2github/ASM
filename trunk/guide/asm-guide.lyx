@@ -5,6 +5,15 @@
 \textclass scrbook
 \begin_preamble
 \usepackage{lmodern}
+
+\usepackage[
+pdfauthor={Eric Bruneton},
+pdftitle={ASM 3.0 A Java bytecode engineering library},
+pdfcreator={pdftex},
+pdfsubject={ASM 3.0},
+pdfkeywords={Java,bytecode}
+]{hyperref}
+
 %\usepackage{showidx}
 
 %\special{pdf: pagesize width 18.0truecm height 24truecm}
@@ -188,6 +197,10 @@ THIS DOCUMENTATION IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
 
 \end_layout
 
+\begin_layout Lowertitleback
+Version 1.0, February 2007
+\end_layout
+
 \begin_layout Standard
 \begin_inset ERT
 status collapsed
@@ -330,9 +343,18 @@ small
 ASM is not the only tool for generating and transforming compiled Java classes,
  but it is one of the most recent and efficient.
  It can be downloaded from 
-\family typewriter
-http://asm.objectweb.org
-\family default
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+url{http://asm.objectweb.org}
+\end_layout
+
+\end_inset
+
 .
  Its main advantages are the following:
 \end_layout
@@ -359,19 +381,6 @@ Its large user community can provide support for new users.
 
 \begin_layout Itemize
 Its open source license allows you to use it in almost any way you want.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Standard
-ajouter une liste d'applications utilisant ASM pour illustrer ses possibilités?
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Section
@@ -534,8 +543,8 @@ Although most component architectures in typical ASM applications are quite
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename complexchain.eps
-	scale 90
+	filename figures/complexchain.eps
+	scale 80
 
 \end_inset
 
@@ -658,6 +667,20 @@ asm-analysis
  related to annotations, generic types, etc.
  Each chapter covers the programming interfaces as well as the related tools
  and predefined components.
+ The source code of all the examples is available on the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+href{http://asm.objectweb.org}{ASM web site}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -665,7 +688,20 @@ This organization makes it easier to introduce class file features progressively
 , but sometimes required to spread the presentation of a single ASM class
  in several sections.
  It is therefore recommanded to read this document in sequential order.
- For a reference guide about the ASM API, please use the Javadoc.
+ For a reference guide about the ASM API, please use the 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+href{http://asm.objectweb.org/asm30/javadoc/user/overview-summary.html}{Javadoc}
+\end_layout
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1665,7 +1701,7 @@ Ljava/lang/String;
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Description
 Note: in the ASM API, and unless stated otherwise, fields and method arguments
@@ -2195,44 +2231,132 @@ ClassVisitor
 
 \family typewriter
 visit
-\family roman
- 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
 visitSource
-\family roman
-? 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont?~}
+\end_layout
+
+\end_inset
+
 visitOuterClass
-\family default
-?
-\family roman
- ( 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont?~(~}
+\end_layout
+
+\end_inset
+
 visitAnnotation
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitAttribute
-\family roman
- )*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-( 
 \family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitInnerClass
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitField
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitMethod
-\family roman
- )*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
@@ -2654,14 +2778,14 @@ getResourceAsStream
 \end_layout
 
 \begin_layout LyX-Code
-c
-\emph on
-l
-\emph default
+
+\shape slanted
+cl
+\shape default
 .getResourceAsStream(
-\emph on
-className
-\emph default
+\shape slanted
+classname
+\shape default
 .replace('.', '/') + ".class");
 \end_layout
 
@@ -3334,8 +3458,8 @@ status collapsed
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename chain.eps
-	scale 90
+	filename figures/chain.eps
+	scale 80
 	clip
 
 \end_inset
@@ -3457,8 +3581,8 @@ status collapsed
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename changeversion.eps
-	scale 90
+	filename figures/changeversion.eps
+	scale 80
 
 \end_inset
 
@@ -4078,7 +4202,7 @@ visitAnnotation
 visitAttribute
 \family default
 , which is not valid.
- Likewise you cannot put this new call in the 
+ You cannot put this new call in the 
 \family typewriter
 visitSource
 \family default
@@ -4095,7 +4219,7 @@ visitAnnotation
 visitAttribute
 \family default
  methods, for the same reason.
- The only possibilities are to put it in 
+ The only possibilities are the 
 \family typewriter
 visitInnerClass
 \family default
@@ -4111,8 +4235,7 @@ visitMethod
 \family typewriter
 visitEnd
 \family default
-.
- 
+ methods.
 \end_layout
 
 \begin_layout Standard
@@ -4503,8 +4626,8 @@ status collapsed
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename complexchain.eps
-	scale 90
+	filename figures/complexchain.eps
+	scale 80
 
 \end_inset
 
@@ -5350,9 +5473,35 @@ status collapsed
 
 \begin_layout Standard
 \align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
-	filename frames.eps
-	scale 90
+	filename figures/frames.eps
+	scale 80
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.5cm}
+\end_layout
 
 \end_inset
 
@@ -6409,9 +6558,35 @@ status collapsed
 
 \begin_layout Standard
 \align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.6cm}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
-	filename getter-frames.eps
-	scale 90
+	filename figures/getter-frames.eps
+	scale 80
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.6cm}
+\end_layout
 
 \end_inset
 
@@ -6507,9 +6682,35 @@ status collapsed
 
 \begin_layout Standard
 \align center
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.6cm}
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
-	filename setter-frames.eps
-	scale 90
+	filename figures/setter-frames.eps
+	scale 80
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+vspace{0.6cm}
+\end_layout
 
 \end_inset
 
@@ -6652,7 +6853,7 @@ The bytecode for this new setter method is the following:
 
 \begin_layout LyX-Code
   IFLT 
-\emph on
+\shape slanted
 label
 \end_layout
 
@@ -6670,13 +6871,13 @@ label
 
 \begin_layout LyX-Code
   GOTO 
-\emph on
+\shape slanted
 end
 \end_layout
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 label:
 \end_layout
 
@@ -6698,7 +6899,7 @@ label:
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 end:
 \end_layout
 
@@ -6723,10 +6924,10 @@ LT
 \family default
 ) 0, it jumps to the instruction designated by the 
 \family typewriter
-\emph on
+\shape slanted
 label
 \family default
-\emph default
+\shape default
  label, otherwise it does nothing and the execution continues to the next
  instruction.
  The next three instructions are the same instructions as in the 
@@ -6741,10 +6942,10 @@ GOTO
  instruction unconditionally jumps to the instruction designated by the
  
 \family typewriter
-\emph on
+\shape slanted
 end
 \family default
-\emph default
+\shape default
  label, which is the 
 \family typewriter
 RETURN
@@ -6752,16 +6953,16 @@ RETURN
  instruction.
  The instructions between the 
 \family typewriter
-\emph on
+\shape slanted
 label
 \family default
-\emph default
+\shape default
  and 
 \family typewriter
-\emph on
+\shape slanted
 end
 \family default
-\emph default
+\shape default
  labels create and throw an exception: the 
 \family typewriter
 NEW
@@ -6865,23 +7066,23 @@ can be compiled into:
 
 \begin_layout LyX-Code
 TRYCATCHBLOCK 
-\emph on
+\shape slanted
 try
-\emph default
+\shape default
  
-\emph on
+\shape slanted
 catch
-\emph default
+\shape default
  
-\emph on
+\shape slanted
 catch
-\emph default
+\shape default
  java/lang/InterruptedException
 \end_layout
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 try:
 \end_layout
 
@@ -6899,7 +7100,7 @@ try:
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 catch:
 \end_layout
 
@@ -6981,10 +7182,10 @@ catch
  the stack is cleared, the exception is pushed on this empty stack, and
  execution continues at 
 \family typewriter
-\emph on
+\shape slanted
 catch
 \family default
-\emph default
+\shape default
 .
 \end_layout
 
@@ -7046,8 +7247,8 @@ IRETURN
 \end_inset
 
  and can be described as follows, where the types between the first square
- brackets correspond to the local variables part, and the others to the
- operand stack part:
+ brackets correspond to the local variables, and the others to the operand
+ stack:
 \end_layout
 
 \begin_layout Standard
@@ -7767,7 +7968,7 @@ checkAndSetF
 
 \begin_layout LyX-Code
   IFLT 
-\emph on
+\shape slanted
 label
 \end_layout
 
@@ -7785,13 +7986,13 @@ label
 
 \begin_layout LyX-Code
   GOTO 
-\emph on
+\shape slanted
 end
 \end_layout
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 label:
 \end_layout
 
@@ -7819,7 +8020,7 @@ F_SAME
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 end:
 \end_layout
 
@@ -7891,86 +8092,230 @@ MethodVisitor
 
 \family typewriter
 visitAnnotationDefault
-\family roman
-?
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont?}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-( 
 \family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitAnnotation
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitParameterAnnotation
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitAttribute
-\family roman
- )*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-( 
 \family typewriter
-visitCode 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
+visitCode
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-  ( 
 \family typewriter
+  
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitTryCatchBlock
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitLabel
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitFrame
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visit
 \family default
-\emph on
+\shape slanted
 Xxx
 \family typewriter
-\emph default
+\shape default
 Insn
-\family roman
- |
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-    
 \family typewriter
-visitLocalVariable
-\family roman
- | 
-\family typewriter
+    visitLocalVariable
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitLineNumber
-\family roman
- )*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
- 
 \family typewriter
- visitMaxs
-\family roman
- )?
+  visitMaxs
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)?}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
@@ -8089,7 +8434,7 @@ visitTypeInsn
 \series bold
 visitFieldInsn
 \series default
-(int opcode, String owner, String name, String desc);
+(int opc, String owner, String name, String desc);
 \end_layout
 
 \begin_layout LyX-Code
@@ -8097,11 +8442,7 @@ visitFieldInsn
 \series bold
 visitMethodInsn
 \series default
-(int opcode, String owner, String name,
-\end_layout
-
-\begin_layout LyX-Code
-      String desc);
+(int opc, String owner, String name, String desc);
 \end_layout
 
 \begin_layout LyX-Code
@@ -9064,8 +9405,8 @@ status collapsed
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename removenop.eps
-	scale 90
+	filename figures/removenop.eps
+	scale 80
 
 \end_inset
 
@@ -9100,23 +9441,15 @@ s only in methods and not in constructors.
 \end_layout
 
 \begin_layout LyX-Code
-public MethodVisitor visitMethod(int access, String name,
+...
 \end_layout
 
 \begin_layout LyX-Code
-    String desc, String signature, String[] exceptions) {
+mv = cv.visitMethod(access, name, desc, signature, exceptions);
 \end_layout
 
 \begin_layout LyX-Code
-  MethodVisitor mv;
-\end_layout
-
-\begin_layout LyX-Code
-  mv = cv.visitMethod(access, name, desc, signature, exceptions);
-\end_layout
-
-\begin_layout LyX-Code
-  if (mv != null && 
+if (mv != null && 
 \series bold
 !name.equals("<init>")
 \series default
@@ -9124,19 +9457,15 @@ public MethodVisitor visitMethod(int access, String name,
 \end_layout
 
 \begin_layout LyX-Code
-    mv = new RemoveNopAdapter(mv);
-\end_layout
-
-\begin_layout LyX-Code
-  }
-\end_layout
-
-\begin_layout LyX-Code
-  return mv;
+  mv = new RemoveNopAdapter(mv);
 \end_layout
 
 \begin_layout LyX-Code
 }
+\end_layout
+
+\begin_layout LyX-Code
+...
 \end_layout
 
 \begin_layout Standard
@@ -9183,11 +9512,12 @@ public MethodVisitor visitMethod(int access, String name,
 
 \begin_layout Standard
 Now that we have seen how method adapters can be used and combined inside
- a class adapter, let's see how more interesting adapters than 
+ a class adapter, let's see how to implement more interesting adapters than
+ 
 \family typewriter
 RemoveNopAdapter
 \family default
- can be implemented.
+.
 \end_layout
 
 \begin_layout Subsection
@@ -10462,8 +10792,8 @@ f
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename automaton.eps
-	scale 90
+	filename figures/automaton.eps
+	scale 80
 
 \end_inset
 
@@ -10517,8 +10847,7 @@ ALOAD
 \end_layout
 
 \begin_layout LyX-Code
-public class RemoveGetFieldPutFieldAdapter extends PatternMethodAdapter
- {
+class RemoveGetFieldPutFieldAdapter extends PatternMethodAdapter {
 \end_layout
 
 \begin_layout LyX-Code
@@ -10861,8 +11190,8 @@ The
 \family typewriter
 org.objectweb.asm.commons
 \family default
- package contains several predefined method adapters that can be useful
- to define your own adapters.
+ package contains some predefined method adapters that can be useful to
+ define your own adapters.
  This section presents three of them and shows how they can be used with
  the 
 \family typewriter
@@ -11157,9 +11486,9 @@ public MethodVisitor visitMethod(int access, String name,
 \family typewriter
   if (
 \family default
-\emph on
+\shape slanted
 debug
-\emph default
+\shape default
  && mv != null && ...
 \family typewriter
 ) { // if this method must be traced
@@ -11182,10 +11511,10 @@ debug
 \family typewriter
         print(
 \family default
-\emph on
+\shape slanted
 aPrintWriter
 \family typewriter
-\emph default
+\shape default
 ); // print it after it has been visited 
 \end_layout
 
@@ -11207,9 +11536,9 @@ aPrintWriter
 
 \begin_layout LyX-Code
   return new 
-\emph on
+\shape slanted
 MyMethodAdapter
-\emph default
+\shape default
 (mv);
 \end_layout
 
@@ -11300,9 +11629,9 @@ public MethodVisitor visitMethod(int access, String name,
 \family typewriter
   if (
 \family default
-\emph on
+\shape slanted
 debug
-\emph default
+\shape default
  && mv != null && ...
 \family typewriter
 ) { // if this method must be checked
@@ -11320,9 +11649,9 @@ debug
 
 \begin_layout LyX-Code
   return new 
-\emph on
+\shape slanted
 MyMethodAdapter
-\emph default
+\shape default
 (mv);
 \end_layout
 
@@ -13539,48 +13868,151 @@ SignatureVisitor
 
 \family typewriter
 visitBaseType
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitArrayType
-\family roman
- | 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitTypeVariable
-\family roman
- |
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
-\family roman
-( 
 \family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitClassType
-\family default
- 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
 visitTypeArgument
-\family roman
-*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
+
+\family typewriter
   
-\family roman
-( 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitInnerClassType
-\family roman
- 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
 visitTypeArgument
-\family roman
-* )* 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont*~)*~}
+\end_layout
+
+\end_inset
+
 visitEnd
-\family roman
- ) )
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)~)}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -13589,32 +14021,106 @@ The methods used to visit method signatures are the following:
 
 \begin_layout LyX-Code
 
-\family roman
-( 
 \family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visitFormalTypeParameter
-\family roman
- 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
 visitClassBound
-\family roman
-? 
-\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont?~}
+\end_layout
+
+\end_inset
+
 visitInterfaceBound
-\family roman
-* )*
+\family default
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 
 \family typewriter
 visitParameterType
-\family roman
-* 
-\family typewriter
-visitReturnType visitExceptionType
-\family roman
-*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}~}
+\end_layout
+
+\end_inset
+
+visitReturnType
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
+visitExceptionType
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -13623,30 +14129,105 @@ Finally the methods used to visit class signatures are:
 
 \begin_layout LyX-Code
 
-\family roman
-( 
+\family typewriter
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
+
 \family default
 visitFormalTypeParameter
-\family roman
- 
+\family typewriter
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
+
 \family default
 visitClassBound
-\family roman
-? 
+\family typewriter
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont?~}
+\end_layout
+
+\end_inset
+
+
 \family default
 visitInterfaceBound
-\family roman
-* )*
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}~)*}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout LyX-Code
 visitSuperClass
-\family roman
- 
+\family typewriter
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~}
+\end_layout
+
+\end_inset
+
+
 \family default
 visitInterface
-\family roman
-*
+\family typewriter
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont{*}}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -14070,7 +14651,7 @@ Annotations
 \family default
  or 
 \family typewriter
-@Task(description="refactor", priority=1)
+@Task(desc="refactor", id=1)
 \family default
 .
  Internally, however, all annotations have the same form and are specified
@@ -14236,26 +14817,70 @@ visitEnd
 \end_layout
 
 \begin_layout LyX-Code
+\begin_inset ERT
+status collapsed
 
-\family roman
-( 
-\family default
+\begin_layout Standard
+
+{
+\backslash
+normalfont(~}
+\end_layout
+
+\end_inset
+
 visit
-\family roman
- | 
-\family default
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitEnum
-\family roman
- | 
-\family default
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitAnnotation
-\family roman
- | 
-\family default
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~|~}
+\end_layout
+
+\end_inset
+
 visitArray
-\family roman
- )* 
-\family default
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\backslash
+normalfont~)*~}
+\end_layout
+
+\end_inset
+
 visitEnd
 \end_layout
 
@@ -14348,8 +14973,11 @@ public class RemoveAnnotationAdapter extends ClassAdapter {
 \end_layout
 
 \begin_layout LyX-Code
-  @Override public AnnotationVisitor visitAnnotation(String desc, boolean
- vis) {
+  @Override
+\end_layout
+
+\begin_layout LyX-Code
+  public AnnotationVisitor visitAnnotation(String desc, boolean vis) {
 \end_layout
 
 \begin_layout LyX-Code
@@ -14950,25 +15578,25 @@ l3
 
 \begin_layout LyX-Code
 (n1, 
-\emph on
+\shape slanted
 l1
-\emph default
+\shape default
 )
 \end_layout
 
 \begin_layout LyX-Code
 (n2, 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 )
 \end_layout
 
 \begin_layout LyX-Code
 (n3, 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 )
 \end_layout
 
@@ -15119,9 +15747,9 @@ index
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 l1
-\emph default
+\shape default
 :
 \end_layout
 
@@ -15132,9 +15760,9 @@ l1
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 :
 \end_layout
 
@@ -15145,9 +15773,9 @@ l2
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 :
 \end_layout
 
@@ -15158,9 +15786,9 @@ l3
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 end
-\emph default
+\shape default
 :
 \end_layout
 
@@ -15170,37 +15798,37 @@ The corresponding tuples are:
 
 \begin_layout LyX-Code
 ("i", "I", null, 
-\emph on
+\shape slanted
 l1
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 , 1)
 \end_layout
 
 \begin_layout LyX-Code
 ("j", "I", null, 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 , 1)
 \end_layout
 
 \begin_layout LyX-Code
 ("i", "I", null, 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 end
-\emph default
+\shape default
 , 1)
 \end_layout
 
@@ -15332,61 +15960,61 @@ visitLocalVariable
 
 \begin_layout LyX-Code
 visitLineNumber(n1, 
-\emph on
+\shape slanted
 l1
-\emph default
+\shape default
 );
 \end_layout
 
 \begin_layout LyX-Code
 visitLineNumber(n2, 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 );
 \end_layout
 
 \begin_layout LyX-Code
 visitLineNumber(n3, 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 );
 \end_layout
 
 \begin_layout LyX-Code
 visitLocalVariable("i", "I", null, 
-\emph on
+\shape slanted
 l1
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 , 1);
 \end_layout
 
 \begin_layout LyX-Code
 visitLocalVariable("j", "I", null, 
-\emph on
+\shape slanted
 l2
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 , 1);
 \end_layout
 
 \begin_layout LyX-Code
 visitLocalVariable("i", "I", null, 
-\emph on
+\shape slanted
 l3
-\emph default
+\shape default
 , 
-\emph on
+\shape slanted
 end
-\emph default
+\shape default
 , 1);
 \end_layout
 
@@ -16729,8 +17357,8 @@ status collapsed
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename classnode.eps
-	scale 90
+	filename figures/classnode.eps
+	scale 80
 
 \end_inset
 
@@ -17328,7 +17956,7 @@ AbstractInsnNode
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Standard
 All the methods of the 
@@ -18782,11 +19410,11 @@ checkAndSetF
 
 \begin_layout LyX-Code
   IFLT 
-\emph on
+\shape slanted
 label
-\emph default
+\shape default
                  IFLT 
-\emph on
+\shape slanted
 label
 \end_layout
 
@@ -18805,9 +19433,9 @@ label
 
 \begin_layout LyX-Code
   GOTO 
-\emph on
+\shape slanted
 end
-\emph default
+\shape default
                    
 \series bold
 RETURN
@@ -18815,7 +19443,7 @@ RETURN
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 label:                     label:
 \end_layout
 
@@ -18843,7 +19471,7 @@ F_SAME                     F_SAME
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 end:                       end:
 \end_layout
 
@@ -19494,8 +20122,8 @@ checkAndSetF
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename controlflowgraph.eps
-	scale 90
+	filename figures/controlflowgraph.eps
+	scale 80
 
 \end_inset
 
@@ -19602,15 +20230,11 @@ Analyzer
  class can also construct the control flow graph of the analyzed method.
  This can be done by overriding the 
 \family typewriter
-newControlFlow
-\emph on
-[
-\emph default
-Exception
-\emph on
-]
-\emph default
-Edge
+newControlFlowEdge
+\family default
+ and 
+\family typewriter
+newControlFlowExceptionEdge
 \family default
  methods of this class, which by default do nothing.
  The result can be used for doing control flow analyses.
@@ -19981,11 +20605,11 @@ checkAndSetF
 
 \begin_layout LyX-Code
   IFLT 
-\emph on
+\shape slanted
 label
-\emph default
+\shape default
                  IFLT 
-\emph on
+\shape slanted
 label
 \end_layout
 
@@ -20012,7 +20636,7 @@ RETURN
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 label:                     label:
 \end_layout
 
@@ -20040,7 +20664,7 @@ F_SAME                     F_SAME
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 end:                       end:
 \end_layout
 
@@ -20524,7 +21148,7 @@ if (to.isAssignableFrom(from)) {
 \end_layout
 
 \begin_layout Standard
-For classes compiled with Java 6 (or upgraded to Java 6 with 
+For Java 6 classes (or classes upgraded to Java 6 with 
 \family typewriter
 COMPUTE_FRAMES
 \family default
@@ -26719,13 +27343,13 @@ Let's take an example to illustrate this.
 
 \begin_layout LyX-Code
   JSR 
-\emph on
+\shape slanted
 sub
 \end_layout
 
 \begin_layout LyX-Code
   JSR 
-\emph on
+\shape slanted
 sub
 \end_layout
 
@@ -26735,9 +27359,9 @@ sub
 
 \begin_layout LyX-Code
 
-\emph on
+\shape slanted
 sub
-\emph default
+\shape default
 :
 \end_layout
 
@@ -27235,8 +27859,8 @@ ClassWriter
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename perfs.eps
-	scale 80
+	filename figures/perfs.eps
+	scale 120
 	rotateAngle 90
 	rotateOrigin center
 
