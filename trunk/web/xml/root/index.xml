@@ -42,6 +42,10 @@
     extensible component systems</a>, november 2002, Grenoble, France. Also
     available in <a href="current/asm-fr.pdf">french</a>.</p>
 
+    <p><a href="current/asm-transformations.pdf">"Using ASM framework to implement 
+    common bytecode transformation patterns"</a>, E. Kuleshov, 
+    <a href="http://aosd.net/2007/">AOSD.07</a>, March 2007, Vancouver, Canada.</p>
+
     <hr/>
     
     <p>ASM is already <a href="users.html">used</a> in many Java products.
@@ -54,6 +58,20 @@
 
     </td>
     <td>
+    <p><strong>Events</strong></p><hr/>
+    <p><a href="http://jroller.com/page/eu?entry=asm_at_the_javaone_this"><img 
+      src="images/javaone.gif" border="0" width="145" height="39" alt="JavaOne"/></a><br/>
+    &#160; &#160; <strong>May 8-11, 2007</strong>  
+    <br/><br/>
+    </p>
+
+    <p><strong>User guide</strong></p><hr/>
+
+    <p>The following document provides an in-depth introduction to ASM 3.0,
+    going from the basic features to advanced topics such as bytecode 
+    analysis.</p>
+
+    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
 
     <p><strong>Tutorials</strong></p><hr/>
 
@@ -73,14 +91,6 @@
     
     <p><a href="doc/tutorial-annotations.html">Tutorial for using J2SE 5.0 Annotations with ASM 1.5.x</a>.</p>
     
-    <p><strong>User guide</strong></p><hr/>
-
-    <p>The following document provides an in-depth introduction to ASM 3.0,
-    going from the basic features to advanced topics such as bytecode 
-    analysis.</p>
-
-    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
-
     <p><strong>External articles</strong></p><hr/>
 
     <p><a href="http://www-128.ibm.com/developerworks/java/library/j-cwt05125/index.html">ASM 2.0 Classworking</a>.</p>
