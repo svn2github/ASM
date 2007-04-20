@@ -52,8 +52,6 @@
     Please let us know if your project is using ASM. You can also add the 
     "Powered by ASM" button below to your project page.</p>
         
-    <br/>
-    
     <a href="http://asm.objectweb.org/"><img src="images/poweredbyasm.gif" border="0" width="88" height="31" alt="Powered by ASM"/></a>
 
     </td>
@@ -61,7 +59,9 @@
     <p><strong>Events</strong></p><hr/>
     <p><a href="http://jroller.com/page/eu?entry=asm_at_the_javaone_this"><img 
       src="images/javaone.gif" border="0" width="145" height="39" alt="JavaOne"/></a><br/>
-    &#160; &#160; <strong>May 8-11, 2007</strong>  
+    <strong>Friday May 11, 2007 1:30 PM</strong> North Meeting Room<br/>
+    <a href="http://www28.cplan.com/sb158/session_details.jsp?isid=286326&amp;ilocation_id=158-1&amp;ilanguage=english">TS-1326</a> 
+    Bytecode Manipulation Techniques for Dynamic Applications for the Java Virtual Machine
     <br/><br/>
     </p>
 
@@ -108,20 +108,20 @@
     <p><a href="current/doc/javadoc/user/index.html">ASM API</a>
     (<a href="current/doc/javadoc/user/overview-summary.html">noframes</a>).</p>
 
-    <p><a href="asm153/javadoc/user/index.html">ASM 1.5.3 API</a>
-    (<a href="asm153/javadoc/user/overview-summary.html">noframes</a>).</p>
+    <p><a href="asm30/javadoc/user/index.html">ASM 3.0 API</a>
+    (<a href="asm30/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from 
+      <a href="jdiff223to30/changes.html">2.2.3</a>,
+      <a href="jdiff153to30/changes.html">1.5.3</a>
+    </p>
             
     <p><a href="asm223/javadoc/user/index.html">ASM 2.3.3 API</a>
     (<a href="asm223/javadoc/user/overview-summary.html">noframes</a>).<br/>
     changes from <a href="jdiff153to223/changes.html">1.5.3</a>
     </p>
             
-    <p><a href="asm30/javadoc/user/index.html">ASM 3.0 API</a>
-    (<a href="asm30/javadoc/user/overview-summary.html">noframes</a>).<br/>
-    changes from 
-      <a href="jdiff153to30/changes.html">1.5.3</a>,
-      <a href="jdiff223to30/changes.html">2.2.3</a>
-    </p>
+    <p><a href="asm153/javadoc/user/index.html">ASM 1.5.3 API</a>
+    (<a href="asm153/javadoc/user/overview-summary.html">noframes</a>).</p>
             
     </td>
     </tr>
