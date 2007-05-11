@@ -3412,7 +3412,7 @@ byte[] b1 = ...;
 \end_layout
 
 \begin_layout LyX-Code
-ClasssWriter cw = new ClassWriter();
+ClassWriter cw = new ClassWriter();
 \end_layout
 
 \begin_layout LyX-Code
