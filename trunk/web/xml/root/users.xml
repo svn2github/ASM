@@ -38,8 +38,9 @@
         <a href="#Jamaica">Jamaica</a> |
         <a href="#CGLIB">CGLIB</a> |
         <a href="#dynaop">dynaop</a> |
-        <a href="#openquark">Open Quark</a> |
         <a href="#Retrotranslator">Retrotranslator</a> |
+        <a href="#openquark">Open Quark</a> |
+        <a href="#Semmle">SemmleCode</a> |
         
         <a href="#Substance">Substance L&amp;F</a> |
 
@@ -416,7 +417,7 @@
           AOP and eventually decided to try ASM. Bytecode instrumentation has its disadvantages,
           but at this moment it's the lesser of evils and
           <a href="http://asm.objectweb.org/current/doc/javadoc/user/org/objectweb/asm/util/ASMifierClassVisitor.html">ASMifierClassVisitor</a>
-          was a definite winner for me".
+          was a definite winner for me".<br/><br/>
           </td>
         </tr>
 
@@ -432,8 +433,28 @@
           object-oriented Java application logic. Open Quark includes a visual
           programming tool called the Gem Cutter, and a CAL Eclipse Plug-in. Open
           Quark is available for download with sources under a BSD license. The
-          CAL Eclipse Plug-in is available under the Eclipse Public License v1.0.
+          CAL Eclipse Plug-in is available under the Eclipse Public License v1.0.<br/><br/>
          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="Semmle"/>
+          <a href="http://semmle.com/">SemmleCode</a> is a free Eclipse plugin that
+          helps computing metrics, finding bugs and checking coding conventions. All
+          these tasks are code queries in the plugin's library of predefined rules and
+          metrics. Queries in SemmleCode are defined in an object-oriented query
+          language that is concise and intuitive. Customizing existing queries or
+          writing new ones for your own projects and frameworks is a simple task.
+          SemmleCode works by storing Java codebases in a relational database. We use
+          ASM to traverse bytecode when extracting the structure of a program to store
+          in the database different program elements and relations between them. In
+          our experience ASM has excellent performance and is the most compatible open
+          source library for Java bytecode analysis.<br/><br/>
+          </td>
+          <td align="center" valign="top">
+          <a href="http://semmle.com/"><img src="images/semmle.gif" border="0"
+            width="120" height="48" alt="Semmle" align="middle"/></a>
+          </td>
         </tr>
 
         <tr>
@@ -446,7 +467,7 @@
           Features supported on JRE 1.4: generics, annotations, reflection on
           generics and annotations, enums, autoboxing, for-each loop,
           varargs, covariant return types, formatted output, static import,
-          concurrency utilities, collections framework enhancements.
+          concurrency utilities, collections framework enhancements.<br/><br/>
          </td>
         </tr>
 
@@ -460,7 +481,7 @@
           requiring session objects (EntityManager). Ebean uses ASM to enhance the Entity 
           Beans to support transparent "Lazy Loading" and "Old Values Creation". 
           For performance reasons ASM is also used to generate code to replace standard 
-          reflection for bean getter and setter methods.
+          reflection for bean getter and setter methods.<br/><br/>
          </td>
         </tr>
 
@@ -473,7 +494,7 @@
           We use ASM to generate dynamic proxy bundles for remote services at runtime. 
           One of our intended areas for applications is the world of mobile and embedded devices. 
           The lightweight design of ASM is ideal for the bytecode manipulations that we require on 
-          the client side and the static code analysis on the service provider side.
+          the client side and the static code analysis on the service provider side.<br/><br/>
          </td>
         </tr>
 
@@ -486,7 +507,7 @@
           Simple Feature Specification for geometric object persistence. 
           JPOX 1.2 and later use ASM in its byte-code enhancer, injecting code into 
           persisted classes allowing detection of changes to fields, and to allow for 
-          lazy loading of field values.
+          lazy loading of field values.<br/><br/>
           </td>
           <td align="center" valign="top">
           <a href="http://www.jpox.org/"><img src="images/jpox.gif" border="0"
