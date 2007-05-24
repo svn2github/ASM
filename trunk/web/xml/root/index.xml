@@ -39,7 +39,7 @@
     <p><a href="current/asm-eng.pdf">"ASM: a code manipulation tool to implement adaptable systems"</a>,
     E. Bruneton, R. Lenglet and T. Coupaye,
     <a href="http://arcad.essi.fr/2002-10-composants.html">Adaptable and
-    extensible component systems</a>, november 2002, Grenoble, France. Also
+    extensible component systems</a>, November 2002, Grenoble, France. Also
     available in <a href="current/asm-fr.pdf">french</a>.</p>
 
     <p><a href="current/asm-transformations.pdf">"Using ASM framework to implement 
@@ -57,13 +57,22 @@
     </td>
     <td>
     <p><strong>Events</strong></p><hr/>
+
+    <p><a href="http://jroller.com/page/eu?entry=asm_is_going_to_oopsla"><img src="images/oopsla2007.gif" 
+      border="0" width="169" height="52" alt="OOPSLA 2007"/></a><br/>
+    <strong>October 21-25, 2007</strong><br/>
+    Tutorial: Transformation and analysis of the Java bytecode with ASM framework
+    </p>
+
     <p><a href="http://jroller.com/page/eu?entry=asm_at_the_javaone_this"><img 
       src="images/javaone.gif" border="0" width="145" height="39" alt="JavaOne"/></a><br/>
-    <strong>Friday May 11, 2007 1:30 PM</strong> North Meeting Room<br/>
-    <a href="http://www28.cplan.com/sb158/session_details.jsp?isid=286326&amp;ilocation_id=158-1&amp;ilanguage=english">TS-1326</a> 
+    <strong>Friday May 11, 2007 1:30 PM</strong><br/>
+    <a href="http://developers.sun.com/learning/javaoneonline/j1sessn.jsp?sessn=TS-1326&amp;yr=2007&amp;track=5">TS-1326</a> 
     Bytecode Manipulation Techniques for Dynamic Applications for the Java Virtual Machine
+    (<a href="http://developers.sun.com/learning/javaoneonline/2007/pdf/TS-1326.pdf">slides</a>)
     <br/><br/>
     </p>
+
 
     <p><strong>User guide</strong></p><hr/>
 
