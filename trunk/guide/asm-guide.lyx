@@ -9882,7 +9882,7 @@ status collapsed
 \begin_layout Standard
 hopefully it is not necessary to give the optimal operand stack size.
  Giving any value greater than or equal to this optimal value is possible,
- although it may vaste memory on the thread's execution stack.
+ although it may waste memory on the thread's execution stack.
 \end_layout
 
 \end_inset
@@ -12138,7 +12138,7 @@ super
 LocalVariablesSorter
 \family default
 
-\begin_inset LatexCommand \index{LocalVariableSorter@\texttt{LocalVariableSorter}}
+\begin_inset LatexCommand \index{LocalVariablesSorter@\texttt{LocalVariablesSorter}}
 
 \end_inset
 
