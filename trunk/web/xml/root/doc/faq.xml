@@ -96,23 +96,26 @@ ASM 2.x only):</p>
 org.objectweb.asm.util.CheckClassAdapter org/domain/package/YourClass.class</code></p>
 
 <p>For example, in the helloworld example in the ASM distribution, if you replace
-visitLdc("Hello world!") with visitLdc(new Integer(1234)) you get the following
+visitLdcInsn("Hello world!") with visitLdcInsn(new Integer(1234)) you get the following
 error message when the generated class is verified as above:</p>
 
 <source>org.objectweb.asm.tree.analysis.AnalyzerException: Error at instruction 2: Argument 1: expected Ljava/lang/String;, but found I
         at org.objectweb.asm.tree.analysis.Analyzer.analyze(Unknown Source)
+        at org.objectweb.asm.util.CheckClassAdapter.verify(Unknown Source)
         at org.objectweb.asm.util.CheckClassAdapter.main(Unknown Source)
+        ...
 main([Ljava/lang/String;)V
-00000 [Ljava/lang/String;.  :     GETSTATIC java/lang/System out Ljava/io/PrintStream;
-00001 [Ljava/lang/String;. Ljava/io/PrintStream; :     LDC 1234
-00002 [Ljava/lang/String;. Ljava/io/PrintStream;I :     INVOKEVIRTUAL java/io/PrintStream println (Ljava/lang/String;)V
-00003 null  :     RETURN</source>
+00000 String .  :  :     GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+00001 String .  : PrintStream  :     LDC 1234
+00002 String .  : PrintStream I  :     INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
+00003 ?     :     RETURN</source>
 
 <p>This shows that the error comes from instruction 2 in method main. The instruction list
 shows that this instruction is INVOKEVIRTUAL. It also shows the types of the local variables
 and of the operand stack values just before this instruction will be executed (here local
 variable 0 contains a String, local variable 1 is not initialized, and the stack contains
-a PrintStream and an int). As explained in the error message, the println method called by 
+a PrintStream and an int - I stands for int, as in type descriptors). As explained in the 
+error message, the println method called by 
 INVOKEVIRTUAL expects a String as first argument, but the stack value corresponding to this
 argument is an int. Then either the INVOKEVIRTUAL instruction is wrong, or the instruction
 that pushed the integer is wrong.</p>
