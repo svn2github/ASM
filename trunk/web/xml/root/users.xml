@@ -41,6 +41,7 @@
         <a href="#Retrotranslator">Retrotranslator</a> |
         <a href="#openquark">Open Quark</a> |
         <a href="#Semmle">SemmleCode</a> |
+        <a href="#Structure101">Structure101</a> |
         
         <a href="#Substance">Substance L&amp;F</a> |
 
@@ -454,6 +455,24 @@
           <td align="center" valign="top">
           <a href="http://semmle.com/"><img src="images/semmle.gif" border="0"
             width="120" height="48" alt="Semmle" align="middle"/></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Structure101"/>
+          <a href="http://www.headwaysoftware.com/products/structure101/">Structure101</a> 
+          lets you control the structural complexity of your code-base and ensure 
+          that it conforms to a defined architecture, making it less costly and 
+          risky to develop, modify, test, and deploy. Structure101 exposes structure, 
+          lets you define how it should be, communicate this to the team and know when 
+          architecture deviations make it into the mainline.  A rich client, web application, 
+          RSS feeds and IDE plug-ins provide the right information at the right time to make 
+          architectural control a cinch on any project or process, local or distributed. 
+          Structure101 is both rich and easy.<br/>
+          Ian Sutton, Chief Architect, Headway Software, said: "Byte-code parsing 
+          is key to structure101, with release 3 we took a look at all the options 
+          available to us to replace our own parser. In the end, it was an easy decision 
+          to go with ASM - for outstanding performance and language feature support".<br/><br/>
           </td>
         </tr>
 
