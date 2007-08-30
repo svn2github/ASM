@@ -459,7 +459,7 @@
         </tr>
 
         <tr>
-          <td valign="top" colspan="2"><anchor name="Structure101"/>
+          <td valign="top"><anchor name="Structure101"/>
           <a href="http://www.headwaysoftware.com/products/structure101/">Structure101</a> 
           lets you control the structural complexity of your code-base and ensure 
           that it conforms to a defined architecture, making it less costly and 
@@ -473,6 +473,10 @@
           is key to structure101, with release 3 we took a look at all the options 
           available to us to replace our own parser. In the end, it was an easy decision 
           to go with ASM - for outstanding performance and language feature support".<br/><br/>
+          </td>
+          <td align="center" valign="top">
+          <a href="http://www.headwaysoftware.com/products/structure101/"><img src="images/structure101.jpg" border="0"
+            width="160" height="57" alt="Structure101" align="middle"/></a>
           </td>
         </tr>
 
