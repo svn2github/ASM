@@ -3,7 +3,7 @@
 border="0" align="left" hspace="10" vspace="0">ASM 3.0 Developer Guide</h2>
 by Eric Bruneton
 <br/>
-02/02/2006
+02/02/2006, updated 23/10/2007
 <br clear="all"/>
 
 <ol>
@@ -1612,16 +1612,15 @@ are marked as belonging to a main "subroutine". Likewise, for all
 as belonging to the subroutine defined by this <code>JSR</code> target.</p>
 
 <p>The second step consists in finding, for each <code>RET</code> instruction,
-to which possible basic blocks it can return to. For this all the basic blocks
-that are reachable from the first one, including via <code>JSR</code>
-instructions, are visited. Each time a <code>JSR</code> instruction is found,
-information about this subroutine call (i.e. the subroutine id and the return
-address) is pushed on a stack. When a <code>RET</code> instruction is found,
-this stack is used to find the return address for this instruction, and to
-create the corresponding control flow graph edge. This return address is the
-return address of the first subroutine call in the stack, starting from the
-bottom of the stack, such that the <code>RET</code> instruction belongs to
-the called subroutine.</p>
+to which possible basic blocks it can return to. The possible basic blocks are
+those that follow <code>JSR</code> instructions. We therefore examine each 
+<code>JSR</code> instruction in turn. For each such <code>JSR</code> 
+instruction <i>I</i> we look at the basic blocks that belong to the called 
+subroutine. When a <code>RET</code> instruction is found we add the block
+following <i>I</i> as a successor of the <code>RET</code> instruction (except
+if <i>I</i> and the <code>RET</code> instruction belong to a common subroutine,
+which can happen if a subroutine returns to its parent subroutine without a 
+<code>RET</code>).</p>
 
 <p>Let's take an example to illustrate this:</p>
 
@@ -1689,30 +1688,20 @@ subroutine #1 without a <code>RET</code>:</p>
 </ul>
 
 <p>The second step consits in finding the successors of the <code>RET</code>
-instructions. The visit of all reachable blocks, starting from L0, leads to
-L4 via two <code>JSR</code> instructions. L4 ends with a <code>RET</code>
-instruction, so the stack of <code>JSR</code> calls that were traversed to
-reach this block is examined. This stack contains two elements: the call
-from L0 to L2, and the call from L2 to L4. The bottom element is the call
-from L0 to L2. It leads to subroutine #1, but L4 belongs to subroutine #2.
-So the <code>RET</code> does not correspond to this <code>JSR</code>. The
-call from L2 to L4 does lead to the subroutine to which the
-<code>RET</code> belongs, so the call corresponding to the <code>RET</code>
-is this one. This means that a successor edge must be added from L4 to L3
-(the next basic block after the <code>JSR</code> in L2).</p>
-
-<p>The visit of all reachable blocks, starting from L0, also leads to L5
-via two <code>JSR</code> instructions and an IFEQ. L5 ends with a
-<code>RET</code> instruction, so the stack of <code>JSR</code> calls that
-were traversed to reach this block is examined. This stack contains two
-elements: the call from L0 to L2, and the call from L2 to L4. The bottom
-element is the call from L0 to L2. It leads to subroutine #1, a subroutine
-to which L5 also belongs. So the call corresponding to the <code>RET</code>
-in L5 is this one. This means that a successor edge must be added from L5 to
-L1 (the next basic block after the <code>JSR</code> in L0). Note that the
-second call in the stack, from L2 to L4, leads to subroutine #2, to which
-L5 also belongs. But it does not correspond to the <code>RET</code> in L5,
-and is not considered because the first stack element is examined first.</p>
+instructions. As explained above, this is done by examining each
+<code>JSR</code> instruction in turn. The first one, in L0, leads to the
+analysis of the basic blocks that belong to subroutine #1. In these basic
+blocks we find only one <code>RET</code> instruction, in L5. These 
+<code>JSR</code> and <code>RET</code> instructions do not belong to a
+common subroutine, so we add L1 (the next basic block after the 
+<code>JSR</code> in L0) as a successor of L5.
+The second <code>JSR</code> instruction, in L2, leads to the analysis 
+of the basic blocks of subroutine #2. In these basic blocks we find two 
+<code>RET</code> instructions, in L4 and L5. L2 and L4 do not belong to
+a common subroutine, so we add L3 (the next basic block after the 
+<code>JSR</code> in L2) as a successor of L4. But L2 and L5 belong to a
+common subroutine (subroutine #1), so we do <i>not</i> add L3 as a 
+successor of L5.</p>
 
 <p>The final control flow graph is the following:</p>
 <ul>
