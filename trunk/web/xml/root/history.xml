@@ -14,6 +14,43 @@
 
     <s1 name="History">
 
+      <subtitle>29 October 2006: ASM 3.1 (cvs-tag: ASM_3_1)</subtitle>
+
+        <ul>
+          <li>extended semantic of 'internal name' to array classes (internal 
+          name equal to descriptor in this case); renamed 'desc' parameter of 
+          'visitTypeInsn' to 'type'</li>
+          <li>new readLabel method in ClassReader</li>
+          <li>new getLabelNode method in MethodNode (see bug 306920)</li>
+          <li>new resetLabel(s) methods in LabelNode and InsnList (feature 
+          request 306499)</li>
+          <li>new checks in CheckMethodVisitor (for stack frames)</li>
+          <li>new CheckSignatureAdapter class</li>
+          <li>new Remapper* classes in commons</li>
+          <li>support for primitive types in GeneratorAdaptor.push (feature 
+          request 307378)</li>
+          <li>new build options (no writer, no frames support, etc)</li>
+          <li>new tests</li>
+          <li>bug fixes
+          <ul>
+            <li>307600 StackOverflowError in org.objectweb.asm.MethodWriter.findSubroutine()</li>
+            <li>307392 MethodWriter generates invalid RuntimeInvisibleParameterAnnotations 
+            for enum constructors</li>
+            <li>307242 Patch to compile ASM 2.2.3 against Java 1.4</li>
+            <li>307011 Typo error in ASM 3.0 User Guide</li>
+            <li>306921 SignatureReader does not handle inner class extends of 
+            other inner class</li>
+            <li>306920 MethodNode.labelNode(label) smashes "user" data Label.info</li>
+            <li>306521 Parameter local of visitFrame() is lost when using a ClassNode</li>
+            <li>306503 CheckClassAdapter doesn't flush its output</li>
+            <li>306422 Another code cleanup patch</li>
+            <li>306349 SerialVersionUIDAdder breaks compile if using JDK 1.4</li>
+            <li>bug fix related to xSTORE in tree.analysis.Frame</li>
+            <li>bug fix in LocalVariableSorter</li>
+            <li>javadoc fixes</li>
+          </ul></li>
+        </ul>
+
       <subtitle>1 November 2006: ASM 3.0 (cvs-tag: ASM_3_0)</subtitle>
 
         <ul>
