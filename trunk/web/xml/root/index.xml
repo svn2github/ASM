@@ -56,6 +56,8 @@
 
     </td>
     <td>
+    
+    <!-- 
     <p><strong>Events</strong></p><hr/>
 
     <p><a href="http://jroller.com/page/eu?entry=asm_is_going_to_oopsla"><img src="images/oopsla2007.gif" 
@@ -72,17 +74,9 @@
     (<a href="http://developers.sun.com/learning/javaoneonline/2007/pdf/TS-1326.pdf">slides</a>)
     <br/><br/>
     </p>
-
+    -->
 
     <p><strong>User guide</strong></p><hr/>
-
-    <p>The following document provides an in-depth introduction to ASM 3.0,
-    going from the basic features to advanced topics such as bytecode 
-    analysis.</p>
-
-    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
-
-    <p><strong>Tutorials</strong></p><hr/>
 
     <p><strong>The best way to learn to use ASM is to write a Java source file 
     that is equivalent to what you want to generate and then use the ASMifier mode of the 
@@ -92,15 +86,21 @@
     transformation) and use the compare view of the plugin in ASMifier mode to compare the
     equivalent ASM code.</strong></p>
     
-    <p>The following tutorial gives more details about this process:</p>
-    
+    <p>The following document provides an in-depth introduction to ASM 3.0,
+    going from the basic features to advanced topics such as bytecode 
+    analysis.</p>
+
+    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
+
     <p><a href="doc/tutorial-asm-2.0.html">Tutorial for ASM 2.0</a>.</p>
 
     <p><a href="doc/tutorial.html">Tutorial for ASM 1.5.x</a>.</p>
     
     <p><a href="doc/tutorial-annotations.html">Tutorial for using J2SE 5.0 Annotations with ASM 1.5.x</a>.</p>
     
-    <p><strong>External articles</strong></p><hr/>
+    <p><a href="doc/faq.html">Frequently Asked Questions</a>.</p>
+    
+    <p><br/><strong>External articles</strong></p><hr/>
 
     <p><a href="http://www-128.ibm.com/developerworks/java/library/j-cwt05125/index.html">ASM 2.0 Classworking</a>.</p>
 
@@ -108,15 +108,19 @@
 
     <p><a href="http://www-128.ibm.com/developerworks/java/library/j-cwt02076.html">Generics with ASM 2.0</a>.</p>
 
-    <p><strong>FAQ</strong></p><hr/>
-    
-    <p><a href="doc/faq.html">Frequently Asked Questions</a>.</p>
-    
-    <p><strong>API</strong></p><hr/>
+    <p><br/><strong>API</strong></p><hr/>
     
     <p><a href="current/doc/javadoc/user/index.html">ASM API</a>
     (<a href="current/doc/javadoc/user/overview-summary.html">noframes</a>).</p>
 
+    <p><a href="asm31/javadoc/user/index.html">ASM 3.1 API</a>
+    (<a href="asm31/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from 
+      <a href="jdiff30to31/changes.html">3.0</a>,
+      <a href="jdiff223to31/changes.html">2.2.3</a>,
+      <a href="jdiff153to31/changes.html">1.5.3</a>
+    </p>
+            
     <p><a href="asm30/javadoc/user/index.html">ASM 3.0 API</a>
     (<a href="asm30/javadoc/user/overview-summary.html">noframes</a>).<br/>
     changes from 
@@ -135,13 +139,13 @@
     </td>
     </tr>
     </table>
-          
+    
     </s1>
 
     <s1 name="Recent News">
 
       <subtitle>29 October 2007: release of ASM 3.1</subtitle>
-
+          
     </s1>
 
   </body>
