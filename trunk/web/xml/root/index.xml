@@ -76,7 +76,7 @@
     </p>
     -->
 
-    <p><strong>User guide</strong></p><hr/>
+    <p><strong>Documentation</strong></p><hr/>
 
     <p><strong>The best way to learn to use ASM is to write a Java source file 
     that is equivalent to what you want to generate and then use the ASMifier mode of the 
