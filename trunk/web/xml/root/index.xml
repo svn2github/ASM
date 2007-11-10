@@ -21,18 +21,16 @@
     <img src="images/asm2.png" border="0" width="200" height="125" alt="ASM logo"/>
     </p>
 
-    <p><strong>ASM</strong> is a Java bytecode manipulation framework. It can be used
-    to dynamically generate stub classes or other proxy classes, directly in binary
-    form, or to dynamically modify classes at load time, i.e., just before they are
-    loaded into the Java Virtual Machine.</p>
+    <p><strong>ASM</strong> is an all purpose Java bytecode manipulation and 
+    analysis framework. It can be used to modify existing classes or dynamically
+    generate classes, directly in binary form. Provided common transformations 
+    and analysis algorithms allow to easily assemble custom complex 
+    transformations and code analysis tools.</p>
 
-    <p>ASM offers similar functionalities as <a href="http://jakarta.apache.org/bcel/">BCEL</a>
-    or <a href="http://serp.sourceforge.net/">SERP</a>, but is much smaller (33KB
-    instead of 350KB for BCEL and 150KB for SERP)
-    and faster than these tools (the overhead of a load time class transformation
-    is of the order of 60% with ASM, 700% or more with BCEL, and 1100% or more with SERP).
-    Indeed ASM was designed to be used in a dynamic way* and
-    was therefore designed and implemented to be as small and as fast as possible.</p>
+    <p>ASM offer similar functionality as other bytecode frameworks, but it is 
+    focused on simplicity of use and performance. Because it was designed and 
+    implemented to be as small and as fast as possible, it makes it very 
+    attractive for using in dynamic systems*.</p>
     
     <p>(*) ASM can of course be used in a static way too.</p>
     
