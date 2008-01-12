@@ -42,6 +42,7 @@
         <a href="#openquark">Open Quark</a> |
         <a href="#Semmle">SemmleCode</a> |
         <a href="#Structure101">Structure101</a> |
+        <a href="#JCarder">JCarder</a> |
         <a href="#NetLogo">NetLogo</a> |
         
         <a href="#Substance">Substance L&amp;F</a> |
@@ -478,6 +479,19 @@
           <td align="center" valign="top">
           <a href="http://www.headwaysoftware.com/products/structure101/"><img src="images/structure101.jpg" border="0"
             width="160" height="57" alt="Structure101" align="middle"/></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="JCarder"/>
+          <a href="http://www.jcarder.org/">JCarder</a> is an open source tool for
+          finding potential deadlocks in concurrent multi-threaded Java programs.
+          It uses ASM to efficiently insert probes into the program under test
+          with minimal overhead.<br/><br/>
+          </td>
+          <td align="center" valign="top">
+          <a href="http://www.jcarder.org/"><img src="images/jcarder.gif" border="0"
+            width="143" height="80" alt="JCarder" align="middle"/></a>
           </td>
         </tr>
 
