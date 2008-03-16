@@ -45,6 +45,7 @@
         <a href="#Semmle">SemmleCode</a> |
         <a href="#Structure101">Structure101</a> |
         <a href="#JCarder">JCarder</a> |
+        <a href="#BTrace">BTrace</a> |
         <a href="#NetLogo">NetLogo</a> |
         
         <a href="#Substance">Substance L&amp;F</a> |
@@ -511,6 +512,23 @@
           <a href="http://www.jcarder.org/"><img src="images/jcarder.gif" border="0"
             width="143" height="80" alt="JCarder" align="middle"/></a>
           </td>
+        </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="BTrace"/>
+          <a href="https://btrace.dev.java.net">BTrace</a> is a safe, dynamic
+          tracing system for the Java platform. BTrace  works by dynamically
+          bytecode instrumenting (BCI) .class files of running a Java application
+          to insert tracing code. The tracing code is expressed in Java programming
+          language. BTrace uses ASM 3.0 to instrument .class files at runtime. On
+          OpenSolaris platform, there is integration with OpenSolaris DTrace
+          (dynamic tracing for Solaris OS and applications) as well. It is
+          possible to raise DTrace probes from BTrace code and also execute an
+          associated D-script. There is a command line access as well as GUI
+          access to BTrace. <a href="http://visualvm.dev.java.net">VisualVM</a>
+          is all-in-one troubleshooting tool for Java. VisualVM supports plugin
+          model to extend it's capabilities. A VisualVM plugin for BTrace is
+          being developed. It will be available soon.</td>
         </tr>
 
         <tr>
