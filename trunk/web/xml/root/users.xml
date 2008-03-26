@@ -13,52 +13,65 @@
   <body>
     <s1 name="Users">
 
-      <p>
+      <ul>
+      <li><strong>Languages and AOP tools:</strong>
         <a href="#AspectWerkz/">AspectWerkz</a> |
         <a href="#AspectJ">AspectJ</a> |
-        <a href="#BEA">BEA WebLogic</a> |
-        <a href="#IBM">IBM AUS</a> |
-        <a href="#OracleBDB">Oracle BerkleyDB</a> |
-        <a href="#OracleTopLink">Oracle TopLink</a> |
-        <a href="#Terracotta">Terracotta</a> |
-        <a href="#RIFE">RIFE</a> |
-
+        <a href="#dynaop">dynaop</a> |
+        <a href="#CGLIB">CGLIB</a> |
+        <a href="#Jamaica">Jamaica</a> |
+        <a href="#BeanShell">BeanShell</a> |
+        <a href="#Groovy">Groovy</a> |
+        <a href="#openquark">Open Quark</a> |
+        <a href="#NetLogo">NetLogo</a> |
+        <a href="#Retrotranslator">Retrotranslator</a>
+      </li>
+        
+      <li><strong>Java ME:</strong>
         <a href="#EclipseME">EclipseME</a> |
         <a href="#SunJavaMEemulation">Sun Java ME emulation for Java SE</a> |
-        <a href="#MicroEmulator">MicroEmulator</a> |
-
-        <a href="#Proactive">Proactive</a> |
-        <a href="#Speedo">Speedo</a> |
+        <a href="#MicroEmulator">MicroEmulator</a>
+      </li>      
+        
+      <li><strong>Frameworks:</strong>
+        <a href="#Terracotta">Terracotta</a> |
+        <a href="#RIFE">RIFE</a> |
+        <a href="#R-OSGi">R-OSGi</a> |
         <a href="#Fractal">Fractal</a> |
+        <a href="#Proactive">Proactive</a> |
+        <a href="#Substance">Substance L&amp;F</a>
+      </li>
+
+      <li><strong>Persistence:</strong>
+        <a href="#OracleBDB">Oracle BerkleyDB</a> |
+        <a href="#OracleTopLink">Oracle TopLink</a> |
+        <a href="#Speedo">Speedo</a> |
         <a href="#EasyBeans">EasyBeans</a> |
         <a href="#JDBCPersistence">JDBCPersistence</a> |
         <a href="#Ebean">Ebean</a> |
-        <a href="#JPOX">JPOX</a> |
+        <a href="#JPOX">JPOX</a>
+      </li>
 
-        <a href="#BeanShell">BeanShell</a> |
-        <a href="#Groovy">Groovy</a> |
-        <a href="#Jamaica">Jamaica</a> |
-        <a href="#CGLIB">CGLIB</a> |
-        <a href="#dynaop">dynaop</a> |
-        <a href="#Retrotranslator">Retrotranslator</a> |
-        <a href="#openquark">Open Quark</a> |
+      <li><strong>Monitoring:</strong>
+        <a href="#BEA">BEA WebLogic</a> |
+        <a href="#BTrace">BTrace</a> |
+        <a href="#JiP">JiP</a>
+        </li>
+
+      <li><strong>Testing and code analysis:</strong>
+        <a href="#Agitar">Agitar</a> |
+        <a href="#Cobertura">Cobertura</a> |
+        <a href="#IBM">IBM AUS</a> |
+        <a href="#JCarder">JCarder</a> |
         <a href="#Semmle">SemmleCode</a> |
         <a href="#Structure101">Structure101</a> |
-        <a href="#JCarder">JCarder</a> |
-        <a href="#BTrace">BTrace</a> |
-        <a href="#NetLogo">NetLogo</a> |
-        
-        <a href="#Substance">Substance L&amp;F</a> |
+        <a href="#SonarJ">SonarJ</a>
+        </li>
+      </ul>  
+      
+      <hr/>
 
-        <a href="#Cobertura">Cobertura</a> |
-        <a href="#SonarJ">SonarJ</a> |
-        <a href="#JiP">JiP</a> |
-        <a href="#R-OSGi">R-OSGi</a>
-        <br/>
-        <br/>
-      </p>
-
-      <table border="0"  width="100%">
+      <table border="0" width="100%">
         <tr>
           <td valign="top" colspan="2"><anchor name="AspectWerkz"/>
           <a href="http://aspectwerkz.codehaus.org/">AspectWerkz</a>
@@ -93,6 +106,22 @@
         </tr>
 
         <tr>
+          <td valign="top"><anchor name="Agitar"/>
+          <a href="http://www.agitar.com">AgitarOne</a> from Agitar automatically generates
+          JUnit tests for your legacy Java code. Agitar has been an early user of
+          ASM and we leverage the framework in all our products for bytecode
+          instrumentation for coverage, call interposing as well as for building
+          control and data flow graphs for higher level dynamic and static
+          analysis. ASM easily offers the lightest and fastest framework for
+          bytecode parsing and manipulation in our experience.
+          <br/><br/></td>
+          <td align="center" valign="top">
+          <a href="http://www.agitar.com"><img src="images/agitar.gif" border="0"
+            height="84" width="151" alt="Agitar" align="middle"/></a>
+          </td>
+        </tr>
+        
+        <tr>
           <td valign="top"><anchor name="BEA"/>
           <a href="http://www.bea.com/">BEA WebLogic Server 9</a> includes an
           advanced diagnostic framework (WebLogic Diagnostic Framework) that
@@ -123,7 +152,7 @@
             height="52" width="110" alt="IBM" align="middle"/></a>
           </td>
         </tr>
-
+        
         <tr>
           <td valign="top"><anchor name="OracleBDB"/>
           <a href="http://www.oracle.com/database/berkeley-db.html">Berkeley DB Java Edition</a>
