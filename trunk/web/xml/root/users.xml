@@ -22,6 +22,7 @@
         <a href="#Jamaica">Jamaica</a> |
         <a href="#BeanShell">BeanShell</a> |
         <a href="#Groovy">Groovy</a> |
+        <a href="#JRuby">JRuby</a> |
         <a href="#openquark">Open Quark</a> |
         <a href="#NetLogo">NetLogo</a> |
         <a href="#Retrotranslator">Retrotranslator</a>
@@ -334,6 +335,17 @@
           <td align="center" valign="top">
             <a href="http://groovy.codehaus.org/"><img src="images/groovy-logo.png" border="0"
               height="56" width="113" alt="Groovy" align="middle"/></a>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top"><anchor name="JRuby"/>
+          <a href="http://jruby.org/">JRuby</a> is an implementation of 
+          the Ruby programming language that runs on the JVM. JRuby uses ASM 
+          extensively in its Ruby compiler and when generating callable method handles 
+          for binding Java code to Ruby method names.<br/><br/></td>
+          <td align="center" valign="top">
+            <a href="http://jruby.org/"><img src="images/jruby.png" border="0"
+              height="50" width="112" alt="JRuby" align="middle"/></a>
           </td>
         </tr>
         <tr>
