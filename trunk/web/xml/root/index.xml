@@ -55,9 +55,17 @@
     </td>
     <td>
     
-    <!-- 
     <p><strong>Events</strong></p><hr/>
 
+    <p><a href="http://www.jroller.com/eu/entry/asm_at_javaone_2008"><img 
+      src="images/javaone.gif" border="0" width="145" height="39" alt="JavaOne"/></a><br/>
+    <strong>Tuesday, May 06 at 19:30 - 20:20; Moscone Center - Hall E 133</strong><br/>
+    <a href="https://www28.cplan.com/cc191/session_details.jsp?isid=295839&amp;ilocation_id=191-1&amp;ilanguage=english">BOF-5839</a> 
+    Practical Applications of Static Bytecode Analysis and Transformation for the Java platform
+    <br/><br/>
+    </p>
+
+    <!--
     <p><a href="http://jroller.com/page/eu?entry=asm_is_going_to_oopsla"><img src="images/oopsla2007.gif" 
       border="0" width="169" height="52" alt="OOPSLA 2007"/></a><br/>
     <strong>CANCELED</strong><br/>
