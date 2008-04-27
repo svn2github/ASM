@@ -17,40 +17,41 @@
       <li><strong>Languages and AOP tools:</strong>
         <a href="#AspectWerkz/">AspectWerkz</a> |
         <a href="#AspectJ">AspectJ</a> |
-        <a href="#dynaop">dynaop</a> |
-        <a href="#CGLIB">CGLIB</a> |
-        <a href="#Jamaica">Jamaica</a> |
         <a href="#BeanShell">BeanShell</a> |
+        <a href="#CGLIB">CGLIB</a> |
+        <a href="#dynaop">dynaop</a> |
         <a href="#Groovy">Groovy</a> |
+        <a href="#Jamaica">Jamaica</a> |
         <a href="#JRuby">JRuby</a> |
-        <a href="#openquark">Open Quark</a> |
         <a href="#NetLogo">NetLogo</a> |
+        <a href="#openquark">Open Quark</a> |
         <a href="#Retrotranslator">Retrotranslator</a>
       </li>
         
       <li><strong>Java ME:</strong>
         <a href="#EclipseME">EclipseME</a> |
-        <a href="#SunJavaMEemulation">Sun Java ME emulation for Java SE</a> |
         <a href="#MicroEmulator">MicroEmulator</a>
+        <a href="#SunJavaMEemulation">Sun Java ME emulation for Java SE</a> |
       </li>      
         
-      <li><strong>Frameworks:</strong>
-        <a href="#Terracotta">Terracotta</a> |
-        <a href="#RIFE">RIFE</a> |
-        <a href="#R-OSGi">R-OSGi</a> |
+      <li><strong>Tools and frameworks:</strong>
         <a href="#Fractal">Fractal</a> |
         <a href="#Proactive">Proactive</a> |
-        <a href="#Substance">Substance L&amp;F</a>
+        <a href="#RIFE">RIFE</a> |
+        <a href="#R-OSGi">R-OSGi</a> |
+        <a href="#Terracotta">Terracotta</a> |
+        <a href="#Substance">Substance L&amp;F</a> |
+        <a href="#WindowBuilder">WindowBuilder</a>
       </li>
 
       <li><strong>Persistence:</strong>
+        <a href="#EasyBeans">EasyBeans</a> |
+        <a href="#Ebean">Ebean</a> |
+        <a href="#JDBCPersistence">JDBCPersistence</a> |
+        <a href="#JPOX">JPOX</a>
         <a href="#OracleBDB">Oracle BerkleyDB</a> |
         <a href="#OracleTopLink">Oracle TopLink</a> |
         <a href="#Speedo">Speedo</a> |
-        <a href="#EasyBeans">EasyBeans</a> |
-        <a href="#JDBCPersistence">JDBCPersistence</a> |
-        <a href="#Ebean">Ebean</a> |
-        <a href="#JPOX">JPOX</a>
       </li>
 
       <li><strong>Monitoring:</strong>
@@ -235,6 +236,23 @@
           <a href="http://rifers.org">
           <img src="images/rife-logo_small.png" border="0"
             width="126" height="53" alt="RIFE" align="middle"/></a>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="WindowBuilder"/>
+          <a href="http://www.instantiations.com/windowbuilder/">WindowBuilder Pro</a> 
+          is a powerful and easy to use bidirectional Java GUI designer based on 
+          Eclipse SWT technology. It makes it very easy to create Java GUI (Swing and SWT), 
+          Eclipse RCP and GWT/Ajax applications without spending a lot of time writing 
+          code to display forms. ASM is an important low level component of 
+          WindowBuilder that allows high performance bytecode enhancements, 
+          such as Java/JavaScript interaction in GWT, binary execution flow analysis, 
+          etc.<br/><br/></td>
+          <td align="center" valign="top">
+          <a href="http://www.instantiations.com/windowbuilder/">
+          <img src="images/windowbuilder.png" border="0"
+            width="160" height="100" alt="WindowBuilder" align="middle"/></a>
           </td>
         </tr>
 
