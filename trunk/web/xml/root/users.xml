@@ -58,6 +58,7 @@
         <a href="#BEA">BEA WebLogic</a> |
         <a href="#BTrace">BTrace</a> |
         <a href="#JiP">JiP</a>
+        <a href="#ByCounter">ByCounter</a>
         </li>
 
       <li><strong>Testing and code analysis:</strong>
@@ -466,6 +467,16 @@
           </td>
         </tr>
 
+        <tr>
+          <td valign="top" colspan="2"><anchor name="ByCounter"/>
+          <a href="http://bycounter.ipd.uka.de/">ByCounter</a>
+          is a lightweight approach for exact runtime counting of executed 
+          bytecode instructions and method invocations. ByCounter significantly 
+          reduces total counting costs by instrumenting only the application 
+          bytecode and not the JVM, and it can be used without modifications on 
+          any JVM.<br/><br/></td>
+        </tr>
+        
         <tr>
           <td valign="top"><anchor name="SonarJ"/>
             <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
