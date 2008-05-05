@@ -479,8 +479,9 @@
         </tr>
         
         <tr>
-          <td valign="top" colspan="2"><anchor name="Limpid Log"/>
-          <a href="http:///">Limpid Log</a> is a revolutionary logging system. 
+          <td valign="top" colspan="2"><anchor name="LimpidLog"/>
+          <a href="http://www.acelet.org/_limpidlog/index.html">Limpid Log</a> 
+          is a revolutionary logging system. 
           You do not need to hard code log statements. At runtime, you can 
           register a class of interest and the system will log all important 
           information about the class. When you are done, you can de-register 
