@@ -57,8 +57,9 @@
       <li><strong>Monitoring:</strong>
         <a href="#BEA">BEA WebLogic</a> |
         <a href="#BTrace">BTrace</a> |
-        <a href="#JiP">JiP</a>
-        <a href="#ByCounter">ByCounter</a>
+        <a href="#JiP">JiP</a> |
+        <a href="#ByCounter">ByCounter</a> |
+        <a href="#LimpidLog">Limpid Log</a>
         </li>
 
       <li><strong>Testing and code analysis:</strong>
@@ -477,6 +478,16 @@
           any JVM.<br/><br/></td>
         </tr>
         
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Limpid Log"/>
+          <a href="http:///">Limpid Log</a> is a revolutionary logging system. 
+          You do not need to hard code log statements. At runtime, you can 
+          register a class of interest and the system will log all important 
+          information about the class. When you are done, you can de-register 
+          the class and the class will not generate any log information anymore. 
+          Limpid Log  is an open source program.<br/><br/></td>
+        </tr>
+
         <tr>
           <td valign="top"><anchor name="SonarJ"/>
             <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">SonarJ</a>
