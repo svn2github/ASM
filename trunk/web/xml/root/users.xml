@@ -66,6 +66,7 @@
       <li><strong>Testing and code analysis:</strong>
         <a href="#Agitar">Agitar</a> |
         <a href="#Cobertura">Cobertura</a> |
+        <a href="#Eclipse">Eclipse</a> |
         <a href="#IBM">IBM AUS</a> |
         <a href="#JCarder">JCarder</a> |
         <a href="#Semmle">SemmleCode</a> |
@@ -155,6 +156,20 @@
           <td align="center" valign="top">
           <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
             height="52" width="110" alt="IBM" align="middle"/></a>
+          </td>
+        </tr>
+        
+        <tr>
+          <td valign="top"><anchor name="Eclipse"/>
+          The goal of the <a href="http://www.eclipse.org/pde/pde-api-tools/">Eclipse API Tools</a> 
+          project is to assist developers with API maintenance from release to 
+          release, alerting developers when an API change might break existing clients.
+          The project uses ASM to to extract type, method, and field references from 
+          .class files, and is also used to generate .class file stubs retaining all 
+          API and reference information.<br/><br/></td>
+          <td align="center" valign="top">
+          <a href="http://www.eclipse.org/pde/pde-api-tools/"><img src="images/eclipse.png" border="0"
+            height="85" width="144" alt="Eclipse" align="middle"/></a>
           </td>
         </tr>
         
