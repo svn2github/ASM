@@ -47,8 +47,8 @@
     <hr/>
     
     <p>ASM is already <a href="users.html">used</a> in many Java products.
-    Please let us know if your project is using ASM. You can also add the 
-    "Powered by ASM" button below to your project page.</p>
+    Please <a href="http://mail.ow2.org/wws/info/asm">let us know</a> if your project is using ASM. 
+    You can also add the "Powered by ASM" button below to your project page.</p>
         
     <a href="http://asm.objectweb.org/"><img src="images/poweredbyasm.gif" border="0" width="88" height="31" alt="Powered by ASM"/></a>
 
