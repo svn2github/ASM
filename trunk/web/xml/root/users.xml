@@ -20,13 +20,14 @@
         <a href="#BeanShell">BeanShell</a> |
         <a href="#CGLIB">CGLIB</a> |
         <a href="#dynaop">dynaop</a> |
+        <a href="#Clojure">Clojure</a> |
         <a href="#Groovy">Groovy</a> |
         <a href="#Jamaica">Jamaica</a> |
         <a href="#JRuby">JRuby</a> |
         <a href="#Jython">Jython</a> |
         <a href="#NetLogo">NetLogo</a> |
         <a href="#openquark">Open Quark</a> |
-        <a href="#Retrotranslator">Retrotranslator</a>
+        <a href="#smash">WebSphere sMash</a>
       </li>
         
       <li><strong>Java ME:</strong>
@@ -38,6 +39,7 @@
       <li><strong>Tools and frameworks:</strong>
         <a href="#Fractal">Fractal</a> |
         <a href="#Proactive">Proactive</a> |
+        <a href="#Retrotranslator">Retrotranslator</a> |
         <a href="#RIFE">RIFE</a> |
         <a href="#R-OSGi">R-OSGi</a> |
         <a href="#Terracotta">Terracotta</a> |
@@ -324,18 +326,6 @@
         </tr>
 
         <tr>
-          <td valign="top" colspan="2"><anchor name="BeanShell"/>
-          Pat Niemeyer said: "I'm very excited about ASM because it's
-          exactly what I need to finish <a
-          href="http://www.beanshell.org/">BeanShell</a> scripted
-          classes... [...] I didn't want to use BCEL because it's huge
-          relative to BeanShell (my core language is about 100K). All I
-          really need is the ability to generate a proxy class for an
-          arbitrary type (delegate all the methods to a reflective style
-          handler) which I believe will now be easy.<br/><br/></td>
-        </tr>
-
-        <tr>
           <td valign="top" colspan="2"><anchor name="Cobertura"/>
           <a href="http://cobertura.sourceforge.net/">Cobertura</a>
           is a free Java tool that calculates the percentage of code accessed by
@@ -362,16 +352,52 @@
           design in the following areas:  code reuse, decomposition,
           dependency reduction.<br/><br/></td>
         </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="BeanShell"/>
+          Pat Niemeyer said: "I'm very excited about ASM because it's
+          exactly what I need to finish <a
+          href="http://www.beanshell.org/">BeanShell</a> scripted
+          classes... [...] I didn't want to use BCEL because it's huge
+          relative to BeanShell (my core language is about 100K). All I
+          really need is the ability to generate a proxy class for an
+          arbitrary type (delegate all the methods to a reflective style
+          handler) which I believe will now be easy.<br/><br/></td>
+        </tr>
+
+
+        <tr>
+          <td valign="top"><anchor name="Clojure"/>
+          <a href="http://clojure.org/">Clojure</a> is a dynamic programming 
+          language that targets the JVM. Clojure is a functional dialect of Lisp, 
+          combining the approachability and interactive development of a scripting 
+          language with an efficient and robust infrastructure for multithreaded programming. 
+          Clojure dynamically compiles to bytecode in memory using ASM, 
+          leveraging its speed and small size.<br/><br/></td>
+          <td align="center" valign="top">
+            <a href="http://clojure.org/"><img src="images/clojure.png" border="0"
+              height="42" width="42" alt="Clojure" align="middle"/></a><br/><br/>
+          </td>
+        </tr>
         <tr>
           <td valign="top"><anchor name="Groovy"/>
           <a href="http://groovy.codehaus.org/">Groovy</a> is a new agile
           dynamic language for the JVM combining lots of great features
           from languages like Python, Ruby and Smalltalk and making them
-          available to the Java developers using a Java-like syntax.</td>
+          available to the Java developers using a Java-like syntax.<br/><br/></td>
           <td align="center" valign="top">
             <a href="http://groovy.codehaus.org/"><img src="images/groovy-logo.png" border="0"
               height="56" width="113" alt="Groovy" align="middle"/></a><br/><br/>
           </td>
+        </tr>
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Jamaica"/>
+          <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
+          is a JVM Macro Assembler language. Its compiler uses a JavaClassCreator facade to delegate JVM class
+          creation; currently it supports ASM and BCEL. "I like ASM," said
+          James Huang, the author of Jamaica and JudoScript, "this is a JVM
+          class creation API done right. For redistributing software, the
+          compactness of ASM API is a great advantage, too."<br/><br/></td>
         </tr>
         <tr>
           <td valign="top"><anchor name="JRuby"/>
@@ -395,15 +421,45 @@
               height="65" width="100" alt="JRuby" align="middle"/></a>
           </td>
         </tr>
+
         <tr>
-          <td valign="top" colspan="2"><anchor name="Jamaica"/>
-          <a href="http://www.judoscript.com/articles/jamaica.html">Jamaica</a>
-          is a JVM Macro Assembler language. Its compiler uses a JavaClassCreator facade to delegate JVM class
-          creation; currently it supports ASM and BCEL. "I like ASM," said
-          James Huang, the author of Jamaica and JudoScript, "this is a JVM
-          class creation API done right. For redistributing software, the
-          compactness of ASM API is a great advantage, too."<br/><br/></td>
+          <td valign="top" colspan="2"><anchor name="NetLogo"/>
+          <a href="http://ccl.northwestern.edu/netlogo">NetLogo</a> is a programming
+          language and modeling environment for simulating natural and social
+          phenomena.  It uses ASM to partially compile NetLogo code into Java
+          byte code.<br/><br/></td>
         </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="openquark"/>
+          <a href="http://labs.businessobjects.com/cal/">Open Quark</a>
+          includes CAL: a general purpose, lazy, strongly-typed, functional
+          language. CAL compiles directly to Java virtual machine bytecodes using
+          ASM. CAL can use any Java class, method, field or constructor. Open
+          Quark's Java APIs allow clients to programmatically create and call CAL
+          functions. This enables logic best expressed in CAL, such as domain
+          specific languages and data transformations, to be combined with regular
+          object-oriented Java application logic. Open Quark includes a visual
+          programming tool called the Gem Cutter, and a CAL Eclipse Plug-in. Open
+          Quark is available for download with sources under a BSD license. The
+          CAL Eclipse Plug-in is available under the Eclipse Public License v1.0.<br/><br/>
+         </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="smash"/>
+          <a href="http://www.projectzero.org/">WebSphere sMash</a> is an agile 
+          development environment leveraging scripting runtimes such as Groovy 
+          and PHP, and optimized for producing REST-style services, integration, 
+          mash-ups, and rich Web interfaces.
+          ASM is used in compiler that compiles PHP scripts to Java bytecode.
+          <br/><br/></td>
+          <td align="center" valign="top">
+            <a href="http://www.projectzero.org/"><img src="images/smash.png" border="0"
+              height="30" width="190" alt="webSphere sMash" align="middle"/></a>
+          </td>
+        </tr>
+        
         <tr>
           <td valign="top"><anchor name="ProActive"/>
           <a href="http://proactive.objectweb.org/">ProActive</a> is a Java library for parallel,
@@ -606,22 +662,6 @@
         </tr>
 
         <tr>
-          <td valign="top" colspan="2"><anchor name="openquark"/>
-          <a href="http://labs.businessobjects.com/cal/">Open Quark</a>
-          includes CAL: a general purpose, lazy, strongly-typed, functional
-          language. CAL compiles directly to Java virtual machine bytecodes using
-          ASM. CAL can use any Java class, method, field or constructor. Open
-          Quark's Java APIs allow clients to programmatically create and call CAL
-          functions. This enables logic best expressed in CAL, such as domain
-          specific languages and data transformations, to be combined with regular
-          object-oriented Java application logic. Open Quark includes a visual
-          programming tool called the Gem Cutter, and a CAL Eclipse Plug-in. Open
-          Quark is available for download with sources under a BSD license. The
-          CAL Eclipse Plug-in is available under the Eclipse Public License v1.0.<br/><br/>
-         </td>
-        </tr>
-
-        <tr>
           <td valign="top"><anchor name="Semmle"/>
           <a href="http://semmle.com/">SemmleCode</a> is a free Eclipse plugin that
           helps computing metrics, finding bugs and checking coding conventions. All
@@ -690,15 +730,7 @@
           access to BTrace. <a href="http://visualvm.dev.java.net">VisualVM</a>
           is all-in-one troubleshooting tool for Java. VisualVM supports plugin
           model to extend it's capabilities. A VisualVM plugin for BTrace is
-          being developed. It will be available soon.</td>
-        </tr>
-
-        <tr>
-          <td valign="top" colspan="2"><anchor name="NetLogo"/>
-          <a href="http://ccl.northwestern.edu/netlogo">NetLogo</a> is a programming
-          language and modeling environment for simulating natural and social
-          phenomena.  It uses ASM to partially compile NetLogo code into Java
-          byte code.</td>
+          being developed. It will be available soon.<br/><br/></td>
         </tr>
 
         <tr>
