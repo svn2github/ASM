@@ -70,7 +70,6 @@
         <a href="#Agitar">Agitar</a> |
         <a href="#Cobertura">Cobertura</a> |
         <a href="#Eclipse">Eclipse</a> |
-        <a href="#IBM">IBM AUS</a> |
         <a href="#JCarder">JCarder</a> |
         <a href="#Semmle">SemmleCode</a> |
         <a href="#Structure101">Structure101</a> |
@@ -144,24 +143,6 @@
           </td>
         </tr>
 
-        <tr>
-          <td valign="top"><anchor name="IBM"/>
-          The <a href="http://www.alphaworks.ibm.com/tech/aus">API Usage Scanner</a>
-          (AUS) tool can help developers to scan one product
-          code to detect the use of another product's internal APIs.
-          Once these usages are identified, the situation can be remedied by
-          replacing those internal APIs with published ones. If a suitable
-          published API is not available, the development team can alert the API provider
-          of the existence of fragile interfaces between the two pieces of software and
-          request an agreement to hold that API stable until a suitable replacement
-          can be provided. Several IBM flagship software products have already
-          done this with great success.<br/><br/></td>
-          <td align="center" valign="top">
-          <a href="http://www.alphaworks.ibm.com/tech/aus"><img src="images/ibm.gif" border="0"
-            height="52" width="110" alt="IBM" align="middle"/></a>
-          </td>
-        </tr>
-        
         <tr>
           <td valign="top"><anchor name="Eclipse"/>
           The goal of the <a href="http://www.eclipse.org/pde/pde-api-tools/">Eclipse API Tools</a> 
