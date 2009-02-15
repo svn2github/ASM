@@ -38,6 +38,7 @@
         
       <li><strong>Tools and frameworks:</strong>
         <a href="#Fractal">Fractal</a> |
+        <a href="#DrGarbage">Dr. Garbage</a> |
         <a href="#Proactive">Proactive</a> |
         <a href="#Retrotranslator">Retrotranslator</a> |
         <a href="#RIFE">RIFE</a> |
@@ -254,6 +255,28 @@
           <a href="http://www.instantiations.com/windowbuilder/">
           <img src="images/windowbuilder.png" border="0"
             width="160" height="100" alt="WindowBuilder" align="middle"/></a><br/><br/>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="DrGarbage"/>
+          <a href="http://www.drgarbage.com/">Dr. Garbage</a> 
+          offers several Eclipse plugins, in which ASM library is used
+          for parsing of class files and for generation of control flow graph
+          visualizations. The <a href="http://www.drgarbage.com/bytecode-visualizer.html">Bytecode
+          Visualizer</a> is a powerful class file viewer and bytecode debugger.
+          Single instruction step and control flow graph shown alongside of any
+          method's bytecode are unique to this product.
+          The <a href="http://www.drgarbage.com/sourcecode-visualizer.html">Sourcecode
+          Visualizer</a> draws a control flow graph alongside of Java source code.
+          The <a href="http://www.drgarbage.com/control-flow-graph-factory.html">Control
+          Flow Graph Factory</a> generates control flow graphs from Java source
+          or bytecode, allows for editing them and exporting them to several
+          bitmap and XML formats.</td>
+          <td align="center" valign="top">
+          <a href="http://www.drgarbage.com/">
+          <img src="images/drgarbage-132x24.gif" border="0"
+            width="133" height="24" alt="Dr. Darbage" align="middle"/></a><br/><br/>
           </td>
         </tr>
 
