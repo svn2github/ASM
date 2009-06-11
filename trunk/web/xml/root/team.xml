@@ -13,9 +13,10 @@
 	<body>
   
 		<s1 name="Project Team">
-		<p>Currently the ASM team is composed of:</p>
+		<p>Currently the ASM team is composed of (in alphabetical order):</p>
       <ul>
-			  <li>Eric Bruneton (<a href="http://www.rd.francetelecom.com/">France Telecom R&amp;D</a>)</li>
+			  <li>Eric Bruneton</li>
+			  <li>Rémi Forax</li>
 			  <li>Eugene Kuleshov</li>
 			  <li>Andrei Loskutov</li>
       </ul>

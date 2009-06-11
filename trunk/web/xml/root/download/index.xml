@@ -20,19 +20,14 @@
     "http://forge.objectweb.org/projects/asm/">ObjectWeb Forge</a>.
     </p>
 
-    <subtitle>ASM CVS Repository</subtitle>
+    <subtitle>ASM SVN Repository</subtitle>
 
     <p>You can also download ASM from the <a href=
-    "http://forge.objectweb.org/cvs/?group_id=23">ObjectWeb Forge
-    CVS</a>.</p>
-    <p>The available modules are:</p>
-    <ul>
-    <li>.: used to get the whole ASM repository.</li>
-    <li><em>web</em>: used to get the ASM web site.</li>
-    </ul>
-    <p>Note that the latest snapshot of the CVS repository is
+    "http://forge.ow2.org/plugins/scmsvn/index.php?group_id=23">ObjectWeb Forge
+    SVN</a>.</p>
+    <p>Note that the latest snapshot of the SVN repository is
     available for
-    <a href="http://www.objectweb.org/builds/nightly/asm/asm-cvs-latest.tgz">download</a>.
+    <a href="http://forge.ow2.org/svnsnapshots/asm-svn-latest.tar.gz">download</a>.
     This snapshot is generated each night at 00:00 AM CEST.</p>
 
     </s1>

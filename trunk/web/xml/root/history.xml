@@ -14,6 +14,52 @@
 
     <s1 name="History">
 
+      <subtitle>11 June 2009: ASM 3.2 (cvs-tag: ASM_3_2)</subtitle>
+
+		<ul>
+			<li>added support for new invokedynamic opcode</li>
+			<li>added new Type.getArgumentsAndReturnSizes method</li>
+			<li>added new GeneratorAdapter.valueOf method</li>
+			<li>added two new Method.getMethod methods (feature request #308554)</li>
+			<li>added new checks in Check*Adapter
+			<ul>
+			  <li>check of xRETURN instructions against declared method return type</li>
+			  <li>check that labels are not reused across methods (inside same class; check for labels reuse across classes still missing)</li>
+			  <li>checks for debug labels and for visitTryCatchBlock calling order</li>
+			  <li>new option for data flow checks with BasicVerifier</li>
+			</ul></li>
+			<li>added Jasmin class adapter (with round trip tests) in examples</li>
+			<li>bug fixes
+			<ul>
+				<li>313314 ClassReader.readClass(InputStream) unnecessary copies read buffer two times</li>
+				<li>311642 StackOverflowException in Label.visitSubroutine</li>
+				<li>311100 patch to make verifying multiple classes easier</li>
+				<li>309819 java/lang/Character typo in GeneratorAdapter</li>
+				<li>312468 Incorrect merging of frames</li>
+				<li>309037 GeneratorAdapter generates jump instructions wrongly</li>
+				<li>308875 ClassWriter COMPUTE_MAXS produces invalid class (verify error)</li>
+				<li>308807 AnalyzerException running CheckClassAdapter.verify() on java.lang.String</li>
+				<li>308745 BasicInterpreter.newOperation lacks a throws AnalyzerException clause</li>
+				<li>fixed bug submitted by Simon Goldsmith for inner classes</li>
+				<li>fixed bug submitted by Michael Rudolf</li>
+				<li>fixed bug with usage of copyOperation</li>
+				<li>fixed bug in test case</li>
+			</ul></li>
+			<li>Javadoc fixes and improvements</li>
+			<li>added performance tests with JBET, JClassLib, Jiapi, mozilla.classfile, BCEL and AspectJ BCEL using HelloWorld example</li>
+			<li>added performance tests with Cojen library</li>
+			<li>added performance tests for gnu.bytecode and CSG bytecode using HelloWorld example</li>
+			<li>added FindBugs preferences and builder for ASM</li>
+			<li>added debug jar</li>
+			<li>improved Ant build scripts
+			<ul>
+			  <li>replaced ow_util_ant_tasks (no longer maintained) with standard ant tasks</li>
+			  <li>updated test/lib jars with newer versions</li>
+			  <li>removed hardcoded JUNIT Eclipse path, made JSE 1.5.0 container as default VM (previously random system JRE)</li>
+			  <li>added license info to the parent pom</li>
+			</ul></li>
+		</ul>
+
       <subtitle>29 October 2007: ASM 3.1 (cvs-tag: ASM_3_1)</subtitle>
 
         <ul>
