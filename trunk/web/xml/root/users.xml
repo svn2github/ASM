@@ -609,13 +609,19 @@
         </tr>
 
         <tr>
-          <td valign="top" colspan="2"><anchor name="ByCounter"/>
+          <td valign="top"><anchor name="ByCounter"/>
           <a href="http://bycounter.ipd.uka.de/">ByCounter</a>
           is a lightweight approach for exact runtime counting of executed 
           bytecode instructions and method invocations. ByCounter significantly 
           reduces total counting costs by instrumenting only the application 
           bytecode and not the JVM, and it can be used without modifications on 
           any JVM.<br/><br/></td>
+          <td align="center" valign="top">
+          <a href="http://bycounter.ipd.uka.de/">
+          <img src="images/bycounter01.png" border="0"
+            width="200" height="37" alt="ByCounter" align="middle"/>
+          </a>
+          </td>
         </tr>
         
         <tr>
