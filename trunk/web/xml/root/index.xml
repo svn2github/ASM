@@ -55,6 +55,7 @@
     </td>
     <td>
     
+    <!-- 
     <p><strong>Events</strong></p><hr/>
 
     <p><a href="http://www.jroller.com/eu/entry/asm_at_javaone_2008"><img 
@@ -65,7 +66,6 @@
     <br/><br/>
     </p>
 
-    <!--
     <p><a href="http://jroller.com/page/eu?entry=asm_is_going_to_oopsla"><img src="images/oopsla2007.gif" 
       border="0" width="169" height="52" alt="OOPSLA 2007"/></a><br/>
     <strong>CANCELED</strong><br/>
@@ -125,6 +125,15 @@
       <a href="jdiff30to31/changes.html">3.0</a>,
       <a href="jdiff223to31/changes.html">2.2.3</a>,
       <a href="jdiff153to31/changes.html">1.5.3</a>
+    </p>
+            
+    <p><a href="asm32/javadoc/user/index.html">ASM 3.2 API</a>
+    (<a href="asm32/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from 
+      <a href="jdiff31to32/changes.html">3.1</a>,
+      <a href="jdiff30to32/changes.html">3.0</a>,
+      <a href="jdiff223to32/changes.html">2.2.3</a>,
+      <a href="jdiff153to32/changes.html">1.5.3</a>
     </p>
             
     <p><a href="asm30/javadoc/user/index.html">ASM 3.0 API</a>
