@@ -62,6 +62,7 @@
       <li><strong>Monitoring:</strong>
         <a href="#BEA">BEA WebLogic</a> |
         <a href="#BTrace">BTrace</a> |
+        <a href="#Byteman">Byteman</a> |
         <a href="#JiP">JiP</a> |
         <a href="#ByCounter">ByCounter</a> |
         <a href="#LimpidLog">Limpid Log</a>
@@ -741,6 +742,16 @@
           is all-in-one troubleshooting tool for Java. VisualVM supports plugin
           model to extend it's capabilities. A VisualVM plugin for BTrace is
           being developed. It will be available soon.<br/><br/></td>
+        </tr>
+
+        <tr>
+          <td valign="top" colspan="2"><anchor name="Byteman"/>
+          <a href="http://www.jboss.org/byteman">Byteman</a> is a bytecode injection 
+          tool which simplifies development of tests for Java applications using a 
+          technique called fault injection. Byteman works by inserting scripted side 
+          effects into application code, Test scripts may include actions which 
+          create and propagate conditions appropriate to the test scenario. 
+          Or they may simply verify correct execution of the application program.<br/><br/></td>
         </tr>
 
         <tr>
