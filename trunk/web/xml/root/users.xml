@@ -75,7 +75,8 @@
         <a href="#JCarder">JCarder</a> |
         <a href="#Semmle">SemmleCode</a> |
         <a href="#Structure101">Structure101</a> |
-        <a href="#SonarJ">SonarJ</a>
+        <a href="#SonarJ">SonarJ</a> |
+        <a href="#TamiFlex">TamiFlex</a>
         </li>
       </ul>  
       
@@ -651,6 +652,26 @@
           <td align="center" valign="top">
             <a href="http://www.hello2morrow.com/en/sonarj/sonarj.php">
             <img src="images/Sonar.gif" border="0" width="150" height="28" alt="SonarJ" align="middle"/>
+            </a>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="TamiFlex"/>
+            <a href="http://code.google.com/p/tamiflex/">TamiFlex</a>
+            is a tool suite to facilitate static analyses of Java programs
+            that use reflection and custom class loaders. The suite consists
+            of two agents that use the java.lang.instrument API, one Play-out
+            Agent and one Play-in Agent. The Play-out Agent allows you to
+            monitor a Java program using any Java-6 compliant JVM (dumping a 
+            reflection trace file, providing information about reflective calls 
+            on the program run, etc). With the Play-in Agent you can cause the
+            virtual machine to load classes from a specified directory instead
+            of the default ones. This is useful for replacing classes by 
+            statically optimized classes, whatever the classpath.<br/><br/></td>
+          <td align="center" valign="top">
+            <a href="http://code.google.com/p/tamiflex/">
+            <img src="images/tamiflex.png" border="0" width="104" height="55" alt="TamiFlex" align="middle"/>
             </a>
           </td>
         </tr>
