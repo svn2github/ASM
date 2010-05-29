@@ -27,7 +27,8 @@
         <a href="#Jython">Jython</a> |
         <a href="#NetLogo">NetLogo</a> |
         <a href="#openquark">Open Quark</a> |
-        <a href="#smash">WebSphere sMash</a>
+        <a href="#smash">WebSphere sMash</a> |
+        <a href="#coroutines">Coroutines</a>
       </li>
         
       <li><strong>Java ME:</strong>
@@ -384,6 +385,17 @@
             <a href="http://clojure.org/"><img src="images/clojure.png" border="0"
               height="42" width="42" alt="Clojure" align="middle"/></a><br/><br/>
           </td>
+        </tr>
+        <tr>
+          <td valign="top" colspan="2"><anchor name="coroutines"/>
+          <a href="http://code.google.com/p/coroutines/">Coroutines</a>
+          are program components that generalize subroutines to allow multiple 
+          entry points for suspending and resuming execution at certain locations. 
+          While in many modern languages coroutines are built-in (Python being the
+          most notable example) or similar, often simplified, constructs are 
+          provided (like C#'s yield), Java lacks any coroutine support - even in 
+          this simplified form. This project provides coroutines on bytecode level
+          using instrumentation to rearrange user code.<br/><br/></td>
         </tr>
         <tr>
           <td valign="top"><anchor name="Groovy"/>
