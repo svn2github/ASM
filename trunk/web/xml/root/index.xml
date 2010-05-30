@@ -117,9 +117,15 @@
     <p><br/><strong>API</strong></p><hr/>
 
     <!-- 
-    <p><a href="asm32/javadoc/user/index.html">ASM API</a>
-    (<a href="asm32/javadoc/user/overview-summary.html">noframes</a>).</p>
+    <p><a href="asm33/javadoc/user/index.html">ASM API</a>
+    (<a href="asm33/javadoc/user/overview-summary.html">noframes</a>).</p>
     -->    
+
+    <p><a href="asm33/javadoc/user/index.html">ASM 3.3 API</a>
+    (<a href="asm33/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from 
+      <a href="jdiff32to33/changes.html">3.2</a>
+    </p>
 
     <p><a href="asm32/javadoc/user/index.html">ASM 3.2 API</a>
     (<a href="asm32/javadoc/user/overview-summary.html">noframes</a>).<br/>
