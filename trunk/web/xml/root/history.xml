@@ -14,6 +14,44 @@
 
     <s1 name="History">
 
+      <subtitle>30 May 2010: ASM 3.3 (cvs-tag: ASM_3_3)</subtitle>
+
+		<ul>
+			<li>added new InstructionAdapter class</li>
+			<li>added TryCatchBlockSorter (provided by Adrian Sampson)</li>
+			<li>improved extensibility of analysis package (patch from Markus Heiden)</li>
+			<li>bug fixes
+			<ul>
+				<li>314969 Counterintuitive interaction of arguments to ClassWriter(cr, flags)</li>
+				<li>314964 AnalyzerAdapter does not treat &lt;init&gt; calls correctly</li>
+				<li>314934 ASM Handling of method Synthetic attribute causes exception during retransformation</li>
+				<li>314878 NPE in AnalyzerAdapter, putfield object comes from different control flow branches</li>
+				<li>fixed bug with remapping of RET instructions</li>
+				<li>314563 exception from asm.commons.LocalVariablesSorterremap</li>
+				<li>fixed bug in GASMifier</li>
+				<li>fixed bug for F_CHOP frames (locals are ignored for these frames)</li>
+				<li>314719 method length is sometimes calculated incorrectly</li>
+				<li>314584 ByteCode Outline Eclipse Plugin -- access flags comment is showing in decimal rather than hex</li>
+				<li>314481 Bug in Remapper related to annotations</li>
+				<li>314486 SerialVersionUIDAdder generates an incorrect serialVersionUID under 1.6 VMs for anonymous classes</li>
+				<li>fixed bug with padding for xxxSwitch instructions</li>
+				<li>313909 VOID_TYPE.getSize() != 0</li>
+				<li>312464 ClassReader does not ensure that NEW has a label associated with it</li>
+			</ul></li>
+			<li>patches (minor code improvements)
+			<ul>
+				<li>314328 minor improvement to serialveruidadder</li>
+				<li>314329 unnecessary casting, using HashMap v. Map</li>
+				<li>314330 make sure files get closed</li>
+			</ul></li>
+			<li>feature requests
+			<ul>
+				<li>314119 Provide read access to uninitializedTypes in AnalyzerAdapter</li>
+				<li>313804 Improve analysis results</li>
+			</ul></li>
+			<li>Javadoc fixes and improvements</li>
+		</ul>
+
       <subtitle>11 June 2009: ASM 3.2 (cvs-tag: ASM_3_2)</subtitle>
 
 		<ul>
