@@ -46,7 +46,8 @@
         <a href="#R-OSGi">R-OSGi</a> |
         <a href="#Terracotta">Terracotta</a> |
         <a href="#Substance">Substance L&amp;F</a> |
-        <a href="#WindowBuilder">WindowBuilder</a>
+        <a href="#WindowBuilder">WindowBuilder</a> |
+        <a href="#javeleon">Javeleon</a>
       </li>
 
       <li><strong>Persistence:</strong>
@@ -258,6 +259,23 @@
           <a href="http://www.instantiations.com/windowbuilder/">
           <img src="images/windowbuilder.png" border="0"
             width="160" height="100" alt="WindowBuilder" align="middle"/></a><br/><br/>
+          </td>
+        </tr>
+
+        <tr>
+          <td valign="top"><anchor name="javeleon"/>
+          <a href="http://javeleon.org/">Javeleon</a>
+          is a novel dynamic updating system that is transparent to the Java language and
+          runs on top of a standard unmodified JVM. It allows dynamic type-safe updates of
+          code as well as thread-safe lazy state migration, thus preserving live object 
+          instances. Javeleon is intentionally designed to mimic the traditional off-line
+          updating scheme. Hence, binary incompatible updates can be successfully carried
+          out if and only if the type conflict is resolved and the conflicting code has 
+          been recompiled.</td>
+          <td align="center" valign="top">
+          <a href="http://javeleon.org/">
+          <img src="images/javeleon-text.png" border="0"
+            width="250" height="80" alt="Javeleon" align="middle"/></a><br/><br/>
           </td>
         </tr>
 
