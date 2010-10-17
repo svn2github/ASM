@@ -28,7 +28,8 @@
         <a href="#NetLogo">NetLogo</a> |
         <a href="#openquark">Open Quark</a> |
         <a href="#smash">WebSphere sMash</a> |
-        <a href="#coroutines">Coroutines</a>
+        <a href="#coroutines">Coroutines</a> |
+        <a href="#fun4j">fun4j</a>
       </li>
         
       <li><strong>Java ME:</strong>
@@ -414,6 +415,20 @@
           provided (like C#'s yield), Java lacks any coroutine support - even in 
           this simplified form. This project provides coroutines on bytecode level
           using instrumentation to rearrange user code.<br/><br/></td>
+        </tr>
+        <tr>
+          <td valign="top"><anchor name="fun4j"/>
+          <a href="http://www.fun4j.org/">fun4j</a> brings functional programming to 
+          the JVM. It's a framework that integrates major concepts from functional 
+          programming into the Java Platform. At its core there is a lambda-to-JVM 
+          bytecode compiler. Thanks to some optimization techniques like tail code 
+          optimization (TCO) the compiler produces code that runs as fast as hand 
+          optimized Java code. The compiler uses the excellent Java bytecode 
+          assembler ASM.<br/><br/></td>
+          <td align="center" valign="top">
+            <a href="http://www.fun4j.org/"><img src="images/lambda-100.png" border="0"
+              height="100" width="100" alt="fun4j" align="middle"/></a><br/><br/>
+          </td>
         </tr>
         <tr>
           <td valign="top"><anchor name="Groovy"/>
