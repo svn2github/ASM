@@ -14,6 +14,20 @@
 
     <s1 name="History">
 
+      <subtitle>21 December 2010: ASM 3.3.1 (cvs-tag: ASM_3_3_1)</subtitle>
+
+		<ul>
+			<li>bug fixes
+			<ul>
+				<li>315135 COMPUTE_FRAMES with CheckClassAdapter gives IndexOutOfBoundsException</li>
+				<li>315248 Bug in CheckClassAdapter? Fails for untransformed class</li>
+				<li>315399 AnalyzerAdapter.execute() method doesn't process null array correctly for AALOAD instruction</li>
+				<li>315417 LocalVariablesSorter.remap() incorrectly process long/double types</li>
+				<li>315697 DependencyTracker example fails in handling class Object</li>
+				<li>315698 DependencyTracker example fails in handling finally blocks</li>
+			</ul></li>
+		</ul>
+		
       <subtitle>30 May 2010: ASM 3.3 (cvs-tag: ASM_3_3)</subtitle>
 
 		<ul>
