@@ -14,6 +14,18 @@
 
     <s1 name="History">
 
+      <subtitle>17 April 2011: ASM 4.0 RC1 (cvs-tag: ASM_4_0_RC1)</subtitle>
+
+		<ul>
+                        <li>full support of Java 7</li>
+                        <li>support of the new invokedynamic encoding and bootstrap method arguments. Done with a 
+                        new visitInvokeDynamicInsn method.</li>
+                        <li>added two new classes MethodHandle and MethodType. Can be used either in visitLdcInsn
+                        or as last arguments of visitInvokeDynamicInsn.</li>
+                        <li>generified the API to use generics and varargs. However, almost all jars are still 
+                        small and 1.2 compatible.</li>
+		</ul>
+
       <subtitle>21 December 2010: ASM 3.3.1 (cvs-tag: ASM_3_3_1)</subtitle>
 
 		<ul>
@@ -438,6 +450,32 @@
 
         <ul>
           <li>First public version</li>
+        </ul>
+
+      <subtitle>Origins</subtitle>
+
+        <ul>
+          <li>The ASM project was created by Eric Bruneton in 2000, during his
+          PhD at <a href="http://www.inria.fr">INRIA</a>. At that time it 
+          was only a code generator (no ClassReader, no Visitor concept). 
+          It was used to generate dynamic stub and proxy classes,
+          before the <code>java.lang.reflect.Proxy</code> class was released 
+          in JDK 1.3. These dynamic classes were used to transparently add 
+          non functional properties (logging, persistence, replication, etc) 
+          to user components.</li>
+          <li>The visitor idea and the ClassReader concepts were added later,
+          in order to be able to transform existing classes. This was
+          needed to insert the non functional code directly in the user
+          classes, instead of in an intermediate proxy (for better performance).
+          These new features were designed and implemented by Eric Bruneton
+          after his PhD, at France Telecom R&amp;D (now Orange Labs),
+          in order to implement the 
+          <a href="http://fractal.ow2.org">Fractal component model</a>.</li>
+          <li>The ASM project was released in Open Source in 2002, at the same
+          time as the Fractal project. Since then, many external contributions
+          have been done to the project. The most important contributors are
+          now part of the ASM team, namely Eugene Kuleshov (since 2003),
+          Andrei Loskutov (since 2004) and Rémi Forax (since 2008).</li>
         </ul>
 
     </s1>
