@@ -14,115 +14,150 @@
 
     <s1 name="History">
 
+      <subtitle>11 September 2011: ASM 4.0 RC2 (cvs-tag: ASM_4_0_RC2)</subtitle>
+
+        <ul>
+            <li>ClassVisitor, MethodVisitor, etc interfaces replaced 
+            with abstract classes, in order to ensure backward
+            binary compatibility in future ASM versions.</li>
+            <li>ClassAdapter and MethodAdapter merged into ClassVisitor
+            and MethodVisitor, classes using multiple interface inheritance
+            removed (e.g. MemberNode, EmptyVisitor) or adapted (e.g. trace
+            and asmifier classes in asm.util).</li>
+            <li>MethodHandle and MethodType renamed to Handle and Type.</li>
+            <li>improved getCommonSuperClass to avoid resolving loaded classes/</li>
+            <li>improved getCommonSuperClass in ClassWriterComputeFramesTest 
+            (more efficient).</li>
+            <li>new checks in CheckClassAdapter.</li>
+            <li>new example, showing how to use the new invokedynamic 
+            instruction.</li>
+            <li>bug fixes
+            <ul>
+                <li>315942 asm-xml.dtd fails to mention SWAP element</li>
+                <li>315984 asm-xml.dtd fails to mention FREM element</li>
+                <li>NOP ATHROW bug (compute frames failed on deadcode in exception handler range)</li>
+                <li>fixed bugs found with FindBugs</li>
+                <li>minor Javadoc improvements and fixes</li>
+            </ul>
+            </li>
+            <li>feature requests
+            <ul>
+                <li>316005 Constant pool access</li>
+                <li>313999 Maven POM should include source-code</li>
+                <li>patch from Ivo Anjo in Analyzer</li>
+            </ul>
+            </li>
+        </ul>
+
       <subtitle>17 April 2011: ASM 4.0 RC1 (cvs-tag: ASM_4_0_RC1)</subtitle>
 
-		<ul>
-                        <li>full support of Java 7</li>
-                        <li>support of the new invokedynamic encoding and bootstrap method arguments. Done with a 
-                        new visitInvokeDynamicInsn method.</li>
-                        <li>added two new classes MethodHandle and MethodType. Can be used either in visitLdcInsn
-                        or as last arguments of visitInvokeDynamicInsn.</li>
-                        <li>generified the API to use generics and varargs. However, almost all jars are still 
-                        small and 1.2 compatible.</li>
-		</ul>
+        <ul>
+            <li>full support of Java 7</li>
+            <li>support of the new invokedynamic encoding and bootstrap method arguments. Done with a 
+            new visitInvokeDynamicInsn method.</li>
+            <li>added two new classes MethodHandle and MethodType. Can be used either in visitLdcInsn
+            or as last arguments of visitInvokeDynamicInsn.</li>
+            <li>generified the API to use generics and varargs. However, almost all jars are still 
+            small and 1.2 compatible.</li>
+        </ul>
 
       <subtitle>21 December 2010: ASM 3.3.1 (cvs-tag: ASM_3_3_1)</subtitle>
 
-		<ul>
-			<li>bug fixes
-			<ul>
-				<li>315135 COMPUTE_FRAMES with CheckClassAdapter gives IndexOutOfBoundsException</li>
-				<li>315248 Bug in CheckClassAdapter? Fails for untransformed class</li>
-				<li>315399 AnalyzerAdapter.execute() method doesn't process null array correctly for AALOAD instruction</li>
-				<li>315417 LocalVariablesSorter.remap() incorrectly process long/double types</li>
-				<li>315697 DependencyTracker example fails in handling class Object</li>
-				<li>315698 DependencyTracker example fails in handling finally blocks</li>
-			</ul></li>
-		</ul>
-		
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>315135 COMPUTE_FRAMES with CheckClassAdapter gives IndexOutOfBoundsException</li>
+                <li>315248 Bug in CheckClassAdapter? Fails for untransformed class</li>
+                <li>315399 AnalyzerAdapter.execute() method doesn't process null array correctly for AALOAD instruction</li>
+                <li>315417 LocalVariablesSorter.remap() incorrectly process long/double types</li>
+                <li>315697 DependencyTracker example fails in handling class Object</li>
+                <li>315698 DependencyTracker example fails in handling finally blocks</li>
+            </ul></li>
+        </ul>
+        
       <subtitle>30 May 2010: ASM 3.3 (cvs-tag: ASM_3_3)</subtitle>
 
-		<ul>
-			<li>added new InstructionAdapter class</li>
-			<li>added TryCatchBlockSorter (provided by Adrian Sampson)</li>
-			<li>improved extensibility of analysis package (patch from Markus Heiden)</li>
-			<li>bug fixes
-			<ul>
-				<li>314969 Counterintuitive interaction of arguments to ClassWriter(cr, flags)</li>
-				<li>314964 AnalyzerAdapter does not treat &lt;init&gt; calls correctly</li>
-				<li>314934 ASM Handling of method Synthetic attribute causes exception during retransformation</li>
-				<li>314878 NPE in AnalyzerAdapter, putfield object comes from different control flow branches</li>
-				<li>fixed bug with remapping of RET instructions</li>
-				<li>314563 exception from asm.commons.LocalVariablesSorterremap</li>
-				<li>fixed bug in GASMifier</li>
-				<li>fixed bug for F_CHOP frames (locals are ignored for these frames)</li>
-				<li>314719 method length is sometimes calculated incorrectly</li>
-				<li>314584 ByteCode Outline Eclipse Plugin -- access flags comment is showing in decimal rather than hex</li>
-				<li>314481 Bug in Remapper related to annotations</li>
-				<li>314486 SerialVersionUIDAdder generates an incorrect serialVersionUID under 1.6 VMs for anonymous classes</li>
-				<li>fixed bug with padding for xxxSwitch instructions</li>
-				<li>313909 VOID_TYPE.getSize() != 0</li>
-				<li>312464 ClassReader does not ensure that NEW has a label associated with it</li>
-			</ul></li>
-			<li>patches (minor code improvements)
-			<ul>
-				<li>314328 minor improvement to serialveruidadder</li>
-				<li>314329 unnecessary casting, using HashMap v. Map</li>
-				<li>314330 make sure files get closed</li>
-			</ul></li>
-			<li>feature requests
-			<ul>
-				<li>314119 Provide read access to uninitializedTypes in AnalyzerAdapter</li>
-				<li>313804 Improve analysis results</li>
-			</ul></li>
-			<li>Javadoc fixes and improvements</li>
-		</ul>
+        <ul>
+            <li>added new InstructionAdapter class</li>
+            <li>added TryCatchBlockSorter (provided by Adrian Sampson)</li>
+            <li>improved extensibility of analysis package (patch from Markus Heiden)</li>
+            <li>bug fixes
+            <ul>
+                <li>314969 Counterintuitive interaction of arguments to ClassWriter(cr, flags)</li>
+                <li>314964 AnalyzerAdapter does not treat &lt;init&gt; calls correctly</li>
+                <li>314934 ASM Handling of method Synthetic attribute causes exception during retransformation</li>
+                <li>314878 NPE in AnalyzerAdapter, putfield object comes from different control flow branches</li>
+                <li>fixed bug with remapping of RET instructions</li>
+                <li>314563 exception from asm.commons.LocalVariablesSorterremap</li>
+                <li>fixed bug in GASMifier</li>
+                <li>fixed bug for F_CHOP frames (locals are ignored for these frames)</li>
+                <li>314719 method length is sometimes calculated incorrectly</li>
+                <li>314584 ByteCode Outline Eclipse Plugin -- access flags comment is showing in decimal rather than hex</li>
+                <li>314481 Bug in Remapper related to annotations</li>
+                <li>314486 SerialVersionUIDAdder generates an incorrect serialVersionUID under 1.6 VMs for anonymous classes</li>
+                <li>fixed bug with padding for xxxSwitch instructions</li>
+                <li>313909 VOID_TYPE.getSize() != 0</li>
+                <li>312464 ClassReader does not ensure that NEW has a label associated with it</li>
+            </ul></li>
+            <li>patches (minor code improvements)
+            <ul>
+                <li>314328 minor improvement to serialveruidadder</li>
+                <li>314329 unnecessary casting, using HashMap v. Map</li>
+                <li>314330 make sure files get closed</li>
+            </ul></li>
+            <li>feature requests
+            <ul>
+                <li>314119 Provide read access to uninitializedTypes in AnalyzerAdapter</li>
+                <li>313804 Improve analysis results</li>
+            </ul></li>
+            <li>Javadoc fixes and improvements</li>
+        </ul>
 
       <subtitle>11 June 2009: ASM 3.2 (cvs-tag: ASM_3_2)</subtitle>
 
-		<ul>
-			<li>added support for new invokedynamic opcode</li>
-			<li>added new Type.getArgumentsAndReturnSizes method</li>
-			<li>added new GeneratorAdapter.valueOf method</li>
-			<li>added two new Method.getMethod methods (feature request #308554)</li>
-			<li>added new checks in Check*Adapter
-			<ul>
-			  <li>check of xRETURN instructions against declared method return type</li>
-			  <li>check that labels are not reused across methods (inside same class; check for labels reuse across classes still missing)</li>
-			  <li>checks for debug labels and for visitTryCatchBlock calling order</li>
-			  <li>new option for data flow checks with BasicVerifier</li>
-			</ul></li>
-			<li>added Jasmin class adapter (with round trip tests) in examples</li>
-			<li>bug fixes
-			<ul>
-				<li>313314 ClassReader.readClass(InputStream) unnecessary copies read buffer two times</li>
-				<li>311642 StackOverflowException in Label.visitSubroutine</li>
-				<li>311100 patch to make verifying multiple classes easier</li>
-				<li>309819 java/lang/Character typo in GeneratorAdapter</li>
-				<li>312468 Incorrect merging of frames</li>
-				<li>309037 GeneratorAdapter generates jump instructions wrongly</li>
-				<li>308875 ClassWriter COMPUTE_MAXS produces invalid class (verify error)</li>
-				<li>308807 AnalyzerException running CheckClassAdapter.verify() on java.lang.String</li>
-				<li>308745 BasicInterpreter.newOperation lacks a throws AnalyzerException clause</li>
-				<li>fixed bug submitted by Simon Goldsmith for inner classes</li>
-				<li>fixed bug submitted by Michael Rudolf</li>
-				<li>fixed bug with usage of copyOperation</li>
-				<li>fixed bug in test case</li>
-			</ul></li>
-			<li>Javadoc fixes and improvements</li>
-			<li>added performance tests with JBET, JClassLib, Jiapi, mozilla.classfile, BCEL and AspectJ BCEL using HelloWorld example</li>
-			<li>added performance tests with Cojen library</li>
-			<li>added performance tests for gnu.bytecode and CSG bytecode using HelloWorld example</li>
-			<li>added FindBugs preferences and builder for ASM</li>
-			<li>added debug jar</li>
-			<li>improved Ant build scripts
-			<ul>
-			  <li>replaced ow_util_ant_tasks (no longer maintained) with standard ant tasks</li>
-			  <li>updated test/lib jars with newer versions</li>
-			  <li>removed hardcoded JUNIT Eclipse path, made JSE 1.5.0 container as default VM (previously random system JRE)</li>
-			  <li>added license info to the parent pom</li>
-			</ul></li>
-		</ul>
+        <ul>
+            <li>added support for new invokedynamic opcode</li>
+            <li>added new Type.getArgumentsAndReturnSizes method</li>
+            <li>added new GeneratorAdapter.valueOf method</li>
+            <li>added two new Method.getMethod methods (feature request #308554)</li>
+            <li>added new checks in Check*Adapter
+            <ul>
+              <li>check of xRETURN instructions against declared method return type</li>
+              <li>check that labels are not reused across methods (inside same class; check for labels reuse across classes still missing)</li>
+              <li>checks for debug labels and for visitTryCatchBlock calling order</li>
+              <li>new option for data flow checks with BasicVerifier</li>
+            </ul></li>
+            <li>added Jasmin class adapter (with round trip tests) in examples</li>
+            <li>bug fixes
+            <ul>
+                <li>313314 ClassReader.readClass(InputStream) unnecessary copies read buffer two times</li>
+                <li>311642 StackOverflowException in Label.visitSubroutine</li>
+                <li>311100 patch to make verifying multiple classes easier</li>
+                <li>309819 java/lang/Character typo in GeneratorAdapter</li>
+                <li>312468 Incorrect merging of frames</li>
+                <li>309037 GeneratorAdapter generates jump instructions wrongly</li>
+                <li>308875 ClassWriter COMPUTE_MAXS produces invalid class (verify error)</li>
+                <li>308807 AnalyzerException running CheckClassAdapter.verify() on java.lang.String</li>
+                <li>308745 BasicInterpreter.newOperation lacks a throws AnalyzerException clause</li>
+                <li>fixed bug submitted by Simon Goldsmith for inner classes</li>
+                <li>fixed bug submitted by Michael Rudolf</li>
+                <li>fixed bug with usage of copyOperation</li>
+                <li>fixed bug in test case</li>
+            </ul></li>
+            <li>Javadoc fixes and improvements</li>
+            <li>added performance tests with JBET, JClassLib, Jiapi, mozilla.classfile, BCEL and AspectJ BCEL using HelloWorld example</li>
+            <li>added performance tests with Cojen library</li>
+            <li>added performance tests for gnu.bytecode and CSG bytecode using HelloWorld example</li>
+            <li>added FindBugs preferences and builder for ASM</li>
+            <li>added debug jar</li>
+            <li>improved Ant build scripts
+            <ul>
+              <li>replaced ow_util_ant_tasks (no longer maintained) with standard ant tasks</li>
+              <li>updated test/lib jars with newer versions</li>
+              <li>removed hardcoded JUNIT Eclipse path, made JSE 1.5.0 container as default VM (previously random system JRE)</li>
+              <li>added license info to the parent pom</li>
+            </ul></li>
+        </ul>
 
       <subtitle>29 October 2007: ASM 3.1 (cvs-tag: ASM_3_1)</subtitle>
 

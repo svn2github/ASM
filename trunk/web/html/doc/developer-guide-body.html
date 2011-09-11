@@ -1,9 +1,9 @@
 <h2>
 <img src="../images/111-bytecode.gif" height="91" width="111" alt=""
-border="0" align="left" hspace="10" vspace="0">ASM 3.0 Developer Guide</h2>
+border="0" align="left" hspace="10" vspace="0">ASM 4.0 Developer Guide</h2>
 by Eric Bruneton
 <br/>
-02/02/2006, updated 23/10/2007
+02/02/2006, updated 23/10/2007, updated 04/09/2010
 <br clear="all"/>
 
 <ol>
@@ -43,7 +43,7 @@ by Eric Bruneton
       <ul>
       <li><a href="#firststep">First step</a></li>
       <li><a href="#secondstep">Second step</a></li>
-      </ul>    
+      </ul>
     </li>
     <li><a href="#uninitializedtypes">Uninitialized types</a></li>
     <li><a href="#exceptionhandlers">Exception handlers</a></li>
@@ -59,7 +59,7 @@ by Eric Bruneton
   <li value="41"><a href="#optimizeperformance">Optimizing performance</a></li>
   <li><a href="#optimizesize">Optimizing code size</a></li>
   <li><a href="#optimizeexample">An example</a></li>
-  </ol>  
+  </ol>
 </li>
 
 </ol>
@@ -162,8 +162,8 @@ report in <code>output/coverage</code>.</p>
 <code>test/conform/org/objectweb/asm/...</code>, and by adding a new Ant script
 to run these tests in <code>test/conform</code>. Note that, by convention, test
 classes are named like the class they test, with a <code>Test</code> or
-<code>UnitTest</code> suffix (<i>X</i><code>Test</code> work on full compiled
-Java classes, while <i>X</i><code>UnitTest</code> work on class fragments).</p>
+<code>UnitTest</code> suffix (<i>Xxx</i><code>Test</code> work on full compiled
+Java classes, while <i>Xxx</i><code>UnitTest</code> work on class fragments).</p>
 
 <p><small>Note: by default tests are run with the optimized ASM classes, which
 do not contain debug info. In order to have line numbers in stack traces, it is
@@ -264,9 +264,9 @@ the core package only.</p>
 
 <h3><a name="structures"></a>3.2 Main data structures</h3>
 
-<p>The core package is made of 20 classes and interfaces. If we exclude the 5
-interfaces and the 3 utility classes (<code>ClassAdapter</code>,
-<code>MethodAdapter</code> and <code>Type</code>), this leaves only 12 classes,
+<p>The core package is made of 19 classes and interfaces. If we exclude the
+Opcodes interface, the 4 abstract visitor classes  and the 2 utility classes
+(<code>Handle</code> and <code>Type</code>), this leaves only 12 classes,
 which are depicted on the figure below.</p>
 
 <br/>
@@ -481,7 +481,7 @@ and parse next frame</li>
 <li>if there is a label for this offset, call <code>visitLabel</code>
 <li>if there is a line number entry for this offset, call
 <code>visitLineNumber</code></li>
-<li>call <code>visit</code><i>X</i><code>Insn</code></li>
+<li>call <code>visit</code><i>Xxx</i><code>Insn</code></li>
 </ul>
 </li>
 <li>call <code>visitAttribute</code> for each non standard code attribute parsed
@@ -537,18 +537,18 @@ quite simple: they convert visit events to a byte array representation, by using
 most complex writer class is the <code>MethodWriter</code> class, because it
 manages advanced features such as automatic maxStack and maxLocals computation,
 automatic stack map frames computation, and automatic handling of wide goto and
-jsr. Without these features, each <code>visit<i>X</i>Insn</code> method would be
+jsr. Without these features, each <code>visit<i>Xxx</i>Insn</code> method would be
 very simple, i.e. it would just add the bytecode representation of an
 instruction to the <code>code</code> byte vector.</p>
 
 <p>In order to be able to automatically compute maxStack and maxLocals, and to
-compute stack map frames, each <code>visit<i>X</i>Insn</code> method does in
+compute stack map frames, each <code>visit<i>Xxx</i>Insn</code> method does in
 fact more than that: it constructs the control flow graph of the method (see
 <a href="#controlflow">section 3.5</a>), keeps track of the maximum number of
 local variables used, and simulates the execution of the visited instruction to
 keep track of the maximum stack size (for computing maxStack) or of the actual
 stack element types (for computing stack map frames). In fact the general form
-of a <code>visit<i>X</i>Insn</code> method is the following:</p>
+of a <code>visit<i>Xxx</i>Insn</code> method is the following:</p>
 
 <ul>
 <li>if (currentBlock != null) // == if computeMaxs or computeFrames, and if this
@@ -572,7 +572,7 @@ instruction may be reachable</li>
 <p>Also the <code>visitMaxs</code> method is more complicated due to these
 advanced features. It is indeed here that maxStack, maxLocals and stack map
 frames are computed, based on the control flow graph constructed in the
-<code>visit<i>X</i>Insn</code> methods (see
+<code>visit<i>Xxx</i>Insn</code> methods (see
 <a href="#controlflow">section 3.5</a> for more details).</p>
 
 <h4><a name="label"></a>3.3.3 Label</h4>
@@ -710,7 +710,7 @@ updated when instructions are resized. But this is much more complicated than
 with the previous attributes. One reason is that, depending on offsets between
 frames, frames are not compressed in the same way (for instance
 <code>SAME_FRAME</code> or <code>SAME_FRAME_EXTENDED</code>). Another reason is
-that long forward <code>IF</code><i>X</i> instructions are resized by
+that long forward <code>IF</code><i>Xxx</i> instructions are resized by
 transforming them into <code>IF</code><i>NOTX</i> <code>GOTO_W</code>, which
 changes the control flow graph of the method, and therefore the frames that must
 be stored in the stack map table.</p>
@@ -1214,7 +1214,7 @@ public static m(Z)LA;
 <h5><a name="firststep"></a>First step</h5>
 
 <p>As stated above, during the first step of the algorithm, which takes place
-in each <code>visit<i>X</i>Insn</code> method in <code> ClassWriter</code>, the
+in each <code>visit<i>Xxx</i>Insn</code> method in <code> ClassWriter</code>, the
 state of the output frame of each basic block is updated by simulating the
 action of the visited instruction. It is important to note that the algorithm
 works at the basic block level, and not at the instruction level. This means
@@ -1577,18 +1577,19 @@ since this block is unreachable. Also there is no problem with declared
 exceptions, because the verifier does not check that <code>ATHROW</code>
 instructions are consistent with declared exceptions).</p>
 
-<p>Choosing <code>ATHROW</code> and declaring a stack map frame of the form []
-[java/lang/Throwable] for dead basic blocks gives the additional benefit of not
-requiring any adjustment to exception handlers. Indeed, if a dead basic block
-is an exception handler, either its stack map frame must be consistent with []
-[exception type], or this exception handler declaration must be removed. Since
-[] [java/lang/Throwable] is consistent with any [] [exception type] frame,
-exception handler declarations for dead code blocks do not need to be removed,
-which saves code.</p>
+<p>But declaring a stack map frame of the form [] [java/lang/Throwable]
+for dead basic blocks may cause a problem if this block is in the range of
+an exception handler: the stack map frame for this handler may be
+inconsistent, with a non empty list of local variable types (the stack
+part will always be consistent since it always has the form [exception type]
+for an exception handler). To solve this, we remove the dead basic blocks
+from the exception handler ranges (which may remove a handler, decrease its
+range, or split its range in to sub ranges).</p>
 
 <p>In summary, the solution for dead code blocks is to replace these blocks
-with <code>NOP</code> ... <code>NOP</code> <code>ATHROW</code>, and to declare
-a [] [java/lang/Throwable] stack map frame for these blocks.</p>
+with <code>NOP</code> ... <code>NOP</code> <code>ATHROW</code>, to declare
+a [] [java/lang/Throwable] stack map frame for these blocks, and to remove
+the dead code blocks from the exception handlers.</p>
 
 <h4><a name="subroutines"></a>3.5.5 Subroutines</h4>
 
@@ -1607,19 +1608,19 @@ correspond to subroutines are computed in <tt>visitMaxs</tt>.</p>
 <p>The first step consists in finding, for each basic block, to which
 subroutine(s) it belongs. All the basic blocks that are reachable from the
 first one, without following a <code>JSR</code> or <code>RET</code> instruction,
-are marked as belonging to a main "subroutine". Likewise, for all 
+are marked as belonging to a main "subroutine". Likewise, for all
 <code>JSR</code> targets, the basic blocks reachable from this target are marked
 as belonging to the subroutine defined by this <code>JSR</code> target.</p>
 
 <p>The second step consists in finding, for each <code>RET</code> instruction,
 to which possible basic blocks it can return to. The possible basic blocks are
-those that follow <code>JSR</code> instructions. We therefore examine each 
-<code>JSR</code> instruction in turn. For each such <code>JSR</code> 
-instruction <i>I</i> we look at the basic blocks that belong to the called 
+those that follow <code>JSR</code> instructions. We therefore examine each
+<code>JSR</code> instruction in turn. For each such <code>JSR</code>
+instruction <i>I</i> we look at the basic blocks that belong to the called
 subroutine. When a <code>RET</code> instruction is found we add the block
 following <i>I</i> as a successor of the <code>RET</code> instruction (except
 if <i>I</i> and the <code>RET</code> instruction belong to a common subroutine,
-which can happen if a subroutine returns to its parent subroutine without a 
+which can happen if a subroutine returns to its parent subroutine without a
 <code>RET</code>).</p>
 
 <p>Let's take an example to illustrate this:</p>
@@ -1691,16 +1692,16 @@ subroutine #1 without a <code>RET</code>:</p>
 instructions. As explained above, this is done by examining each
 <code>JSR</code> instruction in turn. The first one, in L0, leads to the
 analysis of the basic blocks that belong to subroutine #1. In these basic
-blocks we find only one <code>RET</code> instruction, in L5. These 
+blocks we find only one <code>RET</code> instruction, in L5. These
 <code>JSR</code> and <code>RET</code> instructions do not belong to a
-common subroutine, so we add L1 (the next basic block after the 
+common subroutine, so we add L1 (the next basic block after the
 <code>JSR</code> in L0) as a successor of L5.
-The second <code>JSR</code> instruction, in L2, leads to the analysis 
-of the basic blocks of subroutine #2. In these basic blocks we find two 
+The second <code>JSR</code> instruction, in L2, leads to the analysis
+of the basic blocks of subroutine #2. In these basic blocks we find two
 <code>RET</code> instructions, in L4 and L5. L2 and L4 do not belong to
-a common subroutine, so we add L3 (the next basic block after the 
+a common subroutine, so we add L3 (the next basic block after the
 <code>JSR</code> in L2) as a successor of L4. But L2 and L5 belong to a
-common subroutine (subroutine #1), so we do <i>not</i> add L3 as a 
+common subroutine (subroutine #1), so we do <i>not</i> add L3 as a
 successor of L5.</p>
 
 <p>The final control flow graph is the following:</p>
@@ -1754,7 +1755,7 @@ they could be executed only once in <code>ClassReader</code> and
 <li>[R2] the implementation must not include any check or verification, at any
 level (class file parsing, preconditions of methods, validity of bytecode
 sequences, etc). These verifications must be added in
-<code>Check</code><i>X</i><code>Adapter</code> classes.</li>
+<code>Check</code><i>Xxx</i><code>Adapter</code> classes.</li>
 </ul>
 
 <p>Once the best API and algorithms have been found, several "low level"
@@ -1823,19 +1824,19 @@ section.</p>
 <h3><a name="optimizesize"></a>4.2 Optimizing code size</h3>
 
 <p>The obvious way to reduce code size is to reduce the number of classes and
-methods! This begins by reducing the number of interfaces in the public API
-(not because interfaces themselves are big, but because it indirectly reduces
+methods! This begins by reducing the number of abstract classes in the public API
+(not because they are big, but because it indirectly reduces
 the number of classes and methods) [R10]. This reduction generally requires
 compromises with what a "clean" object oriented API would be. Whether these
 compromises are worthwhile or not must be decided on a case by case basis.
 Several such compromises can be detected in the current public ASM API. For
-example the <code>AnnotationVisitor</code> interface is used both for
+example the <code>AnnotationVisitor</code> abstract class is used both for
 annotations and annotation arrays although, in the second case, the
 <code>name</code> argument is useless and would not have been used if an
-<code>AnnotationArrayVisitor</code> interface were defined. Another example is
-the <code>SignatureVisitor</code> interface: a single interface is used to
+<code>AnnotationArrayVisitor</code> abstract class were defined. Another example is
+the <code>SignatureVisitor</code> abstract classs a single class is used to
 represent a quite complex recursive data structure that, in a "normal" object
-oriented design, would be represented with up to 8 interfaces.</p>
+oriented design, would be represented with up to 8 abstract classes.</p>
 
 <p>The number of classes can be reduced in several ways. The most "elegant" one
 is to use appropriate design patterns [R11]. For instance the <code>
@@ -1954,7 +1955,7 @@ signature grammar, given below:</p>
 </center>
 <br/>
 
-<p>The first design of this package used 7 interfaces, roughly corresponding to
+<p>The first design of this package used 7 abstract classes, roughly corresponding to
 the grammar non terminals:</p>
 
 <ul>
@@ -1968,7 +1969,7 @@ the grammar non terminals:</p>
 </ul>
 
 <p>The parser was generated with <code>JavaCC</code> and the writer used 7
-classes, one per interface.</p>
+classes, one per abstract class.</p>
 
 <p>The second step was to replace the generated parser with a hand written,
 recursive descent parser, containing 11 recursive methods (one per rule of the
@@ -1980,7 +1981,7 @@ syntactic verifications were removed ([R2]).</p>
 <p>In the third step a refactoring reduced the number of writer classes to 6
 instead of 7 (by using inheritance).</p>
 
-<p>In the fourth step the number of interfaces was reduced to 4 ([R10]), and
+<p>In the fourth step the number of abstract classes was reduced to 4 ([R10]), and
 the 6 writer classes were merged into a single one ([R12]), using a boolean
 stack encoded as an <code>int</code> ([R8]). The parser was mostly unchanged.
 The reduced API allowed invalid signatures to be generated (it corresponded to
@@ -1994,7 +1995,7 @@ represented the last parsed character and its index with method arguments
 out of 11 ([R13]).</p>
 
 <p>Finally, after some feedback from users, the API was reduced to only one
-interface (although it allowed even more invalid signatures to be generated,
+abstract class (although it allowed even more invalid signatures to be generated,
 this was judged more practical to define <code>SignatureAdapter</code>s), and
 this provided more opportunities to inline parser methods: the final parser
 contains only 3 parsing methods.</p>
