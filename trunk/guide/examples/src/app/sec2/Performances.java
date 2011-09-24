@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,20 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.objectweb.asm.ClassAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
+import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
-import org.objectweb.asm.commons.EmptyVisitor;
+import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.Analyzer;
 import org.objectweb.asm.tree.analysis.BasicInterpreter;
+import org.objectweb.asm.tree.analysis.BasicValue;
 import org.objectweb.asm.tree.analysis.SimpleVerifier;
 
 import ch3.sec2.AddTimerAdapter;
@@ -66,10 +70,10 @@ public class Performances {
     ZipFile zip = new ZipFile(args[0]);
     String clazz = args.length > 1 ? args[1] : null;
 
-    List classes = new ArrayList();
-    Enumeration entries = zip.entries();
+    List<byte[]> classes = new ArrayList<byte[]>();
+    Enumeration<? extends ZipEntry> entries = zip.entries();
     while (entries.hasMoreElements()) {
-      ZipEntry e = (ZipEntry) entries.nextElement();
+      ZipEntry e = entries.nextElement();
       String s = e.getName();
       if (s.endsWith(".class")) {
         s = s.substring(0, s.length() - 6).replace('/', '.');
@@ -166,7 +170,7 @@ public class Performances {
       for (int j = 0; j < classes.size(); ++j) {
         byte[] b = (byte[]) classes.get(j);
         ClassWriter cw = new ClassWriter(0);
-        ClassVisitor cv = new ClassAdapter(cw) {
+        ClassVisitor cv = new ClassVisitor(ASM4, cw) {
           public MethodVisitor visitMethod(int access, String name,
               String desc, String signature, String[] exceptions) {
             return new RemoveGetFieldPutFieldAdapter(cv.visitMethod(
@@ -190,7 +194,7 @@ public class Performances {
         byte[] b = (byte[]) classes.get(j);
         ClassReader cr = new ClassReader(b);
         ClassWriter cw = new ClassWriter(cr, 0);
-        ClassVisitor cv = new ClassAdapter(cw) {
+        ClassVisitor cv = new ClassVisitor(ASM4, cw) {
           public MethodVisitor visitMethod(int access, String name,
               String desc, String signature, String[] exceptions) {
             return new RemoveGetFieldPutFieldAdapter(cv.visitMethod(
@@ -301,7 +305,7 @@ public class Performances {
         ClassWriter cw = new ClassWriter(0);
         ClassNode cn = new ClassNode();
         new ClassReader(b).accept(cn, 0);
-        Iterator it = cn.methods.iterator();
+        Iterator<MethodNode> it = cn.methods.iterator();
         while (it.hasNext()) {
           MethodNode mn = (MethodNode) it.next();
           new RemoveGetFieldPutFieldTransformer(null).transform(mn);
@@ -325,11 +329,11 @@ public class Performances {
         ClassReader cr = new ClassReader(b);
         ClassNode cn = new ClassNode();
         cr.accept(cn, 0);
-        List methods = cn.methods;
+        List<MethodNode> methods = cn.methods;
         for (int k = 0; k < methods.size(); ++k) {
           MethodNode method = (MethodNode) methods.get(k);
           if (method.instructions.size() > 0) {
-            Analyzer a = new Analyzer(new BasicInterpreter());
+            Analyzer<BasicValue> a = new Analyzer<BasicValue>(new BasicInterpreter());
             try {
               a.analyze(cn.name, method);
             } catch (Throwable th) {
@@ -353,11 +357,11 @@ public class Performances {
         ClassReader cr = new ClassReader(b);
         ClassNode cn = new ClassNode();
         cr.accept(cn, 0);
-        List methods = cn.methods;
+        List<MethodNode> methods = cn.methods;
         for (int k = 0; k < methods.size(); ++k) {
           MethodNode method = (MethodNode) methods.get(k);
           if (method.instructions.size() > 0) {
-            Analyzer a = new Analyzer(new SimpleVerifier());
+            Analyzer<BasicValue> a = new Analyzer<BasicValue>(new SimpleVerifier());
             try {
               a.analyze(cn.name, method);
             } catch (Throwable th) {
@@ -419,5 +423,67 @@ public class Performances {
         + " (including " + tread + " for R, "
         + (times[14] * 10 - times[10]) * base + " for C, " + twrite
         + " for W)");
+  }
+
+  static class EmptyVisitor extends ClassVisitor {
+
+    AnnotationVisitor av = new AnnotationVisitor(Opcodes.ASM4) {
+
+      @Override
+      public AnnotationVisitor visitAnnotation(String name, String desc) {
+        return this;
+      }
+
+      @Override
+      public AnnotationVisitor visitArray(String name) {
+        return this;
+      }
+    };
+
+    public EmptyVisitor() {
+      super(ASM4);
+    }
+
+    @Override
+    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+      return av;
+    }
+
+    @Override
+    public FieldVisitor visitField(int access, String name, String desc,
+        String signature, Object value) {
+      return new FieldVisitor(Opcodes.ASM4) {
+
+        @Override
+        public AnnotationVisitor visitAnnotation(String desc,
+            boolean visible) {
+          return av;
+        }
+      };
+    }
+
+    @Override
+    public MethodVisitor visitMethod(int access, String name, String desc,
+        String signature, String[] exceptions) {
+      return new MethodVisitor(Opcodes.ASM4) {
+
+        @Override
+        public AnnotationVisitor visitAnnotationDefault() {
+          return av;
+        }
+
+        @Override
+        public AnnotationVisitor visitAnnotation(String desc,
+            boolean visible) {
+          return av;
+        }
+
+        @Override
+        public AnnotationVisitor visitParameterAnnotation(
+            int parameter, String desc, boolean visible) {
+          return av;
+        }
+      };
+    }
   }
 }

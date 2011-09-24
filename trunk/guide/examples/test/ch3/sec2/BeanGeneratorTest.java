@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -47,11 +47,11 @@ public class BeanGeneratorTest extends AbstractTestCase {
     BeanGenerator cg = new BeanGenerator();
     PrintWriter pw = new PrintWriter(System.out, true);
     byte[] b = cg.generate(pw);
-    Class c = defineClass("pkg.Bean", b);
+    Class<?> c = defineClass("pkg.Bean", b);
     checkClass(c);
   }
 
-  protected void checkClass(Class c) throws Exception {
+  protected void checkClass(Class<?> c) throws Exception {
     Object bean = c.newInstance();
     Method getF = c.getMethod("getF");
     Method setF = c.getMethod("setF", int.class);

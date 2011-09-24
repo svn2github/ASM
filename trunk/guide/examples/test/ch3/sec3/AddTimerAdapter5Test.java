@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,6 @@
 
 package ch3.sec3;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 
 import ch3.sec2.AddTimerAdapterTest;
@@ -43,7 +42,7 @@ import ch3.sec2.AddTimerAdapterTest;
 public class AddTimerAdapter5Test extends AddTimerAdapterTest {
 
   @Override
-  protected ClassAdapter getClassAdapter(ClassVisitor cv) {
+  protected ClassVisitor getClassAdapter(ClassVisitor cv) {
     return new AddTimerAdapter5(cv);
   }
 }

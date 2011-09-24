@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@ public class ComparableGeneratorTest extends AbstractTestCase {
     ComparableGenerator cg = new ComparableGenerator();
     PrintWriter pw = new PrintWriter(System.out, true);
     byte[] b = cg.generate(pw);
-    Class c = defineClass("pkg.Comparable", b);
+    Class<?> c = defineClass("pkg.Comparable", b);
     assertEquals(1, c.getInterfaces().length);
     assertEquals(Mesurable.class, c.getInterfaces()[0]);
     assertEquals(3, c.getFields().length);

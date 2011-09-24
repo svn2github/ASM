@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@ import static org.objectweb.asm.Opcodes.NOP;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import util.AbstractTestCase;
@@ -50,7 +51,7 @@ import util.AbstractTestCase;
 public class RemoveNopClassAdapterTest extends AbstractTestCase {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     MethodVisitor mv;
     mv = new RemoveNopClassAdapter(null).new RemoveNopAdapter(tmv);
     mv.visitCode();
@@ -65,7 +66,7 @@ public class RemoveNopClassAdapterTest extends AbstractTestCase {
   }
 
   protected void checkMethod(TraceMethodVisitor tmv) {
-    TraceMethodVisitor mv = new TraceMethodVisitor(null);
+    TraceMethodVisitor mv = new TraceMethodVisitor(null, new Textifier());
     mv.visitCode();
     mv.visitVarInsn(ILOAD, 1);
     mv.visitInsn(ICONST_0);

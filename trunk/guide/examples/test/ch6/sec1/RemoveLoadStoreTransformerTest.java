@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,7 @@
 
 package ch6.sec1;
 
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.ILOAD;
 import static org.objectweb.asm.Opcodes.IRETURN;
 import static org.objectweb.asm.Opcodes.ISTORE;
@@ -39,6 +40,7 @@ import java.util.List;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import ch3.sec2.RemoveLoadStoreAdapterTest;
@@ -52,7 +54,7 @@ public class RemoveLoadStoreTransformerTest extends
     RemoveLoadStoreAdapterTest {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     MethodNode mn = new MethodNode(0, null, null, null, null);
     mn.visitCode();
     mn.visitVarInsn(ILOAD, 1);
@@ -67,14 +69,14 @@ public class RemoveLoadStoreTransformerTest extends
   }
 
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       @Override
       public void visitEnd() {
         for (MethodNode mn : (List<MethodNode>) methods) {
           new RemoveLoadStoreTransformer(null).transform(mn);
         }
-        accept(cv);
+        accept(next);
       }
     };
   }

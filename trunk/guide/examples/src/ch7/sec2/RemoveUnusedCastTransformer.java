@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,18 +59,18 @@ public class RemoveUnusedCastTransformer extends MethodTransformer {
   }
 
   public void transform(MethodNode mn) {
-    Analyzer a = new Analyzer(new SimpleVerifier());
+    Analyzer<BasicValue> a = new Analyzer<BasicValue>(new SimpleVerifier());
     try {
       a.analyze(owner, mn);
-      Frame[] frames = a.getFrames();
+      Frame<BasicValue>[] frames = a.getFrames();
       AbstractInsnNode[] insns = mn.instructions.toArray();
       for (int i = 0; i < insns.length; ++i) {
         AbstractInsnNode insn = insns[i];
         if (insn.getOpcode() == CHECKCAST) {
-          Frame f = frames[i];
+          Frame<BasicValue> f = frames[i];
           if (f != null && f.getStackSize() > 0) {
             Object operand = f.getStack(f.getStackSize() - 1);
-            Class to, from;
+            Class<?> to, from;
             try {
               to = getClass(((TypeInsnNode) insn).desc);
               from = getClass(((BasicValue) operand).getType());
@@ -88,12 +88,13 @@ public class RemoveUnusedCastTransformer extends MethodTransformer {
     super.transform(mn);
   }
 
-  private static Class getClass(String desc)
+  private Class<?> getClass(String desc)
       throws ClassNotFoundException {
-    return Class.forName(desc.replace('/', '.'));
+	ClassLoader classLoader = getClass().getClassLoader();
+	return Class.forName(desc.replace('/', '.'), false, classLoader);
   }
 
-  private static Class getClass(Type t) throws ClassNotFoundException {
+  private Class<?> getClass(Type t) throws ClassNotFoundException {
     if (t.getSort() == Type.OBJECT) {
       return getClass(t.getInternalName());
     }

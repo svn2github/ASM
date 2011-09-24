@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,9 +62,9 @@ public class RemoveAnnotationTransformer extends ClassTransformer {
     super.transform(cn);
   }
 
-  private void removeAnnotation(Iterator i) {
+  private void removeAnnotation(Iterator<AnnotationNode> i) {
     while (i.hasNext()) {
-      AnnotationNode an = (AnnotationNode) i.next();
+      AnnotationNode an = i.next();
       if (annotationDesc.equals(an.desc)) {
         i.remove();
       }

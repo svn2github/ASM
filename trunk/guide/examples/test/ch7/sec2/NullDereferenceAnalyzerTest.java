@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@ package ch7.sec2;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACONST_NULL;
 import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.ASTORE;
 import static org.objectweb.asm.Opcodes.ATHROW;
 import static org.objectweb.asm.Opcodes.DUP;
@@ -161,8 +162,8 @@ public class NullDereferenceAnalyzerTest extends AbstractTestCase {
   }
 
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       @Override
       public void visitEnd() {
         for (MethodNode mn : (List<MethodNode>) methods) {
@@ -172,7 +173,7 @@ public class NullDereferenceAnalyzerTest extends AbstractTestCase {
           } catch (AnalyzerException e) {
           }
         }
-        accept(cv);
+        accept(next);
       }
     };
   }

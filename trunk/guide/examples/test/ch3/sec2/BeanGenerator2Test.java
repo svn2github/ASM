@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ public class BeanGenerator2Test extends BeanGeneratorTest {
     BeanGenerator2 cg = new BeanGenerator2();
     PrintWriter pw = new PrintWriter(System.out, true);
     byte[] b = cg.generate(pw);
-    Class c = defineClass("pkg.Bean", b);
+    Class<?> c = defineClass("pkg.Bean", b);
     checkClass(c);
   }
 }

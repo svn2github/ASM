@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,9 +55,9 @@ public class AddMethodTransformer extends ClassTransformer {
   public void transform(ClassNode cn) {
     if ((cn.access & ACC_INTERFACE) == 0) {
       boolean isPresent = false;
-      Iterator i = cn.methods.iterator();
+      Iterator<MethodNode> i = cn.methods.iterator();
       while (i.hasNext()) {
-        MethodNode mn = (MethodNode) i.next();
+        MethodNode mn = i.next();
         if ("getThis".equals(mn.name)) {
           if ("()Ljava/lang/Object;".equals(mn.desc)) {
             isPresent = true;

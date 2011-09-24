@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,9 +54,9 @@ public class RemoveMethodTransformer extends ClassTransformer {
   }
 
   public void transform(ClassNode cn) {
-    Iterator i = cn.methods.iterator();
+    Iterator<MethodNode> i = cn.methods.iterator();
     while (i.hasNext()) {
-      MethodNode mn = (MethodNode) i.next();
+      MethodNode mn = i.next();
       if (methodName.equals(mn.name) && methodDesc.equals(mn.desc)) {
         i.remove();
       }

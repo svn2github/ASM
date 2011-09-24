@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,9 +64,9 @@ public class NullDereferenceAnalyzer {
   public List<AbstractInsnNode> findNullDereferences(String owner,
       MethodNode mn) throws AnalyzerException {
     List<AbstractInsnNode> result = new ArrayList<AbstractInsnNode>();
-    Analyzer a = new Analyzer(new IsNullInterpreter());
+    Analyzer<BasicValue> a = new Analyzer<BasicValue>(new IsNullInterpreter());
     a.analyze(owner, mn);
-    Frame[] frames = a.getFrames();
+    Frame<BasicValue>[] frames = a.getFrames();
     AbstractInsnNode[] insns = mn.instructions.toArray();
     for (int i = 0; i < insns.length; ++i) {
       AbstractInsnNode insn = insns[i];
@@ -81,7 +81,7 @@ public class NullDereferenceAnalyzer {
     return result;
   }
 
-  private static Value getTarget(AbstractInsnNode insn, Frame f) {
+  private static BasicValue getTarget(AbstractInsnNode insn, Frame<BasicValue> f) {
     switch (insn.getOpcode()) {
     case GETFIELD:
     case ARRAYLENGTH:
@@ -99,7 +99,7 @@ public class NullDereferenceAnalyzer {
     return null;
   }
 
-  private static Value getStackValue(Frame f, int index) {
+  private static BasicValue getStackValue(Frame<BasicValue> f, int index) {
     int top = f.getStackSize() - 1;
     return index <= top ? f.getStack(top - index) : null;
   }
@@ -111,8 +111,14 @@ class IsNullInterpreter extends BasicInterpreter {
 
   public final static BasicValue MAYBENULL = new BasicValue(null);
 
+  public IsNullInterpreter() {
+	  super(ASM4);
+  }
+  
   @Override
-  public Value newOperation(AbstractInsnNode insn) {
+  public BasicValue newOperation(AbstractInsnNode insn) 
+    throws AnalyzerException 
+  {
     if (insn.getOpcode() == ACONST_NULL) {
       return NULL;
     }
@@ -120,7 +126,7 @@ class IsNullInterpreter extends BasicInterpreter {
   }
 
   @Override
-  public Value merge(Value v, Value w) {
+  public BasicValue merge(BasicValue v, BasicValue w) {
     if (isRef(v) && isRef(w) && v != w) {
       return MAYBENULL;
     }

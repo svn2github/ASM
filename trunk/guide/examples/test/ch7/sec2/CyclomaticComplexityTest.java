@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -86,19 +86,19 @@ public class CyclomaticComplexityTest extends AbstractTestCase {
   }
   
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       public void visitEnd() {
-        Iterator i = methods.iterator();
+        Iterator<MethodNode> i = methods.iterator();
         while (i.hasNext()) {
-          MethodNode mn = (MethodNode) i.next();
+          MethodNode mn = i.next();
           try {
             CyclomaticComplexity cc = new CyclomaticComplexity();
             assert (cc.getCyclomaticComplexity(name, mn) > 0);
           } catch (AnalyzerException ignored) {
           }
         }
-        accept(cv);
+        accept(next);
       }
     };
   }

@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,11 +62,11 @@ public class BeanGenerator3Test extends AbstractTestCase {
     CheckClassAdapter ca = new CheckClassAdapter(cw);
     bg.generate(ca);
 
-    Class c = defineClass("MyBean", cw.toByteArray());
+    Class<?> c = defineClass("MyBean", cw.toByteArray());
     checkClass(c);
   }
 
-  protected void checkClass(Class c) throws Exception {
+  protected void checkClass(Class<?> c) throws Exception {
     Object bean = c.newInstance();
     Method getF0 = c.getMethod("getF0");
     Method setF0 = c.getMethod("setF0", boolean.class);

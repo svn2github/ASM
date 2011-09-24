@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@ public class AddMethodAdapterTest extends AbstractTestCase {
     checkClass(defineClass("C", cw.toByteArray()));
   }
 
-  protected void checkClass(Class c) throws Exception {
+  protected void checkClass(Class<?> c) throws Exception {
     Object o = c.newInstance();
     Method m = c.getMethod("getThis");
     assertEquals(o, m.invoke(o));

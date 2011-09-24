@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,8 @@
 
 package ch4.sec1;
 
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import java.util.Map;
 
 import org.objectweb.asm.signature.SignatureVisitor;
@@ -39,7 +41,7 @@ import org.objectweb.asm.signature.SignatureVisitor;
  * 
  * @author Eric Bruneton
  */
-public class RenameSignatureAdapter implements SignatureVisitor {
+public class RenameSignatureAdapter extends SignatureVisitor {
 
   SignatureVisitor sv;
 
@@ -49,6 +51,7 @@ public class RenameSignatureAdapter implements SignatureVisitor {
 
   public RenameSignatureAdapter(SignatureVisitor sv,
       Map<String, String> renaming) {
+	super(ASM4);
     this.sv = sv;
     this.renaming = renaming;
   }

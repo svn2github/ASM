@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,13 @@
 
 package ch7.sec2;
 
-import org.objectweb.asm.MethodAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.Analyzer;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
+import org.objectweb.asm.tree.analysis.BasicValue;
 import org.objectweb.asm.tree.analysis.BasicVerifier;
 
 /**
@@ -42,7 +44,7 @@ import org.objectweb.asm.tree.analysis.BasicVerifier;
  * 
  * @author Eric Bruneton
  */
-public class BasicVerifierAdapter extends MethodAdapter {
+public class BasicVerifierAdapter extends MethodVisitor {
 
   String owner;
 
@@ -50,14 +52,14 @@ public class BasicVerifierAdapter extends MethodAdapter {
 
   public BasicVerifierAdapter(String owner, int access, String name,
       String desc, MethodVisitor mv) {
-    super(new MethodNode(access, name, desc, null, null));
+    super(ASM4, new MethodNode(access, name, desc, null, null));
     this.owner = owner;
     next = mv;
   }
 
   public void visitEnd() {
     MethodNode mn = (MethodNode) mv;
-    Analyzer a = new Analyzer(new BasicVerifier());
+    Analyzer<BasicValue> a = new Analyzer<BasicValue>(new BasicVerifier());
     try {
       a.analyze(owner, mn);
     } catch (AnalyzerException e) {

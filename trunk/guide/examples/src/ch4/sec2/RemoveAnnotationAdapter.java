@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,9 @@
 
 package ch4.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.AnnotationVisitor;
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 
 /**
@@ -39,12 +40,12 @@ import org.objectweb.asm.ClassVisitor;
  * 
  * @author Eric Bruneton
  */
-public class RemoveAnnotationAdapter extends ClassAdapter {
+public class RemoveAnnotationAdapter extends ClassVisitor {
 
   private String annDesc;
 
   public RemoveAnnotationAdapter(ClassVisitor cv, String annDesc) {
-    super(cv);
+    super(ASM4, cv);
     this.annDesc = annDesc;
   }
 

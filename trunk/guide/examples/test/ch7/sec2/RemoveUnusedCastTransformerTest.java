@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@ package ch7.sec2;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.CHECKCAST;
 import static org.objectweb.asm.Opcodes.INVOKEVIRTUAL;
 import static org.objectweb.asm.Opcodes.IRETURN;
@@ -41,6 +42,7 @@ import java.util.List;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 /**
@@ -52,7 +54,7 @@ public class RemoveUnusedCastTransformerTest extends
     RemoveUnusedCastAdapterTest {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     MethodNode mn = new MethodNode(ACC_PUBLIC, "m",
         "(Ljava/lang/Integer;)I", null, null);
     mn.visitCode();
@@ -69,8 +71,8 @@ public class RemoveUnusedCastTransformerTest extends
   }
 
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       @Override
       public void visitEnd() {
         for (MethodNode mn : (List<MethodNode>) methods) {
@@ -80,7 +82,7 @@ public class RemoveUnusedCastTransformerTest extends
           } catch (NoClassDefFoundError ignored) {
           }
         }
-        accept(cv);
+        accept(next);
       }
     };
   }

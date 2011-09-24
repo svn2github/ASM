@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,9 +77,9 @@ public class AddTimerTransformer extends ClassTransformer {
         if (insns.size() == 0) {
           continue;
         }
-        Iterator j = insns.iterator();
+        Iterator<AbstractInsnNode> j = insns.iterator();
         while (j.hasNext()) {
-          AbstractInsnNode in = (AbstractInsnNode) j.next();
+          AbstractInsnNode in = j.next();
           int op = in.getOpcode();
           if ((op >= IRETURN && op <= RETURN) || op == ATHROW) {
             InsnList il = new InsnList();

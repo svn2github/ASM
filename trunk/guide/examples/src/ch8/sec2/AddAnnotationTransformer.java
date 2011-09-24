@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,9 +59,9 @@ public class AddAnnotationTransformer extends ClassTransformer {
     cn.version = (cn.version & 0xFF) < V1_5 ? V1_5 : cn.version;
     boolean isPresent = false;
     if (cn.visibleAnnotations != null) {
-      Iterator i = cn.visibleAnnotations.iterator();
+      Iterator<AnnotationNode> i = cn.visibleAnnotations.iterator();
       while (i.hasNext()) {
-        AnnotationNode an = (AnnotationNode) i.next();
+        AnnotationNode an = i.next();
         if (annotationDesc.equals(an.desc)) {
           isPresent = true;
           break;
@@ -70,7 +70,7 @@ public class AddAnnotationTransformer extends ClassTransformer {
     }
     if (!isPresent) {
       if (cn.visibleAnnotations == null) {
-        cn.visibleAnnotations = new ArrayList(5);
+        cn.visibleAnnotations = new ArrayList<AnnotationNode>(5);
       }
       cn.visibleAnnotations.add(new AnnotationNode(annotationDesc));
     }

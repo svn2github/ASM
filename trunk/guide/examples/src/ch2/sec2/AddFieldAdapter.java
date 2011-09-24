@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,8 @@
 
 package ch2.sec2;
 
-import org.objectweb.asm.ClassAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 
@@ -39,7 +40,7 @@ import org.objectweb.asm.FieldVisitor;
  * 
  * @author Eric Bruneton
  */
-public class AddFieldAdapter extends ClassAdapter {
+public class AddFieldAdapter extends ClassVisitor {
 
   private int fAcc;
 
@@ -51,7 +52,7 @@ public class AddFieldAdapter extends ClassAdapter {
 
   public AddFieldAdapter(ClassVisitor cv, int fAcc, String fName,
       String fDesc) {
-    super(cv);
+    super(ASM4, cv);
     this.fAcc = fAcc;
     this.fName = fName;
     this.fDesc = fDesc;

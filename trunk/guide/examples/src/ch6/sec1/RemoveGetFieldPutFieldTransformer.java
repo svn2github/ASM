@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,9 +57,9 @@ public class RemoveGetFieldPutFieldTransformer extends
 
   public void transform(MethodNode mn) {
     InsnList insns = mn.instructions;
-    Iterator i = insns.iterator();
+    Iterator<AbstractInsnNode> i = insns.iterator();
     while (i.hasNext()) {
-      AbstractInsnNode i1 = (AbstractInsnNode) i.next();
+      AbstractInsnNode i1 = i.next();
       if (isALOAD0(i1)) {
         AbstractInsnNode i2 = getNext(i1);
         if (i2 != null && isALOAD0(i2)) {

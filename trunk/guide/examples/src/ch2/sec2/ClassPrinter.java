@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,8 @@
 
 package ch2.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Attribute;
 import org.objectweb.asm.ClassVisitor;
@@ -41,7 +43,11 @@ import org.objectweb.asm.MethodVisitor;
  * 
  * @author Eric Bruneton
  */
-public class ClassPrinter implements ClassVisitor {
+public class ClassPrinter extends ClassVisitor {
+
+  public ClassPrinter() {
+	super(ASM4);
+  }
 
   public void visit(int version, int access, String name,
       String signature, String superName, String[] interfaces) {

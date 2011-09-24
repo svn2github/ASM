@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,8 @@
 
 package ch7.sec2;
 
-import org.objectweb.asm.MethodAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.LabelNode;
@@ -38,6 +39,7 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.Analyzer;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
 import org.objectweb.asm.tree.analysis.BasicInterpreter;
+import org.objectweb.asm.tree.analysis.BasicValue;
 import org.objectweb.asm.tree.analysis.Frame;
 
 /**
@@ -45,7 +47,7 @@ import org.objectweb.asm.tree.analysis.Frame;
  * 
  * @author Eric Bruneton
  */
-public class RemoveDeadCodeAdapter extends MethodAdapter {
+public class RemoveDeadCodeAdapter extends MethodVisitor {
 
   String owner;
 
@@ -53,17 +55,17 @@ public class RemoveDeadCodeAdapter extends MethodAdapter {
 
   public RemoveDeadCodeAdapter(String owner, int access, String name,
       String desc, MethodVisitor mv) {
-    super(new MethodNode(access, name, desc, null, null));
+    super(ASM4, new MethodNode(access, name, desc, null, null));
     this.owner = owner;
     next = mv;
   }
 
   public void visitEnd() {
     MethodNode mn = (MethodNode) mv;
-    Analyzer a = new Analyzer(new BasicInterpreter());
+    Analyzer<BasicValue> a = new Analyzer<BasicValue>(new BasicInterpreter());
     try {
       a.analyze(owner, mn);
-      Frame[] frames = a.getFrames();
+      Frame<BasicValue>[] frames = a.getFrames();
       AbstractInsnNode[] insns = mn.instructions.toArray();
       for (int i = 0; i < frames.length; ++i) {
         if (frames[i] == null && !(insns[i] instanceof LabelNode)) {

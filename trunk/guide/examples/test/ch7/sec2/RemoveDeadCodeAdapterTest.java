@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,6 +32,7 @@ package ch7.sec2;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.ATHROW;
 import static org.objectweb.asm.Opcodes.DUP;
 import static org.objectweb.asm.Opcodes.F_SAME;
@@ -42,10 +43,10 @@ import static org.objectweb.asm.Opcodes.NEW;
 import static org.objectweb.asm.Opcodes.PUTFIELD;
 import static org.objectweb.asm.Opcodes.RETURN;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import util.AbstractTestCase;
@@ -58,7 +59,7 @@ import util.AbstractTestCase;
 public class RemoveDeadCodeAdapterTest extends AbstractTestCase {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     RemoveDeadCodeAdapter mv = new RemoveDeadCodeAdapter("pkg/Bean",
         ACC_PUBLIC, "checkAndSetF", "(I)V", tmv);
     mv.visitCode();
@@ -86,7 +87,7 @@ public class RemoveDeadCodeAdapterTest extends AbstractTestCase {
   }
 
   protected void checkMethod(TraceMethodVisitor tmv) {
-    TraceMethodVisitor mv = new TraceMethodVisitor(null);
+    TraceMethodVisitor mv = new TraceMethodVisitor(null, new Textifier());
     mv.visitCode();
     mv.visitVarInsn(ILOAD, 1);
     Label label = new Label();
@@ -110,7 +111,7 @@ public class RemoveDeadCodeAdapterTest extends AbstractTestCase {
 
   @Override
   protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassAdapter(cv) {
+    return new ClassVisitor(ASM4, cv) {
       private String owner;
 
       @Override

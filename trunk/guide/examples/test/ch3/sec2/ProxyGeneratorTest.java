@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@ public class ProxyGeneratorTest extends AbstractTestCase {
 
   public void test() throws Throwable {
     ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-    CheckClassAdapter ca = new CheckClassAdapter(cw);
+    CheckClassAdapter ca = new CheckClassAdapter(cw, false);
     ProxyGenerator pg = new ProxyGenerator(Comparable.class);
     pg.generate(Type.getType("LC;"), ca);
 
@@ -69,9 +69,10 @@ public class ProxyGeneratorTest extends AbstractTestCase {
       }
     };
 
-    Class c = defineClass("C", cw.toByteArray());
-    Constructor ct = c.getConstructor(InvocationHandler.class);
-    Comparable o = (Comparable) ct.newInstance(handler);
+    @SuppressWarnings("unchecked")
+	Class< Comparable<Integer> > c = (Class< Comparable<Integer> >) defineClass("C", cw.toByteArray());
+    Constructor< Comparable<Integer> > ct = c.getConstructor(InvocationHandler.class);
+    Comparable<Integer> o = ct.newInstance(handler);
     int result = o.compareTo(new Integer(123));
 
     assertEquals(o, p);

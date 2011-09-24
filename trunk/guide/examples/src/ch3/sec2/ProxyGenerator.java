@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,9 +72,9 @@ public class ProxyGenerator {
   private static Method GET_METHOD = Method
       .getMethod("java.lang.reflect.Method getMethod(java.lang.String, java.lang.Class[])");
 
-  private Class itf;
+  private Class<?> itf;
 
-  public ProxyGenerator(Class itf) {
+  public ProxyGenerator(Class<?> itf) {
     this.itf = itf;
   }
 

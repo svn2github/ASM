@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@ package ch5.sec1;
 import static org.objectweb.asm.Opcodes.ACC_FINAL;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;
+import static org.objectweb.asm.Opcodes.ASM4;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -59,13 +60,13 @@ public class AddFieldTransformerTest extends AddFieldAdapterTest {
   }
 
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       @Override
       public void visitEnd() {
         new AddFieldTransformer(null, ACC_PUBLIC + ACC_STATIC
             + ACC_FINAL, "field", "I").transform(this);
-        accept(cv);
+        accept(next);
       }
     };
   }

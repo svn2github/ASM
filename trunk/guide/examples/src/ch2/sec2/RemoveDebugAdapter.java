@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,8 @@
 
 package ch2.sec2;
 
-import org.objectweb.asm.ClassAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.ClassVisitor;
 
 /**
@@ -38,10 +39,10 @@ import org.objectweb.asm.ClassVisitor;
  * 
  * @author Eric Bruneton
  */
-public class RemoveDebugAdapter extends ClassAdapter {
+public class RemoveDebugAdapter extends ClassVisitor {
 
   public RemoveDebugAdapter(ClassVisitor cv) {
-    super(cv);
+    super(ASM4, cv);
   }
 
   @Override

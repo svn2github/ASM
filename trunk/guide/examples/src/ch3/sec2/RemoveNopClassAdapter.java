@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,11 +30,10 @@
 
 package ch3.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.NOP;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -42,10 +41,10 @@ import org.objectweb.asm.MethodVisitor;
  * 
  * @author Eric Bruneton
  */
-public class RemoveNopClassAdapter extends ClassAdapter {
+public class RemoveNopClassAdapter extends ClassVisitor {
 
   public RemoveNopClassAdapter(ClassVisitor cv) {
-    super(cv);
+    super(ASM4, cv);
   }
 
   @Override
@@ -59,10 +58,10 @@ public class RemoveNopClassAdapter extends ClassAdapter {
     return mv;
   }
 
-  public class RemoveNopAdapter extends MethodAdapter {
+  public class RemoveNopAdapter extends MethodVisitor {
 
     public RemoveNopAdapter(MethodVisitor mv) {
-      super(mv);
+      super(ASM4, mv);
     }
 
     @Override

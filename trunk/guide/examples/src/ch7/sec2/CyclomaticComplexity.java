@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,7 +37,9 @@ import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.Analyzer;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
 import org.objectweb.asm.tree.analysis.BasicInterpreter;
+import org.objectweb.asm.tree.analysis.BasicValue;
 import org.objectweb.asm.tree.analysis.Frame;
+import org.objectweb.asm.tree.analysis.Value;
 
 /**
  * ASM Guide example class.
@@ -48,27 +50,29 @@ public class CyclomaticComplexity {
   
   public int getCyclomaticComplexity(String owner, MethodNode mn)
       throws AnalyzerException {
-    Analyzer a = new Analyzer(new BasicInterpreter()) {
-      protected Frame newFrame(int nLocals, int nStack) {
-        return new Node(nLocals, nStack);
+    Analyzer<BasicValue> a = new Analyzer<BasicValue>(new BasicInterpreter()) {
+      protected Frame<BasicValue> newFrame(int nLocals, int nStack) {
+        return new Node<BasicValue>(nLocals, nStack);
       }
 
-      protected Frame newFrame(Frame src) {
-        return new Node(src);
+      @Override
+      protected Frame<BasicValue> newFrame(Frame<? extends BasicValue> src) {
+        return new Node<BasicValue>(src);
       }
 
+      @Override
       protected void newControlFlowEdge(int src, int dst) {
-        Node s = (Node) getFrames()[src];
-        s.successors.add((Node) getFrames()[dst]);
+        Node<BasicValue> s = (Node<BasicValue>) getFrames()[src];
+        s.successors.add((Node<BasicValue>) getFrames()[dst]);
       }
     };
     a.analyze(owner, mn);
-    Frame[] frames = a.getFrames();
+    Frame<BasicValue>[] frames = a.getFrames();
     int edges = 0;
     int nodes = 0;
     for (int i = 0; i < frames.length; ++i) {
       if (frames[i] != null) {
-        edges += ((Node) frames[i]).successors.size();
+        edges += ((Node<BasicValue>) frames[i]).successors.size();
         nodes += 1;
       }
     }
@@ -76,15 +80,15 @@ public class CyclomaticComplexity {
   }
 }
 
-class Node extends Frame {
+class Node<V extends Value> extends Frame<V> {
 
-  Set<Node> successors = new HashSet<Node>();
+  Set< Node<V> > successors = new HashSet< Node<V> >();
 
   public Node(int nLocals, int nStack) {
     super(nLocals, nStack);
   }
 
-  public Node(Frame src) {
+  public Node(Frame<? extends V> src) {
     super(src);
   }
 }

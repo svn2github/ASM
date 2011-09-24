@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,13 +30,14 @@
 
 package ch3.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.ILOAD;
 import static org.objectweb.asm.Opcodes.IRETURN;
 import static org.objectweb.asm.Opcodes.ISTORE;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import util.AbstractTestCase;
@@ -49,7 +50,7 @@ import util.AbstractTestCase;
 public class RemoveLoadStoreAdapterTest extends AbstractTestCase {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     MethodVisitor mv = new RemoveLoadStoreAdapter(tmv);
     mv.visitCode();
     mv.visitVarInsn(ILOAD, 1);
@@ -62,7 +63,7 @@ public class RemoveLoadStoreAdapterTest extends AbstractTestCase {
   }
 
   protected void checkMethod(TraceMethodVisitor tmv) {
-    TraceMethodVisitor mv = new TraceMethodVisitor(null);
+    TraceMethodVisitor mv = new TraceMethodVisitor(null, new Textifier());
     mv.visitCode();
     mv.visitVarInsn(ILOAD, 1);
     mv.visitInsn(IRETURN);
@@ -73,7 +74,7 @@ public class RemoveLoadStoreAdapterTest extends AbstractTestCase {
 
   @Override
   protected ClassVisitor getClassAdapter(ClassVisitor cv) {
-    return new ClassAdapter(cv) {
+    return new ClassVisitor(ASM4, cv) {
       @Override
       public MethodVisitor visitMethod(int access, String name,
           String desc, String signature, String[] exceptions) {

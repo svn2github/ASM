@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,9 @@
 
 package ch3.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.Label;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 
 /**
@@ -39,14 +40,14 @@ import org.objectweb.asm.MethodVisitor;
  * 
  * @author Eric Bruneton
  */
-public abstract class PatternMethodAdapter extends MethodAdapter {
+public abstract class PatternMethodAdapter extends MethodVisitor {
 
   protected final static int SEEN_NOTHING = 0;
 
   protected int state;
 
   public PatternMethodAdapter(MethodVisitor mv) {
-    super(mv);
+    super(ASM4, mv);
   }
 
   public void visitFrame(int type, int nLocal, Object[] local,
@@ -108,7 +109,7 @@ public abstract class PatternMethodAdapter extends MethodAdapter {
   }
 
   public void visitTableSwitchInsn(int min, int max, Label dflt,
-      Label labels[]) {
+      Label... labels) {
     visitInsn();
     mv.visitTableSwitchInsn(min, max, dflt, labels);
   }

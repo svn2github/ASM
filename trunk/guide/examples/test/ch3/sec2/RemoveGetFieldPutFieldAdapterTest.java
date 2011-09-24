@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,14 @@
 package ch3.sec2;
 
 import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.GETFIELD;
 import static org.objectweb.asm.Opcodes.IRETURN;
 import static org.objectweb.asm.Opcodes.PUTFIELD;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.util.Textifier;
 import org.objectweb.asm.util.TraceMethodVisitor;
 
 import util.AbstractTestCase;
@@ -50,7 +51,7 @@ import util.AbstractTestCase;
 public class RemoveGetFieldPutFieldAdapterTest extends AbstractTestCase {
 
   public void test() {
-    TraceMethodVisitor tmv = new TraceMethodVisitor(null);
+    TraceMethodVisitor tmv = new TraceMethodVisitor(null, new Textifier());
     MethodVisitor mv = new RemoveGetFieldPutFieldAdapter(tmv);
     mv.visitCode();
     mv.visitVarInsn(ALOAD, 0);
@@ -66,7 +67,7 @@ public class RemoveGetFieldPutFieldAdapterTest extends AbstractTestCase {
   }
 
   protected void checkMethod(TraceMethodVisitor tmv) {
-    TraceMethodVisitor mv = new TraceMethodVisitor(null);
+    TraceMethodVisitor mv = new TraceMethodVisitor(null, new Textifier());
     mv.visitCode();
     mv.visitVarInsn(ALOAD, 0);
     mv.visitFieldInsn(GETFIELD, "C", "f", "I");
@@ -78,7 +79,7 @@ public class RemoveGetFieldPutFieldAdapterTest extends AbstractTestCase {
 
   @Override
   protected ClassVisitor getClassAdapter(ClassVisitor cv) {
-    return new ClassAdapter(cv) {
+    return new ClassVisitor(ASM4, cv) {
       @Override
       public MethodVisitor visitMethod(int access, String name,
           String desc, String signature, String[] exceptions) {

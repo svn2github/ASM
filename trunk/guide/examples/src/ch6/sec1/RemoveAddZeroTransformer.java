@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,9 +53,9 @@ public class RemoveAddZeroTransformer extends MethodTransformer {
 
   public void transform(MethodNode mn) {
     InsnList insns = mn.instructions;
-    Iterator i = insns.iterator();
+    Iterator<AbstractInsnNode> i = insns.iterator();
     while (i.hasNext()) {
-      AbstractInsnNode i1 = (AbstractInsnNode) i.next();
+      AbstractInsnNode i1 = i.next();
       if (i1.getOpcode() == ICONST_0) {
         AbstractInsnNode i2 = getNext(i);
         if (i2 != null && i2.getOpcode() == IADD) {
@@ -67,9 +67,9 @@ public class RemoveAddZeroTransformer extends MethodTransformer {
     super.transform(mn);
   }
 
-  private static AbstractInsnNode getNext(Iterator i) {
+  private static AbstractInsnNode getNext(Iterator<AbstractInsnNode> i) {
     while (i.hasNext()) {
-      AbstractInsnNode in = (AbstractInsnNode) i.next();
+      AbstractInsnNode in = i.next();
       if (!(in instanceof LineNumberNode)) {
         return in;
       }

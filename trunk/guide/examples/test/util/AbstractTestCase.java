@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ public class AbstractTestCase extends TestCase {
     if (getClassAdapter(null) != null) {
       String file = System.getProperty("java.home") + "/lib/rt.jar";
       ZipFile zip = new ZipFile(file);
-      Enumeration entries = zip.entries();
+      Enumeration<? extends ZipEntry> entries = zip.entries();
       while (entries.hasMoreElements()) {
         ZipEntry e = (ZipEntry) entries.nextElement();
         String n = e.getName();
@@ -74,7 +74,7 @@ public class AbstractTestCase extends TestCase {
           n = n.substring(0, n.length() - 6).replace('/', '.');
           InputStream is = zip.getInputStream(e);
           ClassReader cr = new ClassReader(is);
-          if (cr.readInt(4) != Opcodes.V1_6) {
+          if ((cr.readInt(4) & 0xFF) < Opcodes.V1_6) {
             try {
               ClassWriter cw = new ClassWriter(
                   ClassWriter.COMPUTE_FRAMES);
@@ -146,7 +146,7 @@ public class AbstractTestCase extends TestCase {
     return cn;
   }
 
-  protected Class defineClass(String name, byte[] b) {
+  protected Class<?> defineClass(String name, byte[] b) {
     return LOADER.defineClass(name, b);
   }
 
@@ -157,15 +157,15 @@ public class AbstractTestCase extends TestCase {
 
   private static String getText(TraceMethodVisitor mv) {
     StringBuffer sb = new StringBuffer();
-    for (int i = 0; i < mv.text.size(); i++) {
-      sb.append(mv.text.get(i));
+    for (int i = 0; i < mv.p.text.size(); i++) {
+      sb.append(mv.p.text.get(i));
     }
     return sb.toString();
   }
 
   static class TestClassLoader extends ClassLoader {
 
-    public Class defineClass(String name, byte[] b) {
+    public Class<?> defineClass(String name, byte[] b) {
       return defineClass(name, b, 0, b.length);
     }
   }

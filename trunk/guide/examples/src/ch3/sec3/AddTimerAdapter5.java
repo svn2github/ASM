@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,6 +33,7 @@ package ch3.sec3;
 import static org.objectweb.asm.Opcodes.ACC_INTERFACE;
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.ATHROW;
 import static org.objectweb.asm.Opcodes.GETSTATIC;
 import static org.objectweb.asm.Opcodes.INVOKESTATIC;
@@ -44,10 +45,8 @@ import static org.objectweb.asm.Opcodes.LSUB;
 import static org.objectweb.asm.Opcodes.PUTSTATIC;
 import static org.objectweb.asm.Opcodes.RETURN;
 
-import org.objectweb.asm.ClassAdapter;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.commons.AnalyzerAdapter;
@@ -58,14 +57,14 @@ import org.objectweb.asm.commons.LocalVariablesSorter;
  * 
  * @author Eric Bruneton
  */
-public class AddTimerAdapter5 extends ClassAdapter {
+public class AddTimerAdapter5 extends ClassVisitor {
 
   private String owner;
 
   private boolean isInterface;
 
   public AddTimerAdapter5(ClassVisitor cv) {
-    super(cv);
+    super(ASM4, cv);
   }
 
   public void visit(int version, int access, String name,
@@ -99,7 +98,7 @@ public class AddTimerAdapter5 extends ClassAdapter {
     }
   }
 
-  class AddTimerMethodAdapter5 extends MethodAdapter {
+  class AddTimerMethodAdapter5 extends MethodVisitor {
 
     public LocalVariablesSorter lvs;
 
@@ -110,7 +109,7 @@ public class AddTimerAdapter5 extends ClassAdapter {
     private int maxStack;
 
     public AddTimerMethodAdapter5(MethodVisitor mv) {
-      super(mv);
+      super(ASM4, mv);
     }
 
     public void visitCode() {

@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,8 @@
  */
 
 package ch8.sec2;
+
+import static org.objectweb.asm.Opcodes.ASM4;
 
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -59,13 +61,13 @@ public class RemoveAnnotationTransformerTest extends
   }
 
   @Override
-  protected ClassVisitor getClassAdapter(final ClassVisitor cv) {
-    return new ClassNode() {
+  protected ClassVisitor getClassAdapter(final ClassVisitor next) {
+    return new ClassNode(ASM4) {
       @Override
       public void visitEnd() {
         new RemoveAnnotationTransformer(null, "Ljava/lang/Deprecated;")
             .transform(this);
-        accept(cv);
+        accept(next);
       }
     };
   }

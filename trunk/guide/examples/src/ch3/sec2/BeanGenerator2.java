@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,7 @@ public class BeanGenerator2 {
   public byte[] generate(PrintWriter printWriter) {
     ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_MAXS);
     TraceClassVisitor tcv = new TraceClassVisitor(cw, printWriter);
-    CheckClassAdapter cv = new CheckClassAdapter(tcv);
+    CheckClassAdapter cv = new CheckClassAdapter(tcv, false);
     cv.visit(V1_6, ACC_PUBLIC, "pkg/Bean", null, "java/lang/Object",
         null);
     cv.visitSource("Bean.java", null);

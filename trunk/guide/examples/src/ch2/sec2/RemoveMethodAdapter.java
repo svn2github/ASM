@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,8 @@
 
 package ch2.sec2;
 
-import org.objectweb.asm.ClassAdapter;
+import static org.objectweb.asm.Opcodes.ASM4;
+
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 
@@ -39,14 +40,14 @@ import org.objectweb.asm.MethodVisitor;
  * 
  * @author Eric Bruneton
  */
-public class RemoveMethodAdapter extends ClassAdapter {
+public class RemoveMethodAdapter extends ClassVisitor {
 
   private String mName;
 
   private String mDesc;
 
   public RemoveMethodAdapter(ClassVisitor cv, String mName, String mDesc) {
-    super(cv);
+    super(ASM4, cv);
     this.mName = mName;
     this.mDesc = mDesc;
   }

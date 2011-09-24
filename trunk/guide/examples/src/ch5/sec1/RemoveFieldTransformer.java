@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -50,9 +50,9 @@ public class RemoveFieldTransformer extends ClassTransformer {
   }
 
   public void transform(ClassNode cn) {
-    Iterator i = cn.fields.iterator();
+    Iterator<FieldNode> i = cn.fields.iterator();
     while (i.hasNext()) {
-      FieldNode fn = (FieldNode) i.next();
+      FieldNode fn = i.next();
       if (fieldName.equals(fn.name)) {
         i.remove();
       }

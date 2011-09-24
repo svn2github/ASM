@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,9 +56,9 @@ public class OptimizeJumpTransformer extends MethodTransformer {
 
   public void transform(MethodNode mn) {
     InsnList insns = mn.instructions;
-    Iterator i = insns.iterator();
+    Iterator<AbstractInsnNode> i = insns.iterator();
     while (i.hasNext()) {
-      AbstractInsnNode in = (AbstractInsnNode) i.next();
+      AbstractInsnNode in = i.next();
       if (in instanceof JumpInsnNode) {
         LabelNode label = ((JumpInsnNode) in).label;
         AbstractInsnNode target;

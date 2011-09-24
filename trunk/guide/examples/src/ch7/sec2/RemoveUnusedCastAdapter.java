@@ -1,6 +1,6 @@
 /***
  * ASM Guide
- * Copyright (c) 2007 Eric Bruneton
+ * Copyright (c) 2007 Eric Bruneton, 2011 Google
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,9 +30,9 @@
 
 package ch7.sec2;
 
+import static org.objectweb.asm.Opcodes.ASM4;
 import static org.objectweb.asm.Opcodes.CHECKCAST;
 
-import org.objectweb.asm.MethodAdapter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.commons.AnalyzerAdapter;
 
@@ -41,21 +41,21 @@ import org.objectweb.asm.commons.AnalyzerAdapter;
  * 
  * @author Eric Bruneton
  */
-public class RemoveUnusedCastAdapter extends MethodAdapter {
+public class RemoveUnusedCastAdapter extends MethodVisitor {
 
   public AnalyzerAdapter aa;
 
   public RemoveUnusedCastAdapter(MethodVisitor mv) {
-    super(mv);
+    super(ASM4, mv);
   }
 
   public void visitTypeInsn(int opcode, String desc) {
     if (opcode == CHECKCAST) {
-      Class to = getClass(desc);
+      Class<?> to = getClass(desc);
       if (aa.stack != null && aa.stack.size() > 0) {
         Object operand = aa.stack.get(aa.stack.size() - 1);
         if (operand instanceof String) {
-          Class from = getClass((String) operand);
+          Class<?> from = getClass((String) operand);
           if (to.isAssignableFrom(from)) {
             return;
           }
@@ -65,9 +65,10 @@ public class RemoveUnusedCastAdapter extends MethodAdapter {
     mv.visitTypeInsn(opcode, desc);
   }
 
-  private static Class getClass(String desc) {
-    try {
-      return Class.forName(desc.replace('/', '.'));
+  private Class<?> getClass(String desc) {
+	ClassLoader classLoader = getClass().getClassLoader();
+	try {
+      return Class.forName(desc.replace('/', '.'), false, classLoader);
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e.toString());
     }

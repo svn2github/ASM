@@ -8,12 +8,17 @@
   <property name="out.test"           value="${out}/test"/>
 
   <target name="init">
-    <path id="classpath">
-      <pathelement path="${lib}/asm-3.0.jar"/>
-      <pathelement path="${lib}/asm-analysis-3.0.jar"/>
-      <pathelement path="${lib}/asm-commons-3.0.jar"/>
-      <pathelement path="${lib}/asm-tree-3.0.jar"/>
-      <pathelement path="${lib}/asm-util-3.0.jar"/>
+    <path id="compile-classpath">
+      <pathelement path="${lib}/asm-debug-all-4.0.jar"/>
+      <pathelement location="${out.build}"/>
+      <pathelement location="${out.test}"/>
+    </path>
+    <path id="run-classpath">
+      <pathelement path="${lib}/asm-4.0.jar"/>
+      <pathelement path="${lib}/asm-analysis-4.0.jar"/>
+      <pathelement path="${lib}/asm-commons-4.0.jar"/>
+      <pathelement path="${lib}/asm-tree-4.0.jar"/>
+      <pathelement path="${lib}/asm-util-4.0.jar"/>
       <pathelement location="${out.build}"/>
       <pathelement location="${out.test}"/>
     </path>
@@ -22,7 +27,7 @@
   <target name="compile" depends="init">
     <mkdir dir="${out.build}"/>
     <javac srcdir="${src}" destdir="${out.build}" debug="on">
-      <classpath refid="classpath"/>
+      <classpath refid="compile-classpath"/>
       <include name="**/*.java"/>
     </javac>
   </target>
@@ -30,7 +35,7 @@
   <target name="test" depends="compile">
     <mkdir dir="${out.test}"/>
     <javac srcdir="${test}" destdir="${out.test}" debug="on">
-      <classpath refid="classpath"/>
+      <classpath refid="compile-classpath"/>
       <include name="**/*.java"/>
     </javac>
     <mkdir dir="${out.test}/reports"/>
@@ -44,7 +49,7 @@
         </fileset>
       </batchtest>
       <formatter type="xml"/>
-      <classpath refid="classpath"/>
+      <classpath refid="run-classpath"/>
     </junit>
     <junitreport todir="${out.test}/reports">
       <fileset dir="${out.test}/reports">
@@ -56,7 +61,7 @@
 
   <target name="perf" depends="compile">
     <java classname="app.sec2.Performances" fork="true">
-      <classpath refid="classpath"/>
+      <classpath refid="run-classpath"/>
       <arg value="${java.home}/lib/rt.jar"/>
     </java>
   </target>
