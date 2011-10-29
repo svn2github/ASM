@@ -15,7 +15,7 @@
       <menuitem><a href="index.html">Home</a></menuitem>
       <menuitem><a href="download/index.html">Download</a></menuitem>
       <menuitem><a href="eclipse/index.html">Eclipse plugin</a></menuitem>
-      <menuitem><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">User Guide</a></menuitem>
+      <menuitem><a href="http://download.forge.objectweb.org/asm/asm4-guide.pdf">User Guide</a></menuitem>
       <menuitem><a href="http://mail.ow2.org/wws/info/asm">Mailing Lists</a></menuitem>
       <menuitem><a href="license.html">License</a></menuitem>
       <menuitem><a href="history.html">History</a></menuitem>
@@ -25,7 +25,6 @@
       <legend>Developers' Corner</legend>
       <menuitem><a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
       <menuitem><a href="http://forge.objectweb.org/plugins/scmsvn/index.php?group_id=23">SVN Repository</a></menuitem>
-      <menuitem><a href="http://forge.objectweb.org/cvs/?group_id=23">CVS Repository (old)</a></menuitem>
       <menuitem><a href="http://forge.objectweb.org/tracker/?group_id=23">Issue Tracker</a></menuitem>
       <menuitem><a href="doc/developer-guide.html">Developer Guide</a></menuitem>
     </menu>

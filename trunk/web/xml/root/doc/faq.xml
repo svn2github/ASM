@@ -57,8 +57,8 @@ if possible.</p>
 
 <subtitle anchor="Q1">1. How do I remove a method/field?</subtitle>
 
-<p>Use the ClassAdapter and return nothing:</p>
-<source>  public FieldVisitor visitField (String name, ...) {
+<p>Use a ClassVisitor and return nothing:</p>
+<source>  public FieldVisitor visitField(String name, ...) {
     if (removeField(name)) {
       // do nothing, in order to remove this field
       return null;
@@ -70,15 +70,15 @@ if possible.</p>
 
 <subtitle anchor="Q2">2. How do I replace a method/field? I end up with duplicated members!</subtitle>
 
-<p>You must either return the replacement method/field when you visit the original one using the
-ClassAdapter, or you must first remove the original method/field in the ClassAdapter (see
+<p>You must either return the replacement method/field when you visit the original one using a
+ClassVisitor, or you must first remove the original method/field in the ClassVisitor (see
 <a href="#Q1">"1. How do I remove a method/field?"</a>), and then add the new method/field
 by calling a visit method on the ClassWriter.</p>
 
 <subtitle anchor="Q3">3. How do I make ASM calculate visitMaxs for me?</subtitle>
 
-<p>When calling the constructor for ClassWriter pass true. You must also
-still include the visitMaxs instruction, but the values you give are
+<p>When calling the constructor for ClassWriter use the COMPUTE_MAXS flag. 
+You must also still include the visitMaxs instruction, but the values you give are
 ignored, so visitMaxs(0,0) is fine.</p>
 
 <subtitle anchor="Q4">4. Why do I get the [xxx] verifier error?</subtitle>
@@ -89,10 +89,9 @@ making "return" on a method, or if you do not use the appropriate LOAD or STORE
 instruction, depending on the local variable type, the JVM class verifier gives
 a "Register x contains wrong type" or "Expecting to find x on stack" error which 
 does not say anything about the instruction that caused the error. In this case 
-you can use the class verifier provided by ASM (asm-attrs.jar is needed with
-ASM 2.x only):</p>
+you can use the class verifier provided by ASM:</p>
 
-<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-attrs.jar;asm-util.jar"
+<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-util.jar"
 org.objectweb.asm.util.CheckClassAdapter org/domain/package/YourClass.class</code></p>
 
 <p>For example, in the helloworld example in the ASM distribution, if you replace
@@ -129,7 +128,7 @@ try to generate it by using a CheckClassAdapter in front of a ClassWriter:</p>
   ...</source>
 <p>You will probably get an exception which will indicate why your generated class
 is incorrect. For example, if you forget to call visit(...) (which can happen if you
-forget to call super.visit(...) in a class adapter), the generated class
+forget to call super.visit(...) in a class visitor), the generated class
 contains an invalid constant pool index, and ClassReader is unable to read it. If 
 you generate your class by using a CheckClassAdapter, as above, you get an
 exception "Cannot visit member before visit has been called.", which shows that
@@ -141,7 +140,7 @@ you forgot to call the visit method.</p>
 file - there are no security restrictions as default for a standard java
 install. Use ClassLoader.defineClass, this however is a "protected" method, so
 you must use reflection to gain access to it:</p>
-<source>  private Class loadClass (byte[] b) {
+<source>  private Class loadClass(byte[] b) {
     //override classDefine (as it is protected) and define the class.
     Class clazz = null;
     try {
@@ -171,24 +170,25 @@ existing class loader (example needed here).</p>
 <subtitle anchor="Q6">6. How do I rename my class?</subtitle>
 
 <p>It is not enough to rename just the class, you must also rename all the
-references to class members using the MethodAdapter.</p>
-<source>class ClassRenamer extends ClassAdapter implements Opcodes {
+references to class members using a MethodVisitor. The RemappingClassAdapter
+in org.objectweb.asm.commons can do this for you.</p>
+<source>class ClassRenamer extends ClassVisitor implements Opcodes {
 
   private Set oldNames;
   private final String newName;
 
   public ClassRenamer(ClassVisitor cv, Set oldNames, String newName) {
-    super(cv);
+    super(ASM4, cv);
     this.oldNames = oldNames;
     this.newName = newName;
   }
 
-  public void visit (int version, int access, String name, String signature, String superName, String[] interfaces) {
+  public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
     oldNames.add(name);
     cv.visit(version, ACC_PUBLIC, newName, signature, superName, interfaces);
   }
 
-  public MethodVisitor visitMethod (int access, String name, String desc, String signature, String[] exceptions) {
+  public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
     MethodVisitor mv = cv.visitMethod(access, name, fixDesc(desc), fix(signature), exceptions);
     if (mv != null &amp;&amp; (access &amp; ACC_ABSTRACT) == 0) {
       mv = new MethodRenamer(mv);
@@ -196,20 +196,20 @@ references to class members using the MethodAdapter.</p>
     return mv;
   }
 
-  class MethodRenamer extends MethodAdapter {
+  class MethodRenamer extends MethodVisitor {
   
-    public MethodRenamer (final MethodVisitor mv) {
-      super(mv);
+    public MethodRenamer(final MethodVisitor mv) {
+      super(ASM4, mv);
     }
 
-    public void visitTypeInsn (int i, String s) {
+    public void visitTypeInsn(int i, String s) {
       if (oldNames.contains(s)) {
         s = newName;
       }
       mv.visitTypeInsn(i, s);
     }
 
-    public void visitFieldInsn (int opcode, String owner, String name, String desc) {
+    public void visitFieldInsn(int opcode, String owner, String name, String desc) {
       if (oldNames.contains(owner)) {
         mv.visitFieldInsn(opcode, newName, name, fix(desc));
       } else {
@@ -217,7 +217,7 @@ references to class members using the MethodAdapter.</p>
       }
     }
 
-    public void visitMethodInsn (int opcode, String owner, String name, String desc) {
+    public void visitMethodInsn(int opcode, String owner, String name, String desc) {
       if (oldNames.contains(owner)) {
         mv.visitMethodInsn(opcode, newName, name, fix(desc));
       } else {
@@ -226,7 +226,7 @@ references to class members using the MethodAdapter.</p>
     }
   }
 
-  private String fix (String s) {
+  private String fix(String s) {
     if (s != null) {
       Iterator it = oldNames.iterator();
       String name;
@@ -281,7 +281,7 @@ Here is a quick overview:</p>
 
 <subtitle anchor="Q8">8. How can ASM help me create my descriptor types?</subtitle>
 
-<p>Types.java provides the static method Type.getDescriptor, which takes a
+<p>Type.java provides the static method Type.getDescriptor, which takes a
 Class as a parameter.</p>
 <p>Examples:</p><ul>
 <li><code>String desc = Type.getDescriptor(String.class);</code></li>
@@ -294,7 +294,7 @@ Class as a parameter.</p>
 
 <p>Use the following code (this assumes that visitMaxs are computed by ASM - see
 <a href="#Q3">"3. How do I make ASM calculate visitMaxs for me?"</a>):</p>
-<source>void createSetter (String propertyName, String type, Class c) {
+<source>void createSetter(String propertyName, String type, Class c) {
   String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
   MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
   mv.visitVarInsn(ALOAD, 0);
@@ -304,7 +304,7 @@ Class as a parameter.</p>
   mv.visitMaxs(0, 0);
 }
 
-void createGetter (String propertyName, String returnType, Class c) {
+void createGetter(String propertyName, String returnType, Class c) {
   String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
   MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null, null);
   mv.visitVarInsn(ALOAD, 0);
@@ -316,17 +316,17 @@ void createGetter (String propertyName, String returnType, Class c) {
 
 <subtitle anchor="Q10">10. How do I get the bytecode of an existing class?</subtitle>
 
-<p>If you want the bytecode instructions themselves, use TraceClassVisitor. If you
-want the ASM code to generate these bytecode instructions, use ASMifierClassVisitor.
+<p>If you want the bytecode instructions themselves, use a Textifier. If you
+want the ASM code to generate these bytecode instructions, use an ASMifier.
 Both classes provide a "main" method to allow them to be
 called from the command line, passing your fully qualified class name as a
 parameter.
 Example:</p>
 <p><code>java -classpath "asm.jar;asm-util.jar;yourjar.jar"
-org.objectweb.asm.util.ASMifierClassVisitor org.domain.package.YourClass</code></p>
+org.objectweb.asm.util.ASMifier org.domain.package.YourClass</code></p>
 <p>or</p>
 <p><code>java -classpath "asm.jar;asm-util.jar"
-org.objectweb.asm.util.ASMifierClassVisitor org/domain/package/YourClass.class</code></p>
+org.objectweb.asm.util.ASMifier org/domain/package/YourClass.class</code></p>
 <p>Another, much easier method, if you are using Eclipse, is to use the 
 <a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
 
@@ -335,7 +335,7 @@ org.objectweb.asm.util.ASMifierClassVisitor org/domain/package/YourClass.class</
 <p>If you want to know how to generate a synchronized block, a try catch
 block, a finally statement, or any other Java construct, write the Java code
 you want to generate in a temporary class, compile it with javac, and then
-use the ASMifierClassVisitor to get the ASM code that will generate this class (see
+use the ASMifier to get the ASM code that will generate this class (see
 <a href="#Q10">"10. How do I get the bytecode of an existing class?"</a>).
 </p>
 
@@ -355,11 +355,11 @@ problems. The ClassWriter and MethodWriter classes are <em>not</em> thread safe,
 i.e. a single class cannot be generated by several concurrent threads (but,
 of course, several threads can generate distinct classes concurrently, if each
 thread uses its own ClassWriter instance). In order to generate a single class
-by using several concurrent threads, one should use ClassAdapter and
-MethodAdapter instances that delegate to normal ClassWriter and MethodWriter
+by using several concurrent threads, one should use ClassVisitor and
+MethodVisitor instances that delegate to normal ClassWriter and MethodWriter
 instances, and whose methods are all synchronized.</p>
 <p>More generally, ClassVisitor and MethodVisitor implementations, such as
-ClassWriter and ClassAdapter, do not have to be thread safe. However, non thread
+ClassWriter, do not have to be thread safe. However, non thread
 safe visitors can be made thread safe just by using a synchronizing class
 adapter in front of them.</p>
 

@@ -14,7 +14,27 @@
 
     <s1 name="History">
 
-      <subtitle>11 September 2011: ASM 4.0 RC2 (cvs-tag: ASM_4_0_RC2)</subtitle>
+      <subtitle>29 October 2011: ASM 4.0 (svn-tag: ASM_4_0)</subtitle>
+
+        <ul>
+            <li>added automatic test of backward binary compatibility
+            in build process.</li>
+            <li>added automatic call to resetLabel in MethodNode when
+            necessary.</li>
+            <li>improved printing of method handles in Textifier.</li>
+            <li>bug fixes
+            <ul>
+                <li>316204 Analyzer produces incorrect lvt types for 
+                jsr return targets when jsr frame changes twice during 
+                analysis.</li>
+                <li>316212 org.objectweb.asm.optimizer.ClassOptimizer
+                does not work with classes in default package.</li>
+                <li>fixed incorrectly ASMified method handles.</li>
+            </ul>
+            </li>
+        </ul>
+
+      <subtitle>11 September 2011: ASM 4.0 RC2 (svn-tag: ASM_4_0_RC2)</subtitle>
 
         <ul>
             <li>ClassVisitor, MethodVisitor, etc interfaces replaced 
@@ -25,7 +45,7 @@
             removed (e.g. MemberNode, EmptyVisitor) or adapted (e.g. trace
             and asmifier classes in asm.util).</li>
             <li>MethodHandle and MethodType renamed to Handle and Type.</li>
-            <li>improved getCommonSuperClass to avoid resolving loaded classes/</li>
+            <li>improved getCommonSuperClass to avoid resolving loaded classes.</li>
             <li>improved getCommonSuperClass in ClassWriterComputeFramesTest 
             (more efficient).</li>
             <li>new checks in CheckClassAdapter.</li>
@@ -49,7 +69,7 @@
             </li>
         </ul>
 
-      <subtitle>17 April 2011: ASM 4.0 RC1 (cvs-tag: ASM_4_0_RC1)</subtitle>
+      <subtitle>17 April 2011: ASM 4.0 RC1 (svn-tag: ASM_4_0_RC1)</subtitle>
 
         <ul>
             <li>full support of Java 7</li>
@@ -61,7 +81,7 @@
             small and 1.2 compatible.</li>
         </ul>
 
-      <subtitle>21 December 2010: ASM 3.3.1 (cvs-tag: ASM_3_3_1)</subtitle>
+      <subtitle>21 December 2010: ASM 3.3.1 (svn-tag: ASM_3_3_1)</subtitle>
 
         <ul>
             <li>bug fixes
@@ -75,7 +95,7 @@
             </ul></li>
         </ul>
         
-      <subtitle>30 May 2010: ASM 3.3 (cvs-tag: ASM_3_3)</subtitle>
+      <subtitle>30 May 2010: ASM 3.3 (svn-tag: ASM_3_3)</subtitle>
 
         <ul>
             <li>added new InstructionAdapter class</li>
@@ -113,7 +133,7 @@
             <li>Javadoc fixes and improvements</li>
         </ul>
 
-      <subtitle>11 June 2009: ASM 3.2 (cvs-tag: ASM_3_2)</subtitle>
+      <subtitle>11 June 2009: ASM 3.2 (svn-tag: ASM_3_2)</subtitle>
 
         <ul>
             <li>added support for new invokedynamic opcode</li>

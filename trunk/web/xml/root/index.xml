@@ -92,11 +92,11 @@
     transformation) and use the compare view of the plugin in ASMifier mode to compare the
     equivalent ASM code.</strong></p>
     
-    <p>The following document provides an in-depth introduction to ASM 3.0,
+    <p>The following document provides an in-depth introduction to ASM 4.0,
     going from the basic features to advanced topics such as bytecode 
     analysis.</p>
 
-    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 3.0 A Java bytecode engineering library</a>.</p>
+    <p><a href="http://download.forge.objectweb.org/asm/asm-guide.pdf">ASM 4.0 A Java bytecode engineering library</a>.</p>
 
     <p><a href="doc/tutorial-asm-2.0.html">Tutorial for ASM 2.0</a>.</p>
 
@@ -116,10 +116,11 @@
 
     <p><br/><strong>API</strong></p><hr/>
 
-    <!-- 
-    <p><a href="asm33/javadoc/user/index.html">ASM API</a>
-    (<a href="asm33/javadoc/user/overview-summary.html">noframes</a>).</p>
-    -->    
+    <p><a href="asm40/javadoc/user/index.html">ASM 4.0 API</a>
+    (<a href="asm40/javadoc/user/overview-summary.html">noframes</a>).<br/>
+    changes from 
+      <a href="jdiff33to40/changes.html">3.3</a>
+    </p>
 
     <p><a href="asm33/javadoc/user/index.html">ASM 3.3 API</a>
     (<a href="asm33/javadoc/user/overview-summary.html">noframes</a>).<br/>
@@ -167,7 +168,7 @@
 
     <s1 name="Recent News">
 
-      <subtitle>11 September 2011: release of ASM 4.0 RC2</subtitle>
+      <subtitle>29 October 2011: release of ASM 4.0</subtitle>
           
     </s1>
 
