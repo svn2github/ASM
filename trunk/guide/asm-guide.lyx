@@ -8,9 +8,9 @@
 
 \usepackage[
 pdfauthor={Eric Bruneton},
-pdftitle={ASM 3.0 A Java bytecode engineering library},
+pdftitle={ASM 4.0 A Java bytecode engineering library},
 pdfcreator={pdftex},
-pdfsubject={ASM 3.0},
+pdfsubject={ASM 4.0},
 pdfkeywords={Java,bytecode}
 ]{hyperref}
 
@@ -32109,8 +32109,8 @@ i.e.
 not
 \emph default
  taken into account.
- The results were obtained by running each test ten times, on the 12700+
- classes of JDK 1.5 
+ The results were obtained by running each test ten times, on the 18600+
+ classes of JDK 7 
 \family typewriter
 rt.jar
 \family default
@@ -32138,7 +32138,7 @@ copy constant pool
 \end_layout
 
 \begin_layout Itemize
-Tree based transformations are about 30% slower than visitor based ones.
+Tree based transformations are about 25% slower than visitor based ones.
 \end_layout
 
 \begin_layout Itemize
@@ -32162,7 +32162,7 @@ COMPUTE_FRAMES
 \end_layout
 
 \begin_layout Itemize
-The cost of the analysis package is very high!
+The cost of the analysis package is quite high!
 \end_layout
 
 \begin_layout Standard
