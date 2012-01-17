@@ -566,7 +566,6 @@ public class TestUtil {
 		URL url;
 		try {
 			url = new URL("jar:" + file.toURI().toString() + "!/");
-			System.err.println(url);
 			URLClassLoader jfl = new URLClassLoader(new URL[]{url});
 			Class <?> baksmaliClass = jfl.loadClass("org.jf.baksmali.main");
 			Method meth = baksmaliClass.getMethod("main", String[].class);
