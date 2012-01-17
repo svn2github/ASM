@@ -201,11 +201,11 @@ public class AsmDexifierTest {
 		assertTrue("Unequal Map between the original and the generated file.", TestUtil.testMapDexFiles(createdDexFile, dexFile));
 		
 		// Executes Baksmali to disassemble the current dex file.
-		org.jf.baksmali.main.main(new String[] { dexFile.getAbsolutePath(),
+		TestUtil.baksmali(new String[] { dexFile.getAbsolutePath(),
 				"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
 		
 		// Executes Baksmali once again to disassemble our generated dex file.
-		org.jf.baksmali.main.main(new String[] { TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_GENERATED_DEX,
+		TestUtil.baksmali(new String[] { TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_GENERATED_DEX,
 				"-o" + TestUtil.TEMP_FOLDER_GENERATED});
 		
 		// Compare the folders and the .smali files inside.

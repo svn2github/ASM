@@ -215,7 +215,7 @@ public class ApplicationWriterTest {
 				TestUtil.removeTemporaryFolder();
 				
 				// Executes Baksmali to disassemble the current dex file.
-				org.jf.baksmali.main.main(new String[] { fullDexFileName,
+				TestUtil.baksmali(new String[] { fullDexFileName,
 						"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
 				
 				// Uses the Reader and Writer to generate our own dex file from the current dex file.
@@ -238,7 +238,7 @@ public class ApplicationWriterTest {
 				assertTrue("Unequal Map between " + dexFileName + " and the generated file.", TestUtil.testMapDexFiles(createdDexFile, dexFile));
 				
 				// Executes Baksmali once again to disassemble our generated dex file.
-				org.jf.baksmali.main.main(new String[] { fullGeneratedDexFileName,
+				TestUtil.baksmali(new String[] { fullGeneratedDexFileName,
 						"-o" + TestUtil.TEMP_FOLDER_GENERATED});
 				
 				// Compare the folders and the .smali files inside.

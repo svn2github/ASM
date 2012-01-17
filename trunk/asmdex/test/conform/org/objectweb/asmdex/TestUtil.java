@@ -46,6 +46,9 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Arrays;
 
 /**
@@ -171,6 +174,11 @@ public class TestUtil {
 	 */
 	public static final String TEMP_FOLDER_EXPECTED = TEMP_FOLDER_ROOT + TEMP_SUBFOLDER_EXPECTED;
 
+	/**
+	 * Baksmali jar
+	 */
+	private static final String BAKSMALI_JAR = "lib/baksmali.jar";
+	
 	/** String to look after in order to find a Line information in the Baksmali output. */
 	private static final String DEBUG_LINE_MNEMONIC = ".line";
 	
@@ -548,4 +556,23 @@ public class TestUtil {
 		return map;
 	}
 	
+	/**
+	 * Run baksmali with a given set of arguments. org.jf.baksmali.main.main
+	 * @param args
+	 * @return
+	 */
+	public static void baksmali(String [] args) throws IOException {
+		File file = new File(BAKSMALI_JAR);
+		URL url;
+		try {
+			url = new URL("jar:" + file.toURI().toString() + "!/");
+			System.err.println(url);
+			URLClassLoader jfl = new URLClassLoader(new URL[]{url});
+			Class <?> baksmaliClass = jfl.loadClass("org.jf.baksmali.main");
+			Method meth = baksmaliClass.getMethod("main", String[].class);
+		    meth.invoke(null, (Object) args);
+		} catch (Exception e) {
+			throw new IOException("Cannot launch baksmali", e);
+		} 
+	}
 }

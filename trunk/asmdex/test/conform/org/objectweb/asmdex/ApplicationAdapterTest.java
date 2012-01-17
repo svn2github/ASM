@@ -296,7 +296,7 @@ public class ApplicationAdapterTest {
 				TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_ADAPTED_DEX);
 
 		// Uses baksmali to generate the smali files related to the adapted file.
-		org.jf.baksmali.main.main(new String[] { adaptedFile.getAbsolutePath(),
+		TestUtil.baksmali(new String[] { adaptedFile.getAbsolutePath(),
 				"-o" + TestUtil.TEMP_FOLDER_GENERATED});
 		
 		// Generates the "expected" dex file thanks to the writer.
@@ -304,7 +304,7 @@ public class ApplicationAdapterTest {
 				TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_EXPECTED_DEX);
 		
 		// Uses baksmali to generate the smali files related to the "expected" file.
-		org.jf.baksmali.main.main(new String[] { expectedFile.getAbsolutePath(),
+		TestUtil.baksmali(new String[] { expectedFile.getAbsolutePath(),
 				"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
 		
 		// Compares the two outputs.
