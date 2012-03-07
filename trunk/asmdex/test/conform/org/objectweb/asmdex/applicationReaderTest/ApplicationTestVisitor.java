@@ -30,12 +30,12 @@
  */
 package org.objectweb.asmdex.applicationReaderTest;
 
-import org.objectweb.asmdex.ApplicationVisitor;
-import org.objectweb.asmdex.ClassVisitor;
 import org.objectweb.asmdex.logging.LogElementApplicationVisit;
 import org.objectweb.asmdex.logging.LogElementApplicationVisitClass;
 import org.objectweb.asmdex.logging.LogElementApplicationVisitEnd;
 import org.objectweb.asmdex.logging.Logger;
+import org.ow2.asmdex.ApplicationVisitor;
+import org.ow2.asmdex.ClassVisitor;
 
 /**
  * Application Visitor used to test the Reader.

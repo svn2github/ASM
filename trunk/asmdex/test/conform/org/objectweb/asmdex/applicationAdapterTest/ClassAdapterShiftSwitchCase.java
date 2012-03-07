@@ -30,8 +30,8 @@
  */
 package org.objectweb.asmdex.applicationAdapterTest;
 
-import org.objectweb.asmdex.ClassVisitor;
-import org.objectweb.asmdex.MethodVisitor;
+import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.MethodVisitor;
 
 /**
  * Adapter Test that adds NOPs before a switch case code to see if it shifts rightly.

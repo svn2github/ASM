@@ -30,7 +30,6 @@
  */
 package org.objectweb.asmdex.applicationReaderTest;
 
-import org.objectweb.asmdex.AnnotationVisitor;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisit;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisitAnnotation;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisitArray;
@@ -38,6 +37,7 @@ import org.objectweb.asmdex.logging.LogElementAnnotationVisitEnd;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisitEnum;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisitClass;
 import org.objectweb.asmdex.logging.Logger;
+import org.ow2.asmdex.AnnotationVisitor;
 
 /**
  * Annotation Visitor used to test the Reader.

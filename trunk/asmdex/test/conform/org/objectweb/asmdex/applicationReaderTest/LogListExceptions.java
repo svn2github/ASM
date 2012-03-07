@@ -32,7 +32,7 @@ package org.objectweb.asmdex.applicationReaderTest;
 
 import org.objectweb.asmdex.TestUtil;
 import org.objectweb.asmdex.logging.*;
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * Log List of an application that tests the Exceptions. Only the most important classes are parsed,

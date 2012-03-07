@@ -37,9 +37,9 @@ import java.io.IOException;
 
 import org.junit.AfterClass;
 import org.junit.Test;
-import org.objectweb.asmdex.ApplicationReader;
-import org.objectweb.asmdex.ApplicationWriter;
-import org.objectweb.asmdex.tree.ApplicationNode;
+import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.tree.ApplicationNode;
 
 /**
  * Tests the Application Writer using the Tree API.

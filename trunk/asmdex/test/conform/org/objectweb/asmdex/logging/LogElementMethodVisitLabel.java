@@ -30,7 +30,7 @@
  */
 package org.objectweb.asmdex.logging;
 
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * LogElement for the Visit of a Label of a Method.

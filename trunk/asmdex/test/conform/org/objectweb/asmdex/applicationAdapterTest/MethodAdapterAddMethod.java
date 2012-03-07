@@ -30,8 +30,8 @@
  */
 package org.objectweb.asmdex.applicationAdapterTest;
 
-import org.objectweb.asmdex.MethodVisitor;
-import org.objectweb.asmdex.Opcodes;
+import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that adds one "myMethod2" and make "onCreate" calls it.

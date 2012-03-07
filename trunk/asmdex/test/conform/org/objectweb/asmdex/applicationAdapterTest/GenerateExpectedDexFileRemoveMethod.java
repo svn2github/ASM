@@ -30,8 +30,8 @@
  */
 package org.objectweb.asmdex.applicationAdapterTest;
 
-import org.objectweb.asmdex.*;
-import org.objectweb.asmdex.structureCommon.*;
+import org.ow2.asmdex.*;
+import org.ow2.asmdex.structureCommon.*;
 
 /**
  * Generates an "expected" dex file that only contains one activity (FirstActivity),

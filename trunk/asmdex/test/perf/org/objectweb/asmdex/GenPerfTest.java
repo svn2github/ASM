@@ -32,7 +32,13 @@ package org.objectweb.asmdex;
 
 import java.io.IOException;
 
-import org.objectweb.asmdex.tree.ApplicationNode;
+import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.ApplicationVisitor;
+import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.tree.ApplicationNode;
 
 /**
  * Performance tests for bytecode generation.

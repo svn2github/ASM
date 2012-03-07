@@ -33,8 +33,8 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.tree.LabelNode;
-import org.objectweb.asmdex.tree.TryCatchBlockNode;
+import org.ow2.asmdex.tree.LabelNode;
+import org.ow2.asmdex.tree.TryCatchBlockNode;
 
 /**
  * Test Unit of a TryCatchBlockNode.

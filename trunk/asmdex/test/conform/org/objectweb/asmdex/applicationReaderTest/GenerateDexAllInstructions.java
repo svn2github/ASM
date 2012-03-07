@@ -32,12 +32,12 @@ package org.objectweb.asmdex.applicationReaderTest;
 
 import java.io.IOException;
 
-import org.objectweb.asmdex.ApplicationWriter;
-import org.objectweb.asmdex.ClassVisitor;
-import org.objectweb.asmdex.MethodVisitor;
-import org.objectweb.asmdex.Opcodes;
 import org.objectweb.asmdex.TestUtil;
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * Class that generates a dex file containing all the dalvik possible instructions, thanks

@@ -33,11 +33,11 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.structureCommon.Label;
-import org.objectweb.asmdex.tree.AbstractInsnNode;
-import org.objectweb.asmdex.tree.JumpInsnNode;
-import org.objectweb.asmdex.tree.LabelNode;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.structureCommon.Label;
+import org.ow2.asmdex.tree.AbstractInsnNode;
+import org.ow2.asmdex.tree.JumpInsnNode;
+import org.ow2.asmdex.tree.LabelNode;
 
 /**
  * Test Unit of a JumpInsnNode.

@@ -30,11 +30,11 @@
  */
 package org.objectweb.asmdex.applicationReaderTest;
 
-import org.objectweb.asmdex.AnnotationVisitor;
-import org.objectweb.asmdex.FieldVisitor;
 import org.objectweb.asmdex.logging.LogElementFieldVisitAnnotation;
 import org.objectweb.asmdex.logging.LogElementFieldVisitEnd;
 import org.objectweb.asmdex.logging.Logger;
+import org.ow2.asmdex.AnnotationVisitor;
+import org.ow2.asmdex.FieldVisitor;
 
 /**
  * Field Visitor used to test the Reader.

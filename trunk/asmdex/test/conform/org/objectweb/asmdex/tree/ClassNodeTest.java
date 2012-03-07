@@ -33,11 +33,11 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.tree.ClassNode;
-import org.objectweb.asmdex.tree.FieldNode;
-import org.objectweb.asmdex.tree.InnerClassNode;
-import org.objectweb.asmdex.tree.MethodNode;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.tree.ClassNode;
+import org.ow2.asmdex.tree.FieldNode;
+import org.ow2.asmdex.tree.InnerClassNode;
+import org.ow2.asmdex.tree.MethodNode;
 
 /**
  * Test Unit of a ClassNode.

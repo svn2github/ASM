@@ -59,6 +59,9 @@ import org.objectweb.asmdex.applicationAdapterTest.GenerateExpectedDexFileResize
 import org.objectweb.asmdex.applicationAdapterTest.GenerateOriginalDexFileResizeGoto8Bits;
 import org.objectweb.asmdex.applicationAdapterTest.GenerateOriginalDexFileResizeGoto8BitsDoubleRefs;
 import org.objectweb.asmdex.applicationAdapterTest.GenerateOriginalDexFileResizeGoto8BitsDoubleRefsDoubleLabels;
+import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.ApplicationVisitor;
+import org.ow2.asmdex.ApplicationWriter;
 
 /**
  * Tests the Application Adapter.

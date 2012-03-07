@@ -30,7 +30,7 @@
  */
 package org.objectweb.asmdex.logging;
 
-import org.objectweb.asmdex.Opcodes;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * A simple grouping of Log Elements.

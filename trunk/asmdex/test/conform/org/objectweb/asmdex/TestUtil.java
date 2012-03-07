@@ -51,6 +51,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
 
+import org.ow2.asmdex.Constants;
+
 /**
  * Utility class for Test.
  * 

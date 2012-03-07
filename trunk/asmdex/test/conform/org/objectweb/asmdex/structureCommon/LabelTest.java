@@ -33,12 +33,13 @@ package org.objectweb.asmdex.structureCommon;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.ApplicationWriter;
-import org.objectweb.asmdex.ClassVisitor;
-import org.objectweb.asmdex.MethodVisitor;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.instruction.Instruction;
-import org.objectweb.asmdex.instruction.InstructionFormat10X;
+import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.instruction.Instruction;
+import org.ow2.asmdex.instruction.InstructionFormat10X;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * Label unit tests.

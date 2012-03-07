@@ -30,8 +30,8 @@
  */
 package org.objectweb.asmdex.applicationAdapterTest;
 
-import org.objectweb.asmdex.ApplicationVisitor;
-import org.objectweb.asmdex.ClassVisitor;
+import org.ow2.asmdex.ApplicationVisitor;
+import org.ow2.asmdex.ClassVisitor;
 
 /**
  * Adapter Test that removes "myMethod" from the FirstActivity.

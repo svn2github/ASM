@@ -32,7 +32,7 @@ package org.objectweb.asmdex.logging;
 
 import java.util.List;
 
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * LogElement for the Visit of a LocalVariable Instruction of a Method, as a List.

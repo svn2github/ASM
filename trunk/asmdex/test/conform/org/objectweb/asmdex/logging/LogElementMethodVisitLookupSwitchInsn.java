@@ -32,7 +32,7 @@ package org.objectweb.asmdex.logging;
 
 import java.util.Arrays;
 
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * Class representing a Log Element for a Sparse Switch Instruction.

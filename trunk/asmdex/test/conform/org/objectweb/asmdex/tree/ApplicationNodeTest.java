@@ -33,9 +33,9 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.tree.ApplicationNode;
-import org.objectweb.asmdex.tree.ClassNode;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.tree.ApplicationNode;
+import org.ow2.asmdex.tree.ClassNode;
 
 /**
  * Test Unit of an ApplicationNode.

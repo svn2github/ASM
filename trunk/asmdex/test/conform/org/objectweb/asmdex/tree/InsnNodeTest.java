@@ -33,9 +33,9 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.tree.AbstractInsnNode;
-import org.objectweb.asmdex.tree.InsnNode;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.tree.AbstractInsnNode;
+import org.ow2.asmdex.tree.InsnNode;
 
 /**
  * Test Unit of an InsnNode.

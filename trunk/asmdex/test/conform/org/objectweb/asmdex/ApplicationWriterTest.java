@@ -37,8 +37,8 @@ import java.io.IOException;
 
 import org.junit.AfterClass;
 import org.junit.Test;
-import org.objectweb.asmdex.ApplicationReader;
-import org.objectweb.asmdex.ApplicationWriter;
+import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.ApplicationWriter;
 
 /**
  * Tests the Application Writer.

@@ -40,7 +40,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 
-import org.objectweb.asmdex.ApplicationReader;
 import org.objectweb.asmdex.applicationReaderTest.ApplicationTestVisitor;
 import org.objectweb.asmdex.applicationReaderTest.LogListAllInstructions;
 import org.objectweb.asmdex.applicationReaderTest.LogListAnnotationTests;
@@ -48,6 +47,7 @@ import org.objectweb.asmdex.applicationReaderTest.LogListExceptions;
 import org.objectweb.asmdex.applicationReaderTest.LogListHelloWorld;
 import org.objectweb.asmdex.logging.LogList;
 import org.objectweb.asmdex.logging.Logger;
+import org.ow2.asmdex.ApplicationReader;
 
 /**
  * Tests the Application Reader.

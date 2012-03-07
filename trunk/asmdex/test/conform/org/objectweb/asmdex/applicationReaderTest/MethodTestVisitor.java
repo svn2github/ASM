@@ -32,8 +32,6 @@ package org.objectweb.asmdex.applicationReaderTest;
 
 import java.util.List;
 
-import org.objectweb.asmdex.AnnotationVisitor;
-import org.objectweb.asmdex.MethodVisitor;
 import org.objectweb.asmdex.logging.LogElementMethodVisitAnnotation;
 import org.objectweb.asmdex.logging.LogElementMethodVisitAnnotationDefault;
 import org.objectweb.asmdex.logging.LogElementMethodVisitArrayLengthInsn;
@@ -63,7 +61,9 @@ import org.objectweb.asmdex.logging.LogElementMethodVisitTypeInsn;
 import org.objectweb.asmdex.logging.LogElementMethodVisitVarInsn;
 import org.objectweb.asmdex.logging.LogElementMethodVisitVarLongInsn;
 import org.objectweb.asmdex.logging.Logger;
-import org.objectweb.asmdex.structureCommon.Label;
+import org.ow2.asmdex.AnnotationVisitor;
+import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.structureCommon.Label;
 
 /**
  * Method Visitor used to test the Reader.

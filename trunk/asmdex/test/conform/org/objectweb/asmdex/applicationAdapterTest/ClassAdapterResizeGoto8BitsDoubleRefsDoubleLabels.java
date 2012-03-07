@@ -30,8 +30,8 @@
  */
 package org.objectweb.asmdex.applicationAdapterTest;
 
-import org.objectweb.asmdex.ClassVisitor;
-import org.objectweb.asmdex.MethodVisitor;
+import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.MethodVisitor;
 
 /**
  * Adapter Test that adds code at the end of the onCreate method of the FirstActivity

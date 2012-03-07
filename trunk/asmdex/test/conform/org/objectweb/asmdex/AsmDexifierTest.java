@@ -39,7 +39,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import org.junit.Test;
-import org.objectweb.asmdex.util.AsmDexifierApplicationVisitor;
+import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
 
 /**
  * Tests the AsmDexifier.

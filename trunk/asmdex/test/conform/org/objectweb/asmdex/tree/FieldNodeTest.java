@@ -33,8 +33,8 @@ package org.objectweb.asmdex.tree;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.objectweb.asmdex.Opcodes;
-import org.objectweb.asmdex.tree.FieldNode;
+import org.ow2.asmdex.Opcodes;
+import org.ow2.asmdex.tree.FieldNode;
 
 /**
  * Test Unit of a FieldNode.
