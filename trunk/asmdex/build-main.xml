@@ -1,12 +1,6 @@
 <project name="AsmDexMain" default="jar">
 	<property file="build.properties"/>
-
-	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
-		<classpath>
-        	<pathelement location="${findbugs.location}"/>
-		</classpath>
-    </taskdef>
-
+	<property name="findbugs.location" value="${findbugs.home}/lib/findbugs-ant.jar"/>
 	<import file="build.xml"/>
 
 
@@ -18,6 +12,12 @@
 	</target>
 	
 	<target name="findbugs" depends="jar">
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+			<classpath>
+	        	<pathelement location="${findbugs.location}"/>
+			</classpath>
+	    </taskdef>
+
 	    <findbugs home="${findbugs.home}"
 	              output="xml"
 	    		  excludeFilter="exclude.xml"
