@@ -1326,9 +1326,9 @@ public class ApplicationReader {
 	    		// This can happen when, for example, the Reader reads an application that
 	    		// has been only generated partially for, for example, the Writer.
 	    		// In that case, the only missing information is the InnerClass access flag.
-	    		int classIndex = classNameToIndex.get(name);
+	    		Integer classIndex = classNameToIndex.get(name);
 	    		int accessFlags = 0;
-	    		if (classIndex >= 0) {
+	    		if (classIndex != null && classIndex >= 0) {
 	    			ClassDefinitionItem cdi = dexFile.getClassDefinitionItem(classIndex);
 	    			accessFlags = cdi.getAccessFlags();
 	    		}
