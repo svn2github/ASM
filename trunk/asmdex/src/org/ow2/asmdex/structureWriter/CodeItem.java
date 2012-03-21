@@ -44,7 +44,6 @@ import org.ow2.asmdex.lowLevelUtils.DalvikValueReader;
 import org.ow2.asmdex.lowLevelUtils.IDalvikValueReader;
 import org.ow2.asmdex.structureCommon.Label;
 import org.ow2.asmdex.structureCommon.LocalVariable;
-import org.ow2.asmdex.structureWriter.TryCatch;
 
 /**
  * Class representing the code instructions and debug informations of one method.
@@ -421,13 +420,12 @@ public class CodeItem {
 				switch (secondByte) {
 				case 0x1: { // Packed-switch format.
 					int size = reader.ushort();
-					reader.skipInt(); //reader.uint(); // Skip first_key.
+					reader.skipInt();  // Skip first_key.
 					bytesToSkip = size * 4;
 					break;
 				}
 				case 0x2: { // Sparse-switch format.
 					int size = reader.ushort();
-					reader.skipInt(); //reader.uint(); // Skip first_key.
 					bytesToSkip = size * 4 * 2;
 					break;
 				}
