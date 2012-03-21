@@ -62,7 +62,9 @@ public class ArrayOperationInsnNode extends AbstractInsnNode {
      * 
      * @param opcode the opcode of the instruction to be constructed.
      *        This opcode is either AGET(-xxx) or APUT(-xxx).
-     * @param operand the operand of the instruction to be constructed.
+     * @param valueRegister
+     * @param arrayRegister
+     * @param indexRegister
      */
     public ArrayOperationInsnNode(final int opcode, final int valueRegister, final int arrayRegister, final int indexRegister) {
         super(opcode);

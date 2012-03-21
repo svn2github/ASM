@@ -373,7 +373,7 @@ public class AsmDexifierApplicationVisitor extends  ApplicationVisitor {
 	 * Returns a correct Method name from the given Class name, which may probably be
 	 * fully qualified. If also must not already be in the dumpMethods list, in which
 	 * case a number is added to the name.
-	 * @param name
+	 * @param className
 	 * @return a correct Class name.
 	 */
 	public String getAcceptableMethodName(String className) {

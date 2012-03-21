@@ -184,7 +184,7 @@ public abstract class Instruction {
 	
 	/**
 	 * Returns the size in bytes of the given opcode.
-	 * @param opcode, from 0 to 255.
+	 * @param opcode from 0 to 255.
 	 * @return the size in bytes of the given opcode.
 	 */
 	public static byte getInstructionSizeInByte(int opcode) {

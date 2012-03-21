@@ -46,11 +46,14 @@ import java.util.Arrays;
 public class DalvikValueReader implements IDalvikValueReader {
 	
 	private byte[] contents;
+	/**
+	 * Position in stream
+	 */
 	protected int pos = 0;
 
 	/**
 	 * Constructor encapsulating an array of bytes.
-	 * @param stream
+	 * @param contents
 	 */
 	public DalvikValueReader(byte[] contents) {
 		this.contents = contents;
@@ -94,7 +97,7 @@ public class DalvikValueReader implements IDalvikValueReader {
 	 * Reads an integer directly from an input stream. Usually used
 	 * while builder the value reader.
 	 * @param stream
-	 * @return
+	 * @return the value read
 	 * @throws IOException
 	 */
 	final public static int sint(InputStream stream) throws IOException {
@@ -256,7 +259,7 @@ public class DalvikValueReader implements IDalvikValueReader {
 	 * Extends a long read with SizedLong of length sz according to its sign.
 	 * @param l
 	 * @param sz size-1 of the encoded number.
-	 * @return
+	 * @return the value read
 	 */
 	final public long completeSignSizedLong(long l, int sz) {
 		sz++;

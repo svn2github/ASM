@@ -43,6 +43,9 @@ import org.ow2.asmdex.ClassVisitor;
  */
 public class RegisterShiftApplicationAdapter extends ApplicationVisitor{
 
+	/**
+	 * The adapter at level of classes.
+	 */
 	protected RegisterShiftClassAdapter shiftClassAdapter;
 
 	/**

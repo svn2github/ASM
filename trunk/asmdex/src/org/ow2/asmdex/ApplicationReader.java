@@ -307,7 +307,7 @@ public class ApplicationReader {
      * This application is the one specified in the constructor (see
      * {@link #ApplicationReader(byte[]) ApplicationReader}).
      * 
-     * @param classVisitor the visitor that must visit this class.
+     * @param applicationVisitor the visitor that must visit this class.
      * @param classesToVisit the names of the classes to visit, or Null to visit
      * 		  all the classes of the application.
      * @param flags option flags that can be used to modify the default behavior
@@ -325,7 +325,7 @@ public class ApplicationReader {
      * This application is the one specified in the constructor (see
      * {@link #ApplicationReader(byte[]) ApplicationReader}).
      * 
-     * @param classVisitor the visitor that must visit this class.
+     * @param applicationVisitor the visitor that must visit this class.
      * @param flags option flags that can be used to modify the default behavior
      *        of this class. See {@link #SKIP_DEBUG}, {@link #SKIP_CODE}.
      */
@@ -335,9 +335,8 @@ public class ApplicationReader {
     }
     
     /**
-     * Makes the given visitor visit the Java class of this {@link ClassReader}.
-     * This class is the one specified in the constructor (see
-     * {@link #ClassReader(byte[]) ClassReader}).
+     * Makes the given visitor visit the Java class of this {@link ClassVisitor}.
+     * This class is the one specified in the constructor 
      * 
      * @param applicationVisitor the visitor that must visit this Application.
      * @param classesToVisit the names of the classes to visit, or null to visit 
@@ -1525,7 +1524,7 @@ public class ApplicationReader {
     
 	/**
      * Copies the constant pool data into the given {@link ApplicationWriter}. Should
-     * be called before the {@link #accept(ApplicationWriter)} method.
+     * be called before the {@link #accept(ApplicationVisitor,int)} method.
      * 
      * However, contrary to ASM, only the Strings, Types, Fields and Methods indexes are actually copied,
      * because that's the only things the methods are referring to. Also note that the elements given to

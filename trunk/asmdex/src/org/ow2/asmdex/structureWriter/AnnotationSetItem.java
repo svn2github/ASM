@@ -44,8 +44,10 @@ import org.ow2.asmdex.Constants;
  * type_idx. The uniqueness of this Class is also important when encoding it.
  * 
  * An annotation_set_item is used to assign one or several Annotations to an Item :
- * @ MyAnnotation(...)
- * @ MyAnnotation2(...)
+ * <code>
+ * {@literal @}MyAnnotation(...)
+ * {@literal @}MyAnnotation2(...)
+ * </code>
  * myItem.
  * 
  * The fact that the Annotations are composed of several fields (@ myAnnotation(int a, boolean b, float c...)
@@ -85,7 +87,7 @@ public class AnnotationSetItem implements Comparable<AnnotationSetItem> {
 	
 	/**
 	 * Returns the sorted Set of annotation_items.
-	 * @return
+	 * @return annotaion items
 	 */
 	public TreeSet<AnnotationItem> getAnnotationItems() {
 		return annotationItems;
@@ -93,7 +95,7 @@ public class AnnotationSetItem implements Comparable<AnnotationSetItem> {
 
 	/**
 	 * Return the count of annotation_items present in this set.
-	 * @return
+	 * @return positive or 0
 	 */
 	public int getNbAnnotationItems() {
 		return annotationItems.size();

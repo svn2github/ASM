@@ -79,7 +79,7 @@ public abstract class AnnotationVisitor {
      * @param value the actual value, whose type must be {@link Byte},
      *        {@link Boolean}, {@link Character}, {@link Short},
      *        {@link Integer}, {@link Long}, {@link Float}, {@link Double},
-     *        {@link String} or {@link Type}. This value can also be an array
+     *        {@link String} or {@link java.lang.reflect.Type}. This value can also be an array
      *        of byte, boolean, short, char, int, long, float or double values
      *        (this is equivalent to using {@link #visitArray visitArray} and
      *        visiting each array element in turn, but is more convenient).
@@ -125,7 +125,7 @@ public abstract class AnnotationVisitor {
      * Visits an array value of the annotation. Note that arrays of primitive
      * types (such as byte, boolean, short, char, int, long, float or double)
      * can be passed as value to {@link #visit visit}. This is what
-     * {@link ClassReader} does.
+     * {@link ClassVisitor} does.
      * 
      * @param name the value name.
      * @return a visitor to visit the actual array value elements, or

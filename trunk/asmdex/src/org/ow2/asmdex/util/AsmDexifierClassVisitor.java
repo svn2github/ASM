@@ -48,7 +48,7 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
     /**
      * Constructs a new {@link AsmDexifierClassVisitor} object.
      * 
-     * @param pw the print writer to be used to print the class.
+     * @param nbTabulations number of spaces
      */
     public AsmDexifierClassVisitor(final int nbTabulations) {
     	pr = new AsmDexPrinter();

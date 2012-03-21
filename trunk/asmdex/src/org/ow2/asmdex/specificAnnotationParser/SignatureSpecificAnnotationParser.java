@@ -64,7 +64,7 @@ public class SignatureSpecificAnnotationParser implements ISpecificAnnotationPar
 	private String[] signature;
 	/**
 	 * Signature 
-	 * @return
+	 * @return signature of annotation
 	 */
 	public String[] getSignature() {
 		return signature;

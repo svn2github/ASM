@@ -47,7 +47,7 @@ import org.ow2.asmdex.FieldVisitor;
 public class FieldNode extends FieldVisitor {
 
 	/**
-     * The field's access flags (see {@link org.objectweb.asm.Opcodes}). This
+     * The field's access flags (see {@link org.ow2.asmdex.Opcodes}). This
      * field also indicates if the field is synthetic.
      */
     public int access;
@@ -88,11 +88,10 @@ public class FieldNode extends FieldVisitor {
      * Constructs a new {@link FieldNode}.
      * 
      * @param access the field's access flags (see
-     *        {@link org.objectweb.asm.Opcodes}). This parameter also indicates
+     *        {@link org.ow2.asmdex.Opcodes}). This parameter also indicates
      *        if the field is synthetic.
      * @param name the field's name.
-     * @param desc the field's descriptor (see
-     *        {@link org.objectweb.asm.Type Type}).
+     * @param desc the field's descriptor .
      * @param signature the field's signature.
      * @param value the field's initial value. This parameter, which may be
      *        <tt>null</tt> if the field does not have an initial value, must

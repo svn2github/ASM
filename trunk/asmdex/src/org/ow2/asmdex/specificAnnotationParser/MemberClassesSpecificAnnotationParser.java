@@ -62,7 +62,7 @@ public class MemberClassesSpecificAnnotationParser implements ISpecificAnnotatio
 	private List<String> innerClasses;
 	/**
 	 * List of inner classes
-	 * @return
+	 * @return list of class names
 	 */
 	public List<String> getInnerClasses() {
 		return innerClasses;

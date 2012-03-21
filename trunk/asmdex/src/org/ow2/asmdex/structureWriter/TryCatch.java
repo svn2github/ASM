@@ -69,8 +69,7 @@ public class TryCatch {
 	 * Constructor of a Try/Catch structure.
 	 * @param start Label pointing on the Instruction starting the try/catch block.
 	 * @param end Label pointing on the Instruction following the end of the try/catch block.
-	 * @param handler Label pointing on the Handler of the exception.
-	 * @param type Type of the exception. May be null (for catch all).
+	 * @param exceptionHandler Label pointing on the Handler of the exception.
 	 */
 	public TryCatch(Label start, Label end, ExceptionHandler exceptionHandler) {
 		this.start = start;

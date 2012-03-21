@@ -72,7 +72,7 @@ public class MethodInsnNode extends AbstractInsnNode {
      *        INVOKE-STATIC or INVOKE-INTERFACE.
      * @param owner the internal name of the method's owner class.
      * @param name the method's name.
-     * @param desc the method's descriptor (see {@link org.objectweb.asm.Type}).
+     * @param desc the method's descriptor.
      * @param arguments the arguments to give to the method.
      */
     public MethodInsnNode(final int opcode, final String owner, final String name, final String desc,

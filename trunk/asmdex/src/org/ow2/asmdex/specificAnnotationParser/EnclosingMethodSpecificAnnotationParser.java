@@ -53,7 +53,7 @@ public class EnclosingMethodSpecificAnnotationParser implements ISpecificAnnotat
 	private int classId = 0;
 	/**
 	 * Class index
-	 * @return
+	 * @return index
 	 */
 	public int getClassId() {
 		return classId;

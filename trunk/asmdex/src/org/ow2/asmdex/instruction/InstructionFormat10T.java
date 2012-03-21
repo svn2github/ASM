@@ -104,16 +104,7 @@ public class InstructionFormat10T extends Instruction implements IOffsetInstruct
 		return reader.getPos() - 2 + readOffset;
 	}
 	
-	/**
-	 * Returns the Offset encoded in the given 16-bit opcode.
-	 * @return the Offset.
-	 */
-//	public static int getOffset(int opcode) {
-//		return (byte)((opcode >> 8) & 0xff) * 2; // * 2 because branch offsets are word based.
-//	}
 
-	public static void skip(IDalvikValueReader reader) {
-	}
 	
 	/**
 	 * Constructor of the Instruction by providing all the elements it's composed of.

@@ -79,7 +79,6 @@ implements IOneRegisterInstruction, ILiteralInstruction {
 
 	/**
 	 * Constructor of the Instruction by providing all the elements it's composed of.
-	 * @param reader reader on the Instruction to parse, pointing after the 16-bit opcode.
 	 * @param opcode 8 or 16 bits opcode.
 	 * @param destinationRegister the destination register.
 	 * @param var the literal to store.

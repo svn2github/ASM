@@ -483,7 +483,7 @@ public class ConstantPool {
 	
 	/**
 	 * Sets the offset of an annotation_set_item.
-	 * @param annotationItem the annotation_set_item.
+	 * @param annotationSetItem the annotation_set_item.
 	 * @param offset the offset of the annotation_set_item.
 	 */
 	public void setAnnotationSetItemOffset(AnnotationSetItem annotationSetItem, int offset) {

@@ -59,7 +59,7 @@ public class DefaultAnnotationSpecificAnnotationParser implements ISpecificAnnot
 	private AnnotationVisitor annotationVisitor;
 	/**
 	 * Get the annotation visitor
-	 * @return
+	 * @return the visitor
 	 */
 	public AnnotationVisitor getAnnotationVisitor() {
 		return annotationVisitor;

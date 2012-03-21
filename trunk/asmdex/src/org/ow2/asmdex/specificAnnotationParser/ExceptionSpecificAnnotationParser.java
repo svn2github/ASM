@@ -63,7 +63,7 @@ public class ExceptionSpecificAnnotationParser implements ISpecificAnnotationPar
 	private List<String> exceptions;
 	/**
 	 * List of exceptions that may be raised
-	 * @return
+	 * @return list of exception names
 	 */
 	public List<String> getExceptions() {
 		return exceptions;

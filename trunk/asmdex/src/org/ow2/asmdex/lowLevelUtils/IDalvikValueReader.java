@@ -31,7 +31,6 @@
 
 package org.ow2.asmdex.lowLevelUtils;
 
-import java.io.IOException;
 
 /**
  * Interface to the DalvikValueReader.
@@ -49,7 +48,6 @@ public interface IDalvikValueReader {
 	/**
 	 * Reads next signed byte value.
 	 * @return value read from stream
-	 * @throws IOException
 	 */
 	public abstract byte sbyte();
 
@@ -109,8 +107,8 @@ public interface IDalvikValueReader {
 
 	/**
 	 * Reads a long of a given size. Considered as unsigned.
-	 * @param l
-	 * @return
+	 * @param sz
+	 * @return a positive long
 	 */
 	public abstract long sizedLong(int sz);
 
@@ -118,19 +116,19 @@ public interface IDalvikValueReader {
 	 * Extends a long read with SizedLong of length sz according to its sign.
 	 * @param l
 	 * @param sz
-	 * @return
+	 * @return long value
 	 */
 	public abstract long completeSignSizedLong(long l, int sz);
 	
 	/**
 	 * Reads a null terminated UTF8 string as handled by Dalvik (limited to unicode)
-	 * @return
+	 * @return string
 	 */
 	public abstract String utf8String();
 
 	/**
 	 * Set the position of the pointer in the stream.
-	 * @param pos
+	 * @param pos positive absolute position
 	 */
 	public abstract void seek(int pos);
 	
@@ -142,20 +140,20 @@ public interface IDalvikValueReader {
 
 	/**
 	 * Get the current position of the pointer in the stream. Usually to make a save restore.
-	 * @return
+	 * @return positive absolute position
 	 */
 	public abstract int getPos();
 
 	/**
 	 * Parse a string coded as 16 bit character
 	 * @param strSize
-	 * @return
+	 * @return string
 	 */
 	public abstract String unicodeString(int strSize);
 
 	/**
 	 * Check if there are still data to read in the stream.
-	 * @return
+	 * @return true if more data
 	 */
 	public abstract boolean hasMore();
 

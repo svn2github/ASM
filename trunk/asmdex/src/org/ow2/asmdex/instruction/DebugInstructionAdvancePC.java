@@ -49,7 +49,7 @@ public class DebugInstructionAdvancePC extends DebugInstruction implements IDebu
 	
 	/**
 	 * Constructor of the Debug Instruction.
-	 * @param difference difference in words between the current and next address.
+	 * @param differenceAddress difference in words between the current and next address.
 	 */
 	public DebugInstructionAdvancePC(int differenceAddress) {
 		this.differenceAddress = differenceAddress;

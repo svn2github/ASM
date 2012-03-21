@@ -230,8 +230,8 @@ public class ClassDefinitionItem implements Comparable<ClassDefinitionItem>, IAn
 	}
 	
 	/**
-	 * Returns the source file that defines the Class. May be Null.
-	 * @return the source file that defines the Class. May be Null.
+	 * Sets the source file that defines the Class. May be Null.
+	 *
 	 */
 	public void setSourceFileName(String sourceFileName) {
 		this.sourceFileName = sourceFileName;
@@ -428,7 +428,7 @@ public class ClassDefinitionItem implements Comparable<ClassDefinitionItem>, IAn
 	/**
 	 * Adds a Member Class Encoded Value to the Member Classes. They will be encoded as a
 	 * dalvik.annotation.MemberClasses Annotation.
-	 * @param encodedValue the value to add.
+	 * @param memberClassType the value to add.
 	 * @param constantPool the Constant Pool of the Application.
 	 */
 	public void addMemberClassValue(String memberClassType, ConstantPool constantPool) {

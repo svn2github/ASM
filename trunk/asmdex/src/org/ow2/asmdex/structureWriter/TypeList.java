@@ -88,7 +88,7 @@ public class TypeList implements Comparable<TypeList> {
 	
 	/**
 	 * Number of types in the list
-	 * @return
+	 * @return number of types.
 	 */
 	public int size() {
 		return types.length;

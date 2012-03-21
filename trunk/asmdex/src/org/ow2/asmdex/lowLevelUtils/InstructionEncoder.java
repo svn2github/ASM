@@ -85,7 +85,7 @@ public class InstructionEncoder {
 	 * @param opcode
 	 * @param method
 	 * @param arguments
-	 * @return
+	 * @return abstract instruction 
 	 */
 	public static Instruction encodeMethodInsn(int opcode, Method method, int[] arguments) {
 		// The opcode could be about an invoke Instruction, or an invoke/range.
@@ -101,7 +101,7 @@ public class InstructionEncoder {
 	 * @param opcode
 	 * @param destinationRegister
 	 * @param var
-	 * @return
+	 * @return instruction encoded
 	 */
 	public static Instruction encodeVarInsn(int opcode, int destinationRegister, int var) {
 		Instruction insn = null;
@@ -158,7 +158,7 @@ public class InstructionEncoder {
 	 * @param opcode
 	 * @param destinationRegister
 	 * @param var
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeVarInsn(int opcode, int destinationRegister, long var) {
 		Instruction insn = null;
@@ -212,7 +212,7 @@ public class InstructionEncoder {
 	/**
 	 * Encode instructions without args
 	 * @param opcode
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeInsn(int opcode) {
 		return new InstructionFormat10X(opcode);
@@ -225,7 +225,7 @@ public class InstructionEncoder {
 	 * @param firstSourceRegister
 	 * @param secondSourceRegister
 	 * @param value
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeOperationInsn(int opcode, int destinationRegister,
 			int firstSourceRegister, int secondSourceRegister, int value) {
@@ -258,7 +258,7 @@ public class InstructionEncoder {
 	 * Unary instruction
 	 * @param opcode
 	 * @param operand
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeIntInsn(int opcode, int operand) {
 		return new InstructionFormat11X(opcode, operand);
@@ -271,7 +271,7 @@ public class InstructionEncoder {
 	 * @param registerA
 	 * @param registerB
 	 * @param instructionOffset
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeJumpInsn(int opcode, Label label, int registerA,
 			int registerB, int instructionOffset) {
@@ -302,7 +302,7 @@ public class InstructionEncoder {
 	 * @param arrayReference
 	 * @param arrayLabel
 	 * @param instructionOffset
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeFillArrayDataInsn(int opcode, int arrayReference,
 			Label arrayLabel, int instructionOffset) {
@@ -316,7 +316,7 @@ public class InstructionEncoder {
 	 * @param referenceBearingRegister
 	 * @param sizeRegister
 	 * @param type
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeTypeInsn(int opcode, int destinationRegister,
 			int referenceBearingRegister, int sizeRegister, String type) {
@@ -344,7 +344,7 @@ public class InstructionEncoder {
 	 * Multi new array
 	 * @param type
 	 * @param registers
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeMultiANewArrayInsn(String type, int[] registers) {
 		Instruction insn = null;
@@ -364,7 +364,7 @@ public class InstructionEncoder {
 	 * @param register
 	 * @param switchTableLabel
 	 * @param instructionOffset
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeTableSwitchInsn(int register, Label switchTableLabel, int instructionOffset) {
 				
@@ -376,7 +376,7 @@ public class InstructionEncoder {
 	 * @param register
 	 * @param switchTableLabel
 	 * @param instructionOffset
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeSparseSwitchInsn(int register, Label switchTableLabel, int instructionOffset) {
 
@@ -386,7 +386,7 @@ public class InstructionEncoder {
 	/**
 	 * @param destinationRegister
 	 * @param arrayReferenceBearing
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeArrayLength(int destinationRegister, int arrayReferenceBearing) {
 
@@ -399,7 +399,7 @@ public class InstructionEncoder {
 	 * @param valueRegister
 	 * @param arrayRegister
 	 * @param indexRegister
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeArrayOperation(int opcode, int valueRegister, int arrayRegister, int indexRegister) {
 
@@ -411,7 +411,7 @@ public class InstructionEncoder {
 	 * @param opcode
 	 * @param destinationRegister
 	 * @param string
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeStringOperation(int opcode, int destinationRegister, String string) {
 		Instruction insn = null;
@@ -431,7 +431,7 @@ public class InstructionEncoder {
 	 * @param valueRegister
 	 * @param objectRegister
 	 * @param field
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static Instruction encodeFieldInsn(int opcode, int valueRegister, int objectRegister, Field field) {
 		Instruction insn = null;
@@ -450,7 +450,7 @@ public class InstructionEncoder {
 	 * @param signature
 	 * @param index
 	 * @param start
-	 * @return
+	 * @return abstract instruction
 	 */
 	public static DebugInstruction encodeDebugStartLocal(String name, String desc, String signature, int index, Label start) {
 		DebugInstruction insn = null;

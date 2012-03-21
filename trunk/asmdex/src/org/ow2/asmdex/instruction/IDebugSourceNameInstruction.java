@@ -40,7 +40,7 @@ public interface IDebugSourceNameInstruction {
 
 	/**
 	 * The name of the source file.
-	 * @return
+	 * @return source file name
 	 */
 	String getSourceName();
 	

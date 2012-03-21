@@ -126,10 +126,25 @@ public class MethodCodeReader {
     /*
      * The five "state machine" registers of the debug_info_item.
      */
+    /**
+     * register of debug state machine : the debug address
+     */
     protected int debugAddress; 
+    /**
+     * register of debug state machine : the debug line
+     */
     protected int debugLine;
+    /**
+     * register of debug state machine : the source file
+     */
     protected String debugSourceFile;
+    /**
+     * register of debug state machine : the prologue end
+     */
     protected boolean debugPrologueEnd;
+    /**
+     * register of debug state machine : the epilogue end
+     */
     protected boolean debugEpilogueBegin;
     
     /**
@@ -176,8 +191,7 @@ public class MethodCodeReader {
     
 	/**
 	 * Constructor of the MethodCodeReader.
-	 * @param reader reader of the Dex file. Its position <i>will</i> change.
-	 * @param applicationReader the application reader the method is linked to.
+	 * @param dexFile  the Dex file. 
 	 * @param methodVisitor visitor to visit the instructions of the code of the method.
 	 * @param codeOffset offset of the code of the method inside the Dex file. May be 0 if
 	 * 		  the method is abstract or native.

@@ -112,7 +112,7 @@ implements ITwoRegistersInstruction, ILiteralInstruction {
 	/**
 	 * Returns the LiteralC encoded inside the given value, that should contained both RegisterB and LiteralC
 	 * from the getEncodedRegisterBAndLiteralC method.
-	 * @param encodedRegisterBAndLiteralC the RegisterB and LiteralC encoded as an int.
+	 * @param encodedRegisterBAndC the RegisterB and LiteralC encoded as an int.
 	 * @return the LiteralC.
 	 */
 	public static int getLiteralCFromEncodedRegisterBAndLiteralC(int encodedRegisterBAndC) {

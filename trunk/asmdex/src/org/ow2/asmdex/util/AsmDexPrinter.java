@@ -151,7 +151,6 @@ public class AsmDexPrinter {
      * Appends a string representation of the given constant to the given
      * buffer, with quotes if necessary.
      * 
-     * @param buf a string buffer.
      * @param cst a single or array of ints, {@link Integer}, {@link Float}, {@link Long},
      *        {@link Double} or {@link String} object. May be <tt>null</tt>.
      * @param addComma true to add a comma at the end.
@@ -410,7 +409,7 @@ public class AsmDexPrinter {
     /**
      * Appends a quoted string to a given buffer.
      * 
-     * @param buf the buffer where the string must be added.
+     * 
      * @param s the string to be added.
      * @author Eric Bruneton
      */

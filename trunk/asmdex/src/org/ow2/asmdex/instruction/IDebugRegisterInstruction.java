@@ -40,7 +40,7 @@ public interface IDebugRegisterInstruction {
 
 	/**
 	 * The id of the register.
-	 * @return 
+	 * @return id of register
 	 */
 	int getRegister();
 	

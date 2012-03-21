@@ -45,7 +45,7 @@ import org.ow2.asmdex.Opcodes;
 public class MultiANewArrayInsnNode extends AbstractInsnNode {
 
     /**
-     * The method's descriptor (see {@link org.objectweb.asm.Type}).
+     * The method's descriptor 
      */
     public String desc;
     

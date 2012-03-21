@@ -61,7 +61,7 @@ public class InnerClassSpecificAnnotationParser implements ISpecificAnnotationPa
 	private String simpleNameInnerClass = null;
 	/**
 	 * Simple name of the inner class
-	 * @return
+	 * @return string
 	 */
 	public String getSimpleNameInnerClass() {
 		return simpleNameInnerClass;
@@ -69,7 +69,7 @@ public class InnerClassSpecificAnnotationParser implements ISpecificAnnotationPa
 	private int accessFlagsInnerClass = 0;
 	/**
 	 * Access flags for inner class
-	 * @return
+	 * @return or of flags
 	 */
 	public int getAccessFlagsInnerClass() {
 		return accessFlagsInnerClass;

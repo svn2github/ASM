@@ -219,9 +219,9 @@ public class DebugInfoItem {
 	 * Initializes the debug_info_item vector by creating its header. It is <i>not</i> useable as-is though,
 	 * but it can only be when the whole application has been parsed, as it encodes the parameters index
 	 * from its symbolic index. It will have to be parsed again later.
-	 * @param constantPool the Constant Pool.
+	 * 
 	 * @param parameters the parameters of the Method, or null.
-	 * @param the Code Item the Debug Info item is related to.
+	 * @param codeItem the Code Item the Debug Info item is related to.
 	 * @param localVariables the Local Variables of the current Method.
 	 */
 	public void initializeDebugInfoItem(String[] parameters, CodeItem codeItem, List<LocalVariable> localVariables) {
@@ -546,20 +546,12 @@ public class DebugInfoItem {
 		insn.write(debugCode, constantPool);
 	}
 	
-	/**
-	 * Encodes a Debug_Set_Epilogue_Begin Instruction.
-	 */
-//	private void encodeDebugSetEpilogueBegin() {
-//		DebugInstruction insn = new DebugInstructionSetEpilogueBegin();
-//		insn.write(debugOut, constantPool);
-//	}
 	
 	/**
 	 * Encodes a Special Opcode (>= 0xa) according to the given delta offset and delta line.
 	 * This code doesn't test if the deltas are inside the authorized limits.
 	 * @param deltaOffsetInWord the delta offset in Word.
 	 * @param deltaLine the delta line.
-	 * @return the Special Opcode according to the given delta offset and delta line.
 	 */
 	private void encodeDebugSpecialOpcode(int deltaOffsetInWord, int deltaLine) {
 		DebugInstruction insn = new DebugInstructionSpecialOpcode(deltaOffsetInWord, deltaLine);

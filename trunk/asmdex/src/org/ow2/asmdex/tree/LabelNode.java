@@ -68,7 +68,7 @@ public class LabelNode extends AbstractInsnNode {
 
     /**
      * Get the label value
-     * @return
+     * @return abstract label
      */
     public Label getLabel() {
         if (label == null) {

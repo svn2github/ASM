@@ -60,7 +60,7 @@ public class EnclosingClassSpecificAnnotationParser implements ISpecificAnnotati
 	private String className;
 	/**
 	 * Get the class name
-	 * @return
+	 * @return the full name
 	 */
 	public String getClassName() {
 		return className;

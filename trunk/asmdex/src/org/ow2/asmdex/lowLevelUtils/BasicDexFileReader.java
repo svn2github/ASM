@@ -47,6 +47,9 @@ public class BasicDexFileReader {
 	 */
 	public final static int NO_INDEX = 0xFFFFFFFF;
 	
+	/**
+	 * The stream of code.
+	 */
 	protected DalvikValueReader reader;
 	
 	private byte[] magic = new byte[8];
@@ -58,9 +61,21 @@ public class BasicDexFileReader {
 	private static final int OFFSET_FORMAT_VERSION_NUMBER_IN_MAGIC_SEQUENCE = 4;
 	private static final int LENGTH_FORMAT_VERSION_NUMBER_IN_MAGIC_SEQUENCE = 3;
 	
-	protected final static int FILE_SIZE_OFFSET = 32; // Offset to the file_size field.
-	protected final static int HEADER_NOMINAL_SIZE = 0x70; // Fixed in documentation.
+	/**
+	 * Offset to the file size field
+	 */
+	protected final static int FILE_SIZE_OFFSET = 32; 
+	/**
+	 * Header size
+	 */
+	protected final static int HEADER_NOMINAL_SIZE = 0x70; 
+	/**
+	 * Standard endianess marker
+	 */
 	protected final static int STANDARD_ENDIAN_VALUE = 0x12345678;
+	/**
+	 * Reverse endian marker
+	 */
 	protected final static int REVERSE_ENDIAN_VALUE = 0x78563412;
 	
 	/**
@@ -88,22 +103,58 @@ public class BasicDexFileReader {
 	 */
 	public int linkTableSize;
 	
+	/**
+	 * Size of string ids table
+	 */
 	protected int stringIdsSize;
-	protected int stringIdsOffset; // Offset of the String Ids list.
+	/**
+	 * Offset of string ids table
+	 */
+	protected int stringIdsOffset; 
 	
+	/**
+	 * Size of type ids table
+	 */
 	protected int typeIdsSize;
+	/**
+	 * Offset of type ids table
+	 */
 	protected int typeIdsOffset;
 
+	/**
+	 * Size of prototypes ids table
+	 */
 	protected int protoIdsSize;
+	/**
+	 * Offset of prototype ids table
+	 */
 	protected int protoIdsOffset;
 
+	/**
+	 * Size of field ids table
+	 */
 	protected int fieldIdsSize;
+	/**
+	 * Offset of field ids table
+	 */
 	protected int fieldIdsOffset;
 
+	/**
+	 * Size of method ids table
+	 */
 	protected int methodIdsSize;
+	/**
+	 * Offset of method ids table
+	 */
 	protected int methodIdsOffset;
 
+	/**
+	 * Size of class definition table
+	 */
 	protected int classDefinitionsSize; // Class_defs_size in the documentation.
+	/**
+	 * Offset of class definition table
+	 */
 	protected int classDefinitionsOffset;
 	
 	/**
@@ -123,8 +174,8 @@ public class BasicDexFileReader {
 	}
 
 	/**
-	 * Takes an input stream corresponding to a Dex file and populate the structure.
-	 * @param inputStream input stream of the Dex file to parse.
+	 * Takes a byte array corresponding to a Dex file and populate the structure.
+	 * @param dexBytes the code
 	 * @throws IOException
 	 */
 	public void parse(byte[] dexBytes) throws IllegalArgumentException, IOException /*, RefNotFoundException */ {
@@ -348,7 +399,7 @@ public class BasicDexFileReader {
 	// ------------------------------------
 	/**
 	 * Endianess of the file
-	 * @return
+	 * @return true if standard endian
 	 */
 	public boolean isStandardEndian() {
 		return isStandardEndian;
@@ -356,7 +407,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of string ids in the pool
-	 * @return
+	 * @return number
 	 */
 	public int getStringIdsSize() {
 		return stringIdsSize;
@@ -364,7 +415,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of string table
-	 * @return
+	 * @return position
 	 */
 	public int getStringIdsOffset() {
 		return stringIdsOffset;
@@ -372,7 +423,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of type ids.
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getTypeIdsSize() {
 		return typeIdsSize;
@@ -380,7 +431,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of type id table
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getTypeIdsOffset() {
 		return typeIdsOffset;
@@ -388,7 +439,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of prototype ids
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getProtoIdsSize() {
 		return protoIdsSize;
@@ -396,7 +447,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of prototype ids table
-	 * @return
+	 * @return offset
 	 */
 	public int getProtoIdsOffset() {
 		return protoIdsOffset;
@@ -404,7 +455,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of field declaration
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getFieldIdsSize() {
 		return fieldIdsSize;
@@ -412,7 +463,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of the field table
-	 * @return
+	 * @return offset
 	 */
 	public int getFieldIdsOffset() {
 		return fieldIdsOffset;
@@ -420,7 +471,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of methods declared
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getMethodIdsSize() {
 		return methodIdsSize;
@@ -428,7 +479,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of the method table
-	 * @return
+	 * @return offset
 	 */
 	public int getMethodIdsOffset() {
 		return methodIdsOffset;
@@ -436,7 +487,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Number of class declaration
-	 * @return
+	 * @return positive or null number
 	 */
 	public int getClassDefinitionsSize() {
 		return classDefinitionsSize;
@@ -444,7 +495,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Position of the class table
-	 * @return
+	 * @return offset
 	 */
 	public int getClassDefinitionsOffset() {
 		return classDefinitionsOffset;
@@ -452,7 +503,7 @@ public class BasicDexFileReader {
 
 	/**
 	 * Version of the format used by the file
-	 * @return
+	 * @return enumeration
 	 */
 	public byte[] getFormatVersionNumber() {
 		return formatVersionNumber;

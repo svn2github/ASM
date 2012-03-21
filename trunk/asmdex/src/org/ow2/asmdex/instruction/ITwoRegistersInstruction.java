@@ -40,12 +40,12 @@ public interface ITwoRegistersInstruction {
 	
 	/**
 	 * Gets the index of first register
-	 * @return
+	 * @return index
 	 */
 	int getRegisterA();
 	/**
 	 * Gets the index of second register
-	 * @return
+	 * @return index
 	 */
 	int getRegisterB();
 }

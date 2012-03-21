@@ -213,7 +213,7 @@ public class ByteVector {
 
     /**
      * The byte vector is <i>not</i> enlarged if necessary.
-     * @param i an int.
+     * @param s an int.
      * @param position position in byte in the byte vector.
      * @return this byte vector.
      */

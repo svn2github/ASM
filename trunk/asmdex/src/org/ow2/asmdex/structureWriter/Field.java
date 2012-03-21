@@ -112,7 +112,7 @@ public class Field implements Comparable<Field>, IAnnotationsHolder {
 	 * @param access the access flags of the Field.
 	 * @param signature the Signature of the field. May be Null.
 	 * @param value the value of the Field, or Null for non-static Fields.
-	 * @param ConstantPool the Constant Pool.
+	 * @param constantPool the Constant Pool.
 	 */
 	public void init( int access, String[] signature, Object value, ConstantPool constantPool) {
 		this.access = access;

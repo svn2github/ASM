@@ -85,7 +85,7 @@ public class MethodNode extends MethodVisitor {
      * The default value of this annotation interface method. This field must be
      * a {@link Byte}, {@link Boolean}, {@link Character}, {@link Short},
      * {@link Integer}, {@link Long}, {@link Float}, {@link Double},
-     * {@link String} or {@link Type}, or an two elements String array (for
+     * {@link String} , or an two elements String array (for
      * enumeration values), a {@link AnnotationNode}, or a {@link List} of
      * values of one of the preceding types. May be <tt>null</tt>.
      */
@@ -147,7 +147,7 @@ public class MethodNode extends MethodVisitor {
      * @param access the method's access flags (see {@link Opcodes}). This
      *        parameter also indicates if the method is synthetic.
      * @param name the method's name.
-     * @param desc the method's descriptor (see {@link Type}).
+     * @param desc the method's descriptor .
      * @param signature the method's signature. May be <tt>null</tt>.
      * @param exceptions the internal names of the method's exception classes.
      *        May be <tt>null</tt>.

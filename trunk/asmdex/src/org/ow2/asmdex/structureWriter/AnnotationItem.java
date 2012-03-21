@@ -44,7 +44,7 @@ import org.ow2.asmdex.Opcodes;
  * the visibility and the Type of the Annotation.
  * 
  * An annotation_item is used to represent the various fields of an Annotation :
- * @ MyAnnotation(a=5, b=true)
+ * {@literal @}MyAnnotation(a=5, b=true)
  * myItem.
  * 
  * Equals and HashCode are overridden so that they can be rightly stored into a HashSet.

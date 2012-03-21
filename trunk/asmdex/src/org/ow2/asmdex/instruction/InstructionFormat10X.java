@@ -32,7 +32,6 @@
 package org.ow2.asmdex.instruction;
 
 import org.ow2.asmdex.lowLevelUtils.ByteVector;
-import org.ow2.asmdex.lowLevelUtils.IDalvikValueReader;
 import org.ow2.asmdex.structureWriter.ConstantPool;
 
 /**
@@ -47,18 +46,7 @@ public class InstructionFormat10X extends Instruction {
 	 */
 	private static final int INSTRUCTION_SIZE = 2;
 	
-	/**
-	 * Constructor of the Instruction, using a Reader to parse its bytecode.
-	 * @param reader reader on the Instruction to parse, pointing after the 16-bit opcode.
-	 * @param opcode 16-bit opcode.
-	 */
-//	public InstructionFormat10X(IDalvikValueReader reader, int opcode) {
-//		super(opcode);
-//	}
-	
-	public static void skip(IDalvikValueReader reader) {
-	}
-	
+
 	/**
 	 * Constructor of the Instruction by providing all the elements it's composed of.
 	 * @param opcode 8 or 16 bits opcode.

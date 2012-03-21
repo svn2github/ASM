@@ -40,7 +40,7 @@ public interface IOneRegisterInstruction {
 	
 	/**
 	 * The index of the register (called A value in Dalvik documentation)
-	 * @return
+	 * @return regoster A index
 	 */
 	int getRegisterA();
 }

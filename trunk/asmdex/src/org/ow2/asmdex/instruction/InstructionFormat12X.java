@@ -76,7 +76,7 @@ public class InstructionFormat12X extends Instruction implements ITwoRegistersIn
 	 * Constructor of the Instruction by providing all the elements it's composed of.
 	 * @param opcode 8 or 16 bits opcode.
 	 * @param destinationRegister the destination register.
-	 * @param register the register.
+	 * @param var the register.
 	 */
 	public InstructionFormat12X(int opcode, int destinationRegister, int var) {
 		super(opcode);
