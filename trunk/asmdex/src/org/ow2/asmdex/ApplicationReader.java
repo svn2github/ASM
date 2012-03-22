@@ -1335,7 +1335,9 @@ public class ApplicationReader {
 				int i = name.lastIndexOf('$');
 				// Reconstruction of the innerName and outerName.
 				String innerName = name.substring(i + 1, name.length() - 1); // Removes also the ";" at the end.
-				String outerName = name.substring(0, i) + ";"; // Adds the ";" at the end.
+				// Obfuscators may remove mention of the inner name. We must cope with it.
+				String outerName = 
+					(i<0) ? null : name.substring(0, i) + ";"; // Adds the ";" at the end.
 				classVisitor.visitInnerClass(name, outerName, innerName, accessFlags);
 			}
     	}
