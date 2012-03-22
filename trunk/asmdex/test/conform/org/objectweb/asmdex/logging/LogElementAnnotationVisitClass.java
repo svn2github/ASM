@@ -37,7 +37,10 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementAnnotationVisitClass extends LogElement {
 
+	/** The annotation name. */
 	protected String annotationName;
+	
+	/** The class name. */
 	protected String className;
 	
 	/**

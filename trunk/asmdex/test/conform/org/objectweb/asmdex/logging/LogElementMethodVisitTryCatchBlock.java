@@ -39,9 +39,16 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitTryCatchBlock extends LogElement {
 
+	/** Start. */
 	protected Label start;
+	
+	/** End. */
 	protected Label end;
+	
+	/** The handler. */
 	protected Label handler;
+	
+	/** The type. */
 	protected String type;
 	
 	/**

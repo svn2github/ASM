@@ -280,7 +280,7 @@ public class TestUtil {
 	 * Reads a file and return its content as a byte array.
 	 * @param file the file to load.
 	 * @return the byte array of its content.
-	 * @throws IOException 
+	 * 
 	 */
 	public static byte[] readFile(File file) {
 		byte[] bytes = null;
@@ -561,7 +561,6 @@ public class TestUtil {
 	/**
 	 * Run baksmali with a given set of arguments. org.jf.baksmali.main.main
 	 * @param args
-	 * @return
 	 */
 	public static void baksmali(String [] args) throws IOException {
 		File file = new File(BAKSMALI_JAR);

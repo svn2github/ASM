@@ -39,7 +39,10 @@ import java.util.Arrays;
  */
 public class LogElementMethodVisitMultiANewArrayInsn extends LogElement {
 
+	/** The description. */
 	protected String desc;
+	
+	/** The registers. */
 	protected int[] registers;
 	
 	/**

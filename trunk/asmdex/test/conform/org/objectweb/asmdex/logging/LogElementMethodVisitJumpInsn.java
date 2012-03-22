@@ -39,9 +39,16 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitJumpInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The label. */
 	protected Label label;
+	
+	/** The register a. */
 	protected int registerA;
+	
+	/** The register b. */
 	protected int registerB;
 	
 	/**

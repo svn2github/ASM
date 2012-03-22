@@ -81,7 +81,7 @@ public class TryCatch {
 	
 	/**
 	 * Label of first instruction protected
-	 * @return
+	 * @return label of first instruction
 	 */
 	public Label getStart() {
 		return start;
@@ -89,7 +89,7 @@ public class TryCatch {
 	
 	/**
 	 * Label of last instruction protected
-	 * @return
+	 * @return label of last instruction
 	 */
 	public Label getEnd() {
 		return end;
@@ -97,7 +97,7 @@ public class TryCatch {
 	
 	/**
 	 * Label of exception handler
-	 * @return
+	 * @return label of handler
 	 */
 	public Label getHandler() {
 		return handler;
@@ -105,7 +105,7 @@ public class TryCatch {
 	
 	/**
 	 * Type of the exception caught
-	 * @return
+	 * @return type name
 	 */
 	public String getType() {
 		return type;

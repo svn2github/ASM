@@ -39,7 +39,10 @@ import java.lang.reflect.Array;
  */
 public class LogElementAnnotationVisit extends LogElement {
 
+	/** The name. */
 	protected String name;
+	
+	/** The value. */
 	protected Object value;
 
 	@Override

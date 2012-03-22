@@ -63,7 +63,7 @@ public class PackedSwitch implements ISwitchCase {
 
 	/**
 	 * Minimum value getter
-	 * @return
+	 * @return minimal value filtered
 	 */
 	public int getValueMin() {
 		return valueMin;
@@ -78,7 +78,7 @@ public class PackedSwitch implements ISwitchCase {
 
 	/**
 	 * Max value getter
-	 * @return
+	 * @return max value filtered
 	 */
 	public int getValueMax() {
 		return valueMax;

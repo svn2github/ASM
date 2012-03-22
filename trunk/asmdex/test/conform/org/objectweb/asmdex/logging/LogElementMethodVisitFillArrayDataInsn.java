@@ -39,7 +39,10 @@ import java.util.Arrays;
  */
 public class LogElementMethodVisitFillArrayDataInsn extends LogElement {
 
+	/** The array reference. */
 	protected int arrayReference;
+	
+	/** The array data. */
 	protected Object[] arrayData;
 	
 	/**

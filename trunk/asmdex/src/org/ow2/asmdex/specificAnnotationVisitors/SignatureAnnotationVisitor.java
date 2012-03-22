@@ -46,7 +46,7 @@ public class SignatureAnnotationVisitor extends AnnotationVisitor {
 	private List<String> signature = new ArrayList<String>();
 	/**
 	 * signature.
-	 * @return
+	 * @return list of string coding the signature
 	 */
 	public List<String> getSignature() {
 		return signature;

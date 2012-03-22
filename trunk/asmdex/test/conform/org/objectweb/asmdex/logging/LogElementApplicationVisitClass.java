@@ -39,10 +39,19 @@ import java.util.Arrays;
  */
 public class LogElementApplicationVisitClass extends LogElement {
 
+	/** The access flags. */
 	protected int access;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The signature. */
 	protected String[] signature;
+	
+	/** The name of super. */
 	protected String superName;
+	
+	/** The interfaces. */
 	protected String[] interfaces;
 	
 	@Override

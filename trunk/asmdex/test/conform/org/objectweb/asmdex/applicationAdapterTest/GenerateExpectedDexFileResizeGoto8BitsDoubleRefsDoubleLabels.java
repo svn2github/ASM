@@ -50,7 +50,7 @@ public class GenerateExpectedDexFileResizeGoto8BitsDoubleRefsDoubleLabels implem
 
 	/**
 	 * Generate the dex file
-	 * @return
+	 * @return byte code
 	 */
 	public static byte[] generate() {
 	

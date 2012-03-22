@@ -37,9 +37,16 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitArrayOperationInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The value register. */
 	protected int valueRegister;
+	
+	/** The array register. */
 	protected int arrayRegister;
+	
+	/** The index register. */
 	protected int indexRegister;
 	
 	/**

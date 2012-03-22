@@ -39,10 +39,19 @@ import java.util.Arrays;
  */
 public class LogElementClassVisitField extends LogElement {
 
+	/** The access flags. */
 	protected int access;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The description. */
 	protected String desc;
+	
+	/** The signature. */
 	protected String[] signature;
+	
+	/** The value. */
 	protected Object value;
 	
 	@Override

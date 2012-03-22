@@ -37,6 +37,7 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitMaxs extends LogElement {
 
+	/** max stack. */
 	protected int maxStack;
 	
 	/**

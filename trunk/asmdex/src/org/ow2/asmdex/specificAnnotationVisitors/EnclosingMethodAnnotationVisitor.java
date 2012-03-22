@@ -43,7 +43,7 @@ public class EnclosingMethodAnnotationVisitor extends AnnotationVisitor {
 	int methodId;
 	/**
 	 * Get the class index in the class pool
-	 * @return
+	 * @return class index
 	 */
 	public int getClassId() { return methodId; }
 	

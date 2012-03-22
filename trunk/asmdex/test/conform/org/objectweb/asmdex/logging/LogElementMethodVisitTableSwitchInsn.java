@@ -50,10 +50,19 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitTableSwitchInsn extends LogElement {
 
+	/** The register. */
 	protected int register;
+	
+	/** The min. */
 	protected int min;
+	
+	/** The max. */
 	protected int max;
+	
+	/** The default. */
 	protected Label dflt;
+	
+	/** The labels. */
 	protected Label[] labels;
 	
 	/**

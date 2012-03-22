@@ -57,7 +57,7 @@ public class FieldIdItem {
 	
 	/**
 	 * Class index in the global class pool
-	 * @return
+	 * @return index
 	 */
 	public int getClassIndex() {
 		return classIndex;
@@ -65,7 +65,7 @@ public class FieldIdItem {
 
 	/**
 	 * Type index in the type pool
-	 * @return
+	 * @return index
 	 */
 	public int getTypeIndex() {
 		return typeIndex;
@@ -73,7 +73,7 @@ public class FieldIdItem {
 
 	/**
 	 * Name index in the string pool
-	 * @return
+	 * @return index
 	 */
 	public int getNameIndex() {
 		return nameIndex;

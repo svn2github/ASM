@@ -48,7 +48,7 @@ public class ExceptionAnnotationVisitor extends AnnotationVisitor {
 	private List<String> classNames = new ArrayList<String>();
 	/**
 	 * Get the class names of exceptions.
-	 * @return
+	 * @return names of exceptions
 	 */
 	public List<String> getClassNames() {
 		return classNames;

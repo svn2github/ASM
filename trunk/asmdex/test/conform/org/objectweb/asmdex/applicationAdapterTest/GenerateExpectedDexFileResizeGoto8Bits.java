@@ -48,7 +48,7 @@ public class GenerateExpectedDexFileResizeGoto8Bits implements Opcodes {
 
 	/**
 	 * Generate the dex file
-	 * @return
+	 * @return byte code
 	 */
 	public static byte[] generate() {
 	

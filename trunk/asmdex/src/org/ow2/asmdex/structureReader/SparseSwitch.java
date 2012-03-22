@@ -59,7 +59,7 @@ public class SparseSwitch implements ISwitchCase {
 	
 	/**
 	 * Set of values handled.
-	 * @return
+	 * @return the values filtered as an array of integer
 	 */
 	public int[] getKeys() {
 		return keys;

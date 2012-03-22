@@ -37,7 +37,10 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitArrayLengthInsn extends LogElement {
 
+	/** The destination register. */
 	protected int destinationRegister;
+	
+	/** The array reference bearing. */
 	protected int arrayReferenceBearing;
 	
 	/**

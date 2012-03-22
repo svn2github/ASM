@@ -37,11 +37,22 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitFieldInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The owner. */
 	protected String owner;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The desc. */
 	protected String desc;
+	
+	/** The value register. */
 	protected int valueRegister;
+	
+	/** The object register. */
 	protected int objectRegister;
 	
 	/**

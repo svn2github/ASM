@@ -39,6 +39,7 @@ import java.util.Arrays;
  */
 public class LogElementMethodVisitParameters extends LogElement {
 
+	/** The parameters. */
 	protected String[] parameters;
 	
 	/**

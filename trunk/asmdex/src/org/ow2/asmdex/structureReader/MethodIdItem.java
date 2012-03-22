@@ -60,21 +60,21 @@ public class MethodIdItem {
 	
 	/**
 	 * Accessor of class index in class pool
-	 * @return
+	 * @return index
 	 */
 	public int getClassIndex() {
 		return classIndex;
 	}
 	/**
 	 * Accessor of prototype index in prototype pool
-	 * @return
+	 * @return index
 	 */
 	public int getPrototypeIndex() {
 		return prototypeIndex;
 	}
 	/**
 	 * Accessor of name index in string pool
-	 * @return
+	 * @return index
 	 */
 	public int getNameIndex() {
 		return nameIndex;

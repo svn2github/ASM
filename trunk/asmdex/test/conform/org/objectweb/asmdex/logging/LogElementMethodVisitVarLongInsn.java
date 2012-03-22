@@ -37,8 +37,13 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitVarLongInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The destination register. */
 	protected int destinationRegister;
+	
+	/** The variable. */
 	protected long var;
 	
 	/**

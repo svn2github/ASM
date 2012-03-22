@@ -39,6 +39,7 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitLabel extends LogElement {
 
+	/** The label. */
 	protected Label label;
 	
 	/**

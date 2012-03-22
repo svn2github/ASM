@@ -37,8 +37,13 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitParameterAnnotation extends LogElement {
 
+	/** The parameter. */
 	protected int parameter;
+	
+	/** The description. */
 	protected String desc;
+	
+	/** The visible. */
 	protected boolean visible;
 	
 	/**

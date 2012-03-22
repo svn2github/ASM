@@ -39,7 +39,10 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitLineNumber extends LogElement {
 
+	/** The line. */
 	protected int line;
+	
+	/** The label. */
 	protected Label label;
 	
 	/**

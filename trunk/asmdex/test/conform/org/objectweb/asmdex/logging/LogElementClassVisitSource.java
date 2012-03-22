@@ -37,6 +37,7 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementClassVisitSource extends LogElement {
 
+	/** The source. */
 	protected String source;
 
 	@Override

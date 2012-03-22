@@ -47,7 +47,7 @@ public class GenerateDexFileShiftedSwitchCase implements Opcodes {
 
 	/**
 	 * Generate the dex file.
-	 * @return
+	 * @return code
 	 */
 	public static byte[] generate() {
 	

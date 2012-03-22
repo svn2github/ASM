@@ -32,6 +32,7 @@ package org.objectweb.asmdex.logging;
 
 import java.util.Arrays;
 
+// TODO: Auto-generated Javadoc
 /**
  * LogElement for the Visit of Method of a Class.
  * 
@@ -39,11 +40,21 @@ import java.util.Arrays;
  */
 public class LogElementClassVisitMethod extends LogElement {
 
+	/** The access. */
 	protected int access;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The description. */
 	protected String desc;
+	
+	/** The signature. */
 	protected String[] signature;
+	
+	/** The exceptions. */
 	protected String[] exceptions;
+	
 	
 	@Override
 	public ElementType getType() {
@@ -51,12 +62,13 @@ public class LogElementClassVisitMethod extends LogElement {
 	}
 	
 	/**
-	 * Constructor
-	 * @param access
-	 * @param name
-	 * @param desc
-	 * @param signature
-	 * @param exceptions
+	 * Constructor.
+	 *
+	 * @param access the access
+	 * @param name the name
+	 * @param desc the desc
+	 * @param signature the signature
+	 * @param exceptions the exceptions
 	 */
 	public LogElementClassVisitMethod(int access, String name, String desc,
 			String[] signature, String[] exceptions) {
@@ -67,6 +79,9 @@ public class LogElementClassVisitMethod extends LogElement {
 		this.exceptions = exceptions;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.objectweb.asmdex.logging.LogElement#isElementEqual(org.objectweb.asmdex.logging.LogElement)
+	 */
 	@Override
 	public boolean isElementEqual(LogElement e) {
 		LogElementClassVisitMethod a = (LogElementClassVisitMethod)e;

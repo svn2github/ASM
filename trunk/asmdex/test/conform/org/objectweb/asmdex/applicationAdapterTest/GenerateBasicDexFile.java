@@ -46,8 +46,8 @@ import org.ow2.asmdex.structureCommon.*;
 public class GenerateBasicDexFile implements Opcodes {
 
 	/**
-	 * Constructor
-	 * @return
+	 * generator
+	 * @return code.
 	 */
 	public static byte[] generate() {
 	

@@ -74,56 +74,56 @@ public class ClassDefinitionItem {
 	
 	/**
 	 * Index of the class in the class pool
-	 * @return
+	 * @return index
 	 */
 	public int getClassIndex() {
 		return classIndex;
 	}
 	/**
 	 * Access flags coded as a bit field
-	 * @return
+	 * @return access flags as in java/dalvik spec
 	 */
 	public int getAccessFlags() {
 		return accessFlags;
 	}
 	/**
 	 * Index of super class in the class pool
-	 * @return
+	 * @return index
 	 */
 	public int getSuperclassIndex() {
 		return superclassIndex;
 	}
 	/**
 	 * Position of interface definitions as an offset
-	 * @return
+	 * @return absolute offset
 	 */
 	public int getInterfacesOffset() {
 		return interfacesOffset;
 	}
 	/**
 	 * Index of source file name in string pool
-	 * @return
+	 * @return index
 	 */
 	public int getSourceFileIndex() {
 		return sourceFileIndex;
 	}
 	/**
 	 * Offset of annotation definitions for the class
-	 * @return
+	 * @return offset
 	 */
 	public int getAnnotationsOffset() {
 		return annotationsOffset;
 	}
 	/**
 	 * Offset of class content
-	 * @return
+	 * @return offset
 	 */
 	public int getClassDataOffset() {
 		return classDataOffset;
 	}
 	/**
 	 * Offset for declarations of static values.
-	 * @return
+	 * @return offset
 	 */
 	public int getStaticValuesOffset() {
 		return staticValuesOffset;

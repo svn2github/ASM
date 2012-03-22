@@ -39,10 +39,19 @@ import java.util.Arrays;
  */
 public class LogElementMethodVisitMethodInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The owner. */
 	protected String owner;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The description. */
 	protected String desc;
+	
+	/** The arguments. */
 	protected int[] arguments;
 	
 	/**

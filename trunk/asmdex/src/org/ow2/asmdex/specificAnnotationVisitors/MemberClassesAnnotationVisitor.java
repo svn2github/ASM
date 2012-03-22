@@ -46,7 +46,7 @@ public class MemberClassesAnnotationVisitor extends AnnotationVisitor {
 	private List<String> innerClasses = new ArrayList<String>();
 	/**
 	 * List of inner classes.
-	 * @return
+	 * @return list of names
 	 */
 	public List<String> getInnerClasses() {
 		return innerClasses;

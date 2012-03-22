@@ -41,12 +41,25 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitLocalVariableList extends LogElement {
 
+	/** The name. */
 	protected String name;
+	
+	/** The description. */
 	protected String desc;
+	
+	/** The signature. */
 	protected String signature;
+	
+	/** The start label. */
 	protected Label start;
+	
+	/** The ends labels. */
 	protected List<Label> ends;
+	
+	/** The restarts labels. */
 	protected List<Label> restarts;
+	
+	/** The index. */
 	protected int index;
 	
 	/**

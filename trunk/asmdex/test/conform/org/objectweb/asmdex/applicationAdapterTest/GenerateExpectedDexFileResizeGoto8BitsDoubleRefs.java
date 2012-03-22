@@ -49,7 +49,7 @@ public class GenerateExpectedDexFileResizeGoto8BitsDoubleRefs implements Opcodes
 
 	/**
 	 * Generate the dex file
-	 * @return
+	 * @return byte code
 	 */
 	public static byte[] generate() {
 	

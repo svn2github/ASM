@@ -37,10 +37,19 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementMethodVisitTypeInsn extends LogElement {
 
+	/** The opcode. */
 	protected int opcode;
+	
+	/** The destination register. */
 	protected int destinationRegister;
+	
+	/** The reference bearing register. */
 	protected int referenceBearingRegister;
+	
+	/** The size register. */
 	protected int sizeRegister;
+	
+	/** The type. */
 	protected String type;
 
 	/**

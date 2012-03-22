@@ -45,9 +45,16 @@ import org.ow2.asmdex.structureCommon.Label;
  */
 public class LogElementMethodVisitLookupSwitchInsn extends LogElement {
 
+	/** The register. */
 	protected int register;
+	
+	/** The default label. */
 	protected Label dflt;
+	
+	/** The keys. */
 	protected int[] keys;
+	
+	/** The labels. */
 	protected Label[] labels;
 	
 	/**

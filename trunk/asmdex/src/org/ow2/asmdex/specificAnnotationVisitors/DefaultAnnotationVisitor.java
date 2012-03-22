@@ -47,7 +47,7 @@ public class DefaultAnnotationVisitor extends AnnotationVisitor {
 	
 	/**
 	 * Get the information.
-	 * @return
+	 * @return list of info
 	 */
 	public List<DefaultAnnotationInformation> getDefaultAnnotationInformationList() {
 		return infos;
@@ -57,7 +57,7 @@ public class DefaultAnnotationVisitor extends AnnotationVisitor {
 	
 	/**
 	 * Get the description
-	 * @return
+	 * @return description
 	 */
 	public String getDesc() {
 		return desc;

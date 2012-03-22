@@ -37,6 +37,7 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementAnnotationVisitArray extends LogElement {
 
+	/** The name. */
 	protected String name;
 	
 	/**

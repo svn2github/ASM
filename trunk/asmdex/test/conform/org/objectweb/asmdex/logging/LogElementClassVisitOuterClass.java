@@ -37,8 +37,13 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementClassVisitOuterClass extends LogElement {
 
+	/** The owner. */
 	protected String owner;
+	
+	/** The name. */
 	protected String name;
+	
+	/** The description. */
 	protected String desc;
 	
 	@Override

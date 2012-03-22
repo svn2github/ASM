@@ -37,7 +37,10 @@ package org.objectweb.asmdex.logging;
  */
 public class LogElementAnnotationVisitAnnotation extends LogElement {
 
+	/** The name. */
 	protected String name;
+	
+	/** The desc. */
 	protected String desc;
 	
 	/**

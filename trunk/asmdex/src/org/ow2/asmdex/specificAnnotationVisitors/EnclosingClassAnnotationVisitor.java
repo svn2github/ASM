@@ -44,7 +44,7 @@ public class EnclosingClassAnnotationVisitor extends AnnotationVisitor {
 	
 	/**
 	 * Get the class name
-	 * @return
+	 * @return complete name
 	 */
 	public String getClassName() {
 		return className;

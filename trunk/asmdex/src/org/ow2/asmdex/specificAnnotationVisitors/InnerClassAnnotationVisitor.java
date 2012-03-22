@@ -45,12 +45,12 @@ public class InnerClassAnnotationVisitor extends AnnotationVisitor {
 	private String simpleName;
 	/**
 	 * Get the access flags as a bitset
-	 * @return
+	 * @return integer coding the bitset
 	 */
 	public int getAccess() { return access; }
 	/**
 	 * Get the simple name
-	 * @return
+	 * @return name
 	 */
 	public String getSimpleName() { return simpleName; }
 
