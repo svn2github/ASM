@@ -32,6 +32,7 @@ package org.objectweb.asmdex.applicationAdapterTest;
 
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that adds NOPs before a switch case code to see if it shifts rightly.
@@ -45,7 +46,7 @@ public class ApplicationAdapterShiftSwitchCase extends ApplicationVisitor {
 	 * @param av
 	 */
 	public ApplicationAdapterShiftSwitchCase(ApplicationVisitor av) {
-		super(av);
+		super(Opcodes.ASM4, av);
 	}
 
 	@Override

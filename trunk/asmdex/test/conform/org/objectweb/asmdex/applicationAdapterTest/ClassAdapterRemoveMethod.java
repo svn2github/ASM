@@ -32,6 +32,7 @@ package org.objectweb.asmdex.applicationAdapterTest;
 
 import org.ow2.asmdex.ClassVisitor;
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that removes "myMethod" from the FirstActivity.
@@ -45,7 +46,7 @@ public class ClassAdapterRemoveMethod extends ClassVisitor {
 	 * @param cv
 	 */
 	public ClassAdapterRemoveMethod(ClassVisitor cv) {
-		super(cv);
+		super(Opcodes.ASM4, cv);
 	}
 
 	@Override

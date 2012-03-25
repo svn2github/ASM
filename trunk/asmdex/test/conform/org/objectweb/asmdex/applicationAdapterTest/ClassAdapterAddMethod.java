@@ -48,7 +48,7 @@ public class ClassAdapterAddMethod extends ClassVisitor {
 	 * @param cv
 	 */
 	public ClassAdapterAddMethod(ClassVisitor cv) {
-		super(cv);
+		super(Opcodes.ASM4, cv);
 	}
 
 	@Override

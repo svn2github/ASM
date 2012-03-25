@@ -48,11 +48,12 @@ public class RegisterShiftMethodAdapter extends MethodVisitor {
 	
 	/**
 	 * Constructor
+	 * @param api api level
 	 * @param mv method adapter
 	 * @param nbRegistersToShift offset of the shift.
 	 */
-	public RegisterShiftMethodAdapter(MethodVisitor mv, int nbRegistersToShift) {
-		super(mv);
+	public RegisterShiftMethodAdapter(int api, MethodVisitor mv, int nbRegistersToShift) {
+		super(api, mv);
 		this.nbRegistersToShift = nbRegistersToShift;
 	}
 

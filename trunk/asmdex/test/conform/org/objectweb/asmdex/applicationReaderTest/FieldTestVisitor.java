@@ -35,6 +35,7 @@ import org.objectweb.asmdex.logging.LogElementFieldVisitEnd;
 import org.objectweb.asmdex.logging.Logger;
 import org.ow2.asmdex.AnnotationVisitor;
 import org.ow2.asmdex.FieldVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Field Visitor used to test the Reader.
@@ -51,6 +52,7 @@ public class FieldTestVisitor extends FieldVisitor {
 	 * @param logger the logger
 	 */
 	public FieldTestVisitor(Logger logger) {
+		super(Opcodes.ASM4);
 		this.logger = logger;
 	}
 	

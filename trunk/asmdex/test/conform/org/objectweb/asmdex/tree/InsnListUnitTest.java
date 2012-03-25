@@ -35,6 +35,7 @@ import java.util.NoSuchElementException;
 import junit.framework.TestCase;
 
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.structureCommon.Label;
 import org.ow2.asmdex.tree.AbstractInsnNode;
 import org.ow2.asmdex.tree.InsnList;
@@ -661,7 +662,7 @@ public class InsnListUnitTest extends TestCase {
         l1.add(new InsnNode(77));
         
         final InsnList lst = new InsnList();
-        l1.accept(new MethodVisitor() {
+        l1.accept(new MethodVisitor(Opcodes.ASM4) {
             @Override
 			public void visitInsn(int opcode) {
                 lst.add(new InsnNode(opcode));

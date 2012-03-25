@@ -46,7 +46,7 @@ public class MethodAdapterAddMethod extends MethodVisitor {
 	 * @param mv the mv
 	 */
 	public MethodAdapterAddMethod(MethodVisitor mv) {
-		super(mv);
+		super(Opcodes.ASM4, mv);
 	}
 
 	@Override

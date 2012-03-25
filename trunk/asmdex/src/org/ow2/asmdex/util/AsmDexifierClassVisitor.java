@@ -48,9 +48,11 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
     /**
      * Constructs a new {@link AsmDexifierClassVisitor} object.
      * 
+     * @param api api level
      * @param nbTabulations number of spaces
      */
-    public AsmDexifierClassVisitor(final int nbTabulations) {
+    public AsmDexifierClassVisitor(int api, final int nbTabulations) {
+    	super(api);
     	pr = new AsmDexPrinter();
         pr.currentTabulation = nbTabulations;
     }
@@ -87,7 +89,7 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(0, pr.currentTabulation + 1);
+		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(api, 0, pr.currentTabulation + 1);
 		pr.addTextToList(av.getTextComponent());
 		
 		pr.addTabulation();
@@ -125,7 +127,7 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierFieldVisitor fv = new AsmDexifierFieldVisitor(pr.currentTabulation + 1);
+		AsmDexifierFieldVisitor fv = new AsmDexifierFieldVisitor(api, pr.currentTabulation + 1);
 		pr.addTextToList(fv.getTextComponent());
 		
 		pr.addTabulation();
@@ -163,7 +165,7 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierMethodVisitor mv = new AsmDexifierMethodVisitor(pr.currentTabulation + 1);
+		AsmDexifierMethodVisitor mv = new AsmDexifierMethodVisitor(api, pr.currentTabulation + 1);
 		pr.addTextToList(mv.getTextComponent());
 		
 		pr.addTabulation();

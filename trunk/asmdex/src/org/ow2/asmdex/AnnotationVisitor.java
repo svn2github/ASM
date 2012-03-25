@@ -51,6 +51,11 @@ package org.ow2.asmdex;
  */
 public abstract class AnnotationVisitor {
 
+	/**
+	 * The ASM API version implemented by this visitor.
+	 */
+	final protected int api;
+
     /**
      * The annotation visitor to which this visitor must delegate method calls.
      * May be null.
@@ -61,7 +66,9 @@ public abstract class AnnotationVisitor {
      * Constructs a new {@link AnnotationVisitor}.
      *
      */
-    public AnnotationVisitor() { }
+    public AnnotationVisitor(final int api) { 
+    	this.api = api;
+    }
 
     /**
      * Constructs a new {@link AnnotationVisitor}.
@@ -69,7 +76,8 @@ public abstract class AnnotationVisitor {
      * @param av the annotation visitor to which this visitor must delegate
      *        method calls. May be null.
      */
-    public AnnotationVisitor(final AnnotationVisitor av) {
+    public AnnotationVisitor(final int api, final AnnotationVisitor av) {
+    	this.api = api;
         this.av = av;
     }
     /**

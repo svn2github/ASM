@@ -30,7 +30,7 @@
  */
 package org.objectweb.asmdex;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +40,7 @@ import java.io.PrintWriter;
 
 import org.junit.Test;
 import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
 
 /**
@@ -141,9 +142,9 @@ public class AsmDexifierTest {
 		packageStr = packageStr.replace('/', '.');
 		packageStr = packageStr.substring(0, packageStr.length() - 1);
 		AsmDexifierApplicationVisitor ad = new AsmDexifierApplicationVisitor(
-				new PrintWriter(out), packageStr, TestUtil.TEMP_FOLDER_ROOT);
+				Opcodes.ASM4, new PrintWriter(out), packageStr, TestUtil.TEMP_FOLDER_ROOT);
 		AsmDexifierApplicationVisitor.setDexFileName("Test");
-		ApplicationReader ar = new ApplicationReader(dexFile);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, dexFile);
         ar.accept(ad, null, 0);
         
         // Compiles the file and executes it through the main method. A dex file is created.

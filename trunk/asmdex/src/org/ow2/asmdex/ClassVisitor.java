@@ -62,11 +62,16 @@ public abstract class ClassVisitor {
      * be null.
 	 */
 	protected ClassVisitor cv;
-	
+
+	/**
+	 * The ASM API version implemented by this visitor.
+	 */
+	final protected int api;
+
 	/**
      * Constructs a new {@link ClassVisitor}.
      */
-    public ClassVisitor() { }
+    public ClassVisitor(final int api) { this.api = api; }
     
     /**
      * Constructs a new {@link ClassVisitor}.
@@ -74,7 +79,8 @@ public abstract class ClassVisitor {
      * @param cv the class visitor to which this visitor must delegate method
      *        calls. May be null.
      */
-    public ClassVisitor(final ClassVisitor cv) {
+    public ClassVisitor(final int api, final ClassVisitor cv) {
+    	this.api = api;
         this.cv = cv;
     }
 

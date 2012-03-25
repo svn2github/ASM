@@ -41,6 +41,15 @@ import org.ow2.asmdex.AnnotationVisitor;
 public class EnclosingMethodAnnotationVisitor extends AnnotationVisitor {
 	
 	int methodId;
+	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public EnclosingMethodAnnotationVisitor(int api) {
+		super(api);
+	}
+
 	/**
 	 * Get the class index in the class pool
 	 * @return class index

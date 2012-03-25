@@ -38,6 +38,7 @@ import org.objectweb.asmdex.logging.LogElementAnnotationVisitEnum;
 import org.objectweb.asmdex.logging.LogElementAnnotationVisitClass;
 import org.objectweb.asmdex.logging.Logger;
 import org.ow2.asmdex.AnnotationVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Annotation Visitor used to test the Reader.
@@ -54,6 +55,7 @@ public class AnnotationTestVisitor extends AnnotationVisitor {
 	 * @param logger the logger
 	 */
 	public AnnotationTestVisitor(Logger logger) {
+		super(Opcodes.ASM4);
 		this.logger = logger;
 	}
 	

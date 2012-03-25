@@ -43,6 +43,7 @@ import org.ow2.asmdex.AnnotationVisitor;
 import org.ow2.asmdex.ClassVisitor;
 import org.ow2.asmdex.FieldVisitor;
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Class Visitor used to test the Reader.
@@ -59,6 +60,7 @@ public class ClassTestVisitor extends ClassVisitor {
 	 * @param logger the logger
 	 */
 	public ClassTestVisitor(Logger logger) {
+		super(Opcodes.ASM4);
 		this.logger = logger;
 	}
 	

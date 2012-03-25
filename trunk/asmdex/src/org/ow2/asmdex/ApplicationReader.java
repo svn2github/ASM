@@ -181,6 +181,7 @@ public class ApplicationReader {
      */
     private static enum VisitorType { classVisitor, methodVisitor, fieldVisitor };
     
+    protected int api;
     
     // ------------------------------------------------------------------------
     // Constructors
@@ -190,8 +191,8 @@ public class ApplicationReader {
      * Constructs a new {@link ApplicationReader} object.
      * @param byteCode the bytecode of the application to be read.
      */
-    public ApplicationReader(final byte[] byteCode) {
-    	this(byteCode, 0, byteCode.length);
+    public ApplicationReader(final int api, final byte[] byteCode) {
+    	this(api, byteCode, 0, byteCode.length);
     }
     
     /**
@@ -200,7 +201,7 @@ public class ApplicationReader {
      * @param startOffset the start offset of the application data.
      * @param length the length of the application data.
      */
-    public ApplicationReader(final byte[] byteCode, final int startOffset, final int length) {  	
+    public ApplicationReader(final int api, final byte[] byteCode, final int startOffset, final int length) {  	
   	
     	// Uses the byteCode array as-is for parsing the header, unless an
     	// offset and different length were requested, in which case we
@@ -227,8 +228,8 @@ public class ApplicationReader {
      * @param inputStream an input stream from which to read the application.
      * @throws IOException if a problem occurs during reading.
      */
-    public ApplicationReader(final InputStream inputStream ) throws IOException {   	
-        this(readApplication(inputStream));
+    public ApplicationReader(final int api, final InputStream inputStream ) throws IOException {   	
+        this(api, readApplication(inputStream));
     }
 
     /**
@@ -236,9 +237,9 @@ public class ApplicationReader {
      * @param fileName name and path of the application (DEX) to be read.
      * @throws IOException if an exception occurs during reading.
      */
-    public ApplicationReader(final String fileName) throws IOException {
+    public ApplicationReader(int api, final String fileName) throws IOException {
         // Opens as an InputStream the file whose name is given.
-    	this(readApplication(new FileInputStream(new File(fileName))));
+    	this(api, readApplication(new FileInputStream(new File(fileName))));
     }
     
     /**
@@ -246,8 +247,8 @@ public class ApplicationReader {
      * @param file the dex file to be read.
      * @throws IOException if an exception occurs during reading.
      */
-    public ApplicationReader(final File file) throws IOException {
-    	this(readApplication(new FileInputStream(file)));
+    public ApplicationReader(int api, final File file) throws IOException {
+    	this(api, readApplication(new FileInputStream(file)));
     }
     
 
@@ -1247,7 +1248,7 @@ public class ApplicationReader {
     	ISpecificAnnotationParser specificAnnotationParser =
     		new ExceptionSpecificAnnotationParser(Constants.EXCEPTION_ANNOTATION_INTERNAL_NAME);
     	
-    	boolean foundAnnotation = parseSpecificAnnotations(new ExceptionAnnotationVisitor(), specificAnnotationParser);
+    	boolean foundAnnotation = parseSpecificAnnotations(new ExceptionAnnotationVisitor(api), specificAnnotationParser);
     	
     	return foundAnnotation ?
     			((ExceptionSpecificAnnotationParser)specificAnnotationParser).getExceptions()
@@ -1264,7 +1265,7 @@ public class ApplicationReader {
     	ISpecificAnnotationParser specificAnnotationParser =
     		new DefaultAnnotationSpecificAnnotationParser(Constants.ANNOTATION_DEFAULT_INTERNAL_NAME);
     	
-    	boolean foundAnnotation = parseSpecificAnnotations(new DefaultAnnotationVisitor(), specificAnnotationParser);
+    	boolean foundAnnotation = parseSpecificAnnotations(new DefaultAnnotationVisitor(api), specificAnnotationParser);
     	if (foundAnnotation) {
     		// We found a Default Annotation. However, this method was called as we were
     		// visiting a Class. But ASM calls the visitDefaultAnnotation for each Method
@@ -1294,7 +1295,7 @@ public class ApplicationReader {
     	ISpecificAnnotationParser specificAnnotationParser =
     		new SignatureSpecificAnnotationParser(Constants.SIGNATURE_ANNOTATION_INTERNAL_NAME);
     	
-    	boolean foundAnnotation = parseSpecificAnnotations(new SignatureAnnotationVisitor(), specificAnnotationParser);
+    	boolean foundAnnotation = parseSpecificAnnotations(new SignatureAnnotationVisitor(api), specificAnnotationParser);
     	if (foundAnnotation) {
     		result = ((SignatureSpecificAnnotationParser)specificAnnotationParser).getSignature();
     	}
@@ -1313,7 +1314,7 @@ public class ApplicationReader {
     	ISpecificAnnotationParser specificAnnotationParser =
     		new MemberClassesSpecificAnnotationParser(Constants.MEMBER_CLASSES_ANNOTATION_INTERNAL_NAME);
     	
-    	boolean foundAnnotation = parseSpecificAnnotations(new MemberClassesAnnotationVisitor(), specificAnnotationParser);
+    	boolean foundAnnotation = parseSpecificAnnotations(new MemberClassesAnnotationVisitor(api), specificAnnotationParser);
     	if (foundAnnotation) {
 	    	MemberClassesSpecificAnnotationParser parser = (MemberClassesSpecificAnnotationParser)specificAnnotationParser;
 	    	
@@ -1361,8 +1362,8 @@ public class ApplicationReader {
     	ISpecificAnnotationParser enclosingClassSpecificAnnotationParser =
     		new EnclosingClassSpecificAnnotationParser(Constants.ENCLOSING_CLASS_ANNOTATION_INTERNAL_NAME);
 
-    	boolean foundFirstAnnotation = parseSpecificAnnotations(new InnerClassAnnotationVisitor(), innerClassSpecificAnnotationParser);
-    	boolean foundSecondAnnotation = parseSpecificAnnotations(new EnclosingClassAnnotationVisitor(), enclosingClassSpecificAnnotationParser);
+    	boolean foundFirstAnnotation = parseSpecificAnnotations(new InnerClassAnnotationVisitor(api), innerClassSpecificAnnotationParser);
+    	boolean foundSecondAnnotation = parseSpecificAnnotations(new EnclosingClassAnnotationVisitor(api), enclosingClassSpecificAnnotationParser);
 
     	if (foundFirstAnnotation && foundSecondAnnotation) {
 	    	InnerClassSpecificAnnotationParser innerParser = (InnerClassSpecificAnnotationParser)innerClassSpecificAnnotationParser;
@@ -1404,8 +1405,8 @@ public class ApplicationReader {
     	ISpecificAnnotationParser innerClassSpecificAnnotationParser =
     		new InnerClassSpecificAnnotationParser(Constants.INNER_CLASS_ANNOTATION_INTERNAL_NAME);
 
-    	boolean foundFirstAnnotation = parseSpecificAnnotations(new EnclosingMethodAnnotationVisitor(), enclosingMethodSpecificAnnotationParser);
-    	boolean foundSecondAnnotation = parseSpecificAnnotations(new InnerClassAnnotationVisitor(), innerClassSpecificAnnotationParser);
+    	boolean foundFirstAnnotation = parseSpecificAnnotations(new EnclosingMethodAnnotationVisitor(api), enclosingMethodSpecificAnnotationParser);
+    	boolean foundSecondAnnotation = parseSpecificAnnotations(new InnerClassAnnotationVisitor(api), innerClassSpecificAnnotationParser);
     	
     	if (foundFirstAnnotation && foundSecondAnnotation) {
 	    	int methodId = ((EnclosingMethodSpecificAnnotationParser)enclosingMethodSpecificAnnotationParser).getClassId();

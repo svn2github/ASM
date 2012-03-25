@@ -51,9 +51,11 @@ public class AsmDexifierAnnotationVisitor extends AnnotationVisitor {
     /**
      * Constructs a new {@link AsmDexifierAnnotationVisitor}.
      * 
+     * @param api API level
      * @param id identifier of the annotation visitor variable in the produced code.
      */
-    public AsmDexifierAnnotationVisitor(final int id, final int nbTabulations) {
+    public AsmDexifierAnnotationVisitor(final int api, final int id, final int nbTabulations) {
+    	super(api);
         this.id = id;
         pr = new AsmDexPrinter();
         pr.currentTabulation = nbTabulations;
@@ -94,7 +96,7 @@ public class AsmDexifierAnnotationVisitor extends AnnotationVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(id + 1, pr.currentTabulation + 1);
+		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(api, id + 1, pr.currentTabulation + 1);
 		pr.addTextToList(av.getTextComponent());
 		
 		pr.addTabulation();
@@ -125,7 +127,7 @@ public class AsmDexifierAnnotationVisitor extends AnnotationVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(id + 1, pr.currentTabulation + 1);
+		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(api, id + 1, pr.currentTabulation + 1);
 		pr.addTextToList(av.getTextComponent());
 		
 		pr.addTabulation();

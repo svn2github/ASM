@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.ow2.asmdex.AnnotationVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * A node that represents an annotation.
@@ -80,21 +81,42 @@ public class AnnotationNode extends AnnotationVisitor {
     /**
      * Constructs a new {@link AnnotationNode}.
      * 
+     * @param api the API level
      * @param desc the class descriptor of the annotation class.
      */
-    public AnnotationNode(final String desc) {
+    public AnnotationNode(int api, final String desc) {
+    	super(api);
         this.desc = desc;
     }
 
+    /**
+     * Constructs a new {@link AnnotationNode}.
+     * 
+     * @param desc the class descriptor of the annotation class.
+     */
+    public AnnotationNode(final String desc) {
+    	this(Opcodes.ASM4, desc);
+    }
+
+    /**
+     * Constructs a new {@link AnnotationNode} to visit an array value.
+     * 
+     * @param api the API level
+     * @param values where the visited values must be stored.
+     */
+    public AnnotationNode(int api, final List<Object> values) {
+    	super(api);
+        this.values = values;
+    }
+    
     /**
      * Constructs a new {@link AnnotationNode} to visit an array value.
      * 
      * @param values where the visited values must be stored.
      */
     public AnnotationNode(final List<Object> values) {
-        this.values = values;
+    	this(Opcodes.ASM4,values);
     }
-    
     
     // ------------------------------------------------------------------------
     // Visitor Methods.

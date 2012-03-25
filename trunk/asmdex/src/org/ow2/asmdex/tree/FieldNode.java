@@ -37,6 +37,7 @@ import java.util.List;
 import org.ow2.asmdex.AnnotationVisitor;
 import org.ow2.asmdex.ClassVisitor;
 import org.ow2.asmdex.FieldVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * A node that represents a field.
@@ -87,6 +88,37 @@ public class FieldNode extends FieldVisitor {
     /**
      * Constructs a new {@link FieldNode}.
      * 
+     * @param api the API level
+     * @param access the field's access flags (see
+     *        {@link org.ow2.asmdex.Opcodes}). This parameter also indicates
+     *        if the field is synthetic.
+     * @param name the field's name.
+     * @param desc the field's descriptor .
+     * @param signature the field's signature.
+     * @param value the field's initial value. This parameter, which may be
+     *        <tt>null</tt> if the field does not have an initial value, must
+     *        be an {@link Integer}, a {@link Float}, a {@link Long}, a
+     *        {@link Double} or a {@link String}.
+     */
+    public FieldNode(
+    	final int api,
+        final int access,
+        final String name,
+        final String desc,
+        final String[] signature,
+        final Object value)
+    {
+    	super(api);
+        this.access = access;
+        this.name = name;
+        this.desc = desc;
+        this.signature = signature;
+        this.value = value;
+    }
+    
+    /**
+     * Constructs a new {@link FieldNode}.
+     * 
      * @param access the field's access flags (see
      *        {@link org.ow2.asmdex.Opcodes}). This parameter also indicates
      *        if the field is synthetic.
@@ -105,13 +137,8 @@ public class FieldNode extends FieldVisitor {
         final String[] signature,
         final Object value)
     {
-        this.access = access;
-        this.name = name;
-        this.desc = desc;
-        this.signature = signature;
-        this.value = value;
+    	this(Opcodes.ASM4, access,name, desc, signature, value);
     }
-    
     
     // ------------------------------------------------------------------------
     // Accept method

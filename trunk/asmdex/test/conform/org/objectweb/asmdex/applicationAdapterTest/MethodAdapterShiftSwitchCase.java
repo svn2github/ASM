@@ -47,7 +47,7 @@ public class MethodAdapterShiftSwitchCase extends MethodVisitor {
 	 * @param mv the mv
 	 */
 	public MethodAdapterShiftSwitchCase(MethodVisitor mv) {
-		super(mv);
+		super(Opcodes.ASM4, mv);
 	}
 
 	@Override

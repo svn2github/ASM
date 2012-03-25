@@ -63,6 +63,7 @@ import org.objectweb.asmdex.logging.LogElementMethodVisitVarLongInsn;
 import org.objectweb.asmdex.logging.Logger;
 import org.ow2.asmdex.AnnotationVisitor;
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.structureCommon.Label;
 
 /**
@@ -80,6 +81,7 @@ public class MethodTestVisitor extends MethodVisitor {
 	 * @param logger the logger
 	 */
 	public MethodTestVisitor(Logger logger) {
+		super(Opcodes.ASM4);
 		this.logger = logger;
 	}
 	

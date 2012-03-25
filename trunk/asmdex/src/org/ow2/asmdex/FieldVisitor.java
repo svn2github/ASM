@@ -53,10 +53,17 @@ public abstract class FieldVisitor {
     protected FieldVisitor fv;
 
     /**
+	 * The ASM API version implemented by this visitor.
+	 */
+	final protected int api;
+
+    /**
      * Constructs a new {@link FieldVisitor}.
      *
      */
-    public FieldVisitor() { }
+    public FieldVisitor(final int api) {
+    	this.api = api;
+    }
 
     /**
      * Constructs a new {@link FieldVisitor}.
@@ -64,7 +71,8 @@ public abstract class FieldVisitor {
      * @param fv the field visitor to which this visitor must delegate method
      *        calls. May be null.
      */
-    public FieldVisitor(final FieldVisitor fv) {
+    public FieldVisitor(final int api, final FieldVisitor fv) {
+    	this.api  = api;
         this.fv = fv;
     }
 

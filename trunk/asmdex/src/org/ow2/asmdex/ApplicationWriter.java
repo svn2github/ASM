@@ -198,6 +198,7 @@ public class ApplicationWriter extends ApplicationVisitor {
 	 * Constructs an new {@link ClassWriter}.
 	 */
 	public ApplicationWriter() {
+		super(Opcodes.ASM4);
 	}
 	
 	/**
@@ -222,6 +223,7 @@ public class ApplicationWriter extends ApplicationVisitor {
      *        bytecode where applicable.
      */
     public ApplicationWriter(final ApplicationReader applicationReader) {
+    	super(Opcodes.ASM4);
         applicationReader.copyPool(this);
         this.applicationReader = applicationReader;
     }

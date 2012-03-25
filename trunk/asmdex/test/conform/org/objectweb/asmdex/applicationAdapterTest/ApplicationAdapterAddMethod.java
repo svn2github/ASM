@@ -32,6 +32,7 @@ package org.objectweb.asmdex.applicationAdapterTest;
 
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that adds one "myMethod2" and make "onCreate" calls it.
@@ -45,7 +46,7 @@ public class ApplicationAdapterAddMethod extends ApplicationVisitor {
 	 * @param av
 	 */
 	public ApplicationAdapterAddMethod(ApplicationVisitor av) {
-		super(av);
+		super(Opcodes.ASM4, av);
 	}
 
 	@Override

@@ -42,6 +42,13 @@ import org.ow2.asmdex.MethodVisitor;
  */
 public class RegisterShiftClassAdapterExample extends RegisterShiftClassAdapter {
 
+	/**
+	 * Constructor
+	 * @param api
+	 */
+	public RegisterShiftClassAdapterExample(int api) {
+		super(api);
+	}
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String[] signature, String[] exceptions) {
@@ -53,7 +60,7 @@ public class RegisterShiftClassAdapterExample extends RegisterShiftClassAdapter 
 		if ((className.equals("xx")) && (name.equals("yy"))) {
 			registerShift = 2;
 		}
-		return new RegisterShiftMethodAdapter(mv, registerShift); 
+		return new RegisterShiftMethodAdapter(api, mv, registerShift); 
 	}
 
 	

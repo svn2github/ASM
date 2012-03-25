@@ -32,6 +32,7 @@ package org.objectweb.asmdex.applicationAdapterTest;
 
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that adds a Switch case in myMethod of the FirstActivity.
@@ -45,7 +46,7 @@ public class ApplicationAdapterAddCode extends ApplicationVisitor {
 	 * @param av
 	 */
 	public ApplicationAdapterAddCode(ApplicationVisitor av) {
-		super(av);
+		super(Opcodes.ASM4, av);
 	}
 
 	@Override

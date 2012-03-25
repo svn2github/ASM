@@ -102,8 +102,8 @@ public class GenPerfTest {
 		for (int nbTests = 0; nbTests < NB_TESTS; nbTests++) {
 	        long t = System.currentTimeMillis();
 	        for (int i = 0; i < nbIterations; i++) {
-	        	ApplicationReader ar = new ApplicationReader(bytes);
-	        	ApplicationVisitor av = new ApplicationVisitor(){};
+	        	ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, bytes);
+	        	ApplicationVisitor av = new ApplicationVisitor(Opcodes.ASM4){};
 	        	ar.accept(av, 0);
 	        }
 	        
@@ -200,7 +200,7 @@ public class GenPerfTest {
 			// Inserts it into a loop of Reader/Writer.
 	        long t = System.currentTimeMillis();
 	        for (int i = 0; i < nbIterations; i++) {
-	        	ApplicationReader ar = new ApplicationReader(bytes);
+	        	ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, bytes);
 	        	ApplicationWriter aw = new ApplicationWriter();
 	        	ar.accept(aw, 0);
 	        	bytes = aw.toByteArray();
@@ -265,7 +265,7 @@ public class GenPerfTest {
 	 * @throws IOException
 	 */
 	private static byte[] asmDexTestReaderWriterPerform() throws IOException {
-		ApplicationReader ar = new ApplicationReader(testFilename);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, testFilename);
 		ApplicationWriter aw = new ApplicationWriter();
 		ar.accept(aw, 0);
 		return aw.toByteArray();
@@ -277,8 +277,8 @@ public class GenPerfTest {
 	 * @throws IOException
 	 */
 	private static byte[] asmDexTestReaderWriterTreePerform() throws IOException {
-		ApplicationReader ar = new ApplicationReader(testFilename);
-		ApplicationNode an = new ApplicationNode();
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, testFilename);
+		ApplicationNode an = new ApplicationNode(Opcodes.ASM4);
 		ar.accept(an, 0);
 		
 		ApplicationWriter aw = new ApplicationWriter();
@@ -292,7 +292,7 @@ public class GenPerfTest {
 	 * @throws IOException
 	 */
 	private static byte[] asmDexTestReaderWriterShortCutPerform() throws IOException {
-		ApplicationReader ar = new ApplicationReader(testFilename);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, testFilename);
 		ApplicationWriter aw = new ApplicationWriter(ar);
 		ar.accept(aw, 0);
 		return aw.toByteArray();

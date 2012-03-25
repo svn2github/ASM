@@ -30,7 +30,9 @@
  */
 package org.objectweb.asmdex.tree;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.ow2.asmdex.Opcodes;
@@ -46,7 +48,7 @@ import org.ow2.asmdex.tree.MethodNode;
  */
 public class ClassNodeTest {
 
-	private ClassNode cn = new ClassNode();
+	private ClassNode cn = new ClassNode(Opcodes.ASM4);
 	
 	/**
 	 * Test visit.

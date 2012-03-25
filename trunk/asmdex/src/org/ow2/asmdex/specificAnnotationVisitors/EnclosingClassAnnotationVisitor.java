@@ -43,6 +43,14 @@ public class EnclosingClassAnnotationVisitor extends AnnotationVisitor {
 	private String className;
 	
 	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public EnclosingClassAnnotationVisitor(int api) {
+		super(api);
+	}
+
+	/**
 	 * Get the class name
 	 * @return complete name
 	 */

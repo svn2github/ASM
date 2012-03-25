@@ -55,7 +55,7 @@ public class MethodAdapterResizeGoto8BitsDoubleRefsDoubleLabels extends MethodVi
 	 * @param mv the mv
 	 */
 	public MethodAdapterResizeGoto8BitsDoubleRefsDoubleLabels(MethodVisitor mv) {
-		super(mv);
+		super(Opcodes.ASM4, mv);
 	}
 
 	@Override

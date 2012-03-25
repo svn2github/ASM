@@ -36,6 +36,7 @@ import org.objectweb.asmdex.logging.LogElementApplicationVisitEnd;
 import org.objectweb.asmdex.logging.Logger;
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Application Visitor used to test the Reader.
@@ -52,6 +53,7 @@ public class ApplicationTestVisitor extends ApplicationVisitor {
 	 * @param logger the logger
 	 */
 	public ApplicationTestVisitor(Logger logger) {
+		super(Opcodes.ASM4);
 		this.logger = logger;
 	}
 	

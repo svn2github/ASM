@@ -51,7 +51,7 @@ public class MethodAdapterAddSwitchCase extends MethodVisitor {
 	 * @param mv the mv
 	 */
 	public MethodAdapterAddSwitchCase(MethodVisitor mv) {
-		super(mv);
+		super(Opcodes.ASM4, mv);
 	}
 
 	@Override

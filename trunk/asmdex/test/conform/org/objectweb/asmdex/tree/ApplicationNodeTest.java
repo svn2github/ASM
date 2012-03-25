@@ -44,7 +44,7 @@ import org.ow2.asmdex.tree.ClassNode;
  */
 public class ApplicationNodeTest {
 
-	private ApplicationNode an = new ApplicationNode();
+	private ApplicationNode an = new ApplicationNode(Opcodes.ASM4);
 	
 	/**
 	 * Test visit.

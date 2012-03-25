@@ -44,6 +44,15 @@ import org.ow2.asmdex.AnnotationVisitor;
 public class MemberClassesAnnotationVisitor extends AnnotationVisitor {
 	
 	private List<String> innerClasses = new ArrayList<String>();
+	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public MemberClassesAnnotationVisitor(int api) {
+		super(api);
+	}
+
 	/**
 	 * List of inner classes.
 	 * @return list of names

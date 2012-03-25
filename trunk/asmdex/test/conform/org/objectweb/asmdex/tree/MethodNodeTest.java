@@ -49,7 +49,7 @@ public class MethodNodeTest {
 	@Test
 	public void testMethodNode() {
 		// Does nothing.
-		new MethodNode();
+		new MethodNode(Opcodes.ASM4);
 		assertTrue(true);
 	}
 

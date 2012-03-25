@@ -62,6 +62,7 @@ import org.objectweb.asmdex.applicationAdapterTest.GenerateOriginalDexFileResize
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Tests the Application Adapter.
@@ -101,8 +102,8 @@ public class ApplicationAdapterTest {
 		byte[] originalBytes = GenerateBasicDexFile.generate();
 		
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
-		ApplicationVisitor aa = new ApplicationVisitor(aw){};
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
+		ApplicationVisitor aa = new ApplicationVisitor(Opcodes.ASM4, aw){};
 		ar.accept(aa, 0);
 		
 		assertTrue(testAdapter(aw.toByteArray(), originalBytes));
@@ -120,7 +121,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileAddCode.generate();
 		
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterAddCode(aw);
 		ar.accept(aa, 0);
 		
@@ -139,7 +140,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileResizeGoto8Bits.generate();
 		
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterResizeGoto8Bits(aw);
 		ar.accept(aa, 0);
 		
@@ -160,7 +161,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileResizeGoto8BitsDoubleRefs.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterResizeGoto8BitsDoubleRefs(aw);
 		ar.accept(aa, 0);
 		
@@ -182,7 +183,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileResizeGoto8BitsDoubleRefsDoubleLabels.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterResizeGoto8BitsDoubleRefsDoubleLabels(aw);
 		ar.accept(aa, 0);
 		
@@ -201,7 +202,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileRemoveMethod.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterRemoveMethod(aw);
 		ar.accept(aa, 0);
 		
@@ -219,7 +220,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileAddMethod.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterAddMethod(aw);
 		ar.accept(aa, 0);
 		
@@ -239,7 +240,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateExpectedDexFileAddAndRemoveMethod.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa2 = new ApplicationAdapterRemoveMethod(aw);
 		ApplicationVisitor aa1 = new ApplicationAdapterAddMethod(aa2);
 		ar.accept(aa1, 0);
@@ -257,7 +258,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateDexFileSwitchCase.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterAddSwitchCase(aw);
 		ar.accept(aa, 0);
 		
@@ -274,7 +275,7 @@ public class ApplicationAdapterTest {
 		byte[] expectedBytes = GenerateDexFileShiftedSwitchCase.generate();
 
 		ApplicationWriter aw = new ApplicationWriter();
-		ApplicationReader ar = new ApplicationReader(originalBytes);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4,originalBytes);
 		ApplicationVisitor aa = new ApplicationAdapterShiftSwitchCase(aw);
 		ar.accept(aa, 0);
 		

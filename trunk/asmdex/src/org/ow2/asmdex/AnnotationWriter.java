@@ -112,6 +112,7 @@ public class AnnotationWriter extends AnnotationVisitor {
 	 * @param annotationItem the Annotation Item to visit.
 	 */
 	public AnnotationWriter(ConstantPool constantPool, AnnotationItem annotationItem) {
+		super(Opcodes.ASM4);
 		this.constantPool = constantPool;
 		this.annotationItem = annotationItem;
 	}

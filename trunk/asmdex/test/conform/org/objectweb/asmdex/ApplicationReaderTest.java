@@ -48,6 +48,7 @@ import org.objectweb.asmdex.applicationReaderTest.LogListHelloWorld;
 import org.objectweb.asmdex.logging.LogList;
 import org.objectweb.asmdex.logging.Logger;
 import org.ow2.asmdex.ApplicationReader;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Tests the Application Reader.
@@ -72,7 +73,7 @@ public class ApplicationReaderTest {
 	 */
 	@Test(expected = IOException.class)
     public void testIllegalConstructorArgument() throws IOException {
-		new ApplicationReader((InputStream) null);
+		new ApplicationReader(Opcodes.ASM4, (InputStream) null);
     }
     
 	/**
@@ -82,7 +83,7 @@ public class ApplicationReaderTest {
 	@Test
 	public void testApplicationReaderByteArray() throws IOException {
 		byte[] bytes = TestUtil.readFile(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
-		if (bytes != null) new ApplicationReader(bytes);
+		if (bytes != null) new ApplicationReader(Opcodes.ASM4, bytes);
 		else throw new IOException("Test file not found");
 	}
 	
@@ -94,7 +95,7 @@ public class ApplicationReaderTest {
 		byte[] bytes = null;
 		bytes = TestUtil.readFile(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
 		
-		if (bytes != null) new ApplicationReader(bytes, 0, bytes.length);
+		if (bytes != null) new ApplicationReader(Opcodes.ASM4, bytes, 0, bytes.length);
 		else throw new IOException("Test file not found");
 	}
 	
@@ -106,7 +107,7 @@ public class ApplicationReaderTest {
 		byte[] bytes = null;
 		bytes = TestUtil.readFile(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
 		
-		if (bytes != null) new ApplicationReader(bytes, 0, bytes.length - 1);
+		if (bytes != null) new ApplicationReader(Opcodes.ASM4, bytes, 0, bytes.length - 1);
 		else throw new IOException("Test file not found");
 	}
 
@@ -119,7 +120,7 @@ public class ApplicationReaderTest {
 		file = new File(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
 		InputStream is = new FileInputStream(file);
 
-		new ApplicationReader(is);
+		new ApplicationReader(Opcodes.ASM4, is);
 	}
 
 	/**
@@ -129,7 +130,7 @@ public class ApplicationReaderTest {
 	@Test
 	public void testApplicationReaderString() throws IOException {
 		InputStream is = new FileInputStream(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
-		new ApplicationReader(is);
+		new ApplicationReader(Opcodes.ASM4, is);
 	}
 
 	/**
@@ -182,7 +183,7 @@ public class ApplicationReaderTest {
 		Logger logger = new Logger(logList);
 		InputStream is = new FileInputStream(logList.getDexFile());
 		ApplicationTestVisitor av = new ApplicationTestVisitor(logger);
-		ApplicationReader ar = new ApplicationReader(is);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, is);
 		ar.accept(av, logList.getClassesToParse(), 0);
 		
 		logger.logEnd();

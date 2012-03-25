@@ -146,7 +146,7 @@ public class MethodWriter extends MethodVisitor {
 	 */
 	public MethodWriter(ClassWriter classWriter, int access, String name,
 			String desc, String[] signature, String[] exceptions) {
-		
+		super(Opcodes.ASM4);
 		this.classWriter = classWriter;
 		
 		constantPool = classWriter.getConstantPool();

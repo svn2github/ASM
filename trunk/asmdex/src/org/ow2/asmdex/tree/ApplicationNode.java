@@ -60,6 +60,13 @@ public class ApplicationNode extends ApplicationVisitor {
      */
     public List<AnnotationNode> invisibleAnnotations;
 
+    /**
+     * Constructs a new {@link ApplicationNode}.
+     * @param api the API level
+     */
+    public ApplicationNode(int api) {
+    	super(api);
+    }
 	// ------------------------------------------------------
 	// Visitor Methods.
 	// ------------------------------------------------------

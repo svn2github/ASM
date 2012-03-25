@@ -43,6 +43,14 @@ import org.ow2.asmdex.AnnotationVisitor;
  */
 public class DefaultAnnotationVisitor extends AnnotationVisitor {
 	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public DefaultAnnotationVisitor(int api) {
+		super(api);
+	}
+	
 	private List<DefaultAnnotationInformation> infos = new ArrayList<DefaultAnnotationInformation>();
 	
 	/**

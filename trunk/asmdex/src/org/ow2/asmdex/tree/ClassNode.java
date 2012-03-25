@@ -39,6 +39,7 @@ import org.ow2.asmdex.AnnotationVisitor;
 import org.ow2.asmdex.ClassVisitor;
 import org.ow2.asmdex.FieldVisitor;
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * A node that represents a class.
@@ -126,13 +127,15 @@ public class ClassNode extends ClassVisitor {
     /**
      * Constructs a new {@link ClassNode}.
      */
-    public ClassNode() {
+    public ClassNode(int api) {
+    	super(api);
     }
     
     /**
      * Constructs a new {@link ClassNode}.
      */
-    public ClassNode(int access, String name, String[] signature, String superName, String[] interfaces) {
+    public ClassNode(int api, int access, String name, String[] signature, String superName, String[] interfaces) {
+    	super(api);
     	this.access = access;
     	this.name = name;
     	if (signature != null) {
@@ -143,7 +146,13 @@ public class ClassNode extends ClassVisitor {
     		this.interfaces = Arrays.asList(interfaces);
     	}
     }
-	
+
+    /**
+     * Constructs a new {@link ClassNode}.
+     */
+    public ClassNode(int access, String name, String[] signature, String superName, String[] interfaces) {
+    	this(Opcodes.ASM4, access, name, signature, superName, interfaces);
+    }
     
 	// ------------------------------------------------------
 	// Visitor Methods.
@@ -174,7 +183,7 @@ public class ClassNode extends ClassVisitor {
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String[] signature, String[] exceptions) {
-		MethodNode n = new MethodNode(access, name, desc, signature, exceptions);
+		MethodNode n = new MethodNode(api, access, name, desc, signature, exceptions);
 		methods.add(n);
 		return n;
 	}

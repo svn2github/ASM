@@ -60,7 +60,7 @@ public class FieldWriter extends FieldVisitor {
 	 */
 	public FieldWriter(ConstantPool constantPool, String classOwningName, int access,
 			String name, String desc, String[] signature, Object value) {
-		
+		super(Opcodes.ASM4);
 		this.constantPool = constantPool;
 		
 		// Registers the Field in the Field constant pool.

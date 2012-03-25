@@ -45,6 +45,14 @@ import org.ow2.asmdex.AnnotationVisitor;
  */
 public class ExceptionAnnotationVisitor extends AnnotationVisitor {
 	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public ExceptionAnnotationVisitor(int api) {
+		super(api);
+	}
+
 	private List<String> classNames = new ArrayList<String>();
 	/**
 	 * Get the class names of exceptions.

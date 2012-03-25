@@ -55,9 +55,11 @@ public class RegisterShiftClassAdapter extends ClassVisitor {
 	
 	/**
 	 * Empty constructor
+	 * @param api api level
 	 */
-	public RegisterShiftClassAdapter() {
-		super(null);
+	
+	public RegisterShiftClassAdapter(int api) {
+		super(api, null);
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class RegisterShiftClassAdapter extends ClassVisitor {
 			String[] signature, String[] exceptions) {
 		MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);
 	
-		return new RegisterShiftMethodAdapter(mv, 0); 
+		return new RegisterShiftMethodAdapter(api, mv, 0); 
 	}
 
 	

@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.ApplicationVisitor;
 import org.ow2.asmdex.ClassVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * An {@link ApplicationVisitor} that prints the AsmDex code that generates the Application
@@ -123,9 +124,11 @@ public class AsmDexifierApplicationVisitor extends  ApplicationVisitor {
     /**
      * Constructs a new {@link AsmDexifierApplicationVisitor} object.
      * 
+     * @param api API level
      * @param pw the print writer to be used to print the class.
      */
-    public AsmDexifierApplicationVisitor(final PrintWriter pw) {
+    public AsmDexifierApplicationVisitor(int api, final PrintWriter pw) {
+    	super(api);
         this.pw = pw;
         pr = new AsmDexPrinter();
         dumpMethods = new ArrayList<String>();
@@ -135,14 +138,15 @@ public class AsmDexifierApplicationVisitor extends  ApplicationVisitor {
     /**
      * Constructs a new {@link AsmDexifierApplicationVisitor} object.
      * 
+     * @param api API level
      * @param pw the print writer to be used to print the class.
      * @param packageName name of the package, or Null if none should be written.
      * @param filenameOutput possible path and filename of the file where to save the output.
      *        If not Null, a Main method will be created.
      */
-    public AsmDexifierApplicationVisitor(final PrintWriter pw, final String packageName,
+    public AsmDexifierApplicationVisitor(int api, final PrintWriter pw, final String packageName,
     		final String filenameOutput) {
-        this(pw);
+        this(api, pw);
         this.packageName = packageName;
         this.filenameOutput = filenameOutput;
     }
@@ -212,8 +216,8 @@ public class AsmDexifierApplicationVisitor extends  ApplicationVisitor {
         	}
         }
         
-        ApplicationReader ar = new ApplicationReader(args[i]);
-        ar.accept(new AsmDexifierApplicationVisitor(new PrintWriter(System.out)),
+        ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, args[i]);
+        ar.accept(new AsmDexifierApplicationVisitor(Opcodes.ASM4, new PrintWriter(System.out)),
         		classesToVisit, flags);
     }
 
@@ -326,7 +330,7 @@ public class AsmDexifierApplicationVisitor extends  ApplicationVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierClassVisitor cv = new AsmDexifierClassVisitor(1);
+		AsmDexifierClassVisitor cv = new AsmDexifierClassVisitor(api, 1);
 		pr.addTextToList(cv.getTextComponent());
 		
 		pr.addText("}\n\n");

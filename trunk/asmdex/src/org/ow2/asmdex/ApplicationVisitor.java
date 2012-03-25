@@ -46,12 +46,17 @@ public abstract class ApplicationVisitor {
      * May be null.
      */
     protected ApplicationVisitor av;
+
+    /**
+	 * The ASM API version implemented by this visitor.
+	 */
+	final protected int api;
     
     /**
      * Constructs a new {@link ApplicationVisitor}.
      *
      */
-    public ApplicationVisitor() { }
+    public ApplicationVisitor(final int api) { this.api = api; }
 
     /**
      * Constructs a new {@link ApplicationVisitor}.
@@ -59,7 +64,8 @@ public abstract class ApplicationVisitor {
      * @param av the application visitor to which this visitor must delegate
      *        method calls. May be null.
      */
-    public ApplicationVisitor(final ApplicationVisitor av) {
+    public ApplicationVisitor(final int api, final ApplicationVisitor av) {
+    	this.api = api;
         this.av = av;
     }
     

@@ -50,11 +50,12 @@ public class RegisterShiftApplicationAdapter extends ApplicationVisitor{
 
 	/**
 	 * Shift registers in application
+	 * @param api api level
 	 * @param av application visitor
 	 * @param shiftClassAdapter adapter for shifting class
 	 */
-	public RegisterShiftApplicationAdapter(ApplicationVisitor av, RegisterShiftClassAdapter shiftClassAdapter) {
-		super(av);
+	public RegisterShiftApplicationAdapter(int api, ApplicationVisitor av, RegisterShiftClassAdapter shiftClassAdapter) {
+		super(api, av);
 		this.shiftClassAdapter = shiftClassAdapter;
 	}
 	

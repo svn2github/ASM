@@ -39,6 +39,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.tree.ApplicationNode;
 
 /**
@@ -124,8 +125,8 @@ public class ApplicationWriterTreeTest {
 						"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
 				
 				// Uses the Tree API with the Reader and Writer to generate our own dex file from the current dex file.
-				ApplicationReader ar = new ApplicationReader(fullDexFileName);
-				ApplicationNode an = new ApplicationNode();
+				ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, fullDexFileName);
+				ApplicationNode an = new ApplicationNode(Opcodes.ASM4);
 				ar.accept(an, 0);
 				
 				ApplicationWriter aw = new ApplicationWriter();

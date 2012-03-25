@@ -87,6 +87,7 @@ public class ClassWriter extends ClassVisitor {
 	 */
 	public ClassWriter(ApplicationWriter applicationWriter, ConstantPool constantPool, int access,
 			String name, String[] signature, String superName, String[] interfaces) {
+		super(Opcodes.ASM4);
 		this.applicationWriter = applicationWriter;
 		this.constantPool = constantPool;
 		classDefinitionItem = constantPool.addClassToConstantPool(name, superName, access,

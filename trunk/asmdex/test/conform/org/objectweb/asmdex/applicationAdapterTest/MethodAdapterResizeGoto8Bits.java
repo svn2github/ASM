@@ -55,7 +55,7 @@ public class MethodAdapterResizeGoto8Bits extends MethodVisitor {
 	 * @param mv the mv
 	 */
 	public MethodAdapterResizeGoto8Bits(MethodVisitor mv) {
-		super(mv);
+		super(Opcodes.ASM4, mv);
 	}
 
 	@Override

@@ -32,6 +32,7 @@ package org.objectweb.asmdex.applicationAdapterTest;
 
 import org.ow2.asmdex.ClassVisitor;
 import org.ow2.asmdex.MethodVisitor;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Adapter Test that adds code at the end of the onCreate method of the FirstActivity
@@ -48,7 +49,7 @@ public class ClassAdapterResizeGoto8BitsDoubleRefs extends ClassVisitor {
 	 * @param cv
 	 */
 	public ClassAdapterResizeGoto8BitsDoubleRefs(ClassVisitor cv) {
-		super(cv);
+		super(Opcodes.ASM4, cv);
 	}
 
 	@Override

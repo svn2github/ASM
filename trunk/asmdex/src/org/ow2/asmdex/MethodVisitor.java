@@ -87,10 +87,16 @@ public abstract class MethodVisitor {
      */
     protected MethodVisitor mv;
 
+	/**
+	 * The ASM API version implemented by this visitor.
+	 */
+	final protected int api;
+
     /**
      * Constructs a new {@link MethodVisitor}.
      */
-    public MethodVisitor() {
+    public MethodVisitor(final int api) { 
+    	this.api = api;
     }
 
     /**
@@ -99,7 +105,8 @@ public abstract class MethodVisitor {
      * @param mv the method visitor to which this visitor must delegate method
      *        calls. May be null.
      */
-    public MethodVisitor(final MethodVisitor mv) {
+    public MethodVisitor(final int api, final MethodVisitor mv) {
+    	this.api = api;
         this.mv = mv;
     }
 

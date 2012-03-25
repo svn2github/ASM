@@ -44,6 +44,15 @@ import org.ow2.asmdex.AnnotationVisitor;
 public class SignatureAnnotationVisitor extends AnnotationVisitor {
 	
 	private List<String> signature = new ArrayList<String>();
+	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public SignatureAnnotationVisitor(int api) {
+		super(api);
+	}
+
 	/**
 	 * signature.
 	 * @return list of string coding the signature

@@ -39,6 +39,7 @@ import org.junit.AfterClass;
 import org.junit.Test;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.ApplicationWriter;
+import org.ow2.asmdex.Opcodes;
 
 /**
  * Tests the Application Writer.
@@ -134,7 +135,7 @@ public class ApplicationWriterTest {
 	 */
 	@Test
 	public void testGetApplicationReader() throws IOException {
-		ApplicationReader ar = new ApplicationReader(TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, TestUtil.PATH_AND_FILENAME_HELLO_WORLD_DEX);
 		ApplicationWriter aw = new ApplicationWriter(ar);
 		assertNotNull(aw.getApplicationReader());
 	}
@@ -219,7 +220,7 @@ public class ApplicationWriterTest {
 						"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
 				
 				// Uses the Reader and Writer to generate our own dex file from the current dex file.
-				ApplicationReader ar = new ApplicationReader(fullDexFileName);
+				ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, fullDexFileName);
 				ApplicationWriter aw;
 				// Use of the shortcut optimization ?
 				if (shortCutOptimization) {

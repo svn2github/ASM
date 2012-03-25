@@ -38,6 +38,8 @@ package org.ow2.asmdex;
  */
 public interface Opcodes {
 	
+	public static final int ASM4 = 0x40000;
+	
 	/**
 	 * Spurious accessor used by the writer when it an instruction refers to a
 	 * class, Method or a Field not parsed yet.

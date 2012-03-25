@@ -43,6 +43,15 @@ public class InnerClassAnnotationVisitor extends AnnotationVisitor {
 	
 	private int access;
 	private String simpleName;
+	
+	/**
+	 * Constructor.
+	 * @param api the API level
+	 */
+	public InnerClassAnnotationVisitor(int api) {
+		super(api);
+	}
+
 	/**
 	 * Get the access flags as a bitset
 	 * @return integer coding the bitset

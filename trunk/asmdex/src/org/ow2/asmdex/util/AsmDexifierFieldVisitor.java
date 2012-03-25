@@ -48,9 +48,11 @@ public class AsmDexifierFieldVisitor extends FieldVisitor {
 	/**
      * Constructs a new {@link AsmDexifierFieldVisitor} object.
      * 
+     * @param api API level
      * @param nbTabulations number of spaces
      */
-    public AsmDexifierFieldVisitor(final int nbTabulations) {
+    public AsmDexifierFieldVisitor(int api, final int nbTabulations) {
+    	super(api);
     	pr = new AsmDexPrinter();
         pr.currentTabulation = nbTabulations;
     }
@@ -72,7 +74,7 @@ public class AsmDexifierFieldVisitor extends FieldVisitor {
 		pr.addEOL();
 		pr.closeText();
 		
-		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(0, pr.currentTabulation + 1);
+		AsmDexifierAnnotationVisitor av = new AsmDexifierAnnotationVisitor(api, 0, pr.currentTabulation + 1);
 		pr.addTextToList(av.getTextComponent());
 		
 		pr.addTabulation();
