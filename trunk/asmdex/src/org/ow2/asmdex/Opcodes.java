@@ -38,6 +38,9 @@ package org.ow2.asmdex;
  */
 public interface Opcodes {
 	
+	/**
+	 * API level
+	 */
 	public static final int ASM4 = 0x40000;
 	
 	/**

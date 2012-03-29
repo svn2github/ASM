@@ -115,8 +115,6 @@ public class MethodNode extends MethodVisitor {
 	 * The instructions of this method. This list is a list of
 	 * {@link AbstractInsnNode} objects.
 	 * 
-	 * @associates org.objectweb.asm.tree.AbstractInsnNode
-	 * @label instructions
 	 */
 	public InsnList instructions = new InsnList();
 

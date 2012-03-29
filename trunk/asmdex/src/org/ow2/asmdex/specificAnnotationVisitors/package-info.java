@@ -29,31 +29,11 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.ow2.asmdex.specificAnnotationParser;
-
-import org.ow2.asmdex.AnnotationVisitor;
-import org.ow2.asmdex.ApplicationReader;
-import org.ow2.asmdex.lowLevelUtils.DexFileReader;
-
-/**
- * Interface to defines the behavior to perform when finding the desired annotation.
- * 
- * @author Julien Névo.
+/** 
+ * This package implements specific visitors for system annotations.
+ * <p>
+ *  In Dalvik, annotations are used to represent important semantic attributes that are coded as method
+ *  or class attributes in Oracle JVM.
+ *  
  */
-public interface ISpecificAnnotationParser {
-	
-	/**
-	 * Returns the annotation to find.
-	 * @return the annotation to find.
-	 */
-	String getAnnotationName();
-	
-	/**
-	 * Behavior to perform when the desired annotation is found. 
-	 * @param dexFile the Dex file.
-	 * @param applicationReader application reader.
-	 * @param annotationVisitor visitor that visits the annotation and recovers the
-	 * 		  information it needs.
-	 */
-	void treat(DexFileReader dexFile, ApplicationReader applicationReader, AnnotationVisitor annotationVisitor);
-}
+package org.ow2.asmdex.specificAnnotationVisitors;

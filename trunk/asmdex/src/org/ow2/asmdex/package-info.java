@@ -29,31 +29,17 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.ow2.asmdex.specificAnnotationParser;
 
-import org.ow2.asmdex.AnnotationVisitor;
-import org.ow2.asmdex.ApplicationReader;
-import org.ow2.asmdex.lowLevelUtils.DexFileReader;
-
-/**
- * Interface to defines the behavior to perform when finding the desired annotation.
- * 
- * @author Julien Névo.
+/** 
+ *  Provides a small and fast bytecode manipulation framework for Android DEX format.
+ *  <p>
+ *  As the ASM framework, the ASMDEX framework is organized around  the {@link org.ow2.asmdex.ApplicationVisitor ApplicationVisitor}, the {@link org.ow2.asmdex.ClassVisitor ClassVisitor},
+ *  {@link org.ow2.asmdex.FieldVisitor FieldVisitor}, {@link org.ow2.asmdex.MethodVisitor MethodVisitor} and
+ *  {@link org.ow2.asmdex.AnnotationVisitor AnnotationVisitor} abstract classes,
+ *  which allow one to visit the fields, methods and annotations of a class,
+ *  including the bytecode instructions of each method.
+ *  <p>
+ *  In addition to these main abstract classes, ASMDEX provides a
+ *   {@link org.ow2.asmdex.ApplicationReader applicationReader} class, that can parse an existing classes.dex bundle and make a given visitor visit it. ASMDEX also provides a {@link org.ow2.asmdex.ApplicationWriter ApplicationWriter} class, which is a visitor that generates Java class files.
  */
-public interface ISpecificAnnotationParser {
-	
-	/**
-	 * Returns the annotation to find.
-	 * @return the annotation to find.
-	 */
-	String getAnnotationName();
-	
-	/**
-	 * Behavior to perform when the desired annotation is found. 
-	 * @param dexFile the Dex file.
-	 * @param applicationReader application reader.
-	 * @param annotationVisitor visitor that visits the annotation and recovers the
-	 * 		  information it needs.
-	 */
-	void treat(DexFileReader dexFile, ApplicationReader applicationReader, AnnotationVisitor annotationVisitor);
-}
+package org.ow2.asmdex;

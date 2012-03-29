@@ -56,7 +56,7 @@ public interface IOffsetInstruction {
 	
 	/**
 	 * Sets the offset in bytes of the Instruction from the beginning of the method.
-	 * @param offset offset in bytes of the Instruction from the beginning of the method.
+	 * @param instructionOffset offset in bytes of the Instruction from the beginning of the method.
 	 */
 	void setInstructionOffset(int instructionOffset);
 	

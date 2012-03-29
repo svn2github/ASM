@@ -12,7 +12,7 @@
     <property name="source" value="1.6"/>
     <path id="AsmDex.classpath">
         <pathelement location="bin"/>
-        <pathelement location="lib/baksmali-1.2.6.jar"/>
+        <pathelement location="lib/baksmali.jar"/>
         <pathelement location="lib/junit-4.8.2.jar"/>
     </path>
     <target name="init">

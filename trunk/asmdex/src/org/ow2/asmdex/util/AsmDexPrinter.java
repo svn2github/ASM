@@ -154,7 +154,6 @@ public class AsmDexPrinter {
      * @param cst a single or array of ints, {@link Integer}, {@link Float}, {@link Long},
      *        {@link Double} or {@link String} object. May be <tt>null</tt>.
      * @param addComma true to add a comma at the end.
-     * @author Julien Névo, based on code by Eric Bruneton.
      */
     public void addConstant(final Object cst, boolean addComma) {
     	
@@ -411,7 +410,6 @@ public class AsmDexPrinter {
      * 
      * 
      * @param s the string to be added.
-     * @author Eric Bruneton
      */
     public void appendString(final String s) {
     	text.append('\"');

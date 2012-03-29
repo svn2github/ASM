@@ -29,31 +29,10 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.ow2.asmdex.specificAnnotationParser;
-
-import org.ow2.asmdex.AnnotationVisitor;
-import org.ow2.asmdex.ApplicationReader;
-import org.ow2.asmdex.lowLevelUtils.DexFileReader;
-
-/**
- * Interface to defines the behavior to perform when finding the desired annotation.
- * 
- * @author Julien Névo.
+/** 
+ *  Provides an ASMDEX visitor that constructs a tree representation of the
+ *  classes it visits. As for ASM, this has a cost, but it is mitigated by the fact
+ *  that ASMDEX is not a true memory less visitor as a lot of structures must be sorted
+ *  when the complete code of the application is known.
  */
-public interface ISpecificAnnotationParser {
-	
-	/**
-	 * Returns the annotation to find.
-	 * @return the annotation to find.
-	 */
-	String getAnnotationName();
-	
-	/**
-	 * Behavior to perform when the desired annotation is found. 
-	 * @param dexFile the Dex file.
-	 * @param applicationReader application reader.
-	 * @param annotationVisitor visitor that visits the annotation and recovers the
-	 * 		  information it needs.
-	 */
-	void treat(DexFileReader dexFile, ApplicationReader applicationReader, AnnotationVisitor annotationVisitor);
-}
+package org.ow2.asmdex.tree;

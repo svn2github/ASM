@@ -1051,7 +1051,7 @@ public class MethodCodeReader {
      * Updates the debugAddress and debugCurrentOpcodeOffset. However, the visit
      * isn't done here, but by the calling method.
      * The dex file reader position <i>is</i> saved.
-     * @param methodvisitor the visitor to visit the debug information item.
+     * @param methodVisitor the visitor to visit the debug information item.
      * @param currentBytecodeOffset Offset <i>from the method opcodes</i>
      * currently being parsed.
      * @param findLabelsOnly true if no visitor must be called, because we only want to set up
@@ -1185,7 +1185,7 @@ public class MethodCodeReader {
     /**
      * Parses a DBG_START_LOCAL or DBG_START_LOCAL_EXTENDED instruction, and visits
      * the local variables.
-     * @param methodvisitor the visitor to visit the debug information item.
+     * @param methodVisitor the visitor to visit the debug information item.
      * @param currentBytecodeOffset Offset <i>from the method opcodes</i> currently being parsed.
      * @param isLocalExtended true if the instruction concerns a LOCAL_EXTENDED variable. 
      * @param findLabelsOnly true if no visitor must be called, because we only want to set up
@@ -1423,7 +1423,7 @@ public class MethodCodeReader {
 	
 	/**
 	 * Visits a Var Instruction.
-	 * @param opcode 8-bit opcode of the instruction.
+	 * @param opcodeByte 8-bit opcode of the instruction.
 	 * @param methodVisitor visitor to call.
 	 * @param destinationRegister the destination register.
 	 * @param var the operand of the instruction to be visited. This operand is
@@ -1436,7 +1436,7 @@ public class MethodCodeReader {
 	
 	/**
 	 * Visits a Var Instruction.
-	 * @param opcode 8-bit opcode of the instruction.
+	 * @param opcodeByte 8-bit opcode of the instruction.
 	 * @param methodVisitor visitor to call.
 	 * @param destinationRegister the destination register.
 	 * @param var the operand of the instruction to be visited. This operand is
@@ -1501,7 +1501,10 @@ public class MethodCodeReader {
 	 * Visits a given Field Instruction, and parses it.
 	 * The dex file reader position <i>is</i> saved.
 	 * @param methodVisitor MethodVisitor to visit the instruction.
-	 * @param indexInsn Instruction containing the field index, and one or two registers to read.
+	 * @param opcode Opcode of the instruction
+	 * @param registerA First register
+	 * @param registerB Second register
+	 * @param index index of the field definition
 	 */
 	protected void visitFieldInsn(MethodVisitor methodVisitor, int opcode, int registerA, int registerB, int index) {
 	
@@ -1795,7 +1798,7 @@ public class MethodCodeReader {
 	/**
 	 * Adds an Restart Label to a Local Variable labels structure.
 	 * @param registerNumber register number.
-	 * @param endLabel the Label to add.
+	 * @param restartLabel the Label to add.
 	 */
 	protected void addRestartLabelToLocalVariableLabels(int registerNumber, Label restartLabel) {
 		LocalVariable localVariable = getLocalVariable(registerNumber);

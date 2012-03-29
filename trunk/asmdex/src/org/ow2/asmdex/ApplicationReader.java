@@ -181,6 +181,9 @@ public class ApplicationReader {
      */
     private static enum VisitorType { classVisitor, methodVisitor, fieldVisitor };
     
+    /**
+     * API level
+     */
     protected int api;
     
     // ------------------------------------------------------------------------
@@ -306,7 +309,7 @@ public class ApplicationReader {
      * Makes the given visitor visit the Dex Application of this {@link ApplicationReader}.
      * All the classes, or only several, can be visited.
      * This application is the one specified in the constructor (see
-     * {@link #ApplicationReader(byte[]) ApplicationReader}).
+     * {@link #ApplicationReader(int, byte[]) ApplicationReader}).
      * 
      * @param applicationVisitor the visitor that must visit this class.
      * @param classesToVisit the names of the classes to visit, or Null to visit
@@ -324,7 +327,7 @@ public class ApplicationReader {
      * Makes the given visitor visit the Dex Application of this {@link ApplicationReader}.
      * All the classes are visited.
      * This application is the one specified in the constructor (see
-     * {@link #ApplicationReader(byte[]) ApplicationReader}).
+     * {@link #ApplicationReader(int, byte[]) ApplicationReader}).
      * 
      * @param applicationVisitor the visitor that must visit this class.
      * @param flags option flags that can be used to modify the default behavior
