@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+  <properties>
+    <author email="asm-team@objectweb.org">asm-team</author>
+    <title>Home Page</title>
+    <filename>asmdex-index.xml</filename>
+    <pathtoroot>.</pathtoroot>
+  </properties>
+
+  <body>
+    <s1 name="ASMDEX">
+
+    <table border="0">
+    <tr>
+    <td>    
+
+    <p><strong>ASMDEX</strong> is a bytecode manipulation library as ASM but
+    it handles the DEX bytecode used by Android executables. Only the core
+    library and and a tool to convert bytecode to code generating it
+    (asmdexifier) are available. The underlying principle while developing
+    ASMDEX was to keep it very similar to ASM to ease the cost of porting
+    tools done for Oracle Java bytecode to Android bytecode.</p>
+
+    </td>
+    <td>
+
+    <p><strong>Documentation</strong></p><hr/>
+
+    <p><strong>The best way to learn to use ASMDEX is to ....</strong></p>
+    
+    <p>The following document provides an in-depth introduction to ASMDEX 1.0, ...</p>
+
+    <p><br/><strong>API</strong></p><hr/>
+
+    <p><a href="asmdex10/javadoc/user/index.html">ASMDEX 1.0 API</a></p>
+
+    </td>
+    </tr>
+    </table>
+    
+    </s1>
+
+    <s1 name="Recent News">
+
+      <subtitle>31 March 2012: release of ASMDEX 1.0</subtitle>
+          
+    </s1>
+
+  </body>
+</document>
