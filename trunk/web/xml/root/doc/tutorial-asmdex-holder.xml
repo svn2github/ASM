@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../../common/dtd/objectweb.dtd'>
+
+<document>
+
+  <properties>
+    <author email="asm-teaml@objectweb.org">asm-team</author>
+    <title>Introduction to the ASMDEX Bytecode Framework</title>
+    <filename>tutorial-asmdex.xml</filename>
+    <pathtoroot>..</pathtoroot>
+  </properties>
+
+  <body>
+    <s1 name="TOBEREPLACED"/>
+  </body>
+</document>

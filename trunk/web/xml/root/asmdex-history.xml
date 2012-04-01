@@ -23,7 +23,10 @@
       <subtitle>Origins</subtitle>
 
         <ul>
-          <li>TODO.</li>
+          <li>The ASMDEX framework was developed by Julien Nevo during his stay at
+           Orange Labs Lannion in spring 2011. </li>
+          <li>Maintenance of the library is provided by Pierre Crégut since 
+           the departure of Julien.</li>
         </ul>
 
     </s1>

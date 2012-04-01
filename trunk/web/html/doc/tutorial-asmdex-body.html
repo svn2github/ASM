@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" /><title>ASMDEX primer</title></head><body>
+<h1>Introduction to the ASMDEX Bytecode Framework</h1>
+
+<h2>What is ASMDEX ?</h2>
+
+
+ASMDEX is a bytecode manipulation library as ASM but it handles the DEX
+bytecode used by Android executables. Only the core library and and a
+tool to convert bytecode to code generating it (asmdexifier) are
+available. The underlying principle while developing ASMDEX was to keep
+it very similar to ASM to ease the cost of porting tools done for
+Oracle Java bytecode to Android bytecode.<br />
+
+<h2>Differences between ASM and ASMDEX</h2>
+
+
+Although the underlying principle was to keep ASMDEX close to ASM,
+there are still a lot of differences that the user must keep in mind :<br />
+
+<ol>
+
+  <li>The code unit is the application and not the class. An Android application is a ZIP archive as a JAR file but its
+content is a set of resources (most of them are compiled XML files) and
+a single code file that contains all the application code. The name of
+this file is <span style="font-family: monospace;">classes.dex</span><br />
+  </li>
+  <li>There is a single constant pool in <span style="font-family: monospace;">classes.dex</span> which is organized
+as a set of <span style="font-style: italic;">sorted</span> tables.
+Any modification in a class may disturb this sorting and may have an
+impact on the complete code unit.<br />
+    <div style="margin-left: 40px;">Although ASM follows the visitor
+pattern while building an application, this is not in fact a single
+pass process but a two pass one where the second pass is used to
+compute the actual indices of items identified during the first pass. <br />
+</div></li>
+  <li>The Dalvik virtual machine that executes the bytecode is a
+register based machine and not a stack based machine. <br />
+    <ul>
+      <li>Method arguments, local variables but also intermediate
+computations and parameters of called methods are all put in registers in the stack frame.</li>
+      <li>Method arguments are put in the registers with the highest
+numbers.</li>
+      <li>Although formally indistinguishable there are at least four
+class of registers:</li>
+      <ul>
+        <li>the 16th first registers are available for most operations,
+especially if the operation requires several registers.</li>
+        <li>The next limit is 256. Most unary operations use this limit
+because instructions are coded on 16 bits and the opcode takes 8 bits.</li>
+        <li>There is a small set of operation that can handle the
+potential 65536 different registers of a method. There is usually '16'
+in the name of the opcode.</li>
+      </ul>
+      <li>There are two ways to specify the arguments of a method call:</li>
+      <ul>
+        <li>If the number of arguments is small (5 or less), one can
+use any arbitrary combination of the first 16 registers.</li>
+        <li>Otherwise, it is necessary to use a slice of consecutive
+registers. <br />
+        </li>
+      </ul>
+    </ul>
+Because of all the previous constraints, it can be difficult to
+introduce new intermediate computations. Even adding a new intermediate
+register is not easy because it must shift the method parameters and so
+it may move one of them out of the 16 registers limit that could be
+necessary for some operations.<br />
+  </li>
+  <li>Finally there is a system constraint imposed by the virtual
+machine itself : because code is in fact a memory mapped structure
+comprising the whole code of the application, it is not possible to
+modify the code of a class dynamically. In fact, because of the second
+constraint, it would be hard&nbsp; to modify a single class
+anyway, without modifying the code of the other classes.</li>
+</ol>The last constraint limits the use of ASMDEX. Otherwise, the most
+severe programming constraint for the ASMDEX user is probably the third
+one. One
+way to get around is to try to introduce as few changes as possible and
+rather rely on external (but potentially generated) method to perform
+the real work. A future release of ASMDEX may provide a generic
+register allocation method visitor<br />
+to simplify the development of transformations.<br />
+
+<h2>A simple example</h2>
+Here is a canvas of a tool that logs some method calls according to a
+policy that identifies the methods to check. To keep the tutorial short
+and generic, we will not describe the class implementing the policy. We
+will not describe the generation of the log methods either. <br />
+
+<h3> The entry point </h3>
+
+This is a very simple entry point. We consider the case where the
+classes.dex file has been extracted from the APK. You may want to<br />
+
+perform the change in place. But in any case, you must sign your
+application again to install it.<br />
+
+<pre>public class AnnotateCalls {<br /><br />	public static void main(String args[])  {<br />		FileOutputStream os = null;<br />		try {<br />			int api = Opcodes.ASM4;<br />			File inFile; <br />			File outFile;<br />			... // Argument validation<br />			AnnotRulesManager rm = ...; // Rules to apply<br />			ApplicationReader ar = new ApplicationReader(api, inFile);<br />			ApplicationWriter aw = new ApplicationWriter();<br />			ApplicationVisitor aa = new ApplicationAdapterAnnotateCalls(api, rm, aw);<br />			ar.accept(aa, 0);<br />			byte [] b = aw.toByteArray();<br />			os = new FileOutputStream(outFile);<br />			os.write(b);<br />		} catch (IOException e) { // recovery<br />		} finally { // cleanup }<br />	}<br /><br />}<br /></pre>
+<h3>The application visitor </h3>
+This is a new element specific to ASMDEX and represents the complete
+code unit (classes.dex). We use the end visitor to dump the new class.
+The system will take care of sorting the elements as
+they should be. <code>logClassWriter</code> relies on the rule
+manager to know which log methods it should define. You can use
+asmdexifier to define the template of your log method from an existing
+class.
+<pre>public class ApplicationAdapterAnnotateCalls extends ApplicationVisitor {<br />	final LogClassWriter logClassWriter;<br />	final AnnotRulesManager ruleManager;<br />	<br />	public ApplicationAdapterAnnotateCalls(int api, AnnotRulesManager rm, ApplicationVisitor av) {<br />		super(api, av);<br />		ruleManager = rm;<br />		logClassWriter = new LogClassWriter(rm,av);<br />	}<br />	<br />	@Override<br />	public ClassVisitor visitClass(int access, String name, String [] signature, String superName, String [] interfaces) {<br />		ClassVisitor cv = av.visitClass(access, name, signature, superName, interfaces);<br />		ClassAdapterAnnotateCalls ca = new ClassAdapterAnnotateCalls(api, ruleManager,cv);<br />		return ca;<br />	}<br />	@Override<br />	public void visitEnd() {<br />		logClassWriter.addLogClass();<br />		av.visitEnd();<br />	}<br />}<br /></pre>
+<h3>The class visitor</h3>
+
+There is nothing interesting in this one. It delegates all the work to the method visitor.
+<pre>public class ClassAdapterAnnotateCalls extends ClassVisitor {<br /><br />	final private AnnotRulesManager ruleManager;<br /><br />	public ClassAdapterAnnotateCalls(int api, AnnotRulesManager ruleManager, ClassVisitor cv) {<br />		super(api, cv);<br />		this.ruleManager = ruleManager;<br />	}<br />	<br />	@Override<br />	public MethodVisitor visitMethod(int access, String name, String desc, String[] signature,<br />			String[] exceptions) {<br />		MethodVisitor mv = cv.visitMethod(access, name, desc, signature, exceptions);<br />		MethodAdapterAnnotateCalls ma = new MethodAdapterAnnotateCalls(api, ruleManager, mv);<br />		return ma;<br />	}<br />}<br /></pre>
+<h3>The method visitor</h3>
+This is where the real work is done. The method visiting method calls
+is redefined to generate a new method call followed by the original one
+when the method should be logged.
+Whether something must be done is in the result of the call to the rule
+manager. If this is a function, it should be understood as the name of
+a method in the generated log class. This log method is static and
+takes as many arguments as the controlled method. <ul>
+<li> Note that you cannot log a call to a constructor this way. </li>
+<li> THe syntax of method signature in Dalvik is different from the one used in Oracle JVM. It is coded as <code>RA...A</code> instead of <code>(A...A)R</code> where <code>A</code> stands for the type
+descriptor of an argument and <code>R</code> for the type descriptor of the result. </li>
+</ul>
+<pre>public class MethodAdapterAnnotateCalls extends MethodVisitor {<br /><br />	final private AnnotRulesManager ruleManager;<br /><br />	public MethodAdapterAnnotateCalls(int api, AnnotRulesManager ruleManager, MethodVisitor mv) {<br />		super(api, mv);<br />		this.ruleManager = ruleManager;<br />	}<br />	<br />	@Override<br />	public void visitMethodInsn(int opcode, java.lang.String owner, java.lang.String name, java.lang.String desc, int[] arguments) {<br />		boolean isStatic;<br />		String signature;<br />		switch (opcode) {<br />		case Opcodes.INSN_INVOKE_STATIC:<br />		case Opcodes.INSN_INVOKE_STATIC_RANGE:<br />			isStatic=true;<br />			break;<br />		default:<br />			isStatic=false;<br />		}<br />		String logItName = ruleManager.log(owner,name,desc,isStatic);<br />		if (logItName != null) {<br />			if (isStatic) signature = "V" + MethodSignature.popType(desc);<br />			else signature = "V" + owner + MethodSignature.popType(desc);<br />			int opcodeStatic = (opcode &lt; 0x74) ? Opcodes.INSN_INVOKE_STATIC : Opcodes.INSN_INVOKE_STATIC_RANGE; <br />			mv.visitMethodInsn(opcodeStatic, LogClassWriter.LOG_CLASSNAME, logItName, signature, arguments);<br />		}<br />		mv.visitMethodInsn(opcode, owner, name, desc, arguments);<br />	}<br />	<br />}<br /></pre>
+
+
+</body></html>

@@ -19,7 +19,7 @@
 
     <p><strong>ASMDEX</strong> is a bytecode manipulation library as ASM but
     it handles the DEX bytecode used by Android executables. Only the core
-    library and and a tool to convert bytecode to code generating it
+    library, the tree library and a tool to convert bytecode to code generating it
     (asmdexifier) are available. The underlying principle while developing
     ASMDEX was to keep it very similar to ASM to ease the cost of porting
     tools done for Oracle Java bytecode to Android bytecode.</p>
@@ -29,9 +29,10 @@
 
     <p><strong>Documentation</strong></p><hr/>
 
-    <p><strong>The best way to learn to use ASMDEX is to ....</strong></p>
+    <p><strong>The best way to learn to use ASMDEX is to have a look at the following <a href="doc/tutorial-asmdex.html">tutorial</a> and to
+    look at examples in the code</strong></p>
     
-    <p>The following document provides an in-depth introduction to ASMDEX 1.0, ...</p>
+    <p>The following <a href="http://download.forge.objectweb.org/asm/asmdex-report.pdf">document</a> (Julien Nevo's master thesis, written in french) provides an in-depth introduction to ASMDEX 1.0.</p>
 
     <p><br/><strong>API</strong></p><hr/>
 
