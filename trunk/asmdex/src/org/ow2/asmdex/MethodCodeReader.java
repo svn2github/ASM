@@ -330,49 +330,49 @@ public class MethodCodeReader {
     	// Parses all the instructions.
     	dexFile.seek(instructionsStartOffset);
 		while (dexFile.getPos() < instructionsEndOffset) {
-
+            int relativeOffset = dexFile.getPos() - instructionsStartOffset;
 			if (!skipDebug && (debugCurrentOpcodeOffset >= 0)) {
 				// Parses the Debug Information Item. This will work only if it has information
 				// to display for the current offset. Note that we don't need to parse
 				// this structure on the first pass (findLabelOnly).
-				int relativeOffset = dexFile.getPos() - instructionsStartOffset;
+			
 				parseDebugInformationItem(methodVisitor, relativeOffset, findLabelsOnly);
-				// If a Label is present here, visit it. The label table must of course have
-				// been built before (on the first pass).
-				if (labels.containsKey(relativeOffset)) {
-					Label label = labels.get(relativeOffset);
-					// The line number is valid only if set in the last occurrence
-					// of the Debug Informations parsing.
-					if (newDebugLineEmitted) {
-						label.setLine(debugEmittedLine);							
-					}
-					
-					if (!findLabelsOnly) {
-						methodVisitor.visitLabel(label);
-					}
-				}
-				
-				// Visits the line number (previously parsed) AFTER we visited
-				// the Label.
-				if (newDebugLineEmitted) {
-					if (!findLabelsOnly) {
-						methodVisitor.visitLineNumber(debugEmittedLine,
-								getLabel(relativeOffset));
-					}
-					newDebugLineEmitted = false;
-				}
-				
-				// If a Try/Catch block is here, visit it. The TryCatch table has been
-				// built before on first pass.
-				if (listTryCatchStructures.containsKey(relativeOffset)) {
-					ArrayList<TryCatch> listTryCatch = listTryCatchStructures.get(relativeOffset);
-					for (TryCatch tcs : listTryCatch) {
-						if (!findLabelsOnly) {
-							methodVisitor.visitTryCatchBlock(tcs.getStart(),
-									tcs.getEnd(), tcs.getHandler(), tcs.getType());
-						}
-					}
-				}
+			}
+			// If a Label is present here, visit it. The label table must of course have
+			// been built before (on the first pass).
+			if (labels.containsKey(relativeOffset)) {
+			    Label label = labels.get(relativeOffset);
+			    // The line number is valid only if set in the last occurrence
+			    // of the Debug Informations parsing (it implies !skipDebug).
+			    if (newDebugLineEmitted) {
+			        label.setLine(debugEmittedLine);							
+			    }
+
+			    if (!findLabelsOnly) {
+			        methodVisitor.visitLabel(label);
+			    }
+			}
+
+			// Visits the line number (previously parsed) AFTER we visited
+			// the Label.
+			if (newDebugLineEmitted) {
+			    if (!findLabelsOnly) {
+			        methodVisitor.visitLineNumber(debugEmittedLine,
+			                getLabel(relativeOffset));
+			    }
+			    newDebugLineEmitted = false;
+			}
+
+			// If a Try/Catch block is here, visit it. The TryCatch table has been
+			// built before on first pass.
+			if (listTryCatchStructures.containsKey(relativeOffset)) {
+			    ArrayList<TryCatch> listTryCatch = listTryCatchStructures.get(relativeOffset);
+			    for (TryCatch tcs : listTryCatch) {
+			        if (!findLabelsOnly) {
+			            methodVisitor.visitTryCatchBlock(tcs.getStart(),
+			                    tcs.getEnd(), tcs.getHandler(), tcs.getType());
+			        }
+			    }
 			}
 			
 			// Now reads the bytecode itself.
