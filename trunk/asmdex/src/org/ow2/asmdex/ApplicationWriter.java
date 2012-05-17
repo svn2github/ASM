@@ -604,7 +604,7 @@ public class ApplicationWriter extends ApplicationVisitor {
 	 */
 	private void writeMethodsOfCodeItem(List<Method> methods) {
 		for (Method method : methods) {
-			if (!method.isAbstractOrInterface()) {
+			if (method.supportsCodeItem()) {
 				out.addPadding();
 				if (codeItemOffset == 0) {
 					codeItemOffset = out.getLength();
@@ -794,7 +794,7 @@ public class ApplicationWriter extends ApplicationVisitor {
 		for (Method method : constantPool.getMethods()) {
 			// If the Method is "Unknown" (referred to but not encoded), or is Abstract or Interface
 			// don't write its Debug Information. 
-			if (!method.isUnknown() && !method.isAbstractOrInterface()) {
+			if (!method.isUnknown() && method.supportsCodeItem()) {
 				CodeItem codeItem = method.getCodeItem();
 				
 				// "Constant Pool" optimization enabled ?

@@ -157,7 +157,7 @@ public class Method implements Comparable<Method>, IAnnotationsHolder {
 		this.access = access;
 		this.exceptionNames = exceptionNames;
 		this.signature = signature;
-		if (!isUnknown() && (!isAbstractOrInterface())) {
+		if (!isUnknown() && supportsCodeItem()) {
 			codeItem = new CodeItem(this, constantPool);
 		}
 		
@@ -187,7 +187,7 @@ public class Method implements Comparable<Method>, IAnnotationsHolder {
 		this.exceptionNames = exceptionNames;
 		this.signature = signature;
 		
-		if ((codeItem == null) && (!isUnknown() && (!isAbstractOrInterface()))) { // It SHOULD be Null in all cases.
+		if ((codeItem == null) && !isUnknown() && supportsCodeItem()) { // It SHOULD be Null in all cases.
 			codeItem = new CodeItem(this, constantPool);
 		}
 	}
@@ -248,13 +248,29 @@ public class Method implements Comparable<Method>, IAnnotationsHolder {
 	}
 	
 	/**
+	 * Indicates whether the Method is native.
+	 * @return true if the Method is static.
+	 */
+	public boolean isNative() {
+	    return (access & Opcodes.ACC_NATIVE) != 0;
+	}
+	
+	/**
 	 * Indicates whether the Method is unknown (referred to, but not yet parsed).
 	 * @return true if the Method is unknown.
 	 */
 	public boolean isUnknown() {
 		return (access & Opcodes.ACC_UNKNOWN) != 0;
 	}
-	
+
+	/**
+     * Indicates whether a method contains java code (a CodeItem). 
+     * @return true if the Method has code.
+     */
+    public boolean supportsCodeItem() {
+        return (access & (Opcodes.ACC_ABSTRACT | Opcodes.ACC_INTERFACE | Opcodes.ACC_NATIVE)) == 0;
+    }
+
 	/**
 	 * Indicates whether the Method uses the "this" parameter.
 	 * @return true if the Method uses the "this" parameter.
