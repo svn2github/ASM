@@ -30,17 +30,22 @@
  */
 package org.objectweb.asmdex;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.IOException;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.AfterClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.ApplicationWriter;
 import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.tree.ApplicationNode;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Tests the Application Writer using the Tree API.
@@ -48,24 +53,35 @@ import org.ow2.asmdex.tree.ApplicationNode;
  * 
  * @author Julien Névo
  */
+@RunWith(Parameterized.class)
 public class ApplicationWriterTreeTest {
 
+    @Parameters
+    public static Collection<Object[]> data() {
+        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        File testCaseFolder;
+        testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.FULL_TEST_SUBFOLDER);
+        for (File dexFile : testCaseFolder.listFiles()) {
+            String dexFileName = dexFile.getName();
+            if (dexFileName.toLowerCase().endsWith(".dex")) {
+                data.add(new Object [] {dexFile});
+            }
+        }
+        return data;
+    }
+
+    private File dexFile;
+
+    public ApplicationWriterTreeTest(File file) {
+        dexFile = file;
+    }
+    
 	/**
 	 * After the class has been tested, we remove the temporary folder.
 	 */
 	@AfterClass
 	public static void testAfter() {
 		TestUtil.removeTemporaryFolder();
-	}
-
-	
-	/**
-	 * Test application writer.
-	 */
-	@Test
-	public void testApplicationWriter() {
-		// This constructor does nothing.
-		new ApplicationWriter();
 	}
 
 	/**
@@ -81,22 +97,18 @@ public class ApplicationWriterTreeTest {
 	 */
 	@Test
 	public void testToByteArray() throws IOException {
-		boolean result;
-		
-		// Looks for all the dex files to test.
-		File testCaseFolder;
-		testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.FULL_TEST_SUBFOLDER);
-		result = testGenerationToByteArray(testCaseFolder, false);
-		
-		testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.SKIP_LINE_NUMBERS_TEST_SUBFOLDER);
-		result &= testGenerationToByteArray(testCaseFolder, true);
-
-		assertTrue("Generated dex files aren't equal to the ones from dx.", result);
+	    testGenerationToByteArray(false);
 	}
 	
+    @Test
+    public void testToByteArraySkipLine() throws IOException {
+        testGenerationToByteArray(true);
+    }
 	
-
-	
+    public String getName() {
+        return "testByteArray" + dexFile.getName();
+    }
+		
 	/**
 	 * Tests if the generation to byte array is correct.
 	 * For each dex file contained in the test/case folder :
@@ -110,48 +122,41 @@ public class ApplicationWriterTreeTest {
 	 * @param skipLineNumbers true to skip the debug information about line numbers.
 	 * @throws IOException 
 	 */
-	private boolean testGenerationToByteArray(File folder, boolean skipLineNumbers) throws IOException {
+	private void testGenerationToByteArray(boolean skipLineNumbers) throws IOException {
 		boolean areFolderIdentical = true;
-		
-		for (File dexFile : folder.listFiles()) {
-			String dexFileName = dexFile.getName(); 
-			if (dexFileName.toLowerCase().endsWith(".dex")) {
-				String fullDexFileName = folder.getPath() + "/" + dexFileName;
-				
-				TestUtil.removeTemporaryFolder();
-				
-				// Executes Baksmali to disassemble the current dex file.
-				TestUtil.baksmali(new String[] { fullDexFileName,
-						"-o" + TestUtil.TEMP_FOLDER_EXPECTED});
-				
-				// Uses the Tree API with the Reader and Writer to generate our own dex file from the current dex file.
-				ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, fullDexFileName);
-				ApplicationNode an = new ApplicationNode(Opcodes.ASM4);
-				ar.accept(an, 0);
-				
-				ApplicationWriter aw = new ApplicationWriter();
-				an.accept(aw);
-				
-				byte[] generatedDexFile = aw.toByteArray();
-				
-				String fullGeneratedDexFileName = TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_GENERATED_DEX;
-				File createdDexFile = TestUtil.createFileFromByteArray(generatedDexFile, fullGeneratedDexFileName);
-				
-				// Tests the maps of both the original dex file and the generated one.
-				assertTrue("Unequal Map between " + dexFileName + " and the generated file.", TestUtil.testMapDexFiles(createdDexFile, dexFile));
-				
-				// Executes Baksmali once again to disassemble our generated dex file.
-				TestUtil.baksmali(new String[] { fullGeneratedDexFileName,
-						"-o" + TestUtil.TEMP_FOLDER_GENERATED});
-				
-				// Compare the folders and the .smali files inside.
-				areFolderIdentical = TestUtil.testSmaliFoldersEquality(TestUtil.TEMP_FOLDER_GENERATED,
-						TestUtil.TEMP_FOLDER_EXPECTED, skipLineNumbers);
-				assertTrue("Generated .smali files differ.", areFolderIdentical);
-				TestUtil.removeTemporaryFolder();
-			}
-		}
-		
-		return areFolderIdentical;
+		TestUtil.removeTemporaryFolder();
+		File testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.FULL_TEST_SUBFOLDER);
+		String dexFileName = dexFile.getName();
+		String fullDexFileName = testCaseFolder.getPath() + "/" + dexFileName;	
+		// Executes Baksmali to disassemble the current dex file.
+		TestUtil.baksmali(new String[] { fullDexFileName,
+		        "-o" + TestUtil.TEMP_FOLDER_EXPECTED});
+
+		// Uses the Tree API with the Reader and Writer to generate our own dex file from the current dex file.
+		ApplicationReader ar = new ApplicationReader(Opcodes.ASM4, fullDexFileName);
+		ApplicationNode an = new ApplicationNode(Opcodes.ASM4);
+		ar.accept(an, 0);
+
+		ApplicationWriter aw = new ApplicationWriter();
+		an.accept(aw);
+
+		byte[] generatedDexFile = aw.toByteArray();
+
+		String fullGeneratedDexFileName = TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_GENERATED_DEX;
+		File createdDexFile = TestUtil.createFileFromByteArray(generatedDexFile, fullGeneratedDexFileName);
+
+		// Tests the maps of both the original dex file and the generated one.
+		assertTrue("Unequal Map between " + dexFileName + " and the generated file.", TestUtil.testMapDexFiles(createdDexFile, dexFile));
+
+		// Executes Baksmali once again to disassemble our generated dex file.
+		TestUtil.baksmali(new String[] { fullGeneratedDexFileName,
+		        "-o" + TestUtil.TEMP_FOLDER_GENERATED});
+
+		// Compare the folders and the .smali files inside.
+		areFolderIdentical = TestUtil.testSmaliFoldersEquality(TestUtil.TEMP_FOLDER_GENERATED,
+		        TestUtil.TEMP_FOLDER_EXPECTED, skipLineNumbers);
+		assertTrue("Generated .smali files differ.", areFolderIdentical);
+		TestUtil.removeTemporaryFolder();
 	}
+
 }

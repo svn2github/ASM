@@ -116,6 +116,10 @@ public abstract class LogElement {
 		 * inner class  visit
 		 */
 		TYPE_CLASS_VISIT_INNER_CLASS,
+        /**
+         * member class  visit
+         */
+        TYPE_CLASS_VISIT_MEMBER_CLASS,
 		/**
 		 * method visit
 		 */

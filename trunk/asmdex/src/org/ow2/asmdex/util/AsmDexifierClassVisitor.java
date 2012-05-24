@@ -150,6 +150,19 @@ public class AsmDexifierClassVisitor extends ClassVisitor {
 		pr.closeText();
 	}
 
+
+	@Override
+	public void visitMemberClass(String name, String outerName, String innerName) {
+	        pr.addTabulation();
+	        pr.addText("cv.visitMemberClass(");
+	        pr.addConstant(name, true);
+	        pr.addConstant(outerName, true);
+	        pr.addConstant(innerName, false);
+	        pr.addText(");");
+	        pr.addEOL();
+	        pr.closeText();
+	    }
+	   
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc, String[] signature, String[] exceptions) {
 		pr.addTabulation();

@@ -37,8 +37,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
@@ -60,34 +65,35 @@ import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
  * 
  * @author Julien Névo
  */
+@RunWith(Parameterized.class)
 public class AsmDexifierTest {
 	
+    @Parameters
+    public static Collection<Object[]> data() {
+        ArrayList<Object[]> data = new ArrayList<Object[]>();
+        File testCaseFolder;
+        testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.FULL_TEST_SUBFOLDER);
+        for (File dexFile : testCaseFolder.listFiles()) {
+            String dexFileName = dexFile.getName();
+            if (dexFileName.toLowerCase().endsWith(".dex")) {
+                data.add(new Object [] {dexFile});
+            }
+        }
+        return data;
+    }
+
+    private File dexFile;
+
+    public AsmDexifierTest(File file) {
+        dexFile = file;
+    }
+
 	/**
 	 * True to show little messages about what files is being tested.
 	 */
 	private static boolean SHOW_MESSAGES = true;
 
-	/**
-	 * Test asm dexifier.
-	 *
-	 * @throws Exception the exception
-	 */
-	@Test
-	public void testAsmDexifier() throws Exception {
-		
-		boolean result = true;
-		
-		// Looks for all the dex files to test.
-		File testCaseFolder;
-		testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.FULL_TEST_SUBFOLDER);
-		result = testAsmDexifierFolder(testCaseFolder, false);
-		
-		testCaseFolder = new File(TestUtil.PATH_FOLDER_TESTCASE + TestUtil.SKIP_LINE_NUMBERS_TEST_SUBFOLDER);
-		result &= testAsmDexifierFolder(testCaseFolder, true);
-		
-		assertTrue("Generated dex files aren't equal to the ones from dx.", result);
-	}
-	
+
 	/**
 	 * Tests if the generation to byte array is correct.
 	 * For each dex file contained in the test/case folder :
@@ -98,26 +104,22 @@ public class AsmDexifierTest {
 	 *   - Compares each .smali files :
 	 *     Allows some dex files to skip some debug information : the line numbers can be
 	 *     incorrect in some rare and not useful cases.
-	 * @param skipLineNumbers true to skip the debug information about line numbers.
 	 * @throws IOException 
 	 */
-	private boolean testAsmDexifierFolder(File folder, boolean skipLineNumbers) throws Exception {
-		boolean result = true;
-		
-		for (File dexFile : folder.listFiles()) {
-			String dexFileName = dexFile.getName(); 
-			if (dexFileName.toLowerCase().endsWith(".dex")) {
-				if (SHOW_MESSAGES) {
-					System.out.print("AsmDexifier test with " + dexFileName + ". ");
-				}
-				result = testDexFile(dexFile, skipLineNumbers);
-				assertTrue("Dex file isn't equal : " + dexFileName, result);
-			}
-		}
-		
-		return result;
+	@Test
+	public void testAsmDexifier() throws Exception {
+	    testDexFile(false);
 	}
 
+	/**
+	 * Same test as testAsmDexifier without debug info
+	 * @throws Exception
+	 */
+	@Test
+    public void testAsmDexifierSkip() throws Exception {
+        testDexFile(true);
+    }
+	
 	/**
 	 * Tests the given dex file.
 	 * @param dexFile the dex file to test.
@@ -126,7 +128,7 @@ public class AsmDexifierTest {
 	 * @return true if the generated dex file matches the original.
 	 * @throws Exception 
 	 */
-	private static boolean testDexFile(File dexFile, boolean skipLineNumbers) throws Exception {
+	private boolean testDexFile(boolean skipLineNumbers) throws Exception {
 		
 		TestUtil.removeTemporaryFolder();
 		TestUtil.createTemporaryFolders(new String[] { TestUtil.PATH_FOLDER_TEST, TestUtil.PATH_FOLDER_CONFORM });
@@ -215,6 +217,8 @@ public class AsmDexifierTest {
 				TestUtil.TEMP_FOLDER_EXPECTED, skipLineNumbers);
 		
 		TestUtil.removeTemporaryFolder();
+		
+		assertTrue("Unequal smali folders between the original and the generated file.", areFolderIdentical);
 		
 		if ((areFolderIdentical) && (SHOW_MESSAGES)) {
 			System.out.println("OK!");

@@ -106,6 +106,11 @@ public class ClassNode extends ClassVisitor {
     public List<InnerClassNode> innerClasses = new ArrayList<InnerClassNode>();
 
     /**
+     * Informations about the member classes of this class.
+     */
+    public List<MemberClassNode> memberClasses = new ArrayList<MemberClassNode>();
+
+    /**
      * The fields of this class.
      */
     public List<FieldNode> fields = new ArrayList<FieldNode>();
@@ -181,6 +186,13 @@ public class ClassNode extends ClassVisitor {
 	}
 
 	@Override
+	public void visitMemberClass(String name, String outerName,
+	            String innerName) {
+	   MemberClassNode n = new MemberClassNode(name, outerName, innerName);
+	        memberClasses.add(n);
+	}
+
+	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String[] signature, String[] exceptions) {
 		MethodNode n = new MethodNode(api, access, name, desc, signature, exceptions);
@@ -243,7 +255,12 @@ public class ClassNode extends ClassVisitor {
         for (InnerClassNode icn : innerClasses) {
         	icn.accept(cv);
         }
-        
+
+        // Visits Inner Classes.
+        for (MemberClassNode icn : memberClasses) {
+            icn.accept(cv);
+        }
+
         // Visits Fields.
         for (FieldNode fn : fields) {
         	fn.accept(cv);

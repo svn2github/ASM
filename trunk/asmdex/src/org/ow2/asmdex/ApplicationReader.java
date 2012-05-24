@@ -577,7 +577,7 @@ public class ApplicationReader {
 				// Visits the inner class, if any.
 				if (classAnnotationsOffset != 0) {
 					dexFile.seek(classAnnotationsOffset); // Get to the annotation_set_item.
-					readInnerClassAnnotations(classVisitor);
+					readInnerClassAnnotations(className, classVisitor);
 					
 					dexFile.seek(classAnnotationsOffset);
 					readMemberClassesAnnotations(classVisitor);
@@ -1342,7 +1342,8 @@ public class ApplicationReader {
 				// Obfuscators may remove mention of the inner name. We must cope with it.
 				String outerName = 
 					(i<0) ? null : name.substring(0, i) + ";"; // Adds the ";" at the end.
-				classVisitor.visitInnerClass(name, outerName, innerName, accessFlags);
+				// classVisitor.visitInnerClass(name, outerName, innerName, accessFlags);
+				classVisitor.visitMemberClass(name, outerName, innerName);
 			}
     	}
     }
@@ -1351,9 +1352,10 @@ public class ApplicationReader {
      * Reads the Annotations, check only the ones related to inner classes
      * (EnclosingClass, InnerClasses), and call the visitInnerClass accordingly.
      * The dex file reader must point on an annotation_set_item.
+     * @param className 
      * @param classVisitor the visitor to visit the inner class.
      */
-    private void readInnerClassAnnotations(ClassVisitor classVisitor) {
+    private void readInnerClassAnnotations(String className, ClassVisitor classVisitor) {
     	// Creates the InnerClass and EnclosingClass Parsers and makes the search for these
     	// specific annotations in the annotations.
 
@@ -1373,17 +1375,9 @@ public class ApplicationReader {
 	    	EnclosingClassSpecificAnnotationParser enclosingParser = (EnclosingClassSpecificAnnotationParser)enclosingClassSpecificAnnotationParser;
 	    	
 	    	// Gets the information.
-	    	//int classId = enclosingParser.getClassId();
-			//String outerClassName = dexFile.getStringItemFromTypeIndex(classId);
 	    	String outerClassName = enclosingParser.getClassName();
 			String simpleNameInnerClass = innerParser.getSimpleNameInnerClass();
-			String nameInnerClass = null;
-			// Reconstruction of the name of the inner class.
-			if ((simpleNameInnerClass != null) && (outerClassName != null)) {
-				nameInnerClass = outerClassName.replace(';', '$') + simpleNameInnerClass + ';';
-			}
-	    	
-	    	classVisitor.visitInnerClass(nameInnerClass, outerClassName, simpleNameInnerClass, innerParser.getAccessFlagsInnerClass());
+			classVisitor.visitInnerClass(className, outerClassName, simpleNameInnerClass, innerParser.getAccessFlagsInnerClass());
     	}
     }
     
@@ -1431,10 +1425,16 @@ public class ApplicationReader {
 			String outerClassName = dexFile.getNameFromMethodIndex(methodId);
 			String nameInnerClass = null;
 			// Reconstruction the name of the inner class.
+			/*
 			if ((nameEnclosingClass != null) && (simpleNameInnerClass != null) && (outerClassName != null)) {
 				nameInnerClass = nameEnclosingClass.replace(';', '$') + '1' + simpleNameInnerClass;
 			}
 			classVisitor.visitInnerClass(nameInnerClass, outerClassName, simpleNameInnerClass, innerParser.getAccessFlagsInnerClass());
+			*/
+            if ((nameEnclosingClass != null) && (simpleNameInnerClass != null) && (outerClassName != null)) {
+                nameInnerClass = nameEnclosingClass.replace(';', '$') + '1' + simpleNameInnerClass + ";";
+            }
+            classVisitor.visitInnerClass(nameInnerClass, nameEnclosingClass, simpleNameInnerClass, innerParser.getAccessFlagsInnerClass());
     	}
     }
     

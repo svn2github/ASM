@@ -341,10 +341,10 @@ public class LogListHelloWorld implements LogList {
 			, new LogElementApplicationVisitClass(ACC_PUBLIC + ACC_FINAL, "Lft/nevo/R;", null, "Ljava/lang/Object;", null)
 			, new LogElementClassVisit(ACC_PUBLIC + ACC_FINAL, "Lft/nevo/R;", null, "Ljava/lang/Object;", null)
 			, new LogElementClassVisitSource("R.java", null)
-			, new LogElementClassVisitInnerClass("Lft/nevo/R$attr;", "Lft/nevo/R;", "attr", ACC_PUBLIC + ACC_FINAL)
-			, new LogElementClassVisitInnerClass("Lft/nevo/R$drawable;", "Lft/nevo/R;", "drawable", ACC_PUBLIC + ACC_FINAL)
-			, new LogElementClassVisitInnerClass("Lft/nevo/R$layout;", "Lft/nevo/R;", "layout", ACC_PUBLIC + ACC_FINAL)
-			, new LogElementClassVisitInnerClass("Lft/nevo/R$string;", "Lft/nevo/R;", "string", ACC_PUBLIC + ACC_FINAL)
+			, new LogElementClassVisitMemberClass("Lft/nevo/R$attr;", "Lft/nevo/R;", "attr")
+			, new LogElementClassVisitMemberClass("Lft/nevo/R$drawable;", "Lft/nevo/R;", "drawable")
+			, new LogElementClassVisitMemberClass("Lft/nevo/R$layout;", "Lft/nevo/R;", "layout")
+			, new LogElementClassVisitMemberClass("Lft/nevo/R$string;", "Lft/nevo/R;", "string")
 			
 			// Method <init>
 			, new LogElementClassVisitMethod(ACC_PUBLIC + ACC_CONSTRUCTOR, "<init>", "V", null, null)

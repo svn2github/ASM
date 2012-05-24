@@ -211,6 +211,22 @@ public abstract class ClassVisitor {
         }    	
     }
 	
+    /**
+     * Visits information about a member class. 
+     * 
+     * @param outerName the internal name of the class to which the member class
+     *        belongs. 
+     * @param innerName the (simple) name of the member class inside its
+     *        enclosing class. 
+     */
+    public void visitMemberClass(
+        String name,
+        String outerName,
+        String innerName) {
+        if (cv != null) {
+            cv.visitMemberClass(name,outerName, innerName);
+        }       
+    }
 	/**
      * Visits a field of the class.
      * 

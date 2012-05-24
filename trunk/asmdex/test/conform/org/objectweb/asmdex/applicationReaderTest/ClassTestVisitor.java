@@ -35,6 +35,7 @@ import org.objectweb.asmdex.logging.LogElementClassVisitAnnotation;
 import org.objectweb.asmdex.logging.LogElementClassVisitEnd;
 import org.objectweb.asmdex.logging.LogElementClassVisitField;
 import org.objectweb.asmdex.logging.LogElementClassVisitInnerClass;
+import org.objectweb.asmdex.logging.LogElementClassVisitMemberClass;
 import org.objectweb.asmdex.logging.LogElementClassVisitMethod;
 import org.objectweb.asmdex.logging.LogElementClassVisitOuterClass;
 import org.objectweb.asmdex.logging.LogElementClassVisitSource;
@@ -103,6 +104,10 @@ public class ClassTestVisitor extends ClassVisitor {
 		logger.foundElement(new LogElementClassVisitInnerClass(name, outerName, innerName, access));
 	}
 
+	   @Override
+	    public void visitMemberClass(String name, String outerName, String innerName) {
+	        logger.foundElement(new LogElementClassVisitMemberClass(name, outerName, innerName));
+	    }
 	@Override
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String[] signature, String[] exceptions) {
