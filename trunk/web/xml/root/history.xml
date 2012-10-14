@@ -14,6 +14,45 @@
 
     <s1 name="History">
 
+     <subtitle>14 October 2012: ASM 4.1 (svn-tag: ASM_4_1)</subtitle>
+
+        <ul>
+            <li>implicit first frame no longer visited with
+            EXPAND_FRAMES (was necessary to fix bug 316360).</li>
+            <li>performance improvements in ClassReader (about +10
+            percent speedup).</li>
+            <li>feature requests
+            <ul>
+                <li>316306: More efficient patch for Frame.merge().</li>
+                <li>316318: Allow generated SVUID field to be marked
+                synthetic.</li>
+                <li>316321: asm osgi bundles based on BND.</li>
+                <li>Moved checkClassSignature, checkMethodSignature and
+                checkFieldSignature to CheckClassAdapter and made them public.</li>
+                <li>316345: Support "synthetic" access modifier in 
+                org.objectweb.asm.util.Textifier.appendAccess()</li>
+            </ul>
+            </li>
+            <li>bug fixes
+            <ul>
+                <li>316360: MethodWriter.visitFrame(F_NEW,...) requires
+                explicit invocation for the implicit frame at offset zero.</li>
+                <li>316352: LocalVariableSorter.visitFrame() logic is
+                incorrect.</li>
+                <li>316326: analysis.Frame.merge() should use !
+                .equals() instead of !=.</li>
+            <li>Fix regression: LDC with a primitive class doesn't
+            work anymore.</li>
+            <li>316347: GeneratorAdaptor.ifCmp() generates
+            DCMPG/DCMPL incorrectly.</li>
+            <li>316348: ClassVersion check in ClassReader looks at
+            wrong offset.</li>
+            <li>316359: ClassWriter toByteArray fails when there are
+            more than 32k constant pool entries.</li>
+            </ul>
+            </li>
+        </ul>
+
       <subtitle>29 October 2011: ASM 4.0 (svn-tag: ASM_4_0)</subtitle>
 
         <ul>
