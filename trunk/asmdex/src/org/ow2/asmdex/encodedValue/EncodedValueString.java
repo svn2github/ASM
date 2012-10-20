@@ -53,18 +53,11 @@ public class EncodedValueString extends EncodedValue {
 	
 	/**
 	 * Constructs the Encoded Value from its value.
-	 * @param value the value.
+	 * @param value the value. It cannot be null.
 	 */
 	public EncodedValueString(String value) {
+	    if (value == null) throw new RuntimeException("EncodedValue");
 		this.value = value;
-	}
-	
-	/**
-	 * Constructs the Encoded Value from an Object containing a value.
-	 * @param value the Object containing a value.
-	 */
-	public EncodedValueString(Object value) {
-		this.value = (String)value;
 	}
 	
 	@Override
@@ -110,7 +103,7 @@ public class EncodedValueString extends EncodedValue {
 			return 0;
 		}
 		
-		EncodedValueString ev = (EncodedValueString)encodedValue; 
+		EncodedValueString ev = (EncodedValueString)encodedValue;
 		return value.compareTo(ev.value);
 	}
 }

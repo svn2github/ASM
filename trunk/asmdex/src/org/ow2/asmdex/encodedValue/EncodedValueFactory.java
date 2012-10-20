@@ -85,7 +85,7 @@ public class EncodedValueFactory {
 			encodedValue = new EncodedValueDouble(value);
 			break;
 		case Opcodes.VALUE_STRING:
-			encodedValue = new EncodedValueString(value);
+			encodedValue = new EncodedValueString((String) value);
 			break;
 		case Opcodes.VALUE_TYPE:
 			encodedValue = new EncodedValueType(value);
@@ -174,7 +174,7 @@ public class EncodedValueFactory {
 		} else if (value instanceof Short) {
 			return new EncodedValueShort(value);
 		} else if (value instanceof String) {
-			return new EncodedValueString(value);
+			return new EncodedValueString((String) value);
 		}
 		
 		// Test the Arrays.
