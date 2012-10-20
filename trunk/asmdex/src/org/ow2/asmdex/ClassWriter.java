@@ -446,7 +446,7 @@ public class ClassWriter extends ClassVisitor {
 
         constantPool.addTypeToConstantPool(Constants.INNER_CLASS_ANNOTATION_INTERNAL_NAME);
         // According to the documentation, if the class is anonymous, the name becomes a Null value.
-        if (name == null) {
+        if (innerName == null) { // DOUBLE CHECK IF NAME OR INNER NAME.
             encodedValue = EncodedValueFactory.getEncodedNullValue();
         } else {
             encodedValue = EncodedValueFactory.getEncodedValue(innerName, Opcodes.VALUE_STRING);
