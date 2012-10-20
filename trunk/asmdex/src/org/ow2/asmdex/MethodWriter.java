@@ -340,7 +340,7 @@ public class MethodWriter extends MethodVisitor {
 		int outgoingSize = (Prototype.getSizeOfDescriptor(desc, true) / 2);
 		// If the opcode of the call shows a non-static call, we have to count "this" in
 		// the current Outgoing Arguments size.
-		if (opcode != Opcodes.INSN_INVOKE_STATIC) {
+		if (opcode != Opcodes.INSN_INVOKE_STATIC && opcode != Opcodes.INSN_INVOKE_STATIC_RANGE) {
 			outgoingSize++;
 		}
 		
