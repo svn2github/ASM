@@ -245,25 +245,10 @@ public class MethodAdapterAnnotateCalls extends MethodVisitor {
 		representation. Here is the relevant code from the MethodSignature
 		class:</p>
 	<pre>
-/**
- * Gives back all the types from a list but the first. Used to parse a method
- * signature in Dalvik format.
- * @param desc a string coded as a list of type descriptions
- * @return the string without the first type
- */
 public static String popType(String desc) {
     return desc.substring(nextTypePosition(desc,0));
 }
 
-
-/**
- * Get the point where the next type description ends.
- * @param desc  a string coded as a  list of type descriptions
- * @param pos position to start from.
- * @return the position of first character of the next type.
- */
-</pre>
-	<pre>
 public static int nextTypePosition(String desc, int pos) {
     while(desc.charAt(pos) == '[') pos ++;
     if (desc.charAt(pos) == 'L') pos = desc.indexOf(';', pos);
