@@ -98,6 +98,7 @@ implements IOneRegisterInstruction, ILiteralInstruction {
 	
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test4BitsLimit(registerA);
 		int firstShort = ((literalB & 0xf) << 12) + ((registerA & 0xf) << 8) + opcodeByte;
 		out.putShort(firstShort);
 	}

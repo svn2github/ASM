@@ -197,6 +197,7 @@ implements IThreeRegistersInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test8BitsLimit(registerA | registerB | registerC);
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		out.putShort(((registerC & 0xff) << 8) + (registerB & 0xff)); 
 	}

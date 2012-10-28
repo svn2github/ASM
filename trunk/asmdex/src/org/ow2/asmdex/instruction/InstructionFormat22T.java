@@ -183,6 +183,8 @@ implements ITwoRegistersInstruction, IOffsetInstruction {
 	
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test4BitsLimit(registerA | registerB);
+	    
 		// The format is B|A|op CCCC.
 		int firstShort = ((registerB & 0xf) << 12) + ((registerA & 0xf) << 8) + opcodeByte;
 		int secondShort = (label.getOffset() - instructionOffset) / 2; // / 2 because offsets are word-based.

@@ -141,6 +141,7 @@ implements IOneRegisterInstruction, ILongLiteralInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test8BitsLimit(registerA);
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		out.putByte((byte)literalB);
 		out.putByte((byte)(literalB >> 8));

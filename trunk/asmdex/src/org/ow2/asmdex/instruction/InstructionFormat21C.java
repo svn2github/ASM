@@ -162,6 +162,7 @@ implements IOneRegisterInstruction, IIndexInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test8BitsLimit(registerA);
 		// The format is AA|op BBBB.
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		// The index may be a Type, or a String index.

@@ -200,7 +200,9 @@ implements IRegisterArrayInstruction, IIndexInstruction {
 			try { throw new Exception("Abnormal arguments number : " + nbRegisters); }
     		catch (Exception e) { e.printStackTrace(); }
 		}
-		
+		int mask=0;
+		for(int i=0; i < nbRegisters; i++) mask |= registers[i];
+		test4BitsLimit(mask);
 		out.putShort(firstShort);
 		if (opcodeByte == 0x24) {
 			out.putShort(constantPool.getTypeIndex(type));

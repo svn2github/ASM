@@ -139,6 +139,7 @@ public class InstructionFormat12X extends Instruction implements ITwoRegistersIn
 	
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test4BitsLimit(registerA | registerB);
 		int firstShort = ((registerB & 0xf) << 12) + ((registerA & 0xf) << 8) +	opcodeByte;
 		out.putShort(firstShort);
 	}

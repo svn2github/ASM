@@ -132,6 +132,7 @@ implements IOneRegisterInstruction, IIndexInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test8BitsLimit(registerA);
 		// The format is AA|op BBBBlo BBBBhi.
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		int index = constantPool.getStringIndex(string);

@@ -189,6 +189,7 @@ implements ITwoRegistersInstruction, IIndexInstruction {
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
 		// The format is B|A|op CCCC.
+	    test8BitsLimit(registerA | registerB);
 		out.putShort((((registerA & 0xf) << 8) + ((registerB & 0xf) << 12)) + opcodeByte);
 		// The index may be a Type, or a Field index.
 		int index;

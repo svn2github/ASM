@@ -158,6 +158,7 @@ implements ITwoRegistersInstruction, ILiteralInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test8BitsLimit(registerA | registerB);
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		out.putShort(((literalC & 0xff) << 8) + (registerB & 0xff));
 	}

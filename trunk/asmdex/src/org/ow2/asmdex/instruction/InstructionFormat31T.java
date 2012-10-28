@@ -168,6 +168,7 @@ implements IOneRegisterInstruction, IOffsetInstruction {
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
 		// The format is AA|op BBBBlo BBBBhi.
+	    test8BitsLimit(registerA);
 		out.putShort(((registerA & 0xff) << 8) + opcodeByte);
 		int branchOffset = (label.getOffset() - instructionOffset) / 2; // / 2 because offsets are word-based. 
 		out.putShort(branchOffset & 0xffff);

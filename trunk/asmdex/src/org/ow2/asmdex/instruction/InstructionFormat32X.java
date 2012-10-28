@@ -136,6 +136,7 @@ implements ITwoRegistersInstruction {
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
+	    test16BitsLimit(registerA | registerB);
 		out.putShort(opcodeByte);
 		out.putShort(registerA & 0xffff);
 		out.putShort(registerB & 0xffff);

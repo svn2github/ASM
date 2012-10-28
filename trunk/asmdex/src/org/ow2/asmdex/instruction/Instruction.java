@@ -151,7 +151,24 @@ public abstract class Instruction {
 		}
 	}
 	
-	/**
+    /**
+     * Tests if the given number can be held in 8 bits, throw an IllegalArgumentException otherwise.
+     */
+    public static void test8BitsLimit(int number) {
+        if ((number & 0xffffff00) != 0) {
+            throw new IllegalArgumentException("The number " + number +" can't be held in 8 bits !");
+        }
+    }
+
+    /**
+     * Tests if the given number can be held in 16 bits, throw an IllegalArgumentException otherwise.
+     */
+    public static void test16BitsLimit(int number) {
+        if ((number & 0xffff0000) != 0) {
+            throw new IllegalArgumentException("The number " + number +" can't be held in 16 bits !");
+        }
+    }
+    /**
 	 * Tests if the given numbers can be held in 4 bits, throw an IllegalArgumentException otherwise.
 	 */
 	public static void test4BitsLimit(int[] numbers) {
@@ -190,4 +207,5 @@ public abstract class Instruction {
 	public static byte getInstructionSizeInByte(int opcode) {
 		return instructionSizeInBytes[opcode];
 	}
+	
 }
