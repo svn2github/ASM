@@ -1155,15 +1155,12 @@ public class ApplicationReader {
 			// Non primitive array. We visit each elements, as well as calling the 
 			// visitArray method.
 			int nbElements = dexFile.uleb128();
-			if (annotationVisitor != null) {
-				AnnotationVisitor arrayElementsAnnotationVisitor = annotationVisitor.visitArray(valueName);
-			   	if (arrayElementsAnnotationVisitor != null) {
-					for (int elementIndex = 0; elementIndex < nbElements; elementIndex++) {
-						readEncodedValue(arrayElementsAnnotationVisitor, null);
-					}
-					arrayElementsAnnotationVisitor.visitEnd();
-			   	}
-	    	}			
+		    AnnotationVisitor arrayElementsAnnotationVisitor = 
+		        (annotationVisitor == null) ? null : annotationVisitor.visitArray(valueName);
+			for (int elementIndex = 0; elementIndex < nbElements; elementIndex++) {
+				readEncodedValue(arrayElementsAnnotationVisitor, null);
+			}
+			if (arrayElementsAnnotationVisitor != null) arrayElementsAnnotationVisitor.visitEnd();			
 		}
     }
 
