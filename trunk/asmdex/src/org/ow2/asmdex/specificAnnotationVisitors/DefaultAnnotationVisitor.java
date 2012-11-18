@@ -47,8 +47,9 @@ public class DefaultAnnotationVisitor extends AnnotationVisitor {
 	 * Constructor.
 	 * @param api the API level
 	 */
-	public DefaultAnnotationVisitor(int api) {
+	public DefaultAnnotationVisitor(int api, String desc) {
 		super(api);
+		this.desc = desc;
 	}
 	
 	private List<DefaultAnnotationInformation> infos = new ArrayList<DefaultAnnotationInformation>();
@@ -78,19 +79,28 @@ public class DefaultAnnotationVisitor extends AnnotationVisitor {
 
 	@Override
 	public AnnotationVisitor visitAnnotation(String name, String desc) {
-		// The "name" is "value", ignored here.
-		this.desc = desc;
-		return this;
+		DefaultAnnotationVisitor av = new DefaultAnnotationVisitor(api, desc);
+		infos.add(new DefaultAnnotationInformation(name, av));
+		return av;
 	}
 	
 	@Override
 	public AnnotationVisitor visitArray(String name) {
-		return null;
+        DefaultAnnotationVisitor av = new DefaultAnnotationVisitor(api, null);
+        infos.add(new DefaultAnnotationInformation(name, av));
+        return av;
 	}
+	
 	@Override
 	public void visitEnd() { }
+	
 	@Override
-	public void visitEnum(String name, String desc, String value) { }
+	public void visitEnum(String name, String desc, String value) { 
+	    infos.add(new DefaultAnnotationInformation(name, new DefaultAnnotationInformation.EnumInfo(desc,value)));
+	}
+	
 	@Override
-	public void visitClass(String annotationName, String className) { }
+	public void visitClass(String name, String className) { 
+	    infos.add(new DefaultAnnotationInformation(name, new DefaultAnnotationInformation.ClassInfo(className)));
+	}
 }

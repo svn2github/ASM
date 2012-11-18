@@ -111,7 +111,7 @@ public class AnnotationElement implements Comparable<AnnotationElement> {
 	@Override
 	public int hashCode() {
 		// Caching the hashcode is useless here (not enough calls).
-		return (elementName != null ? elementName.hashCode() : 0) + encodedValue.hashCode();
+		return (elementName != null ? elementName.hashCode() : 0) + (encodedValue != null ? encodedValue.hashCode() : 0);
 	}
 	
 	@Override
@@ -142,4 +142,8 @@ public class AnnotationElement implements Comparable<AnnotationElement> {
 		return result;
 	}
 	
+	@Override 
+	public String toString() {
+	    return elementName + ": " + encodedValue; 
+	}
 }

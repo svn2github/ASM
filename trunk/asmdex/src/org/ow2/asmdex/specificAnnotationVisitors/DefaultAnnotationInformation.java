@@ -31,6 +31,8 @@
 
 package org.ow2.asmdex.specificAnnotationVisitors;
 
+import java.util.ArrayList;
+
 /**
  * Tiny class to hold the name and value of an Default Annotation conveniently.
  * The description (class of the Annotation it belongs to) isn't stored here.
@@ -49,12 +51,60 @@ public class DefaultAnnotationInformation {
 	 */
 	private Object value;
 	
+	
+	/**
+	 * Description of an enumeration item. Can be used a value if this is not a primitive object.
+	 * @author pierre
+	 *
+	 */
+	static public class EnumInfo {
+	    
+	    /**
+	     * Description of the enum type 
+	     */
+	    final public String enumDesc;
+	    /**
+	     * enumeration element.
+	     */
+	    final public String enumValue;
+	    
+	    /**
+	     * Constructor representing a statically encoded value from an enum type.
+	     * @param enumDesc the type description
+	     * @param enumValue the value
+	     */
+	    public EnumInfo(String enumDesc, String enumValue) {
+	        this.enumDesc = enumDesc;
+	        this.enumValue = enumValue;
+	    }
+	}
+	
+	/**
+	 * 
+	 * Representation of a value in an annotation that is class. 
+	 */
+	static public class ClassInfo {
+        /**
+         * The name of the class
+         */
+        final public String className;
+        
+        /**
+         * Constructor for the value
+         * @param className static name of the class.
+         */
+        public ClassInfo(String className) {
+            this.className = className;
+        }
+    }
+		
 	/**
 	 * Constructor (record)
 	 * @param name
 	 * @param value
 	 */
 	public DefaultAnnotationInformation(String name, Object value) {
+	    System.out.println(name + " -> " + value); // DEBUG
 		this.name = name;
 		this.value = value;
 	}

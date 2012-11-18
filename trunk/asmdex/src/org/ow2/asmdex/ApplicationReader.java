@@ -192,6 +192,7 @@ public class ApplicationReader {
 
     /**
      * Constructs a new {@link ApplicationReader} object.
+     * @param api the ASMDEX api level
      * @param byteCode the bytecode of the application to be read.
      */
     public ApplicationReader(final int api, final byte[] byteCode) {
@@ -200,6 +201,7 @@ public class ApplicationReader {
     
     /**
      * Constructs a new {@link ApplicationReader} object.
+     * @param api the ASMDEX api level
      * @param byteCode the bytecode of the application to be read.
      * @param startOffset the start offset of the application data.
      * @param length the length of the application data.
@@ -228,6 +230,7 @@ public class ApplicationReader {
         
     /**
      * Constructs a new {@link ApplicationReader} object.
+     * @param api the ASMDEX api level
      * @param inputStream an input stream from which to read the application.
      * @throws IOException if a problem occurs during reading.
      */
@@ -237,6 +240,7 @@ public class ApplicationReader {
 
     /**
      * Constructs a new {@link ApplicationReader} object.
+     * @param api the ASMDEX api level
      * @param fileName name and path of the application (DEX) to be read.
      * @throws IOException if an exception occurs during reading.
      */
@@ -247,6 +251,7 @@ public class ApplicationReader {
     
     /**
      * Constructs a new {@link ApplicationReader} object.
+     * @param api the ASMDEX api level
      * @param file the dex file to be read.
      * @throws IOException if an exception occurs during reading.
      */
@@ -746,7 +751,8 @@ public class ApplicationReader {
 						// As stated in the ASM visitDefaultAnnotation(), it consists only in one
 						// visit(), and one visitEnd().
 						if (annotationVisitor != null) {
-							annotationVisitor.visit(methodName, defaultAnnotations.get(methodName).getValue());
+						    Object value = defaultAnnotations.get(methodName).getValue();
+						    visitDefaultAnnotationValue(annotationVisitor,methodName,value);
 							annotationVisitor.visitEnd();
 						}
 					}
@@ -824,6 +830,41 @@ public class ApplicationReader {
 			
 			dexFile.seek(saveDexFilePosition); // Recovers position in the methods list.
 		}
+    }
+
+    private void visitDefaultAnnotationValue(AnnotationVisitor annotationVisitor, String name, Object value) {
+        if (value instanceof DefaultAnnotationVisitor) {
+            DefaultAnnotationVisitor dav = (DefaultAnnotationVisitor) value;
+            String desc = dav.getDesc();
+            if (desc == null) {
+                //  Here we have an array
+                AnnotationVisitor av = annotationVisitor.visitArray(name);
+                if (av != null) {
+                    for(DefaultAnnotationInformation info : dav.getDefaultAnnotationInformationList()) {
+                        visitDefaultAnnotationValue(av, info.getName(), info.getValue());
+                    }
+                    av.visitEnd();
+                }
+            } else {
+                // Here we have an annotation with its description type
+                AnnotationVisitor av = annotationVisitor.visitAnnotation(name,desc);
+                if (av != null) {
+                    for(DefaultAnnotationInformation info : dav.getDefaultAnnotationInformationList()) {
+                        visitDefaultAnnotationValue(av, info.getName(), info.getValue());
+                    }
+                    av.visitEnd();
+                }
+            }
+        } else if (value instanceof DefaultAnnotationInformation.EnumInfo) {
+            DefaultAnnotationInformation.EnumInfo enumInfo = (DefaultAnnotationInformation.EnumInfo) value;
+            annotationVisitor.visitEnum(name,enumInfo.enumDesc, enumInfo.enumValue);
+        } else if (value instanceof DefaultAnnotationInformation.ClassInfo) {
+            DefaultAnnotationInformation.ClassInfo classInfo = (DefaultAnnotationInformation.ClassInfo) value;
+            annotationVisitor.visitClass(name,classInfo.className);
+        } else {
+            // Primitive type case.
+            annotationVisitor.visit(name, value);
+        }
     }
 
     /**
@@ -1268,16 +1309,20 @@ public class ApplicationReader {
     	ISpecificAnnotationParser specificAnnotationParser =
     		new DefaultAnnotationSpecificAnnotationParser(Constants.ANNOTATION_DEFAULT_INTERNAL_NAME);
     	
-    	boolean foundAnnotation = parseSpecificAnnotations(new DefaultAnnotationVisitor(api), specificAnnotationParser);
+    	boolean foundAnnotation = parseSpecificAnnotations(new DefaultAnnotationVisitor(api, Constants.ANNOTATION_DEFAULT_INTERNAL_NAME), specificAnnotationParser);
     	if (foundAnnotation) {
     		// We found a Default Annotation. However, this method was called as we were
     		// visiting a Class. But ASM calls the visitDefaultAnnotation for each Method
     		// which has a Default Annotation linked to it. So we store our result and will
     		// use it for each Method having a Default Annotation.
 			DefaultAnnotationVisitor dav = (DefaultAnnotationVisitor)((DefaultAnnotationSpecificAnnotationParser)specificAnnotationParser).getAnnotationVisitor();
-			for (DefaultAnnotationInformation info : dav.getDefaultAnnotationInformationList()) {
-				String methodName = info.getName();
-				defaultAnnotations.put(methodName, info);
+			List <DefaultAnnotationInformation> entries = dav.getDefaultAnnotationInformationList();
+			if (entries.size() == 1) {
+			    dav = (DefaultAnnotationVisitor) entries.get(0).getValue();
+			    for (DefaultAnnotationInformation info : dav.getDefaultAnnotationInformationList()) {
+			        String methodName = info.getName();
+			        defaultAnnotations.put(methodName, info);
+			    }
 			}
     	} else {
     		defaultAnnotations.clear();
@@ -1325,16 +1370,6 @@ public class ApplicationReader {
 	    	List<String> classes = parser.getInnerClasses();
 	    	
 	    	for (String name : classes) {
-	    		// We may be reading information about a class that doesn't exist.
-	    		// This can happen when, for example, the Reader reads an application that
-	    		// has been only generated partially for, for example, the Writer.
-	    		// In that case, the only missing information is the InnerClass access flag.
-	    		Integer classIndex = classNameToIndex.get(name);
-	    		int accessFlags = 0;
-	    		if (classIndex != null && classIndex >= 0) {
-	    			ClassDefinitionItem cdi = dexFile.getClassDefinitionItem(classIndex);
-	    			accessFlags = cdi.getAccessFlags();
-	    		}
 	    		
 				int i = name.lastIndexOf('$');
 				// Reconstruction of the innerName and outerName.

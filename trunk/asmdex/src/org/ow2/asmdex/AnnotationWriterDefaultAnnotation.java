@@ -48,6 +48,8 @@ public class AnnotationWriterDefaultAnnotation extends AnnotationWriter {
 	 */
 	protected ClassDefinitionItem classDefinitionItem = null;
 	
+	AnnotationVisitor subAnnotationVisitor;
+	
 	/**
 	 * Constructor for the default annotations.
 	 * @param constantPool constant pool
@@ -63,14 +65,32 @@ public class AnnotationWriterDefaultAnnotation extends AnnotationWriter {
 	@Override
 	public void visit(String name, Object value) {
 		// If Default Annotation, we have to create a subAnnotation and visit it.
-		AnnotationVisitor subAnnotationVisitor = visitAnnotation(Constants.VALUE_STRING, currentName);
+		subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
 		subAnnotationVisitor.visit(name, value);
-		subAnnotationVisitor.visitEnd();
 		// Registering "name" and "currentName" is not needed, as they were registered before.
 	}
 
-	@Override
+    @Override
+    public void visitEnum(String name, String desc, String value) {
+        subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
+        subAnnotationVisitor.visitEnum(name, desc, value);
+    }
+
+    @Override
+    public AnnotationVisitor visitArray(String name) {
+        subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
+        return subAnnotationVisitor.visitArray(name);
+    }
+
+    @Override
+    public AnnotationVisitor visitAnnotation(String name,String desc) {
+        subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
+        return subAnnotationVisitor.visitAnnotation(name,desc);
+    }
+
+    @Override
 	public void visitEnd() {
+        subAnnotationVisitor.visitEnd();
 		// If DefaultAnnotation, we must not add it directly to the Method, it is not encoded this way.
 		// It must be given to the Class, that will encode it as ONE AnnotationElement of VALUE_ANNOTATION
 		// type, which will consist of the one or several DefaultAnnotations.
