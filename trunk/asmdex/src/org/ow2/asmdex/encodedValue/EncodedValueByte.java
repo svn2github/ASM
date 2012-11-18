@@ -116,4 +116,10 @@ public class EncodedValueByte extends EncodedValue {
 		byte value2 = eb.value;
 		return (value == value2 ? 0 : (value > value2 ? 1 : -1));
 	}
+	
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
 }

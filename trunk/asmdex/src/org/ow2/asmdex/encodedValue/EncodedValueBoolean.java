@@ -110,6 +110,10 @@ public class EncodedValueBoolean extends EncodedValue {
 		return (value == eb.value ? 0 : (value ? 1 : -1));
 	}
 
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 
 	
 }

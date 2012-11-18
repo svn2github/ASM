@@ -113,4 +113,10 @@ public class EncodedValueEnum extends EncodedValue {
 		EncodedValueEnum ee = (EncodedValueEnum)encodedValue;
 		return value.compareTo(ee.value);
 	}
+	
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
 }

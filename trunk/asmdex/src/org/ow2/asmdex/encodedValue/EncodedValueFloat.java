@@ -113,4 +113,10 @@ public class EncodedValueFloat extends EncodedValue {
 		float value2 = ef.value;
 		return (value == value2 ? 0 : (value > value2 ? 1 : -1));
 	}
+	
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
+
 }

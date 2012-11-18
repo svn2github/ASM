@@ -86,4 +86,10 @@ public class EncodedValueNull extends EncodedValue {
 	int compareValue(EncodedValue encodedValue) {
 		return 0;
 	}
+	
+    @Override
+    public String toString() {
+        return "null";
+    }
+
 }

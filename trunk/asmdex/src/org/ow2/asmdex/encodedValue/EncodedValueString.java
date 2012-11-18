@@ -106,4 +106,10 @@ public class EncodedValueString extends EncodedValue {
 		EncodedValueString ev = (EncodedValueString)encodedValue;
 		return value.compareTo(ev.value);
 	}
+	
+    @Override
+    public String toString() {
+        return '"' + value + '"';
+    }
+
 }

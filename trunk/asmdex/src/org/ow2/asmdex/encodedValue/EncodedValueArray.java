@@ -31,11 +31,11 @@
 
 package org.ow2.asmdex.encodedValue;
 
-import java.util.ArrayList;
-
 import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.lowLevelUtils.ByteVector;
 import org.ow2.asmdex.structureWriter.ConstantPool;
+
+import java.util.ArrayList;
 
 /**
  * Class representing an Encoded Array.
@@ -164,5 +164,20 @@ public class EncodedValueArray extends EncodedValue {
 			result = size1 == size2 ? 0 : (size1 < size2 ? -1 : 1);
 		}
 		return result;
+	}
+	
+	@Override
+	public String toString() {
+	    StringBuilder result = new StringBuilder();
+        boolean isFirst = true;
+        for(EncodedValue ev: encodedValues) {
+            if (isFirst) {
+                result.append("{");
+                isFirst = false;
+            } else result.append(",");
+            result.append(ev);
+        }
+        result.append("}");
+        return result.toString();	    
 	}
 }

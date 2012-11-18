@@ -183,4 +183,20 @@ public class EncodedValueAnnotation extends EncodedValue {
 		}
 		return result;
 	}
+	
+	@Override
+	public String toString() {
+	    StringBuilder result = new StringBuilder("@");
+	    result.append(annotationType);
+	    boolean isFirst = true;
+	    for(AnnotationElement ae: annotationElements) {
+	        if (isFirst) {
+	            result.append("(");
+	            isFirst = false;
+	        } else result.append(",");
+	        result.append(ae);
+	    }
+	    result.append(")");
+	    return result.toString();
+	}
 }
