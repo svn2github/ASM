@@ -276,8 +276,9 @@ public class Method implements Comparable<Method>, IAnnotationsHolder {
 	 * @return true if the Method uses the "this" parameter.
 	 */
 	public boolean isUsingThis() {
-		// "This" is used if the Method is not static, and is not a Constructor.
-		return (!isStatic()) && ((access & Opcodes.ACC_CONSTRUCTOR) == 0);
+		// "This" is used if the Method is not static, and is not a Constructor and not abstract.
+	    // Patch for "not abstract" by Panxiaobo #316341 - patch 16.
+		return (!isStatic()) && ((access & Opcodes.ACC_CONSTRUCTOR) == 0) && supportsCodeItem();
 	}
 	
 	/**
