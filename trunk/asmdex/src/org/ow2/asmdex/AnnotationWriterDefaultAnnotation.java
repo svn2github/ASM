@@ -77,6 +77,12 @@ public class AnnotationWriterDefaultAnnotation extends AnnotationWriter {
     }
 
     @Override
+    public void visitClass(String annotationName, String className) {
+        subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
+        subAnnotationVisitor.visitClass(annotationName, className);
+    }
+
+    @Override
     public AnnotationVisitor visitArray(String name) {
         subAnnotationVisitor = super.visitAnnotation(Constants.VALUE_STRING, currentName);
         return subAnnotationVisitor.visitArray(name);
