@@ -538,21 +538,19 @@ public class ApplicationWriter extends ApplicationVisitor {
 	 * content, because we don't know the offsets of the annotation_set_items yet.
 	 */
 	private void prepareAnnotationSetRefLists() {
-		for (Method method : constantPool.getMethods()) {
-			if (method.getNbParameterAnnotations() > 0) {
-				out.addPadding();
-				if (annotationSetRefListOffset == 0) {
-					annotationSetRefListOffset = out.getLength();
-				}
-				// Sets the offset.
-				constantPool.setAnnotationSetRefListOffset(method.getAnnotatedParameterSetRefList(), out.getLength());
-				
-				// Writes fake data.
-				out.putInt(0); // Fake size.
-				for (int i = 0, size = method.getAnnotatedParameterSetRefList().getNbAnnotationSetItem(); i < size; i++) {
-					out.putInt(0); // Fake annotations_off.
-				}
-			}
+		for (AnnotationSetRefList annotationSetRefList : constantPool.getAnnotationSetRefLists()) {
+            out.addPadding();
+            if (annotationSetRefListOffset == 0) {
+                annotationSetRefListOffset = out.getLength();
+            }
+            // Sets the offset.
+            constantPool.setAnnotationSetRefListOffset(annotationSetRefList, out.getLength());
+            
+            // Writes fake data.
+            out.putInt(0); // Fake size.
+            for (int i = 0, size = annotationSetRefList.getNbAnnotationSetItem(); i < size; i++) {
+                out.putInt(0); // Fake annotations_off.
+            }		    
 		}
 	}
 
