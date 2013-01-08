@@ -31,13 +31,15 @@
 
 package org.ow2.asmdex.structureWriter;
 
+import org.ow2.asmdex.Opcodes;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.TreeSet;
-
-import org.ow2.asmdex.Opcodes;
 
 /**
  * Constant Pool of the Application. It has a link to every element the Application holds.
@@ -253,7 +255,10 @@ public class ConstantPool {
 	 * Map linking a ClassName (fully qualified) to its Class Definition Item. It is useful to sort the
 	 * Class at the end of the parsing.
 	 */
-	private HashMap<String, ClassDefinitionItem> classNameToClassDefinitionItem = new HashMap<String, ClassDefinitionItem>();
+	// We use a sorted map instead of a regular map so that names of classes are roughly ordered although some
+	// items may be introduced to respect the type hierarchy (required constraint imposed by sortClasses().
+	// This rough ordering is the one used by dx. [PC - 7/1/13]
+	private Map<String, ClassDefinitionItem> classNameToClassDefinitionItem = new TreeMap<String, ClassDefinitionItem>();
 
 	/**
 	 * HashSet of annotation_directory_items. They are unique, but we don't care about their order.
