@@ -483,6 +483,7 @@ public class ApplicationReader {
 		int annotationsOffset = classDefinitionItem.getAnnotationsOffset();
 		int classDataOffset = classDefinitionItem.getClassDataOffset();
 		int staticValuesOffset = classDefinitionItem.getStaticValuesOffset();
+        defaultAnnotations.clear(); // Must be reset for each class class.
 		
 		// Finds the Interfaces, if any.
 		String[] interfaces = null;
@@ -547,6 +548,7 @@ public class ApplicationReader {
 	        // The field, method and parameter annotations are stored into three maps, to
 	        // to speed up the search when parsing these elements later.
 	        int classAnnotationsOffset = 0;
+	        
 	        if (ANNOTATIONS && (annotationsOffset != 0)) {
 	        	dexFile.seek(annotationsOffset); // Get to the annotations_directory_item.
 				classAnnotationsOffset = dexFile.uint();
@@ -1321,8 +1323,6 @@ public class ApplicationReader {
 			        defaultAnnotations.put(methodName, info);
 			    }
 			}
-    	} else {
-    		defaultAnnotations.clear();
     	}
     }
     
