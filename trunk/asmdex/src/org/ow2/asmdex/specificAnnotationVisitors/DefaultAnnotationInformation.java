@@ -104,7 +104,6 @@ public class DefaultAnnotationInformation {
 	 * @param value
 	 */
 	public DefaultAnnotationInformation(String name, Object value) {
-	    System.out.println(name + " -> " + value); // DEBUG
 		this.name = name;
 		this.value = value;
 	}
