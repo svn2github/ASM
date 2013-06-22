@@ -177,7 +177,19 @@ public abstract class Instruction {
 		}
 	}
 	
-	/**
+    /**
+     * Tests if the given number can be held in 4 bits, throw an IllegalArgumentException otherwise.
+     */
+    public static void testRange(int[] numbers) {
+        int length = numbers.length;
+        if (length == 0) throw new IllegalArgumentException("Too short for a range");
+        int expected = numbers[0];
+        for(int i=1; i<length; i++) {
+            if (numbers[i] != ++expected)
+                throw new IllegalArgumentException("The register at position " + i +" is not consecutive.");
+        }
+    }
+    /**
 	 * Size in bytes of every instructions. Includes 256 opcodes.
 	 */
 	final private static byte[] instructionSizeInBytes = new byte[] {

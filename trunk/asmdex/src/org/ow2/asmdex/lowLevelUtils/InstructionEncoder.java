@@ -348,9 +348,11 @@ public class InstructionEncoder {
 	 */
 	public static Instruction encodeMultiANewArrayInsn(String type, int[] registers) {
 		Instruction insn = null;
-		
+		int length = registers.length;
 		// The instruction to create varies according to the number of registers.
-		if (registers.length <= 5) {
+		// Bug316405: we have to use a range if register indexes are beyond 16. In that case we assume it is a range and let 
+		// instruction generation catch errors.
+		if (length <= 5 && length > 0 && registers[length - 1] < 16) {
 			insn = new InstructionFormat35C(Opcodes.INSN_FILLED_NEW_ARRAY, type, registers);
 		} else {
 			insn = new InstructionFormat3RC(Opcodes.INSN_FILLED_NEW_ARRAY_RANGE, type, registers);

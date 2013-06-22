@@ -75,24 +75,6 @@ implements IRegisterArrayInstruction, IIndexInstruction {
 		return index;
 	}
 	
-	/**
-	 * Constructor of the Instruction, using a Reader to parse its bytecode.
-	 * @param reader reader on the Instruction to parse, pointing after the 16-bit opcode.
-	 * @param opcode 16-bit opcode.
-	 */
-//	public InstructionFormat3RC(IDalvikValueReader reader, int opcode) {
-//		super(opcode);
-//		
-//		// The format is AA|op BBBB CCCC.
-//		int nbRegisters = opcodeHighOrderByte;
-//		registers = new int[nbRegisters];
-//		index = (int)reader.ushort();
-//		int currentRegister = (int)reader.ushort();
-//		for (int registerIndex = 0; registerIndex < nbRegisters; registerIndex++) {
-//			registers[registerIndex] = currentRegister;
-//			currentRegister++;
-//		}
-//	}
 	
 	/**
 	 * Returns the Index encoded where the Reader points. <i>It must be performed only once after
@@ -154,22 +136,13 @@ implements IRegisterArrayInstruction, IIndexInstruction {
 		super(opcode);
 		this.type = type;
 		this.registers = registers;
+		Instruction.testRange(registers);
 	}
 
 	@Override
 	public int getSize() {
 		return INSTRUCTION_SIZE;
 	}
-
-//	@Override
-//	public int[] getUsedRegisters() {
-//		return registers;
-//	}
-
-//	@Override
-//	public int getNbEncodedRegisters() {
-//		return registers.length;
-//	}
 
 	@Override
 	public void write(ByteVector out, ConstantPool constantPool) {
