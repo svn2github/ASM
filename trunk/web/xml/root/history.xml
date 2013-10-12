@@ -14,6 +14,29 @@
 
     <s1 name="History">
 
+     <subtitle>12 October 2013: ASM 5.0 beta (svn-tag: ASM_5_0_BETA)</subtitle>
+
+        <ul>
+            <li>Full support of Java 8 (annotation on Java types and MethodParameters attribute)</li>
+        </ul>
+
+     <subtitle>12 October 2013: ASM 4.2 (svn-tag: ASM_4_2)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>316506 ByteVector doesn't validate byteLength in putUTF8().</li>
+                <li>       Javadoc typos.</li>
+                <li>316482 JarOptimizer removes directory entries in resulting jars.</li>
+                <li>       Don't create a new ClassWriter instance in toByteArray, in order for this code to work with subclasses.</li>
+                <li>316416 JSRInlinerAdapter fails with IndexOutOfBoundsException.</li>
+                <li>316403 LocalVariablesSorter incorrectly assumes it can call visitFrame() with original args.</li>
+                <li>316373 RemappingSignatureAdapter.visitInnerClassType is broken when handling identifiers with "$" signs.</li>
+                <li>316380 Bug in org.objectweb.asm.util.CheckClassAdapter.visitInnerClass() regarding inner class name.</li>
+             </ul>
+            </li>
+        </ul>
+
      <subtitle>14 October 2012: ASM 4.1 (svn-tag: ASM_4_1)</subtitle>
 
         <ul>
@@ -30,7 +53,7 @@
                 <li>Moved checkClassSignature, checkMethodSignature and
                 checkFieldSignature to CheckClassAdapter and made them public.</li>
                 <li>316345: Support "synthetic" access modifier in 
-                org.objectweb.asm.util.Textifier.appendAccess()</li>
+                org.objectweb.asm.util.Textifier.appendAccess().</li>
             </ul>
             </li>
             <li>bug fixes
