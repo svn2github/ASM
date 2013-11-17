@@ -207,7 +207,8 @@ public class AnnotationSetRefList {
 	
 		if (obj instanceof AnnotationSetRefList) {
 			AnnotationSetRefList asr = (AnnotationSetRefList)obj;
-			return java.util.Arrays.equals(annotationSetItems, asr.annotationSetItems);
+			// Patch for part of bug316398 : 
+			return method.equals(asr.method) && java.util.Arrays.equals(annotationSetItems, asr.annotationSetItems);
 		}
 		
 		return false;
