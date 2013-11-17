@@ -200,7 +200,8 @@ public class Label {
      */
     @Override
     public String toString() {
-    	StringBuilder result = new StringBuilder('L' + System.identityHashCode(this));
+        // Bug 316426 - Limited to not too large positive integers.
+    	StringBuilder result = new StringBuilder('L' + (System.identityHashCode(this) & (Integer.MAX_VALUE >> 3)));
     	if ((status & RESOLVED) > 0) {
     		result.append(" (offset 0x" + Integer.toHexString(position) + ", line " + line + ")");
     	}
