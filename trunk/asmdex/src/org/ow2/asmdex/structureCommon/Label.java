@@ -53,6 +53,8 @@ public class Label {
      * Indicates if the position of this label is known. Only this flag from ASM is currently implemented.
      */
     static final int RESOLVED = 2;
+    
+    private static int counter = 1;
 
     /**
      * Field used to associate user information to a label. Warning: this field
@@ -86,7 +88,7 @@ public class Label {
 	 */
 	private ArrayList<Instruction> referringInstructions = new ArrayList<Instruction>();
 
-
+	final private int id;
 	// ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
@@ -95,6 +97,7 @@ public class Label {
      * Constructs a new label.
      */
     public Label() {
+        id = counter++ & Integer.MAX_VALUE;
     }
 
     
@@ -200,8 +203,8 @@ public class Label {
      */
     @Override
     public String toString() {
-        // Bug 316426 - Limited to not too large positive integers.
-    	StringBuilder result = new StringBuilder('L' + (System.identityHashCode(this) & (Integer.MAX_VALUE >> 3)));
+        // Bug 316426 - better to use an explicit counter
+    	StringBuilder result = new StringBuilder('L' + id);
     	if ((status & RESOLVED) > 0) {
     		result.append(" (offset 0x" + Integer.toHexString(position) + ", line " + line + ")");
     	}
