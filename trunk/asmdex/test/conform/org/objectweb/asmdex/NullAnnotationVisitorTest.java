@@ -14,6 +14,9 @@ import org.ow2.asmdex.Opcodes;
  *
  */
 public class NullAnnotationVisitorTest {
+    /**
+     * The test.
+     */
     @Test
     public void test() {
         ApplicationWriter aw = new ApplicationWriter();

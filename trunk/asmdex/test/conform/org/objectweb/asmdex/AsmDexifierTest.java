@@ -32,14 +32,6 @@ package org.objectweb.asmdex;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -47,6 +39,14 @@ import org.junit.runners.Parameterized.Parameters;
 import org.ow2.asmdex.ApplicationReader;
 import org.ow2.asmdex.Opcodes;
 import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Tests the AsmDexifier.
@@ -68,6 +68,10 @@ import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
 @RunWith(Parameterized.class)
 public class AsmDexifierTest {
 	
+    /**
+     * Gives back the set of arguments of the tests (in fact just file names).
+     * @return List of dex file on which to operate.
+     */
     @Parameters(name= "{index}: {0}")
     public static Collection<Object[]> data() {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
@@ -84,6 +88,11 @@ public class AsmDexifierTest {
 
     private File dexFile;
 
+    /**
+     * Instantiates a new asm dexifier test.
+     *
+     * @param file the file tested.
+     */
     public AsmDexifierTest(File file) {
         dexFile = file;
     }

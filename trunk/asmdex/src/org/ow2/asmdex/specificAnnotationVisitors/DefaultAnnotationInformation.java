@@ -31,7 +31,6 @@
 
 package org.ow2.asmdex.specificAnnotationVisitors;
 
-import java.util.ArrayList;
 
 /**
  * Tiny class to hold the name and value of an Default Annotation conveniently.

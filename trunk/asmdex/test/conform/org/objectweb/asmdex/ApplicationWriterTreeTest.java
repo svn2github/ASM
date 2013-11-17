@@ -56,6 +56,11 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class ApplicationWriterTreeTest {
 
+    /**
+     * Data for the arguments of the test (name of files).
+     *
+     * @return the collection
+     */
     @Parameters(name= "{index}: {0}")
     public static Collection<Object[]> data() {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
@@ -72,6 +77,11 @@ public class ApplicationWriterTreeTest {
 
     private File dexFile;
 
+    /**
+     * Instantiates a new application writer tree test.
+     *
+     * @param file the file
+     */
     public ApplicationWriterTreeTest(File file) {
         dexFile = file;
     }
@@ -100,11 +110,19 @@ public class ApplicationWriterTreeTest {
 	    testGenerationToByteArray(false);
 	}
 	
+    /**
+     * Test with debug skipped (line numbers)
+     * @throws IOException
+     */
     @Test
     public void testToByteArraySkipLine() throws IOException {
         testGenerationToByteArray(true);
     }
 	
+    /**
+     * Name the test.
+     * @return the name
+     */
     public String getName() {
         return "testByteArray" + dexFile.getName();
     }

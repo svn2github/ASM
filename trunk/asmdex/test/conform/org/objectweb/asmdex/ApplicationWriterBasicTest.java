@@ -11,6 +11,9 @@ import org.ow2.asmdex.Opcodes;
 
 import java.io.IOException;
 
+/**
+ * The Class ApplicationWriterBasicTest.
+ */
 public class ApplicationWriterBasicTest {
     /**
      * Tests the visit method, but it does nothing.
