@@ -56,7 +56,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class ApplicationWriterTreeTest {
 
-    @Parameters
+    @Parameters(name= "{index}: {0}")
     public static Collection<Object[]> data() {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
         File testCaseFolder;
@@ -156,7 +156,6 @@ public class ApplicationWriterTreeTest {
 		areFolderIdentical = TestUtil.testSmaliFoldersEquality(TestUtil.TEMP_FOLDER_GENERATED,
 		        TestUtil.TEMP_FOLDER_EXPECTED, skipLineNumbers);
 		assertTrue("Generated .smali files differ.", areFolderIdentical);
-		TestUtil.removeTemporaryFolder();
 	}
 
 }

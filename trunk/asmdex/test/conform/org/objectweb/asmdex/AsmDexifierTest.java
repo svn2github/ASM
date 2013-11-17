@@ -68,7 +68,7 @@ import org.ow2.asmdex.util.AsmDexifierApplicationVisitor;
 @RunWith(Parameterized.class)
 public class AsmDexifierTest {
 	
-    @Parameters
+    @Parameters(name= "{index}: {0}")
     public static Collection<Object[]> data() {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
         File testCaseFolder;

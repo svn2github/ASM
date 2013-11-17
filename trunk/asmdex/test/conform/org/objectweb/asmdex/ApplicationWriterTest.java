@@ -65,7 +65,7 @@ public class ApplicationWriterTest {
      * Parameters for the test : set of files.
      * @return collection of dex files
      */
-    @Parameters
+    @Parameters(name= "{index}: {0}")
     public static Collection<Object[]> data() {
         ArrayList<Object[]> data = new ArrayList<Object[]>();
         File testCaseFolder;
@@ -192,8 +192,13 @@ public class ApplicationWriterTest {
 	    String fullGeneratedDexFileName = TestUtil.TEMP_FOLDER_ROOT + TestUtil.FILENAME_GENERATED_DEX;
 	    File createdDexFile = TestUtil.createFileFromByteArray(generatedDexFile, fullGeneratedDexFileName);
 
-	    // Tests the maps of both the original dex file and the generated one.
-	    assertTrue("Unequal Map between " + dexFileName + " and the generated file.", TestUtil.testMapDexFiles(createdDexFile, dexFile));
+	    boolean isEqualMap = TestUtil.testMapDexFiles(createdDexFile, dexFile);
+	    if (!isEqualMap) {
+	        System.err.println(createdDexFile + " != " + dexFile);
+	        // System.exit(1);
+	    }
+        // Tests the maps of both the original dex file and the generated one.
+	    assertTrue("Unequal Map between " + dexFileName + " and the generated file.", isEqualMap);
 
 	    // Executes Baksmali once again to disassemble our generated dex file.
 	    TestUtil.baksmali(new String[] { fullGeneratedDexFileName,
