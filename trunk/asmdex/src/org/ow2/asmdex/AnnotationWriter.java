@@ -322,6 +322,9 @@ public class AnnotationWriter extends AnnotationVisitor {
 			annotationName = currentName;
 			// A Class in an Array must NOT be sorted.
 			setMustSortArray(false);
+		} else {
+		    // Bug 316471 : do not forget to add the string to constant pool.
+		    constantPool.addStringToConstantPool(annotationName);
 		}
 		
 		// Registers the Type to the Constant Pool.
