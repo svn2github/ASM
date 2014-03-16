@@ -14,6 +14,23 @@
 
     <s1 name="History">
 
+     <subtitle>16 March 2014: ASM 5.0 (svn-tag: ASM_5_0)</subtitle>
+
+        <ul>
+            <li>visitMethodInsn(int,String,String,String) is deprecated, and replaced with visitMethodInsn(int,String,String,String,boolean), in order to support  invokespecial and invokestatic on interfaces.</li>
+            <li>Added a getMaxStackSize method in asm.tree.analysis.Frame.</li>
+            <li>bug fixes
+            <ul>
+                <li>317111 source debug extension size should not be limeted to 64k</li>
+                <li>316682 maxLocals not updated in AnalyzerAdapter constructor.</li>
+                <li>316630 Type verification in CheckAnnotationAdapter.</li>
+                <li>316545 ASM incorrectly merges Object[] and byte[][] in StackMapTable.</li>
+                <li>316555 Wrong maxLocals calculation in AnalyzerAdapter.</li>
+                <li>316553 InsnListIterator can't get previous entry after exec "remove()".</li>
+             </ul>
+            </li>
+        </ul>
+
      <subtitle>12 October 2013: ASM 5.0 beta (svn-tag: ASM_5_0_BETA)</subtitle>
 
         <ul>
