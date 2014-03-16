@@ -116,6 +116,10 @@
 
     <p><br/><strong>API</strong></p><hr/>
 
+    <p><a href="asm50/javadoc/user/index.html">ASM 5.0 API</a>
+    (<a href="asm50/javadoc/user/overview-summary.html">noframes</a>).
+    </p>
+
     <p><a href="asm40/javadoc/user/index.html">ASM 4.0 API</a>
     (<a href="asm40/javadoc/user/overview-summary.html">noframes</a>).<br/>
     changes from 
