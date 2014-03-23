@@ -14,6 +14,20 @@
 
     <s1 name="History">
 
+     <subtitle>23 March 2014: ASM 5.0.1 (svn-tag: ASM_5_0_1)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>317132 ASM 5.0 do not supported JDK 1.5?</li>
+                <li>317131 Infinite loop in InstructionAdapter.invokestatic(...).</li> 
+                <li>316691 Incorrect StackMapFrame calculations for large > 32k methods in Java 7.</li>
+                <li>317123 ASM5.0: Class MethodNode broken?</li>
+                <li>317127 duplicate entries in InnerClasses attribute.</li>
+             </ul>
+            </li>
+        </ul>
+
      <subtitle>16 March 2014: ASM 5.0 (svn-tag: ASM_5_0)</subtitle>
 
         <ul>
