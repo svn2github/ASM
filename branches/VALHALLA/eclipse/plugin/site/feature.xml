@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.loskutov.BytecodeOutline.feature"
+      label="Bytecode Outline"
+      version="@FEATURE_VERSION@"
+      provider-name="Andrey Loskutov"
+      plugin="de.loskutov.BytecodeOutline">
+
+   <description url="http://asm.ow2.org/eclipse/index.html">
+      Feature contains bytecode outline and bytecode comparison view
+for any java/class file.
+   </description>
+
+   <copyright url="..">
+      Copyright (C)2004-2013 by Andrey Loskutov Loskutov@gmx.de
+All rights reserved.
+   </copyright>
+
+   <license>
+      Copyright (C)2004-2013 by Andrey Loskutov Loskutov@gmx.de
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS&apos;&apos; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+   </license>
+
+   <url>
+      <update label="ObjectWeb update site" url="http://download.forge.objectweb.org/eclipse-update/"/>
+      <discovery label="ObjectWeb update site" url="http://download.forge.objectweb.org/eclipse-update/"/>
+      <discovery label="Andrey Loskutov plugins" url="http://andrei.gmxhome.de/eclipse/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.help.base"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.jdt.debug"/>
+      <import plugin="org.eclipse.jdt.core" version="3.6.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="de.loskutov.BytecodeOutline"
+         download-size="710"
+         install-size="710"
+         version="@PLUGIN_VERSION@"
+         unpack="false"/>
+
+</feature>

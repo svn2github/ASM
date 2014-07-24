@@ -1,0 +1,7 @@
+<FindBugsFilter>
+<Match>
+  <!-- Rationale : we are not going to use it against code that may want to modify array and even if they do
+       it will just crash. The benefit of no copying is more important. -->
+  <Bug code="EI,EI2"/>
+</Match>
+</FindBugsFilter>

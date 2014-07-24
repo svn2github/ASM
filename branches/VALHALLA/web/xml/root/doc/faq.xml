@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../../common/dtd/objectweb.dtd'>
+
+<document>
+
+	<properties>
+		<author email="asm-team@objectweb.org">asm-team</author>
+		<title>ASM FAQ</title>
+		<filename>faq.xml</filename>
+		<pathtoroot>..</pathtoroot>
+	</properties>
+
+	<body>
+		<s1 name="Frequently Asked Questions">
+<p>Here are some frequently asked questions about ASM, gathered by
+  <a href="mailto:m.proctor@bigfoot.com">Mark Proctor</a>.</p>
+    <ul>
+<li><a href="#Q0">0. How do I start using ASM?</a></li>
+<li><a href="#Q1">1. How do I remove a method/field?</a></li>
+<li><a href="#Q2">2. How do I replace a method/field? I end up with duplicated members!</a></li>
+<li><a href="#Q3">3. How do I make ASM calculate visitMaxs for me?</a></li>
+<li><a href="#Q4">4. Why do I get the [xxx] verifier error?"</a></li>
+<li><a href="#Q5">5. How do I add my bytecode class to the system class loader?</a></li>
+<li><a href="#Q6">6. How do I rename my class?</a></li>
+<li><a href="#Q7">7. How do method descriptors work?</a></li>
+<li><a href="#Q8">8. How can ASM help me create my descriptor types?</a></li>
+<li><a href="#Q9">9. How do I generate Setters and Getters for my class?</a></li>
+<li><a href="#Q10">10. How do I get the bytecode of an existing class?</a></li>
+<li><a href="#Q11">11. How do I generate [some Java code] with ASM?</a></li>
+<li><a href="#Q12">12. How does the [xxx] bytecode instruction work?</a></li>
+<li><a href="#Q13">13. Is ASM thread safe?</a></li>
+<li><a href="#Q14">14. What is the earliest JDK required to use ASM?</a></li>
+<li><a href="#Q15">15. How to resolve conflicts between different ASM API 
+    versions available in a global classpath or within the same ClassLoader?</a></li>
+    </ul>
+
+<subtitle anchor="Q0">0. How do I start using ASM?</subtitle>
+
+<p>If you want to use ASM to generate classes from scratch, write a Java source 
+file that is representative of the classes you want to generate, compile it(*), and
+then run the <a href="#Q10">ASMifier</a> on the compiled class to see the Java source code that 
+generates this class with ASM. If you are using Eclipse it is even easier,
+thanks to the <a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
+
+<p>If you want to use ASM to transform classes, write two Java source files - 
+first with and second without features that has to be added or removed and try
+to keep other differences as minimal as you can, compile them(*), and then run the 
+<a href="#Q10">ASMifier</a> on both of them. Then compare the results with some visual diff tool. 
+If you are using Eclipse it is even easier, thanks to the compare tool of the
+<a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
+
+<p>(*) Note that javac may produce different code for different -target, 
+so you'll have to compile for your target environment, repeat that 
+excercise for all required target's or use the earliest bytecode version 
+if possible.</p>
+
+<subtitle anchor="Q1">1. How do I remove a method/field?</subtitle>
+
+<p>Use a ClassVisitor and return nothing:</p>
+<source>  public FieldVisitor visitField(String name, ...) {
+    if (removeField(name)) {
+      // do nothing, in order to remove this field
+      return null;
+    } else {
+      // make the next visitor visit this field, in order to keep it
+      return super.visitField(name, ...);
+    }
+  }</source>
+
+<subtitle anchor="Q2">2. How do I replace a method/field? I end up with duplicated members!</subtitle>
+
+<p>You must either return the replacement method/field when you visit the original one using a
+ClassVisitor, or you must first remove the original method/field in the ClassVisitor (see
+<a href="#Q1">"1. How do I remove a method/field?"</a>), and then add the new method/field
+by calling a visit method on the ClassWriter.</p>
+
+<subtitle anchor="Q3">3. How do I make ASM calculate visitMaxs for me?</subtitle>
+
+<p>When calling the constructor for ClassWriter use the COMPUTE_MAXS flag. 
+You must also still include the visitMaxs instruction, but the values you give are
+ignored, so visitMaxs(0,0) is fine.</p>
+
+<subtitle anchor="Q4">4. Why do I get the [xxx] verifier error?</subtitle>
+
+<p>If the message given by the JVM class verifier does not help you, you can
+use the verifier provided by ASM. For example, if you use a wrong constant when 
+making "return" on a method, or if you do not use the appropriate LOAD or STORE
+instruction, depending on the local variable type, the JVM class verifier gives
+a "Register x contains wrong type" or "Expecting to find x on stack" error which 
+does not say anything about the instruction that caused the error. In this case 
+you can use the class verifier provided by ASM:</p>
+
+<p><code>java -cp "asm.jar;asm-tree.jar;asm-analysis.jar;asm-util.jar"
+org.objectweb.asm.util.CheckClassAdapter org/domain/package/YourClass.class</code></p>
+
+<p>For example, in the helloworld example in the ASM distribution, if you replace
+visitLdcInsn("Hello world!") with visitLdcInsn(new Integer(1234)) you get the following
+error message when the generated class is verified as above:</p>
+
+<source>org.objectweb.asm.tree.analysis.AnalyzerException: Error at instruction 2: Argument 1: expected Ljava/lang/String;, but found I
+        at org.objectweb.asm.tree.analysis.Analyzer.analyze(Unknown Source)
+        at org.objectweb.asm.util.CheckClassAdapter.verify(Unknown Source)
+        at org.objectweb.asm.util.CheckClassAdapter.main(Unknown Source)
+        ...
+main([Ljava/lang/String;)V
+00000 String .  :  :     GETSTATIC java/lang/System.out : Ljava/io/PrintStream;
+00001 String .  : PrintStream  :     LDC 1234
+00002 String .  : PrintStream I  :     INVOKEVIRTUAL java/io/PrintStream.println (Ljava/lang/String;)V
+00003 ?     :     RETURN</source>
+
+<p>This shows that the error comes from instruction 2 in method main. The instruction list
+shows that this instruction is INVOKEVIRTUAL. It also shows the types of the local variables
+and of the operand stack values just before this instruction will be executed (here local
+variable 0 contains a String, local variable 1 is not initialized, and the stack contains
+a PrintStream and an int - I stands for int, as in type descriptors). As explained in the 
+error message, the println method called by 
+INVOKEVIRTUAL expects a String as first argument, but the stack value corresponding to this
+argument is an int. Then either the INVOKEVIRTUAL instruction is wrong, or the instruction
+that pushed the integer is wrong.</p>
+
+<p>If your class is so "corrupted" that you cannot read it with a ClassReader, 
+try to generate it by using a CheckClassAdapter in front of a ClassWriter:</p>
+<source>  ClassWriter cw = new ClassWriter(true);
+  ClassVisitor cv = new CheckClassAdapter(cw);
+  // generate your class here:
+  cv.visit(...);
+  ...</source>
+<p>You will probably get an exception which will indicate why your generated class
+is incorrect. For example, if you forget to call visit(...) (which can happen if you
+forget to call super.visit(...) in a class visitor), the generated class
+contains an invalid constant pool index, and ClassReader is unable to read it. If 
+you generate your class by using a CheckClassAdapter, as above, you get an
+exception "Cannot visit member before visit has been called.", which shows that
+you forgot to call the visit method.</p>
+
+<subtitle anchor="Q5">5. How do I add my bytecode class to the system class loader?</subtitle>
+
+<p>You must first have the security to do this, as defined in the policy
+file - there are no security restrictions as default for a standard java
+install. Use ClassLoader.defineClass, this however is a "protected" method, so
+you must use reflection to gain access to it:</p>
+<source>  private Class loadClass(byte[] b) {
+    //override classDefine (as it is protected) and define the class.
+    Class clazz = null;
+    try {
+      ClassLoader loader = ClassLoader.getSystemClassLoader();
+      Class cls = Class.forName("java.lang.ClassLoader");
+      java.lang.reflect.Method method =
+        cls.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class });
+
+      // protected method invocaton
+      method.setAccessible(true);
+      try {
+        Object[] args = new Object[] { className, b, new Integer(0), new Integer(b.length)};
+        clazz = (Class) method.invoke(loader, args);
+      } finally {
+        method.setAccessible(false);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.exit(1);
+    }
+    return clazz;
+  }</source>
+<p>Alternatively you can create your own ClassLoader by extending the
+existing class loader (example needed here).</p>
+
+
+<subtitle anchor="Q6">6. How do I rename my class?</subtitle>
+
+<p>It is not enough to rename just the class, you must also rename all the
+references to class members using a MethodVisitor. The RemappingClassAdapter
+in org.objectweb.asm.commons can do this for you.</p>
+<source>class ClassRenamer extends ClassVisitor implements Opcodes {
+
+  private Set oldNames;
+  private final String newName;
+
+  public ClassRenamer(ClassVisitor cv, Set oldNames, String newName) {
+    super(ASM4, cv);
+    this.oldNames = oldNames;
+    this.newName = newName;
+  }
+
+  public void visit(int version, int access, String name, String signature, String superName, String[] interfaces) {
+    oldNames.add(name);
+    cv.visit(version, ACC_PUBLIC, newName, signature, superName, interfaces);
+  }
+
+  public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+    MethodVisitor mv = cv.visitMethod(access, name, fixDesc(desc), fix(signature), exceptions);
+    if (mv != null &amp;&amp; (access &amp; ACC_ABSTRACT) == 0) {
+      mv = new MethodRenamer(mv);
+    }
+    return mv;
+  }
+
+  class MethodRenamer extends MethodVisitor {
+  
+    public MethodRenamer(final MethodVisitor mv) {
+      super(ASM4, mv);
+    }
+
+    public void visitTypeInsn(int i, String s) {
+      if (oldNames.contains(s)) {
+        s = newName;
+      }
+      mv.visitTypeInsn(i, s);
+    }
+
+    public void visitFieldInsn(int opcode, String owner, String name, String desc) {
+      if (oldNames.contains(owner)) {
+        mv.visitFieldInsn(opcode, newName, name, fix(desc));
+      } else {
+        mv.visitFieldInsn(opcode, owner, name, fix(desc));
+      }
+    }
+
+    public void visitMethodInsn(int opcode, String owner, String name, String desc) {
+      if (oldNames.contains(owner)) {
+        mv.visitMethodInsn(opcode, newName, name, fix(desc));
+      } else {
+        mv.visitMethodInsn(opcode, owner, name, fix(desc));
+      }
+    }
+  }
+
+  private String fix(String s) {
+    if (s != null) {
+      Iterator it = oldNames.iterator();
+      String name;
+      while (it.hasNext()) {
+        name = (String) it.next();
+        if (s.indexOf(name) != -1) {
+          s = desc.replaceAll(name, newName);
+        }
+      }
+    }
+    return s;
+  }
+}</source>
+
+
+<subtitle anchor="Q7">7. How do method descriptors work?</subtitle>
+
+<p>To understand this best it's good to read the source code of Type.java.
+Here is a quick overview:</p>
+<ul>
+<li>Primitive representations:
+<ul>
+<li>'V' - void</li>
+<li>'Z' - boolean</li>
+<li>'C' - char</li>
+<li>'B' - byte</li>
+<li>'S' - short</li>
+<li>'I' - int</li>
+<li>'F' - float</li>
+<li>'J' - long</li>
+<li>'D' - double</li>
+</ul>
+</li>
+<li>Class representations:
+<ul>
+<li>L&lt;class&gt;;</li>
+<li>Ljava/io/ObjectOutput;</li>
+<li>Ljava/lang/String;</li>
+</ul>
+</li>
+</ul>
+<p>Examples:</p>
+<ul>
+<li>public void method()
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "()V", null, null);</code></li></ul></li>
+<li>public void method(String s, int i)
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;I)V", null, null);</code></li></ul></li>
+<li>public String method(String s, int i, boolan flag)
+<ul><li><code>cw.visitMethod(ACC_PUBLIC, methodName, "(Ljava/lang/String;IZ)Ljava/lang/String;", null, null);</code></li></ul></li>
+</ul>
+
+
+<subtitle anchor="Q8">8. How can ASM help me create my descriptor types?</subtitle>
+
+<p>Type.java provides the static method Type.getDescriptor, which takes a
+Class as a parameter.</p>
+<p>Examples:</p><ul>
+<li><code>String desc = Type.getDescriptor(String.class);</code></li>
+<li><code>String desc = Type.getDescriptor(int.class);</code></li>
+<li><code>String desc = Type.getDescriptor(java.io.ObjectOutput.class);</code></li>
+</ul>
+
+
+<subtitle anchor="Q9">9. How do I generate Setters and Getters for my class?</subtitle>
+
+<p>Use the following code (this assumes that visitMaxs are computed by ASM - see
+<a href="#Q3">"3. How do I make ASM calculate visitMaxs for me?"</a>):</p>
+<source>void createSetter(String propertyName, String type, Class c) {
+  String methodName = "set" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+  MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "(" + type + ")V", null, null);
+  mv.visitVarInsn(ALOAD, 0);
+  mv.visitVarInsn(Type.getType(c).getOpcode(ILOAD), 1);
+  mv.visitFieldInsn(PUTFIELD, className, propertyName, type);
+  mv.visitInsn(RETURN);
+  mv.visitMaxs(0, 0);
+}
+
+void createGetter(String propertyName, String returnType, Class c) {
+  String methodName = "get" + propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+  MethodVisitor mv = cw.visitMethod(ACC_PUBLIC, methodName, "()" + returnType, null, null);
+  mv.visitVarInsn(ALOAD, 0);
+  mv.visitFieldInsn(GETFIELD, internalClassName, propertyName, returnType);
+  mv.visitInsn(Type.getType(c).getOpcode(IRETURN));
+  mv.visitMaxs(0, 0);
+}</source>
+
+
+<subtitle anchor="Q10">10. How do I get the bytecode of an existing class?</subtitle>
+
+<p>If you want the bytecode instructions themselves, use a Textifier. If you
+want the ASM code to generate these bytecode instructions, use an ASMifier.
+Both classes provide a "main" method to allow them to be
+called from the command line, passing your fully qualified class name as a
+parameter.
+Example:</p>
+<p><code>java -classpath "asm.jar;asm-util.jar;yourjar.jar"
+org.objectweb.asm.util.ASMifier org.domain.package.YourClass</code></p>
+<p>or</p>
+<p><code>java -classpath "asm.jar;asm-util.jar"
+org.objectweb.asm.util.ASMifier org/domain/package/YourClass.class</code></p>
+<p>Another, much easier method, if you are using Eclipse, is to use the 
+<a href="../eclipse/bco/index.html">Bytecode Outline</a> plugin.</p>
+
+<subtitle anchor="Q11">11. How do I generate [some Java code] with ASM?</subtitle>
+
+<p>If you want to know how to generate a synchronized block, a try catch
+block, a finally statement, or any other Java construct, write the Java code
+you want to generate in a temporary class, compile it with javac, and then
+use the ASMifier to get the ASM code that will generate this class (see
+<a href="#Q10">"10. How do I get the bytecode of an existing class?"</a>).
+</p>
+
+
+<subtitle anchor="Q12">12. How does the [xxx] bytecode instruction work?</subtitle>
+
+<p>See <a href="http://java.sun.com/docs/books/vmspec/2nd-edition/html/Instructions.doc.html">chapter
+6</a> of the Java Virtual Machine Specification.
+</p>
+
+
+<subtitle anchor="Q13">13. Is ASM thread safe?</subtitle>
+
+<p>The Type and ClassReader classes are thread safe, i.e. several threads can
+use a single Type object or a single ClassReader object concurrently without
+problems. The ClassWriter and MethodWriter classes are <em>not</em> thread safe,
+i.e. a single class cannot be generated by several concurrent threads (but,
+of course, several threads can generate distinct classes concurrently, if each
+thread uses its own ClassWriter instance). In order to generate a single class
+by using several concurrent threads, one should use ClassVisitor and
+MethodVisitor instances that delegate to normal ClassWriter and MethodWriter
+instances, and whose methods are all synchronized.</p>
+<p>More generally, ClassVisitor and MethodVisitor implementations, such as
+ClassWriter, do not have to be thread safe. However, non thread
+safe visitors can be made thread safe just by using a synchronizing class
+adapter in front of them.</p>
+
+
+<subtitle anchor="Q14">14. What is the earliest JDK required to use ASM?</subtitle>
+
+<p>The org.objectweb.asm package should work with JDK 1.1, or even with JDK 1.0
+if Type is not used. Indeed, this package only requires the following JDK classes
+and methods:</p>
+<ul>
+  <li>in java.io: InputStream, IOException (only in two constructors of
+  ClassReader)</li>
+  <li>in java.lang.reflect: Method (only in Type)</li>
+  <li>in java.lang:
+    <ul>
+      <li>Object, String, StringBuffer</li>
+      <li>Long, Double, Float, Void, Byte, Boolean ...</li>
+      <li>System.arraycopy</li>
+      <li>ClassLoader.getSystemClassLoader,
+      ClassLoader.getSystemResourceAsStream (only in one constructor of
+      ClassReader)</li>
+    </ul>
+  </li>
+</ul>
+<p>The asm.util and asm.tree packages require JDK 1.2, since they use the
+List interface and the ArrayList class.
+</p>
+
+
+<subtitle anchor="Q15">15. How to resolve conflicts between different ASM API 
+    versions available in a global classpath or within the same ClassLoader?</subtitle>
+
+<p>Tools and frameworks that are using ASM for bytecode 
+processing (e.g. Hibernate, CGLIB, AspectWerkz) should repackage 
+ASM code within their own name space. This can be automated with 
+<a href="http://tonicsystems.com/products/jarjar/">Jar Jar Links</a> tool.</p>
+
+    </s1>
+	</body>
+</document>

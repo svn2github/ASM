@@ -1,0 +1,77 @@
+<project name="ASM Guide" default="test">
+
+  <property name="src"                value="${basedir}/src"/>
+  <property name="lib"                value="${basedir}/lib"/>
+  <property name="test"               value="${basedir}/test"/>
+  <property name="out"                value="${basedir}/output"/>
+  <property name="out.build"          value="${out}/build"/>
+  <property name="out.test"           value="${out}/test"/>
+
+  <target name="init">
+    <path id="compile-classpath">
+      <pathelement path="${lib}/asm-debug-all-4.0.jar"/>
+      <pathelement location="${out.build}"/>
+      <pathelement location="${out.test}"/>
+    </path>
+    <path id="run-classpath">
+      <pathelement path="${lib}/asm-4.0.jar"/>
+      <pathelement path="${lib}/asm-analysis-4.0.jar"/>
+      <pathelement path="${lib}/asm-commons-4.0.jar"/>
+      <pathelement path="${lib}/asm-tree-4.0.jar"/>
+      <pathelement path="${lib}/asm-util-4.0.jar"/>
+      <pathelement location="${out.build}"/>
+      <pathelement location="${out.test}"/>
+    </path>
+  </target>
+
+  <target name="compile" depends="init">
+    <mkdir dir="${out.build}"/>
+    <javac srcdir="${src}" destdir="${out.build}" debug="on">
+      <classpath refid="compile-classpath"/>
+      <include name="**/*.java"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="compile">
+    <mkdir dir="${out.test}"/>
+    <javac srcdir="${test}" destdir="${out.test}" debug="on">
+      <classpath refid="compile-classpath"/>
+      <include name="**/*.java"/>
+    </javac>
+    <mkdir dir="${out.test}/reports"/>
+    <junit fork="yes"
+           printsummary="yes"
+           errorproperty="test.failed"
+           failureproperty="test.failed">
+      <batchtest fork="yes" todir="${out.test}/reports">
+        <fileset dir="${test}">
+          <include name="**/*Test.java"/>
+        </fileset>
+      </batchtest>
+      <formatter type="xml"/>
+      <classpath refid="run-classpath"/>
+    </junit>
+    <junitreport todir="${out.test}/reports">
+      <fileset dir="${out.test}/reports">
+        <include name="TEST-*.xml"/>
+      </fileset>
+      <report todir="${out.test}/reports"/>
+    </junitreport>
+  </target>
+
+  <target name="perf" depends="compile">
+    <java classname="app.sec2.Performances" fork="true">
+      <classpath refid="run-classpath"/>
+      <arg value="${java.home}/lib/rt.jar"/>
+    </java>
+  </target>
+
+  <target name="dist" depends="clean">
+    <zip zipFile="asm-guide.zip" basedir="." excludes="CVS/*"/>
+  </target>
+
+  <target name="clean">
+    <delete dir="${out}"/>
+  </target>
+
+</project>

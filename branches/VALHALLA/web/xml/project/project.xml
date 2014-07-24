@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE project SYSTEM '../../common/dtd/project.dtd'>
+
+<project>
+
+  <title>ASM</title>
+  <description>ASM is a very small and very fast Java bytecode manipulation framework.</description>
+  <keywords>ASM,bytecode,manipulation,Java,open,source,free,software,BSD</keywords>
+
+  <body>
+
+    <menu>
+      <legend>ASM</legend>
+      <menuitem><a href="index.html">Home</a></menuitem>
+      <menuitem><a href="download/index.html">Download</a></menuitem>
+      <menuitem><a href="eclipse/index.html">Eclipse plugin</a></menuitem>
+      <menuitem><a href="http://download.forge.objectweb.org/asm/asm4-guide.pdf">User Guide</a></menuitem>
+      <menuitem><a href="http://mail.ow2.org/wws/info/asm">Mailing Lists</a></menuitem>
+      <menuitem><a href="license.html">License</a></menuitem>
+      <menuitem><a href="history.html">History</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>ASMDEX</legend>
+      <menuitem><a href="asmdex-index.html">Home</a></menuitem>
+      <menuitem><a href="download/asmdex-index.html">Download</a></menuitem>
+      <menuitem><a href="http://mail.ow2.org/wws/info/asm">Mailing Lists</a></menuitem>
+      <menuitem><a href="asmdex-license.html">License</a></menuitem>
+      <menuitem><a href="asmdex-history.html">History</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>Developers' Corner</legend>
+      <menuitem><a href="http://forge.objectweb.org/projects/asm/">ObjectWeb Forge Site</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/plugins/scmsvn/index.php?group_id=23">SVN Repository</a></menuitem>
+      <menuitem><a href="http://forge.objectweb.org/tracker/?group_id=23">Issue Tracker</a></menuitem>
+      <menuitem><a href="doc/developer-guide.html">Developer Guide</a></menuitem>
+    </menu>
+
+    <menu>
+      <legend>About</legend>
+      <menuitem><a href="users.html">Users</a></menuitem>
+      <menuitem><a href="team.html">Team</a></menuitem>
+      <menuitem><a href="mailto:asm-team@objectweb.org">Contacts</a></menuitem>
+    </menu>
+
+  </body>
+</project>

@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE document SYSTEM '../../common/dtd/objectweb.dtd'>
+
+<document>
+  <properties>
+    <author email="asm-team@objectweb.org">asm-team</author>
+    <title>History</title>
+    <filename>history.xml</filename>
+    <pathtoroot>.</pathtoroot>
+  </properties>
+
+  <body>
+
+    <s1 name="History">
+
+     <subtitle>21 April 2014: ASM 5.0.2 (svn-tag: ASM_5_0_2)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>317135 Textifier prints bridge methods to be volatile.</li>
+                <li>317151 Fix for 316545 is incorrect.</li>
+                <li>317136 ASMifier 5.0.1 output references package org.objectweb.asm.attrs.</li>
+             </ul>
+            </li>
+        </ul>
+
+     <subtitle>23 March 2014: ASM 5.0.1 (svn-tag: ASM_5_0_1)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>317132 ASM 5.0 do not supported JDK 1.5?</li>
+                <li>317131 Infinite loop in InstructionAdapter.invokestatic(...).</li> 
+                <li>316691 Incorrect StackMapFrame calculations for large > 32k methods in Java 7.</li>
+                <li>317123 ASM5.0: Class MethodNode broken?</li>
+                <li>317127 duplicate entries in InnerClasses attribute.</li>
+             </ul>
+            </li>
+        </ul>
+
+     <subtitle>16 March 2014: ASM 5.0 (svn-tag: ASM_5_0)</subtitle>
+
+        <ul>
+            <li>visitMethodInsn(int,String,String,String) is deprecated, and replaced with visitMethodInsn(int,String,String,String,boolean), in order to support  invokespecial and invokestatic on interfaces.</li>
+            <li>Added a getMaxStackSize method in asm.tree.analysis.Frame.</li>
+            <li>bug fixes
+            <ul>
+                <li>317111 source debug extension size should not be limeted to 64k</li>
+                <li>316682 maxLocals not updated in AnalyzerAdapter constructor.</li>
+                <li>316630 Type verification in CheckAnnotationAdapter.</li>
+                <li>316545 ASM incorrectly merges Object[] and byte[][] in StackMapTable.</li>
+                <li>316555 Wrong maxLocals calculation in AnalyzerAdapter.</li>
+                <li>316553 InsnListIterator can't get previous entry after exec "remove()".</li>
+             </ul>
+            </li>
+        </ul>
+
+     <subtitle>12 October 2013: ASM 5.0 beta (svn-tag: ASM_5_0_BETA)</subtitle>
+
+        <ul>
+            <li>Full support of Java 8 (annotation on Java types and MethodParameters attribute)</li>
+        </ul>
+
+     <subtitle>12 October 2013: ASM 4.2 (svn-tag: ASM_4_2)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>316506 ByteVector doesn't validate byteLength in putUTF8().</li>
+                <li>       Javadoc typos.</li>
+                <li>316482 JarOptimizer removes directory entries in resulting jars.</li>
+                <li>       Don't create a new ClassWriter instance in toByteArray, in order for this code to work with subclasses.</li>
+                <li>316416 JSRInlinerAdapter fails with IndexOutOfBoundsException.</li>
+                <li>316403 LocalVariablesSorter incorrectly assumes it can call visitFrame() with original args.</li>
+                <li>316373 RemappingSignatureAdapter.visitInnerClassType is broken when handling identifiers with "$" signs.</li>
+                <li>316380 Bug in org.objectweb.asm.util.CheckClassAdapter.visitInnerClass() regarding inner class name.</li>
+             </ul>
+            </li>
+        </ul>
+
+     <subtitle>14 October 2012: ASM 4.1 (svn-tag: ASM_4_1)</subtitle>
+
+        <ul>
+            <li>implicit first frame no longer visited with
+            EXPAND_FRAMES (was necessary to fix bug 316360).</li>
+            <li>performance improvements in ClassReader (about +10
+            percent speedup).</li>
+            <li>feature requests
+            <ul>
+                <li>316306: More efficient patch for Frame.merge().</li>
+                <li>316318: Allow generated SVUID field to be marked
+                synthetic.</li>
+                <li>316321: asm osgi bundles based on BND.</li>
+                <li>Moved checkClassSignature, checkMethodSignature and
+                checkFieldSignature to CheckClassAdapter and made them public.</li>
+                <li>316345: Support "synthetic" access modifier in 
+                org.objectweb.asm.util.Textifier.appendAccess().</li>
+            </ul>
+            </li>
+            <li>bug fixes
+            <ul>
+                <li>316360: MethodWriter.visitFrame(F_NEW,...) requires
+                explicit invocation for the implicit frame at offset zero.</li>
+                <li>316352: LocalVariableSorter.visitFrame() logic is
+                incorrect.</li>
+                <li>316326: analysis.Frame.merge() should use !
+                .equals() instead of !=.</li>
+            <li>Fix regression: LDC with a primitive class doesn't
+            work anymore.</li>
+            <li>316347: GeneratorAdaptor.ifCmp() generates
+            DCMPG/DCMPL incorrectly.</li>
+            <li>316348: ClassVersion check in ClassReader looks at
+            wrong offset.</li>
+            <li>316359: ClassWriter toByteArray fails when there are
+            more than 32k constant pool entries.</li>
+            </ul>
+            </li>
+        </ul>
+
+      <subtitle>29 October 2011: ASM 4.0 (svn-tag: ASM_4_0)</subtitle>
+
+        <ul>
+            <li>added automatic test of backward binary compatibility
+            in build process.</li>
+            <li>added automatic call to resetLabel in MethodNode when
+            necessary.</li>
+            <li>improved printing of method handles in Textifier.</li>
+            <li>bug fixes
+            <ul>
+                <li>316204 Analyzer produces incorrect lvt types for 
+                jsr return targets when jsr frame changes twice during 
+                analysis.</li>
+                <li>316212 org.objectweb.asm.optimizer.ClassOptimizer
+                does not work with classes in default package.</li>
+                <li>fixed incorrectly ASMified method handles.</li>
+            </ul>
+            </li>
+        </ul>
+
+      <subtitle>11 September 2011: ASM 4.0 RC2 (svn-tag: ASM_4_0_RC2)</subtitle>
+
+        <ul>
+            <li>ClassVisitor, MethodVisitor, etc interfaces replaced 
+            with abstract classes, in order to ensure backward
+            binary compatibility in future ASM versions.</li>
+            <li>ClassAdapter and MethodAdapter merged into ClassVisitor
+            and MethodVisitor, classes using multiple interface inheritance
+            removed (e.g. MemberNode, EmptyVisitor) or adapted (e.g. trace
+            and asmifier classes in asm.util).</li>
+            <li>MethodHandle and MethodType renamed to Handle and Type.</li>
+            <li>improved getCommonSuperClass to avoid resolving loaded classes.</li>
+            <li>improved getCommonSuperClass in ClassWriterComputeFramesTest 
+            (more efficient).</li>
+            <li>new checks in CheckClassAdapter.</li>
+            <li>new example, showing how to use the new invokedynamic 
+            instruction.</li>
+            <li>bug fixes
+            <ul>
+                <li>315942 asm-xml.dtd fails to mention SWAP element</li>
+                <li>315984 asm-xml.dtd fails to mention FREM element</li>
+                <li>NOP ATHROW bug (compute frames failed on deadcode in exception handler range)</li>
+                <li>fixed bugs found with FindBugs</li>
+                <li>minor Javadoc improvements and fixes</li>
+            </ul>
+            </li>
+            <li>feature requests
+            <ul>
+                <li>316005 Constant pool access</li>
+                <li>313999 Maven POM should include source-code</li>
+                <li>patch from Ivo Anjo in Analyzer</li>
+            </ul>
+            </li>
+        </ul>
+
+      <subtitle>17 April 2011: ASM 4.0 RC1 (svn-tag: ASM_4_0_RC1)</subtitle>
+
+        <ul>
+            <li>full support of Java 7</li>
+            <li>support of the new invokedynamic encoding and bootstrap method arguments. Done with a 
+            new visitInvokeDynamicInsn method.</li>
+            <li>added two new classes MethodHandle and MethodType. Can be used either in visitLdcInsn
+            or as last arguments of visitInvokeDynamicInsn.</li>
+            <li>generified the API to use generics and varargs. However, almost all jars are still 
+            small and 1.2 compatible.</li>
+        </ul>
+
+      <subtitle>21 December 2010: ASM 3.3.1 (svn-tag: ASM_3_3_1)</subtitle>
+
+        <ul>
+            <li>bug fixes
+            <ul>
+                <li>315135 COMPUTE_FRAMES with CheckClassAdapter gives IndexOutOfBoundsException</li>
+                <li>315248 Bug in CheckClassAdapter? Fails for untransformed class</li>
+                <li>315399 AnalyzerAdapter.execute() method doesn't process null array correctly for AALOAD instruction</li>
+                <li>315417 LocalVariablesSorter.remap() incorrectly process long/double types</li>
+                <li>315697 DependencyTracker example fails in handling class Object</li>
+                <li>315698 DependencyTracker example fails in handling finally blocks</li>
+            </ul></li>
+        </ul>
+        
+      <subtitle>30 May 2010: ASM 3.3 (svn-tag: ASM_3_3)</subtitle>
+
+        <ul>
+            <li>added new InstructionAdapter class</li>
+            <li>added TryCatchBlockSorter (provided by Adrian Sampson)</li>
+            <li>improved extensibility of analysis package (patch from Markus Heiden)</li>
+            <li>bug fixes
+            <ul>
+                <li>314969 Counterintuitive interaction of arguments to ClassWriter(cr, flags)</li>
+                <li>314964 AnalyzerAdapter does not treat &lt;init&gt; calls correctly</li>
+                <li>314934 ASM Handling of method Synthetic attribute causes exception during retransformation</li>
+                <li>314878 NPE in AnalyzerAdapter, putfield object comes from different control flow branches</li>
+                <li>fixed bug with remapping of RET instructions</li>
+                <li>314563 exception from asm.commons.LocalVariablesSorterremap</li>
+                <li>fixed bug in GASMifier</li>
+                <li>fixed bug for F_CHOP frames (locals are ignored for these frames)</li>
+                <li>314719 method length is sometimes calculated incorrectly</li>
+                <li>314584 ByteCode Outline Eclipse Plugin -- access flags comment is showing in decimal rather than hex</li>
+                <li>314481 Bug in Remapper related to annotations</li>
+                <li>314486 SerialVersionUIDAdder generates an incorrect serialVersionUID under 1.6 VMs for anonymous classes</li>
+                <li>fixed bug with padding for xxxSwitch instructions</li>
+                <li>313909 VOID_TYPE.getSize() != 0</li>
+                <li>312464 ClassReader does not ensure that NEW has a label associated with it</li>
+            </ul></li>
+            <li>patches (minor code improvements)
+            <ul>
+                <li>314328 minor improvement to serialveruidadder</li>
+                <li>314329 unnecessary casting, using HashMap v. Map</li>
+                <li>314330 make sure files get closed</li>
+            </ul></li>
+            <li>feature requests
+            <ul>
+                <li>314119 Provide read access to uninitializedTypes in AnalyzerAdapter</li>
+                <li>313804 Improve analysis results</li>
+            </ul></li>
+            <li>Javadoc fixes and improvements</li>
+        </ul>
+
+      <subtitle>11 June 2009: ASM 3.2 (svn-tag: ASM_3_2)</subtitle>
+
+        <ul>
+            <li>added support for new invokedynamic opcode</li>
+            <li>added new Type.getArgumentsAndReturnSizes method</li>
+            <li>added new GeneratorAdapter.valueOf method</li>
+            <li>added two new Method.getMethod methods (feature request #308554)</li>
+            <li>added new checks in Check*Adapter
+            <ul>
+              <li>check of xRETURN instructions against declared method return type</li>
+              <li>check that labels are not reused across methods (inside same class; check for labels reuse across classes still missing)</li>
+              <li>checks for debug labels and for visitTryCatchBlock calling order</li>
+              <li>new option for data flow checks with BasicVerifier</li>
+            </ul></li>
+            <li>added Jasmin class adapter (with round trip tests) in examples</li>
+            <li>bug fixes
+            <ul>
+                <li>313314 ClassReader.readClass(InputStream) unnecessary copies read buffer two times</li>
+                <li>311642 StackOverflowException in Label.visitSubroutine</li>
+                <li>311100 patch to make verifying multiple classes easier</li>
+                <li>309819 java/lang/Character typo in GeneratorAdapter</li>
+                <li>312468 Incorrect merging of frames</li>
+                <li>309037 GeneratorAdapter generates jump instructions wrongly</li>
+                <li>308875 ClassWriter COMPUTE_MAXS produces invalid class (verify error)</li>
+                <li>308807 AnalyzerException running CheckClassAdapter.verify() on java.lang.String</li>
+                <li>308745 BasicInterpreter.newOperation lacks a throws AnalyzerException clause</li>
+                <li>fixed bug submitted by Simon Goldsmith for inner classes</li>
+                <li>fixed bug submitted by Michael Rudolf</li>
+                <li>fixed bug with usage of copyOperation</li>
+                <li>fixed bug in test case</li>
+            </ul></li>
+            <li>Javadoc fixes and improvements</li>
+            <li>added performance tests with JBET, JClassLib, Jiapi, mozilla.classfile, BCEL and AspectJ BCEL using HelloWorld example</li>
+            <li>added performance tests with Cojen library</li>
+            <li>added performance tests for gnu.bytecode and CSG bytecode using HelloWorld example</li>
+            <li>added FindBugs preferences and builder for ASM</li>
+            <li>added debug jar</li>
+            <li>improved Ant build scripts
+            <ul>
+              <li>replaced ow_util_ant_tasks (no longer maintained) with standard ant tasks</li>
+              <li>updated test/lib jars with newer versions</li>
+              <li>removed hardcoded JUNIT Eclipse path, made JSE 1.5.0 container as default VM (previously random system JRE)</li>
+              <li>added license info to the parent pom</li>
+            </ul></li>
+        </ul>
+
+      <subtitle>29 October 2007: ASM 3.1 (cvs-tag: ASM_3_1)</subtitle>
+
+        <ul>
+          <li>extended semantic of 'internal name' to array classes (internal 
+          name equal to descriptor in this case); renamed 'desc' parameter of 
+          'visitTypeInsn' to 'type'</li>
+          <li>new readLabel method in ClassReader</li>
+          <li>new getLabelNode method in MethodNode (see bug 306920)</li>
+          <li>new resetLabel(s) methods in LabelNode and InsnList (feature 
+          request 306499)</li>
+          <li>new checks in CheckMethodVisitor (for stack frames)</li>
+          <li>new CheckSignatureAdapter class</li>
+          <li>new Remapper* classes in commons</li>
+          <li>support for primitive types in GeneratorAdaptor.push (feature 
+          request 307378)</li>
+          <li>new build options (no writer, no frames support, etc)</li>
+          <li>new tests</li>
+          <li>bug fixes
+          <ul>
+            <li>307600 StackOverflowError in org.objectweb.asm.MethodWriter.findSubroutine()</li>
+            <li>307392 MethodWriter generates invalid RuntimeInvisibleParameterAnnotations 
+            for enum constructors</li>
+            <li>307242 Patch to compile ASM 2.2.3 against Java 1.4</li>
+            <li>307011 Typo error in ASM 3.0 User Guide</li>
+            <li>306921 SignatureReader does not handle inner class extends of 
+            other inner class</li>
+            <li>306920 MethodNode.labelNode(label) smashes "user" data Label.info</li>
+            <li>306521 Parameter local of visitFrame() is lost when using a ClassNode</li>
+            <li>306503 CheckClassAdapter doesn't flush its output</li>
+            <li>306422 Another code cleanup patch</li>
+            <li>306349 SerialVersionUIDAdder breaks compile if using JDK 1.4</li>
+            <li>bug fix related to xSTORE in tree.analysis.Frame</li>
+            <li>bug fix in LocalVariableSorter</li>
+            <li>javadoc fixes</li>
+          </ul></li>
+        </ul>
+
+      <subtitle>1 November 2006: ASM 3.0 (cvs-tag: ASM_3_0)</subtitle>
+
+        <ul>
+          <li>visit*Annotation methods can now return null</li>
+          <li>COMPUTE_MAXS now works with all subroutines, even very weird ones 
+          that cannot be produced by javac</li>
+          <li>new getters in ClassReader, SKIP_DEBUG now skips visitSource</li>
+          <li>new methods in Type: getObjectType, getConstructorDescriptor</li>
+          <li>InsnList now supports ListIterator interface</li>
+          <li>new insertBefore() and insert*() methods in InsnList class</li>
+          <li>improved Analyzer API, support for abstract and native methods</li>
+          <li>improved Method class behavior with default package</li>
+          <li>minor bug fixes
+          <ul>
+            <li>305716 bug in floating point constant handling in constant pool
+            writing</li>
+            <li>305917 optimizer.ClassConstantsCollector generates an invalid
+            class constant</li>
+            <li>306058 FieldNode.accept() cannot handle ClassVisitors yielding
+            null as FieldVisitor</li>
+          </ul></li>
+          <li>new tests</li>
+          <li>javadoc improvements</li>
+        </ul>
+
+      <subtitle>06 July 2006: ASM 3.0 RC1 (cvs-tag: ASM_3_0_RC1)</subtitle>
+
+        <ul>
+          <li>new API for instruction lists in tree package</li>
+          <li>new JSRInliner class in commons</li>
+          <li>new CodeSizeEvaluator class in commons</li>
+          <li>changes and optimizations in AnalyzerAdapter</li>
+          <li>DataflowInterpreter renamed into SourceInterpreter</li>
+          <li>port of changes from ASM 2.x</li>
+        </ul>
+
+      <subtitle>06 July 2006: ASM 2.2.3 (cvs-tag: ASM_2_2_3)</subtitle>
+
+        <ul>
+          <li>compute maxs option now takes visitLocalVariable into account</li>
+          <li>bug fix in TraceSignatureVisitor</li>
+          <li>minor Javadoc improvements</li>
+        </ul>
+
+      <subtitle>20 April 2006: ASM 3.0 beta2 (cvs-tag: ASM_3_0_BETA2)</subtitle>
+
+        <ul>
+          <li>visitFrame is now called after visitLabel in ClassReader</li>
+          <li>new SKIP_FRAMES and SKIP_CODE flags in ClassReader</li>
+          <li>fixed issue with dead code and COMPUTE_FRAMES option in ClassWriter</li>
+          <li>port of bug fixes from ASM_2_2_2</li>
+          <li>refactorings in core package to get same performances as in ASM 2.x 
+          (3.0 beta was slightly less performant than 2.x)</li>
+          <li>refactored tests and added many new tests. Tests now cover 100%
+          of the code, except in commons package.</li>
+        </ul>
+
+      <subtitle>7 April 2006: ASM 2.2.2 (cvs-tag: ASM_2_2_2)</subtitle>
+
+        <ul>
+          <li>bug fix in ClassWriter for SourceDebugExtension attribute</li>
+          <li>bug fix in LocalVariableSorter when same variable slot is used to
+             save different types</li>
+          <li>all fields in classes ClassNode, MethodNode, LookupSwitchInsnNode
+             and TableSwitchInsnNode of the tree package are mutable (non-final)</li>
+          <li>additional checks in CheckClassAdapter, CheckMethodAdapter and
+             CheckAnnotationAdapter</li>
+          <li>new constructor in SimpleVerifier with list of interfaces of the 
+             class being verified to allow isAssignableFrom check without 
+             loading this class (which may be invalid)</li>
+        </ul>
+        
+      <subtitle>14 December 2005: ASM 3.0 beta (cvs-tag: ASM_3_0_BETA)</subtitle>
+
+        <ul>
+          <li>Major changes for the new Java 6 StackMapTable attribute
+            <ul>
+              <li>StackMapTable support integrated in core package (new 
+              visitFrame method in MethodVisitor)</li>
+              <li>asm.attrs package removed</li>              
+              <li>new commons.AnalyzerAdapter class</li>
+              <li>incremental stack map frames update in LocalVariablesSorter</li>
+            </ul>
+          </li>
+          <li>ClassReader and ClassWriter constructors changed</li>
+          <li>...</li>
+        </ul>
+        
+      <subtitle>14 December 2005: ASM 2.2.1 (cvs-tag: ASM_2_2_1)</subtitle>
+
+        <ul>
+          <li>bug fix in ClassReader for empty annotation array values</li>
+          <li>new accept method in MethodNode</li>
+          <li>new checks in asm.util</li>
+          <li>performance optimizations in LocalVariablesSorter</li>
+          <li>more precise type system used in analysis package</li>
+          <li>javadoc fixes and improvements</li>
+        </ul>
+        
+      <subtitle>24 November 2005: ASM 2.2 (cvs-tag: ASM_2_2)</subtitle>
+      
+        <ul>
+          <li>pass through behavior for unknown attributes</li>
+          <li>optimizations for "mostly add" transformations (new ClassWriter constructor)</li>
+          <li>removed constraint for visitTryCatchBlock call order with respect to visitLabel
+          <ul>
+            <li>visitTryCatchBlock can be called before or after its labels are visited</li>
+            <li>ClassReader now calls visitTryCatchBloc at the beginning of the method body</li>
+          </ul>
+          </li>        
+          <li>new AdviceAdapter class in commons</li>
+          <li>new constructor in GeneratorAdapter for better integration with the plain visitors/adapters</li>
+          <li>fixed potential endles loop in IntMap.get()</li>
+          <li>bug fixes in xml package</li>
+          <li>improved javadocs (commons, tree)</li>
+          <li>new tests</li>
+          <li>corbertura added to the build</li>
+        </ul>
+
+      <subtitle>25 August 2005: ASM 2.1 (cvs-tag: ASM_2_1)</subtitle>
+
+        <ul>
+          <li>support for StackMapTable attribute in asm.attrs</li>
+          <li>restructured StackMap attribute implementation (SM and SMT are using the same frames)</li>
+          <li>addition of Traceable interface in asm.util.attrs</li>
+          <li>new "dependencies" example</li>
+          <li>improved commons.Method</li>
+          <li>deprecated asm.tree.Insn.getByOpcode()</li>
+          <li>public constructor in InsnNode</li>
+          <li>better exception handling in analyzer</li>
+          <li>added Opcodes.V1_6 constant</li>
+          <li>javadoc improvements</li>
+          <li>changed code style (Eclipse formatter + Sun conventions with minor changes)</li>
+          <li>asm-all jar</li>
+          <li>bug fixes
+          <ul>
+            <li>correct handling of synthetic attribute vs. synthetic flag</li>
+            <li>bug in TraceClassVisitor</li>
+            <li>bug in analyzer.Frame for ASTORE</li>
+            <li>added BasicValue.hashCode() and DataflowValue.hashCode()</li>
+            <li>bug about size calculation for custom attributes</li>
+          </ul>
+          </li>
+        </ul>
+
+      <subtitle>17 May 2005: ASM 2.0 (cvs-tag: ASM_2_0)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>7 February 2005: ASM 2.0.RC1 (cvs-tag: ASM_2_0_RC1)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>New visitCode() method in MethodVisitor to easily detect first instruction</li>
+          <li>signature support (contribution from Thomas Hallgren)</li>
+          <li>commons package (contribution from CLIB and other projects; not yet stable)</li>
+          <li>memory usage optimization in tree package (contribution from Rene Treffer)</li>
+          <li>performance improvements in core package</li>
+          <li>performance improvements in analysis package (dataflowinterpreter is now two times faster)</li>
+          <li>asm library plugin for Eclipse, used by Bytecode Outline plugin</li>
+        </ul>
+
+      <subtitle>21 January 2005: ASM 1.5.3 (cvs-tag: ASM_1_5_3)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>New behavior for visitLineNumber</li>
+        </ul>
+
+      <subtitle>8 November 2004: ASM 2.0 alpha (cvs-tag: ASM_2_0_ALPHA)</subtitle>
+
+        <ul>
+          <li>Major API changes for Java 5 attributes
+            <ul>
+              <li>added new FieldVisitor interface</li>
+              <li>added new AnnotationVisitor interface</li>
+              <li>renamed CodeVisitor into MethodVisitor</li>
+              <li>renamed Constants into Opcodes</li>
+              <li>added and changed methods in ClassVisitor and CodeVisitor</li>
+              <li>removed almost all classes in attrs package</li>
+              <li>removed TreeClassAdapter and TreeCodeAdapter</li>
+              <li>added new MemberNode, AnnotationNode and LabelNode classes</li>
+              <li>many changes in asm.util package</li>
+            </ul>
+          </li>
+          <li>Added many new tests, reorganized tests classes and scripts</li>
+        </ul>
+
+      <subtitle>8 November 2004: ASM 1.5.2 (cvs-tag: ASM_1_5_2)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>23 September 2004: ASM 1.5.1 (cvs-tag: ASM_1_5_1)</subtitle>
+
+        <ul>
+          <li>Cleaned up ASMifierClassVisitor</li>
+          <li>Removed AnnotationElementValue</li>
+          <li>Added more tests for attributes and Java 5 annotations</li>
+          <li>Added new annotations example</li>
+          <li>Build package for Maven's ibiblio repository</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>30 August 2004: ASM 1.5 (cvs-tag: ASM_1_5)</subtitle>
+
+        <ul>
+          <li>Added support for class version in ClassVisitor</li>
+          <li>Changed behavior for unrecognized attributes</li>
+          <li>Added new analyzer in tree.analysis package (contribution from Bing Ran)</li>
+          <li>Improved build files</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>11 May 2004: ASM 1.4.3 (cvs-tag: ASM_1_4_3)</subtitle>
+
+        <ul>
+          <li>Added tree.analysis package</li>
+          <li>Added xml package, contributed by Eugene Kuleshov</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>1 March 2004: ASM 1.4.2 (cvs-tag: ASM_1_4_2)</subtitle>
+
+        <ul>
+          <li>Improved build files to facilitate Linux packaging</li>
+          <li>Bug fixes</li>
+        </ul>
+
+      <subtitle>12 December 2003: ASM 1.4.1 (cvs-tag: ASM_1_4_1)</subtitle>
+
+        <ul>
+          <li>Added attrs package, contributed by Eugene Kuleshov</li>
+        </ul>
+
+      <subtitle>13 November 2003: ASM 1.4 (cvs-tag: ASM_1_4)</subtitle>
+
+        <ul>
+          <li>Added attribute support</li>
+        </ul>
+
+      <subtitle>3 November 2003: ASM 1.3.6 (cvs-tag: ASM_1_3_6)</subtitle>
+
+        <ul>
+          <li>Changed license from LGPL to BSD</li>
+        </ul>
+
+      <subtitle>8 October 2003: ASM 1.3.5 (cvs-tag: ASM_1_3_5)</subtitle>
+
+        <ul>
+          <li>Bug fixes</li>
+          <li>Added thread safety support in ClassReader</li>
+          <li>Added equals and hashcode in Type</li>
+          <li>Added FAQ</li>
+        </ul>
+
+      <subtitle>9 July 2003: ASM 1.3.4 (cvs-tag: ASM_1_3_4)</subtitle>
+
+        <ul>
+          <li>Added kASM jar (needed a small refactoring)</li>
+        </ul>
+
+      <subtitle>3 October 2002: ASM 1.3.3 (cvs-tag: ASM_1_3_3)</subtitle>
+
+        <ul>
+          <li>Added tree package</li>
+          <li>Added support for GOTO_W and JSR_W</li>
+          <li>Added an ant target to create a debian package</li>
+        </ul>
+
+      <subtitle>6 September 2002: ASM 1.3.2 (cvs-tag: ASM_1_3_2)</subtitle>
+
+        <ul>
+          <li>Added util package</li>
+        </ul>
+
+      <subtitle>6 September 2002: ASM 1.3.1 (cvs-tag: ASM_1_3_1)</subtitle>
+
+        <ul>
+          <li>Bug fix</li>
+        </ul>
+
+      <subtitle>11 July 2002: ASM 1.3 (cvs-tag: ASM_1_3)</subtitle>
+
+        <ul>
+          <li>First public version</li>
+        </ul>
+
+      <subtitle>Origins</subtitle>
+
+        <ul>
+          <li>The ASM project was created by Eric Bruneton in 2000, during his
+          PhD at <a href="http://www.inria.fr">INRIA</a>. At that time it 
+          was only a code generator (no ClassReader, no Visitor concept). 
+          It was used to generate dynamic stub and proxy classes,
+          before the <code>java.lang.reflect.Proxy</code> class was released 
+          in JDK 1.3. These dynamic classes were used to transparently add 
+          non functional properties (logging, persistence, replication, etc) 
+          to user components.</li>
+          <li>The visitor idea and the ClassReader concepts were added later,
+          in order to be able to transform existing classes. This was
+          needed to insert the non functional code directly in the user
+          classes, instead of in an intermediate proxy (for better performance).
+          These new features were designed and implemented by Eric Bruneton
+          after his PhD, at France Telecom R&amp;D (now Orange Labs),
+          in order to implement the 
+          <a href="http://fractal.ow2.org">Fractal component model</a>.</li>
+          <li>The ASM project was released in Open Source in 2002, at the same
+          time as the Fractal project. Since then, many external contributions
+          have been done to the project. The most important contributors are
+          now part of the ASM team, namely Eugene Kuleshov (since 2003),
+          Andrei Loskutov (since 2004) and Rémi Forax (since 2008).</li>
+        </ul>
+
+    </s1>
+
+  </body>
+</document>

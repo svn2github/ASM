@@ -1,0 +1,168 @@
+<project name="BytecodeOutline" default="plugin">
+
+  <!-- defines the location of the asm project via asm.project.dir -->
+  <property file="${user.home}/asm-build.properties"/>
+
+  <!-- TODO right now we define bco.version/plugin.id here, but we shall read it from MANIFEST.MF -->
+  <property file="build.properties"/>
+
+  <!-- defines product.version from asm etc  -->
+  <property file="${asm.project.dir}/build.properties" />
+
+
+  <property name="src"                value="${basedir}/src"/>
+  <property name="externals"          value="${basedir}/externals"/>
+  <property name="out"                value="${basedir}/output"/>
+  <property name="lib"                value="${basedir}/lib"/>
+  <property name="out.build"          value="${out}/build"/>
+
+  <property name="asm-debug-all.jar" value="${asm.project.dir}/output/dist/lib/all/asm-debug-all-${product.version}.jar"/>
+  <property name="asm.jar" value="${lib}/asm-debug-all.jar"/>
+
+   <path id="saxon.classpath">
+        <fileset dir="${saxon.home}" includes="*.jar"/>
+    </path>
+
+  <target name="init">
+    <!-- read plugin base version from META-INF/MANIFEST.MF to ${pluginVersion} -->
+    <loadfile srcFile="${basedir}/META-INF/MANIFEST.MF" property="bco.version">
+      <filterchain>
+          <tokenfilter><containsregex pattern="Bundle-Version: (.*)" replace="\1"/></tokenfilter>
+          <deletecharacters chars=" \n\r"/>
+      </filterchain>
+    </loadfile>
+
+    <!-- read plugin id from META-INF/MANIFEST.MF to ${pluginId} -->
+    <loadfile srcFile="${basedir}/META-INF/MANIFEST.MF" property="plugin.id">
+      <filterchain>
+          <tokenfilter><containsregex pattern="Bundle-SymbolicName:\s*([^;]+)(;.*)?" replace="\1"/></tokenfilter>
+          <deletecharacters chars=" \n\r"/>
+      </filterchain>
+    </loadfile>
+
+    <property name="plugin.jar"   value="${plugin.id}_${bco.version}.jar"/>
+    <property name="feature.jar"  value="${plugin.id}.feature_${bco.version}.jar"/>
+    <condition property="asm.recompile" >
+        <not><available file="${asm.jar}" /></not>
+    </condition>
+  </target>
+
+    <!-- Trigger (re-)compilation of asm-debug-all.jar, if it is is not available -->
+    <target name="asmcompile" if="asm.recompile" >
+        <echo message="Building ASM core libraries"/>
+        <ant dir="${asm.project.dir}" inheritall="false" target="jar" >
+        	<property name="product.noshrink" value="true"/>
+    	</ant>
+        <copy tofile="${asm.jar}" preservelastmodified="true" file="${asm-debug-all.jar}" />
+    </target>
+
+    <!-- use it to force recompilation of asm core libraries -->
+    <target name="force_recompile">
+        <property name="asm.recompile" value="true" />
+        <antcall target="compile" />
+    </target>
+
+  <target name="compile" depends="init, asmcompile">
+    <path id="classpath">
+      <fileset dir="lib" includes="*.jar"/>
+      <fileset dir="${eclipse.home}" includes="plugins/**/*.jar"/>
+    </path>
+    <mkdir dir="${out.build}"/>
+    <javac destdir="${out.build}" debug="on" source="1.6" target="1.6" includeantruntime="false">
+      <classpath refid="classpath"/>
+      <src path="${src}"/>
+      <include name="**/*.java"/>
+    </javac>
+  </target>
+
+  <target name="jars" depends="compile">
+    <copy todir="${out.build}">
+      <fileset dir="${src}">
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
+    <filterset id="version.filter">
+        <filter token="PLUGIN_VERSION" value="${bco.version}" />
+        <filter token="FEATURE_VERSION" value="${bco.version}" />
+    </filterset>
+  	<mkdir dir="${out}/site"/>
+    <copy todir="${out}/site">
+      <fileset dir="${basedir}/site">
+        <include name="**/*.xml"/>
+      </fileset>
+      <filterset refid="version.filter"/>
+    </copy>
+
+    <zip zipfile="${out}/BytecodeOutlinesrc.zip">
+      <zipfileset dir="${src}" includes="**/*" prefix="src"/>
+      <fileset dir=".">
+        <include name="icons/*"/>
+        <include name="plugin.xml"/>
+        <include name="build.properties"/>
+        <include name="META-INF/*"/>
+        <include name="build.xml"/>
+        <include name="build.config"/>
+        <include name=".project"/>
+        <include name=".classpath"/>
+        <include name="README.txt"/>
+        <include name="LICENSE.txt"/>
+      </fileset>
+      <fileset dir="${out}/site">
+        <include name="feature.xml"/>
+        <include name="site.xml"/>
+      </fileset>
+
+    </zip>
+  </target>
+
+  <target name="plugin" depends="jars,xslt">
+    <zip zipfile="${out}/${plugin.jar}">
+      <zipfileset dir="${out}" includes="BytecodeOutlinesrc.zip"/>
+      <fileset dir=".">
+        <include name="META-INF/MANIFEST.MF"/>
+        <include name="icons/**/*"/>
+        <include name="plugin.xml"/>
+        <include name="about.html"/>
+        <include name="about.ini"/>
+        <include name="about.properties"/>
+        <include name="about32.png"/>
+        <include name="*.txt"/>
+        <include name="lib/*.jar"/>
+      </fileset>
+    <fileset dir="${out.build}">
+      <include name="**/*"/>
+    </fileset>
+      <zipfileset dir="${out}/doc" includes="toc.xml,opcodes.html,ref-*.html" prefix="doc"/>
+    </zip>
+  </target>
+
+  <target name="feature" depends="plugin">
+    <jar zipfile="${out}/${feature.jar}">
+      <fileset dir="${out}/site" includes="feature.xml"/>
+    </jar>
+  </target>
+
+  <target name="site" depends="feature">
+    <zip zipfile="${out}/${plugin.id}.update_${bco.version}.zip">
+      <zipfileset dir="${out}/site" includes="site.xml"/>
+      <zipfileset dir="${out}" includes="${feature.jar}" prefix="features"/>
+      <zipfileset dir="${out}" includes="${plugin.jar}"  prefix="plugins"/>
+    </zip>
+  </target>
+
+  <target name="clean">
+    <delete failonerror="false" includeEmptyDirs="true">
+      <fileset dir="${out}" includes="**/*"/>
+      <fileset dir="${lib}" includes="**/*"/>
+    </delete>
+  </target>
+
+  <target name="xslt" depends="init">
+    <mkdir dir="${out}/doc"/>
+    <xslt basedir="." destdir="${out}/doc" includes="opcodes.xml" classpathref="saxon.classpath"
+          style="opcodes-doc.xsl" force="true">
+       <factory name="net.sf.saxon.TransformerFactoryImpl" />
+    </xslt>
+  </target>
+
+</project>

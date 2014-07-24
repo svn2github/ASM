@@ -1,0 +1,817 @@
+<h2>
+<img src="../images/111-bytecode.gif" height="91" width="111" alt="Introduction to the ASM 2.0 Bytecode Framework" border="0" align="left" hspace="10" vspace="0">
+Introduction to the ASM 2.0 Bytecode Framework</h2>
+by Eugene Kuleshov<br />
+08/17/2005<br clear="all" />
+
+<p>Java features such as dynamic class loading and reflection make it a dynamic
+language. However, in many cases, reflection is not sufficient, and developers
+need to generate bytecode from non-Java source code, such as scripting languages
+like Groovy (<A href="http://jcp.org/en/jsr/detail?id=241">JSR-241</A>) or
+BeanShell (<A href="http://jcp.org/en/jsr/detail?id=274">JSR-274</A>), or from
+metadata such as an OR-mapping configuration. When working with existing
+classes, and especially when original Java sources are not available, some tools
+may need to do a static analysis of the interdependencies or even method
+behavior in order to produce test coverage or metrics, or to detect bugs and
+anti-patterns. New features added to into Java 5, such as annotations and
+generics, affected bytecode structure and require special attention from
+bytecode manipulation tools to maintain good performance. This article will give
+an overview of one of the smallest and fastest bytecode manipulation frameworks
+available for Java.</P>
+<H3>Framework Structure</H3>
+<P>The <A href="http://asm.objectweb.org/">ASM</A> bytecode manipulation
+framework is written in Java and uses a visitor-based approach to generate
+bytecode and drive transformations of existing classes. It allows developers to
+avoid dealing directly with a class constant pool and offsets within method
+bytecode, thus hiding bytecode complexity from the developer and providing
+better performance, compared to other tools such as <A
+href="http://jakarta.apache.org/bcel/">BCEL</A>, <A
+href="http://serp.sourceforge.net/">SERP</A>, or <A
+href="http://www.csg.is.titech.ac.jp/~chiba/javassist/">Javassist</A>.</P>
+<P>ASM is divided into several packages that allow flexible bundling. The
+packaging arrangement is shown in Figure 1.</P>
+<P><IMG height=102 alt="Arrangement of ASM packages"
+src="../images/components.gif"
+width=294><BR><I>Figure 1. Arrangement of ASM packages</I></P>
+<UL>
+  <LI>The <B>Core</B> package provides an API to read, write, and transform Java
+  bytecode and defines a foundation for the other packages. This package is
+  sufficient to generate Java bytecode and to implement the majority of bytecode
+  transformations.
+  <LI>The <B>Tree</B> package provides in-memory representation of Java
+  bytecode.
+  <LI>The <B>Analysis</B> package provides basic data-flow analyses and
+  type-checking algorithms for Java method bytecode stored in structures from
+  the tree package.
+  <LI>The <B>Commons</B> package (added in ASM 2.0) provides several commonly
+  used bytecode transformations and adapters to simplify bytecode generation.
+  <LI>The <B>Util</B> package contains several helper classes and simple
+  bytecode verifiers that can help in development or testing.
+  <LI>The <B>XML</B> package provides an adapter to convert bytecode structures
+  to and from XML, and SAX-compliant adapters that allow the use of XSLT to
+  define bytecode transformations. </LI></UL>
+<P>The next few sections will give an introduction to the Core package of the
+ASM framework. To get a better understanding of the organization of this
+package, you have to have some basic understanding of the bytecode structures
+that are defined in the <A
+href="http://java.sun.com/docs/books/vmspec/index.html">JVM specification</A>.
+Here is a high-level diagram of the class file format (<CODE>[*]</CODE> marks
+repeatable structures).</P><PRE><CODE>
+    <A id=diagram1 name=diagram1></A>
+  <B style="COLOR: red">[1]</B>-------------------------------------------+
+   | Header and Constant Stack                  |
+   +--------------------------------------------+
+   | [*] Class Attributes                       |
+  <B style="COLOR: red">[2]</B>------------+------------------------------+
+   | [*] Fields  | Field Name, Descriptor, etc  |
+   |             +------------------------------+
+   |             | [*] Field Attributes         |
+  <B style="COLOR: red">[3]</B>------------+------------------------------+
+   | [*] Methods | Method Name, Descriptor, etc |
+   |             +------------------------------|
+   |             | Method max stack and locals  |
+   |             |------------------------------|
+   |             | [*] Method Code table        |
+   |             |------------------------------|
+   |             | [*] Method Exception table   |
+   |             |------------------------------|
+   |             | [*] Method Code Attributes   |
+   |             +------------------------------|
+   |             | [*] Method Attributes        |
+   +-------------+------------------------------+
+
+</CODE>
+</PRE>
+
+<P>Here are a few things to notice:</P>
+<UL>
+  <LI>All descriptors, string literals, and any other constants used in class
+  structures are stored in a <I>Constant Stack</I> at the beginning of the class
+  file and then referenced from all other structures by its indexes.
+  <LI>Each class must contain headers (including class name, super class,
+  interfaces, etc.) and the Constant Stack. Other elements, such as the list of
+  fields, list of methods, and all attributes, are optional and may or may not
+  be present.
+  <LI>Each Field section includes field info such as name, access flags (public,
+  private, etc.), descriptor and field Attributes.
+  <LI>Each Method section contains similar header info and information about max
+  stack and max local variable numbers, which are used to verify bytecode. For
+  non-abstract and non-native methods, there is a table of method instructions
+  (method body), an exceptions table, and code attributes. Besides these, there
+  can be other method attributes.
+  <LI>Each Attribute for Class, Field, Method, and Method Code has its own name,
+  which is also documented in the Class File format section of the JVM
+  specification. These attributes represent various pieces of information about
+  bytecode, such as source file name, inner classes, signature (used to store
+  generics info), line number, and local variable tables and annotations. The
+  JVM specification also allows the definition of custom attributes that will be
+  ignored by the standard VM, but may contain additional information. <I>Note
+  that Java 5 annotations practically made these custom attributes obsolete,
+  because annotation semantics allow you to express pretty much anything.</I>
+  <LI>The Method Code table contains a list of instructions for the Java Virtual
+  Machine. Some of these instructions (as well as the exception, line number,
+  and local variable tables) use offsets within the code table and the values of
+  all of these offsets may need to be adjusted when instructions are inserted or
+  removed from the method code table. </LI></UL>
+<P>As you can see, bytecode tweaking isn't easy. However, the ASM framework
+reduces the complexity of the underlying structures and provides a simplified
+API that still allows for access to all bytecode information and enables complex
+transformations.</P>
+<H3>Event-Based Bytecode Processing</H3>
+<P>The Core package uses a push approach (similar to the "<A
+href="http://en.wikipedia.org/wiki/Visitor_pattern">Visitor</A>" design pattern,
+which is also used in the <A href="http://www.saxproject.org/">SAX API</A> for
+XML processing) to walk trough complex bytecode structures. ASM defines several
+interfaces, such as <CODE>ClassVisitor</CODE> (section [1] in the class file
+format diagram above), <CODE>FieldVisitor</CODE> (section [2]),
+<CODE>MethodVisitor</CODE> (section [3]), and <CODE>AnnotationVisitor</CODE>.
+<CODE>AnnotationVisitor</CODE> is a special interface that allows you to express
+hierarchical annotation structures. The next few paragraphs will show how these
+interfaces interact with each other and how they can be used together to
+implement bytecode transformations and/or capture information from the
+bytecode.</P>
+<P>The Core package can be logically divided into two major parts:</P>
+<UL>
+  <LI>Bytecode producers, such as a <CODE>ClassReader</CODE> or a custom class
+  that can fire the proper sequence of calls to the methods of the above visitor
+  classes.
+  <LI>Bytecode consumers, such as writers (<CODE>ClassWriter</CODE>,
+  <CODE>FieldWriter</CODE>, <CODE>MethodWriter</CODE>, and
+  <CODE>AnnotationWriter</CODE>), adapters (<CODE>ClassAdapter</CODE> and
+  <CODE>MethodAdapter</CODE>), or any other classes implementing the above
+  visitor interfaces. </LI></UL>
+<P>Figure 2 shows the sequence diagram for the common producer-consumer
+interaction.</P>
+<P><IMG height=1297 alt="Sequence diagram for producer-consumer interaction"
+src="../images/reader-sequence2.gif"
+width=497><BR><I>Figure 2. Sequence diagram for producer-consumer
+interaction</I></P>
+<P>In this interaction, a client application creates <CODE>ClassReader</CODE>
+and calls the <CODE>accept()</CODE> method, passing a concrete
+<CODE>ClassVisitor</CODE> instance as a parameter. Then <CODE>ClassReader</CODE>
+parses the class and fires "visit" events to <CODE>ClassVisitor</CODE> for each
+bytecode fragment. For repeated contexts, such as fields, methods, or
+annotations, a <CODE>ClassVisitor</CODE> may create child visitors derived from
+the corresponding interface (<CODE>FieldVisitor</CODE>,
+<CODE>MethodVisitor</CODE>, or <CODE>AnnotationVisitor</CODE>) and return them
+to the producer. When a producer receive a null value for
+<CODE>FieldVisitor</CODE> or <CODE>MethodVisitor</CODE>, it skips that fragment
+of the class (e.g., a <CODE>ClassReader</CODE> wouldn't even parse the
+corresponding bytecode section in such a case, which leads to a sort of "lazy
+loading" feature driven by the visitors). Otherwise, the corresponding
+subcontext events are delegated to the child visitor instance. At the end of
+each subcontext, the producer calls the <CODE>visitEnd()</CODE> method and then
+moves on to the next section (e.g., the next field, method, etc.).</P>
+
+<P>Bytecode consumers can be linked together in a "<A
+href="http://en.wikipedia.org/wiki/Chain_of_responsibility_pattern">Chain of
+responsibility</A>" pattern by either manually delegating events to the next
+visitor in the chain, or with using visitors derived from
+<CODE>ClassAdapter</CODE> and/or <CODE>MethodAdapter</CODE> that delegate all
+visit methods to their underlying visitors. Those delegators act as bytecode
+consumers from one side and as bytecode producers from the other. They can
+decide to modify natural delegation in order to implement specific bytecode
+transformation:</P>
+<UL>
+  <LI>Visit call delegation can be omitted in order to remove class fields,
+  methods, method instructions, etc.
+  <LI>Visit call parameters can be modified in order to rename classes, methods,
+  types, etc.
+  <LI>New visit calls can be added in order to introduce new fields or methods,
+  or to inject new code into existing methods. </LI></UL>
+<P>The chain can be ended by a <CODE>ClassWriter</CODE> visitor, which will
+produce the resulting bytecode. For example:</P><PRE><CODE>
+  ClassWriter cw = new ClassWriter(computeMax);
+  ClassVisitor cc = new CheckClassAdapter(cw);
+  ClassVisitor tv =
+    new TraceClassVisitor(cc, new PrintWriter(System.out));
+  ClassVisitor cv = new TransformingClassAdapter(tv);
+  ClassReader cr = new ClassReader(bytecode);
+  cr.accept(cv, skipDebug);
+  byte[] newBytecode = cw.toByteArray();
+</CODE>
+</PRE>
+<P>In the above code, the <CODE>TransformingClassAdapter</CODE> implements
+custom class transformations and sends the results to the
+<CODE>TraceClassVisitor</CODE> passed to its constructor.
+<CODE>TraceClassVisitor</CODE> prints the transformed class and delegates the
+same events to <CODE>CheckClassAdapter</CODE>, which does simple bytecode
+verification and then passes the event to the <CODE>ClassWriter</CODE>.</P>
+<P>Most of the visit methods receive simple parameters such as <CODE>int</CODE>,
+<CODE>boolean</CODE>, and <CODE>String</CODE>. In all visit methods where
+<CODE>String</CODE> parameters refer to constants within the bytecode, ASM uses
+the same representation as used by the JVM. For instance, all class names (e.g.
+super class, interfaces, exceptions, owner classes for the field, and methods
+referenced from method code) should be specified in the <A
+href="http://java.sun.com/docs/books/vmspec/html/ClassFile.doc.html#14757">Internal
+Form</A>. Field and method descriptors (usually the <CODE>desc</CODE> parameter)
+also should be in <A
+href="http://java.sun.com/docs/books/vmspec/html/ClassFile.doc.html#1169">JVM
+representation</A>. The same approach is taken for <CODE>signature</CODE>
+parameters used to represent generics information, so they should follow the
+grammar defined in Section 4.4.4 of the <A
+href="http://java.sun.com/docs/books/vmspec/2nd-edition/ClassFileFormat-final-draft.pdf">Revised
+Class File Format</A> (PDF). This approach helps avoid unnecessary calculations
+when no transformation is required. To help construct and parse such
+descriptors, there is a <CODE>Type</CODE> class that provides several static
+methods:</P>
+<UL>
+  <LI><CODE>String getMethodDescriptor(Type returnType, Type[]
+  argumentTypes)</CODE>
+  <LI><CODE>String getInternalName(Class c)</CODE>
+  <LI><CODE>String getDescriptor(Class c)</CODE>
+  <LI><CODE>String getMethodDescriptor(Method m)</CODE>
+  <LI><CODE>Type getType(String typeDescriptor)</CODE>
+  <LI><CODE>Type getType(Class c)</CODE>
+  <LI><CODE>Type getReturnType(String methodDescriptor)</CODE>
+  <LI><CODE>Type getReturnType(Method m)</CODE>
+  <LI><CODE>Type[] getArgumentTypes(String methodDescriptor)</CODE>
+  <LI><CODE>Type[] getArgumentTypes(Method m)</CODE> </LI></UL>
+<P>Note that these descriptors are using an "<A
+href="http://gafter.blogspot.com/2004/09/puzzling-through-erasure-answer.html">erasured</A>"
+representation, which does not contain generics information. Generics info is
+actually stored as a separate bytecode attribute, but ASM takes care of this
+attribute and passes the generic signature string in a <CODE>signature</CODE>
+parameter of the appropriate visit methods. The value of the
+<CODE>signature</CODE> string also uses the JVM representation (see Section
+4.4.4 in the "<A
+href="http://java.sun.com/docs/books/vmspec/2nd-edition/ClassFileFormat-Java5.pdf">Class
+File Format</A>" (PDF) as revised for Java 5), which uniquely maps from the
+generic declarations in Java code, but presents an additional challenge for
+tools that need to retrieve details from generic types. To handle signatures,
+ASM provides <CODE>SignatureVisitor</CODE>, <CODE>SignatureReader</CODE>, and
+<CODE>SignatureWriter</CODE> classes modelled in a way similar to other ASM
+visitors, as illustrated in Figure 3.</P>
+<P><IMG height=515 alt="Sequence diagram for Signature classes"
+src="../images/signature-sequence2.gif"
+width=385><BR><I>Figure 3. Sequence diagram for Signature classes</I></P>
+<P>The Util package contains <CODE>TraceSignatureVisitor</CODE>, which
+implements <CODE>SignatureVisitor</CODE> and allows you to convert a
+<CODE>signature</CODE> value into a Java declaration with generic types. The
+following example converts a method signature into a Java method
+declaration.</P><PRE><CODE>  TraceSignatureVisitor v =
+      new TraceSignatureVisitor(access);
+  SignatureReader r = new SignatureReader(sign);
+  r.accept(v);
+  String genericDecl = v.getDeclaration();
+  String genericReturn = v.getReturnType();
+  String genericExceptions = v.getExceptions();
+
+  String methodDecl = genericReturn + " " +
+    methodName + genericDecl;
+  if(genericExceptions!=null) {
+    methodDecl += " throws " + genericExceptions;
+  }
+</CODE>
+</PRE>
+<P>Up to this point, we have talked about the general design of the ASM
+framework and manipulating class structure. However, the most interesting part
+is how ASM handles method code.</P>
+
+<H3>Visiting Method Code</H3>
+<P>In ASM, a method declaration is represented by the
+<CODE>ClassVisitor.visitMethod()</CODE>, and the rest of the method bytecode
+artifacts (Section [3] on <A
+href="http://www.onjava.com/lpt/a/6142?page=1#diagram1">class file format
+diagram</A>) are represented by number of the visit methods in
+<CODE>MethodVisitor</CODE>. These methods are called in the following order,
+where "*" marks repeated methods and "?" marks methods that can be called once
+at most. In addition, the <CODE>visit<I>...</I>Insn</CODE> and
+<CODE>visitLabel</CODE> methods must be called in the sequential order of the
+bytecode instructions of the visited code, and the
+<CODE>visitTryCatchBlock</CODE>, <CODE>visitLocalVariable</CODE>, and
+<CODE>visitLineNumber</CODE> methods must be called after the labels passed as
+arguments have been visited.</P>
+<TABLE cellSpacing=0 cellPadding=5 width="100%" border=1>
+  <TBODY>
+  <TR bgColor=#d0d0ff>
+    <TD>?</TD>
+    <TD><PRE>visitAnnotationDefault
+</PRE></TD>
+    <TD>Visits the default value for annotation interface method</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD>*</TD>
+    <TD><PRE>visitAnnotation
+</PRE></TD>
+    <TD>Visits a method annotation</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD>*</TD>
+    <TD><PRE>visitParameterAnnotation
+</PRE></TD>
+    <TD>Visits a method parameter annotation</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD>*</TD>
+    <TD><PRE>visitAttribute
+</PRE></TD>
+    <TD>Visits a non-standard method attribute</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD>?</TD>
+    <TD><PRE>visitCode
+</PRE></TD>
+    <TD>Starts the visit of the method's code for non-abstract and non-native
+      methods</TD></TR>
+  <TR>
+    <TD vAlign=top rowSpan=16>*</TD>
+    <TD vAlign=top><CODE>visitInsn</CODE></TD>
+    <TD>Visits a zero operand instruction: <CODE>NOP</CODE>,
+      <CODE>ACONST_NULL</CODE>, <CODE>ICONST_M1</CODE>, <CODE>ICONST_0</CODE>,
+      <CODE>ICONST_1</CODE>, <CODE>ICONST_2</CODE>, <CODE>ICONST_3</CODE>,
+      <CODE>ICONST_4</CODE>, <CODE>ICONST_5</CODE>, <CODE>LCONST_0</CODE>,
+      <CODE>LCONST_1</CODE>, <CODE>FCONST_0</CODE>, <CODE>FCONST_1</CODE>,
+      <CODE>FCONST_2</CODE>, <CODE>DCONST_0</CODE>, <CODE>DCONST_1</CODE>,
+      <CODE>IALOAD</CODE>, <CODE>LALOAD</CODE>, <CODE>FALOAD</CODE>,
+      <CODE>DALOAD</CODE>, <CODE>AALOAD</CODE>, <CODE>BALOAD</CODE>,
+      <CODE>CALOAD</CODE>, <CODE>SALOAD</CODE>, <CODE>IASTORE</CODE>,
+      <CODE>LASTORE</CODE>, <CODE>FASTORE</CODE>, <CODE>DASTORE</CODE>,
+      <CODE>AASTORE</CODE>, <CODE>BASTORE</CODE>, <CODE>CASTORE</CODE>,
+      <CODE>SASTORE</CODE>, <CODE>POP</CODE>, <CODE>POP2</CODE>,
+      <CODE>DUP</CODE>, <CODE>DUP_X1</CODE>, <CODE>DUP_X2</CODE>,
+      <CODE>DUP2</CODE>, <CODE>DUP2_X1</CODE>, <CODE>DUP2_X2</CODE>,
+      <CODE>SWAP</CODE>, <CODE>IADD</CODE>, <CODE>LADD</CODE>,
+      <CODE>FADD</CODE>, <CODE>DADD</CODE>, <CODE>ISUB</CODE>,
+      <CODE>LSUB</CODE>, <CODE>FSUB</CODE>, <CODE>DSUB</CODE>,
+      <CODE>IMUL</CODE>, <CODE>LMUL</CODE>, <CODE>FMUL</CODE>,
+      <CODE>DMUL</CODE>, <CODE>IDIV</CODE>, <CODE>LDIV</CODE>,
+      <CODE>FDIV</CODE>, <CODE>DDIV</CODE>, <CODE>IREM</CODE>,
+      <CODE>LREM</CODE>, <CODE>FREM</CODE>, <CODE>DREM</CODE>,
+      <CODE>INEG</CODE>, <CODE>LNEG</CODE>, <CODE>FNEG</CODE>,
+      <CODE>DNEG</CODE>, <CODE>ISHL</CODE>, <CODE>LSHL</CODE>,
+      <CODE>ISHR</CODE>, <CODE>LSHR</CODE>, <CODE>IUSHR</CODE>,
+      <CODE>LUSHR</CODE>, <CODE>IAND</CODE>, <CODE>LAND</CODE>,
+      <CODE>IOR</CODE>, <CODE>LOR</CODE>, <CODE>IXOR</CODE>, <CODE>LXOR</CODE>,
+      <CODE>I2L</CODE>, <CODE>I2F</CODE>, <CODE>I2D</CODE>, <CODE>L2I</CODE>,
+      <CODE>L2F</CODE>, <CODE>L2D</CODE>, <CODE>F2I</CODE>, <CODE>F2L</CODE>,
+      <CODE>F2D</CODE>, <CODE>D2I</CODE>, <CODE>D2L</CODE>, <CODE>D2F</CODE>,
+      <CODE>I2B</CODE>, <CODE>I2C</CODE>, <CODE>I2S</CODE>, <CODE>LCMP</CODE>,
+      <CODE>FCMPL</CODE>, <CODE>FCMPG</CODE>, <CODE>DCMPL</CODE>,
+      <CODE>DCMPG</CODE>, <CODE>IRETURN</CODE>, <CODE>LRETURN</CODE>,
+      <CODE>FRETURN</CODE>, <CODE>DRETURN</CODE>, <CODE>ARETURN</CODE>,
+      <CODE>RETURN</CODE>, <CODE>ARRAYLENGTH</CODE>, <CODE>ATHROW</CODE>,
+      <CODE>MONITORENTER</CODE>, or <CODE>MONITOREXIT</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitFieldInsn</CODE></TD>
+    <TD>Visits a field instruction: <CODE>GETSTATIC</CODE>,
+      <CODE>PUTSTATIC</CODE>, <CODE>GETFIELD</CODE> or
+  <CODE>PUTFIELD</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitIntInsn</CODE></TD>
+    <TD>Visits an instruction with a single int operand: <CODE>BIPUSH</CODE>,
+      <CODE>SIPUSH</CODE>, or <CODE>NEWARRAY</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitJumpInsn</CODE></TD>
+    <TD>Visits a jump instruction: <CODE>IFEQ</CODE>, <CODE>IFNE</CODE>,
+      <CODE>IFLT</CODE>, <CODE>IFGE</CODE>, <CODE>IFGT</CODE>,
+      <CODE>IFLE</CODE>, <CODE>IF_ICMPEQ</CODE>, <CODE>IF_ICMPNE</CODE>,
+      <CODE>IF_ICMPLT</CODE>, <CODE>IF_ICMPGE</CODE>, <CODE>IF_ICMPGT</CODE>,
+      <CODE>IF_ICMPLE</CODE>, <CODE>IF_ACMPEQ</CODE>, <CODE>IF_ACMPNE</CODE>,
+      <CODE>GOTO</CODE>, <CODE>JSR</CODE>, <CODE>IFNULL</CODE>, or
+      <CODE>IFNONNULL</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitTypeInsn</CODE></TD>
+    <TD>Visits a type instruction: <CODE>NEW</CODE>, <CODE>ANEWARRAY</CODE>,
+      <CODE>CHECKCAST</CODE>, or <CODE>INSTANCEOF</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitVarInsn</CODE></TD>
+    <TD>Visits a local variable instruction: <CODE>ILOAD</CODE>,
+      <CODE>LLOAD</CODE>, <CODE>FLOAD</CODE>, <CODE>DLOAD</CODE>,
+      <CODE>ALOAD</CODE>, <CODE>ISTORE</CODE>, <CODE>LSTORE</CODE>,
+      <CODE>FSTORE</CODE>, <CODE>DSTORE</CODE>, <CODE>ASTORE</CODE>, or
+      <CODE>RET</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitMethodInsn</CODE></TD>
+    <TD>Visits a method instruction: <CODE>INVOKEVIRTUAL</CODE>,
+      <CODE>INVOKESPECIAL</CODE>, <CODE>INVOKESTATIC</CODE>, or
+      <CODE>INVOKEINTERFACE</CODE>.</TD></TR>
+  <TR>
+    <TD><CODE>visitIincInsn</CODE></TD>
+    <TD>Visits an <CODE>IINC</CODE> instruction.</TD></TR>
+  <TR>
+    <TD><CODE>visitLdcInsn</CODE></TD>
+    <TD>Visits an <CODE>LDC</CODE> instruction.</TD></TR>
+  <TR>
+    <TD><CODE>visitMultiANewArrayInsn</CODE></TD>
+    <TD>Visits a <CODE>MULTIANEWARRAY</CODE> instruction.</TD></TR>
+  <TR>
+    <TD><CODE>visitLookupSwitchInsn</CODE></TD>
+    <TD>Visits a <CODE>LOOKUPSWITCH</CODE> instruction.</TD></TR>
+  <TR>
+    <TD><CODE>visitTableSwitchInsn</CODE></TD>
+    <TD>Visits a <CODE>TABLESWITCH</CODE> instruction.</TD></TR>
+  <TR bgColor=#cccccc>
+    <TD><CODE>visitLabel</CODE></TD>
+    <TD>Visits a label.</TD></TR>
+  <TR bgColor=#cccccc>
+    <TD><CODE>visitLocalVariable</CODE></TD>
+    <TD>Visits a local variable declaration.</TD></TR>
+  <TR bgColor=#cccccc>
+    <TD><CODE>visitLineNumber</CODE></TD>
+    <TD>Visits a line number declaration.</TD></TR>
+  <TR bgColor=#cccccc>
+    <TD><CODE>visitTryCatchBlock</CODE></TD>
+    <TD>Visits a try-catch block.</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD></TD>
+    <TD><CODE>visitMaxs</CODE></TD>
+    <TD>Visits the maximum stack size and the maximum number of local
+      variables of the method.</TD></TR>
+  <TR bgColor=#d0d0ff>
+    <TD colSpan=2><CODE>visitEnd</CODE></TD>
+    <TD>Visits the end of the method.</TD></TR></TBODY></TABLE>
+<P>Note that the <CODE>visitEnd</CODE> method must <STRONG>always</STRONG> be
+called at the end of method processing. <CODE>ClassReader</CODE> does that for
+you, but it should be taken care of in a custom bytecode producer; e.g., when a
+class is generated from scratch or when new methods are introduced.</P>
+<P>Also note that if a method actually has some bytecode (i.e., if it is not
+abstract and not a native method), then <CODE>visitCode</CODE> must be called
+before the first <CODE>visit...Insn</CODE> call, and the <CODE>visitMaxs</CODE>
+method must be called after last <CODE>visit...Insn</CODE> call.</P>
+<P>Each of the <CODE>visitIincInsn</CODE>, <CODE>visitLdcInsn</CODE>,
+<CODE>visitMultiANewArrayInsn</CODE>, <CODE>visitLookupSwitchInsn</CODE>, and
+<CODE>visitTableSwitchInsn</CODE> methods uniquely represent one bytecode
+instruction. The rest of the <CODE>visit...Insn</CODE> methods--namely,
+<CODE>visitInsn</CODE>, <CODE>visitFieldInsn</CODE>, <CODE>visitIntInsn</CODE>,
+<CODE>visitJumpInsn</CODE>, <CODE>visitTypeInsn</CODE>,
+<CODE>visitVarInsn</CODE>, and <CODE>visitMethodInsn</CODE>--represent more then
+one bytecode instruction, with their opcodes passed in a first method parameter.
+All constants for those opcodes are defined in the <CODE>Opcodes</CODE>
+interface. This approach is very performant for bytecode parsing and formatting.
+Unfortunately, this could be a challenge to the developer who is trying to
+generate code, because <CODE>ClassWriter</CODE> does not verify these
+constraints. However, there is a <CODE>CheckClassAdapter</CODE> that could be
+used during development to test generated code.</P>
+<P>Another challenge with any kind of bytecode generation or transformation is
+that offsets within method code can change and should be adjusted when
+additional instructions are inserted or removed from the method code. This is
+applicable to parameters of all jump opcodes (<CODE>if</CODE>,
+<CODE>goto</CODE>, <CODE>jsr</CODE>, and <CODE>switch</CODE>), as well as to
+try-catch blocks, line number and local variable declarations, and to some of
+the special attributes (e.g., <CODE>StackMap</CODE>, used by CLDC). However, ASM
+hides this complexity from the developer. In order to specify positions in the
+method bytecode and not have to use absolute offsets, a unique instance of the
+<CODE>Label</CODE> class should be passed to the <CODE>visitLabel</CODE> method.
+Other <CODE>MethodVisitor</CODE> methods such as <CODE>visitJumpInsn</CODE>,
+<CODE>visitLookupSwitchInsn</CODE>, <CODE>visitTableSwitchInsn</CODE>,
+<CODE>visitTryCatchBlock</CODE>, <CODE>visitLocalVariable</CODE>, and
+<CODE>visitLineNumber</CODE> can use these <CODE>Label</CODE> instances even
+before the <CODE>visitLabel</CODE> call, as long as the instance will be called
+later in a method.</P>
+<P>The above may sound complicated, and at first glance requires deep knowledge
+of the bytecode instructions. However, using <CODE>ASMifierClassVisitor</CODE>
+on compiled classes allows you to see how any given bytecode could be generated
+with ASM. Moreover, applying <CODE>ASMifier</CODE> on two compiled classes (an
+original one and one after applying the required transformation) and then
+running <CODE>diff</CODE> on the output gives a good hint as to what ASM calls
+should be used in the transformer. This process is explained in more detail in
+several articles (see the <A href="http://www.onjava.com/lpt/a/">Resources</A>
+section below). There is even a <A
+href="http://asm.objectweb.org/eclipse/bco/index.html">plugin for the Eclipse
+IDE</A>, shown in Figure 4, that provides a great support for generating ASM
+code and comparing <CODE>ASMifier</CODE> output right from Java sources, and
+also includes a contextual bytecode reference.</P>
+<P><A
+onclick="PopImage('Figure 4. Eclipse ASM Plugin', this.href, '1369', '1050', '');return false;"
+href="http://www.onjava.com/onjava/2005/08/17/graphics/eclipse-plugin.gif"
+target=_blank><IMG height=230
+alt="Eclipse ASM Plugin--click for full-size image."
+src="../images/eclipse-plugin-sm.gif"
+width=300 border=0></A><BR><EM>Figure 4. Eclipse ASM plugin (Click on the
+picture to see a full-size image)</EM></P>
+
+<H3>Tracking Class Dependencies with ASM Visitors</H3>
+<P>There are already a few articles that explain how to generate bytecode with
+ASM (see the <A
+href="http://www.onjava.com/lpt/a/6142?page=8#resources">Resources</A> section
+for some links). For a change, let's see how ASM can be used to analyze existing
+classes. One interesting application is to capture information about external
+classes or packages used by any given module or .jar file. For simplicity, this
+example will only capture outgoing dependencies and won't keep track of the
+dependency types (e.g., superclass, method parameters, local variable types,
+etc.).</P>
+<P>Notice that for analysis purposes, we don't need to create new instances of
+child visitors for annotations, fields, and methods. All of these visitors,
+including class and signature visitor, could be implemented in a single
+class:</P><PRE><CODE>public class DependencyVisitor implements
+    AnnotationVisitor, SignatureVisitor,
+    ClassVisitor, FieldVisitor, MethodVisitor {
+...
+</CODE>
+</PRE>
+<P>For this example, we will track dependencies between packages, so individual
+classes should be aggregated by the package name:</P><PRE><CODE>  private String getGroupKey(String name) {
+    int n = name.lastIndexOf('/');
+    if(n&gt;-1) name = name.substring(0, n);
+    packages.add(name);
+    return name;
+  }
+</CODE>
+</PRE>
+<P>In order to collect dependencies, visitor interfaces such as
+<CODE>ClassVisitor</CODE>, <CODE>AnnotationVisitor</CODE>,
+<CODE>FieldVisitor</CODE>, and <CODE>MethodVisitor</CODE> should selectively
+aggregate parameters of their methods. There are several common cases:</P>
+<P>First of all, there are class names in <A
+href="http://java.sun.com/docs/books/vmspec/html/ClassFile.doc.html#14757">internal
+form</A> (super class, interfaces, exceptions, field and method owners); e.g.,
+<CODE>java/lang/String</CODE>:</P><PRE><CODE>  private void addName(String name) {
+    if(name==null) return;
+    String p = getGroupKey(name);
+    if(current.containsKey(p)) {
+      current.put(p, current.get(p)+1);
+    } else {
+      current.put(p, 1);
+    }
+  }</CODE>
+</PRE>
+<P>In this case, <CODE>current</CODE> is the current group of dependencies
+(e.g., package).</P>
+<P>Another case is type descriptors (annotations, enum and field types,
+parameters of the newarray instruction, etc.); e.g.,
+<CODE>Ljava/lang/String;</CODE>, <CODE>J</CODE>, and <CODE>[[[I</CODE>. These
+can be parsed with <CODE>Type.getType( desc)</CODE> to obtain the class name in
+internal form:</P><PRE><CODE>  private void addDesc(String desc) {
+    addType(Type.getType(desc));
+  }
+
+  private void addType(Type t) {
+    switch(t.getSort()) {
+      case Type.ARRAY:
+        addType(t.getElementType());
+        break;
+      case Type.OBJECT:
+        addName(t.getClassName().replace('.','/'));
+        break;
+    }
+  }</CODE>
+</PRE>
+<P>Method descriptors used in method declarations and in invoke instructions
+describe parameter types and return a type; e.g.,
+<CODE>([java/lang/String;II)V</CODE>. The helper methods
+<CODE>Type.getReturnType(methodDescriptor)</CODE> and
+<CODE>Type.getArgumentTypes(methodDescriptor)</CODE> can parse such descriptors
+and extract parameter and return types.</P><PRE><CODE>  private void addMethodDesc(String desc) {
+    addType(Type.getReturnType(desc));
+    Type[] types = Type.getArgumentTypes(desc);
+    for(int i = 0; i &lt; types.length; i++) {
+      addType(types[ i]);
+    }
+  }</CODE>
+</PRE>
+<P>The special case is the <CODE>signature</CODE> parameter used in many "visit"
+methods to specify Java 5 generics info. If it is present (i.e., non-null), this
+parameter overrides the descriptor parameter and contains an encoded form of the
+generics information. <CODE>SignatureReader</CODE> class could be used to parse
+this value. So we can implement a <CODE>SignatureVisitor</CODE>, which will be
+called for each signature artifact.</P><PRE><CODE>  private void addSignature(String sign) {
+    if(sign!=null) {
+      new SignatureReader(sign).accept(<B>this</B>);
+    }
+  }
+
+  private void addTypeSignature(String sign) {
+    if(sign!=null) {
+      new SignatureReader(sign).acceptType(<B>this</B>);
+    }
+  }</CODE>
+
+</PRE>
+
+<P>Methods implementing the <CODE>ClassVisitor</CODE> interface, such as
+<CODE>visit()</CODE>, <CODE>visitField()</CODE>, <CODE>visitMethod()</CODE>, and
+<CODE>visitAnnotation()</CODE>, can collect information about dependencies on
+superclasses and interfaces, types used by fields, method parameters, return
+values, and exceptions, as well as types of the annotations. For example:</P><PRE><CODE>  public void visit(int version, int access,
+      String name, String signature,
+      String superName, String[] interfaces) {
+    String p = getGroupKey(name);
+    current = groups.get(p);
+    if(current==null) {
+      current = new HashMap&lt;String,Integer&gt;();
+      groups.put(p, current);
+    }
+
+    if(signature==null) {
+      <B>addName(superName);
+      addNames(interfaces);</B>
+    } else {
+      <B>addSignature(signature);</B>
+    }
+  }
+
+  public FieldVisitor visitField(int access,
+      String name, String desc,
+      String signature, Object value) {
+    if(signature==null) {
+      <B>addDesc(desc);</B>
+    } else {
+      <B>addTypeSignature(signature);</B>
+    }
+    if(value instanceof Type) {
+      <B>addType((Type) value);</B>
+    }
+    return this;
+  }
+
+  public MethodVisitor visitMethod(int access,
+      String name, String desc,
+      String signature, String[] exceptions) {
+    if(signature==null) {
+      <B>addMethodDesc(desc);</B>
+    } else {
+      <B>addSignature(signature);</B>
+    }
+    <B>addNames(exceptions);</B>
+    return this;
+  }
+
+  public AnnotationVisitor visitAnnotation(
+      String desc, boolean visible) {
+    <B>addDesc(desc);</B>
+    return this;
+  }
+</CODE>
+</PRE>
+<P>Methods implementing the <CODE>MethodVisitor</CODE> interface can collect
+dependencies on types of the parameter annotations and types used in bytecode
+instructions that can use object references:</P><PRE><CODE>  public AnnotationVisitor
+      visitParameterAnnotation(int parameter,
+          String desc, boolean visible) {
+    <B>addDesc(desc);</B>
+    return this;
+  }
+
+  /**
+   * Visits a type instruction
+   * NEW, ANEWARRAY, CHECKCAST or INSTANCEOF.
+   */
+  public void visitTypeInsn(int opcode,
+        String desc) {
+    if(desc.charAt(0)=='[') {
+      <B>addDesc(desc);</B>
+    } else {
+      <B>addName(desc);</B>
+    }
+  }
+
+  /**
+   * Visits a field instruction
+   * GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
+   */
+  public void visitFieldInsn(int opcode,
+        String owner, String name, String desc) {
+    <B>addName(owner);
+    addDesc(desc);</B>
+  }
+
+  /**
+   * Visits a method instruction INVOKEVIRTUAL,
+   * INVOKESPECIAL, INVOKESTATIC or
+   * INVOKEINTERFACE.
+   */
+  public void visitMethodInsn(int opcode,
+        String owner, String name, String desc) {
+    <B>addName(owner);
+    addMethodDesc(desc);</B>
+  }
+
+  /**
+   * Visits a LDC instruction.
+   */
+  public void visitLdcInsn(Object cst) {
+    if(cst instanceof Type) {
+      <B>addType((Type) cst);</B>
+    }
+  }
+
+  /**
+   * Visits a MULTIANEWARRAY instruction.
+   */
+  public void visitMultiANewArrayInsn(
+        String desc, int dims) {
+    <B>addDesc(desc);</B>
+  }
+
+  /**
+   * Visits a try catch block.
+   */
+  public void visitTryCatchBlock(Label start,
+        Label end, Label handler, String type) {
+    <B>addName(type);</B>
+  }
+
+</CODE>
+</PRE>
+
+<P>Now we can use <CODE>DependencyVisitor</CODE> to collect dependencies from
+the entire .jar file. For example:</P><PRE><CODE>  DependencyVisitor v = new DependencyVisitor();
+  ZipFile f = new ZipFile(jarName);
+  Enumeration&lt;? extends ZipEntry&gt; en = f.entries();
+  while(en.hasMoreElements()) {
+    ZipEntry e = en.nextElement();
+    String name = e.getName();
+    if(name.endsWith(".class")) {
+      ClassReader cr =
+          new ClassReader(f.getInputStream(e));
+      cr.accept(v, false);
+    }
+  }
+</CODE>
+</PRE>
+<P>The collected information can be represented in many different ways. One can
+build dependency trees and calculate some metrics, or create some
+visualizations. For example, Figure 5 shows how <I>ant.1.6.5.jar</I> looks in a
+visualization I built on top of the collected information using some simple
+Java2D code. The following diagram shows packages from the input .jar on a
+horizontal axis and external dependencies on a vertical axis. The darker a box's
+color is, the more times the package is referenced.</P>
+<P><IMG height=651 alt="Dependencies in ant.1.6.5.jar as discovered with ASM"
+src="../images/ant.1.6.5.gif"
+width=426><BR><I>Figure 5. Dependencies in </I>ant.1.6.5.jar<I>, as discovered
+with ASM</I></P>
+<P>The complete code of this tool will be included into the next ASM release. It
+can be also obtained from <A
+href="http://cvs.forge.objectweb.org/cgi-bin/viewcvs.cgi/asm/asm/examples/">ASM
+CVS</A>.</P>
+<H3>Changes in the ASM 2.0 API Since ASM 1.x</H3>
+<P>You can skip this section if you haven't used ASM 1.x.</P>
+<P>The major structural change in ASM 2.0 is that all J2SE 5.0 features are
+built into the ASM visitor/filter event flow. So the new API allows you to deal
+with generics and annotations in a much more lightweight and semantically
+natural way. Instead of explicitly creating annotation attribute instances, we
+have generics and annotation data within the event flow. For example, in ASM
+1.x, the <CODE>ClassVisitor</CODE> interface used the following method:</P><PRE><CODE>  CodeVisitor visitMethod(int access, String name,
+      String desc, String[] exceptions,
+      Attribute attrs);</CODE>
+</PRE>
+<P>This has been split into several methods in ASM 2.0:</P><PRE><CODE>  MethodVisitor visitMethod(int access,
+      String name, String desc, String <B>signature</B>,
+      String[] exceptions)
+
+  AnnotationVisitor <B>visitAnnotation</B>(String desc,
+      boolean visible)
+
+  void <B>visitAttribute</B>(Attribute attr)</CODE>
+</PRE>
+<P>In the 1.x API, in order to define generics info, you'd have to create
+specific instances of the <CODE>SignatureAttribute</CODE>, and to define
+annotations, you'd need instances of the
+<CODE>RuntimeInvisibleAnnotations</CODE>,
+<CODE>RuntimeInvisibleParameterAnnotations</CODE>,
+<CODE>RuntimeVisibleAnnotations</CODE>,
+<CODE>RuntimeVisibleParameterAnnotations</CODE>, and
+<CODE>AnnotationDefault</CODE>. Then you'd put these instances into the
+<CODE>attrs</CODE> parameter of the appropriate visit method.</P>
+<P>In ASM 2.0, a new <CODE>signature</CODE> parameter has been added to
+represent generics info. The new <CODE>AnnotationVisitor</CODE> interface is
+used to handle all annotations. There is no need to create an <CODE>attrs</CODE>
+collection, and annotation data is more strictly typed. However, when migrating
+existing code, especially when "adapter" classes have been used; it is necessary
+to be careful and make sure that all methods overwritten from the adapter are
+updated to new signatures, because the compiler will raise no warnings.</P>
+
+<P>There are several other changes introduced in ASM 2.0.</P>
+<UL>
+  <LI>Introduced the new interfaces <CODE>FieldVisitor</CODE> and
+  <CODE>AnnotationVisitor</CODE>.
+  <LI><CODE>CodeVisitor</CODE> into <CODE>MethodVisitor</CODE>.
+  <LI>New <CODE>visitCode()</CODE> method added to the
+  <CODE>MethodVisitor</CODE> to easily detect first instruction.
+  <LI><CODE>Constants</CODE> interface renamed into <CODE>Opcodes</CODE>.
+  <LI>Almost all attributes from the <CODE>attrs</CODE> package are incorporated
+  into ASM's event model.
+  <LI><CODE>TreeClassAdapter</CODE> and <CODE>TreeCodeAdapter</CODE> are
+  incorporated into the <CODE>ClassNode</CODE> and <CODE>MethodNode</CODE>.
+  <LI>Introduced the <CODE>LabelNode</CODE> class to make elements of
+  <CODE>instructions</CODE> collection common type of
+  <CODE>AbstractInsnNode</CODE>. </LI></UL>
+<P>In general, it would be a good idea to run tool like <A
+href="http://javadiff.sourceforge.net/">JDiff</A> and review the differences
+between the ASM 1.x and 2.0 APIs.</P>
+<H3>Conclusion</H3>
+<P>ASM 2.0 hides many bytecode complexities from the developer and allows one to
+efficiently work with Java features on a bytecode level. The framework allows
+you not only to transform and generate bytecode, but also to pull out
+significant details about existing classes. The API is being constantly
+improved--version 2.0 incorporates the generics and annotations introduced in
+J2SE 5.0. Since then, support for the new features introduced in Mustang (see
+"<A href="https://mustang.dev.java.net/">Java SE 6 Snapshot Releases</A>") have
+been added to the ASM framework.</P><A id=resources name=resources></A>
+<H3>Resources</H3>
+<UL>
+  <LI><A href="http://java.sun.com/docs/books/vmspec/">Java Virtual Machine
+  Specification</A>
+  <LI>"<A
+  href="http://java.sun.com/docs/books/vmspec/2nd-edition/ClassFileFormat-final-draft.pdf">Revised
+  Class File Format</A>" (Chapter 4 of the JVM specification; PDF). Includes
+  modifications for J2SE 5.0 to support changes mandated by JSR-14, JSR-175, and
+  JSR-201, as well as minor corrections and adjustments.
+  <LI>"<A
+  href="http://www.oreillynet.com/pub/a/onjava/2004/10/06/asm1.html">Using the
+  ASM Toolkit for Bytecode Manipulation</A>"
+  <LI>"<A
+  href="http://www.oreillynet.com/pub/a/onjava/2004/10/20/asm.html">Create and
+  Read J2SE 5.0 Annotations with the ASM Bytecode Toolkit</A>"
+  <LI><A
+  href="http://weblogs.java.net/blog/kellyohair/archive/2005/05/bytecode_instru.html">Bytecode
+  Instrumentation (BCI)</A>. Kelly O'Hair discusses challenges in bytecode
+  instrumentation. </LI></UL>
+

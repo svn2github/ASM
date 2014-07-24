@@ -1,0 +1,36 @@
+<project name="AsmDexMain" default="jar">
+	<property file="build.properties"/>
+	<property name="findbugs.location" value="${findbugs.home}/lib/findbugs-ant.jar"/>
+	<import file="build.xml"/>
+
+
+	
+	<target name="jar" depends="AsmDex.init,AsmDex.build">
+		<jar jarfile="asmdex.jar">
+			<fileset dir="bin"/>
+		</jar>
+	</target>
+	
+	<target name="findbugs" depends="jar">
+		<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask">
+			<classpath>
+	        	<pathelement location="${findbugs.location}"/>
+			</classpath>
+	    </taskdef>
+
+	    <findbugs home="${findbugs.home}"
+	              output="xml"
+	    		  excludeFilter="exclude.xml"
+	              outputFile="asmdex-fb.xml" >
+	      <auxClasspath>
+	        <path refid="AsmDex.classpath"/>
+	      </auxClasspath>
+	      <sourcePath path="${basedir}/src" />
+	      <class location="${basedir}/bin" />
+	    </findbugs>		
+	</target>
+	
+	<target name="javadoc">
+		<javadoc sourcepath="src" destdir="apidoc"/>
+	</target>
+</project>
